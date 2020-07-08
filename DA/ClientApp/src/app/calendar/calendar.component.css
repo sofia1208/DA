@@ -40,6 +40,14 @@ h1 {
 {
     margin-left: 50px;
 }
+.activeSchooling {
+  background-color: #8CEE88;
+  border-radius: 12px;
+}
+.takenSchooling {
+  background-color: #F28C8C;
+  border-radius: 12px;
+}
 
 
 

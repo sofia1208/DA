@@ -76,21 +76,26 @@
     <br />
 
   </div>
-  <ng-template #customCellTemplate let-day="day" let-locale="locale" let-tooltipPlacement="tooltipPlacement" >
+  <ng-template #customCellTemplate let-day="day" let-locale="locale" let-days="days" let-dayEvents="dayEvents">
     <div class="cal-cell-top">
-      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+      <!--<span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>-->
       <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
     </div>
-    <p style="margin: 5px; ">   </p>
 
-  </ng-template>
-  <ng-template #tooltipTemplate let-event="event">
-    <div>
-     
-      {{event.title}}
+    <div  >
+      <span *ngFor="let ev of day.events">
+        <span *ngIf="ev.isFree" >
+          <p class="activeSchooling" style="margin: 5px;  font-size:17px;" click(clickOnEvent)>{{ ev.title }}</p>
+        </span>
+        <span *ngIf="!ev.isFree" >
+          <p class="takenSchooling" style="margin: 5px;  font-size:17px;" click(clickOnEvent)>{{ ev.title }}</p>
+        </span>
    
+      </span>
     </div>
-  </ng-template>
+
+</ng-template>
+ 
   <div></div>
   <div [ngSwitch]="view">
     <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
