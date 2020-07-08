@@ -19,12 +19,12 @@ namespace DA.Controllers {
             this.schoolingService = schoolingService;
         }
 
-        [HttpGet("Summary")]
-        public List<SchoolingSummaryDTO> Summary() {
-            return schoolingService.Summary();
+        [HttpGet("Summary/{type}")]
+        public List<SchoolingSummaryDTO> Summary(string type) {
+            return schoolingService.Summary(type);
         }
 
-        [HttpGet("SchoolingDetails")]
+        [HttpGet("Details/{id}")]
         public SchoolingDetailDTO Details(int id) {
             return schoolingService.GetDetails(id);
         }
