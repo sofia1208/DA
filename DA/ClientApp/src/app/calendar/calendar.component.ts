@@ -1,11 +1,7 @@
-
-
-
-
-
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import {
-  Component,
+
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
@@ -19,106 +15,64 @@ import {
   isSameDay,
   isSameMonth,
   addHours,
+  
 } from 'date-fns';
 
 import { Subject } from 'rxjs';
-//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
   CalendarView,
-} from 'angular-calendar';
+  CalendarDateFormatter,
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
+  DAYS_OF_WEEK,
+} from 'angular-calendar';
+import { CustomDateFormatter } from './customdateformatter';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
- 
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-calendar',
+  templateUrl: './calendar.component.html',
+  styleUrls: ['./calendar.component.css', '/angular-calendar.css'
+   ],
+  providers: [
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter,
+    },
+  ],
   styles: [
-    `
-      h1 {
-        font-size: 24px;
-      
-        color: #707070;
-      },
-     .container{
-       margin: 40px;
-       margin-left: 100px;
-       }
-
-      .buttonGray {
-      border-radius: 12px;
-      color: #707070;
-      background-color: #D4D4D4;
-     
-           }
-     .buttonGray:hover{
-     background-color: #F8F4F4;
-     color: #FEAE5F;
-      }
-    .buttonGray:click{
-     background-color: white;
-     color: #FEAE5F;
-      }
-     .month{
-color: #707070;
- text-align: center;
- font-size: 20px;
-}
-    
-
-    `
   ]
-
+  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
+  constructor() { }
 
-  view: CalendarView = CalendarView.Month;
+  ngOnInit() {
+
+  }
+  locale: string = 'de';
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+
+  weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
+  view: CalendarView = CalendarView.Day;
 
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
 
+
+
   modalData: {
     action: string;
     event: CalendarEvent;
   };
-  locale: string = 'de';
 
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
+
+
 
   refresh: Subject<any> = new Subject();
 
@@ -128,7 +82,7 @@ export class AppComponent {
       end: addDays(new Date(), 1),
       title: 'A 3 day event',
       color: colors.red,
-      actions: this.actions,
+      cssClass: 'event.css',
       allDay: true,
       resizable: {
         beforeStart: true,
@@ -140,7 +94,7 @@ export class AppComponent {
       start: startOfDay(new Date()),
       title: 'An event with no end date',
       color: colors.yellow,
-      actions: this.actions,
+   
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
@@ -154,7 +108,7 @@ export class AppComponent {
       end: addHours(new Date(), 2),
       title: 'A draggable and resizable event',
       color: colors.yellow,
-      actions: this.actions,
+   
       resizable: {
         beforeStart: true,
         afterEnd: true,
@@ -165,7 +119,7 @@ export class AppComponent {
 
   activeDayIsOpen: boolean = true;
 
- // constructor(private modal: NgbModal) { }
+  // constructor(private modal: NgbModal) { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -201,7 +155,7 @@ export class AppComponent {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-   // this.modal.open(this.modalContent, { size: 'lg' });
+    // this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
@@ -233,3 +187,27 @@ export class AppComponent {
     this.activeDayIsOpen = false;
   }
 }
+
+
+
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
+  },
+};
+
+
+//export class AppComponent {
+//  
+
+ 
+//}

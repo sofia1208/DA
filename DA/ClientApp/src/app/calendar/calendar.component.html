@@ -1,0 +1,125 @@
+<div class="outerDiv">
+  <h1 class="schulungh1">
+    Schulungen und Workshops
+  </h1>
+  <div class="row text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h3 class="month">{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3>
+        </div>
+        <div class="col-sm">
+          <div class="btn-group">
+            <div>
+              <div class="btn buttonGray "
+                   mwlCalendarPreviousView
+                   [view]="view"
+                   [(viewDate)]="viewDate"
+                   (viewDateChange)="closeOpenMonthViewDay()">
+                    <
+              </div>
+              <div class="btn buttonGray "
+                   mwlCalendarToday
+                   [(viewDate)]="viewDate">
+                Heute
+              </div>
+              <div class="btn buttonGray"
+                   mwlCalendarNextView
+                   [view]="view"
+                   [(viewDate)]="viewDate"
+                   (viewDateChange)="closeOpenMonthViewDay()">
+                >
+              </div>
+
+            </div>
+            </div>
+          </div>
+
+          <div class="col-sm">
+            <div class="btn-group">
+              <div class="btn buttonGray"
+                   (click)="setView(CalendarView.Month)"
+                  
+                   [class.active]="view === CalendarView.Month"
+                    
+                   >
+                Monat
+              </div>
+              <div class="btn buttonGray"
+                   (click)="setView(CalendarView.Week)"
+                   [class.active]="view === CalendarView.Week"
+                   
+                 >
+                Woche
+              </div>
+              <div class="btn buttonGray"
+                   (click)="setView(CalendarView.Day)"
+                   [class.active]="view === CalendarView.Day"
+                
+           
+               >
+                Tag
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div>
+
+
+
+      </div>
+
+
+      <div class="col-md-4">
+        <div class="btn-group">
+         
+        </div>
+      </div>
+
+      <div class="col-md-4">
+
+      </div>
+    </div>
+    <br />
+
+  </div>
+  <div></div>
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
+                             [viewDate]="viewDate"
+                             [events]="events"
+                             [refresh]="refresh"
+                             [activeDayIsOpen]="activeDayIsOpen"
+                             (dayClicked)="dayClicked($event.day)"
+                             (eventClicked)="handleEvent('Clicked', $event.event)"
+                             (eventTimesChanged)="eventTimesChanged($event)"
+                             [locale]="locale"
+                               [weekendDays]="weekendDays"
+                            [weekStartsOn]="weekStartsOn"
+                          
+                             >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
+                            [viewDate]="viewDate"
+                            [events]="events"
+                            [refresh]="refresh"
+                            (eventClicked)="handleEvent('Clicked', $event.event)"
+                            (eventTimesChanged)="eventTimesChanged($event)"
+                             [locale]="locale"
+                            [weekendDays]="weekendDays"
+                            [weekStartsOn]="weekStartsOn"
+                          >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
+                           [viewDate]="viewDate"
+                           [events]="events"
+                           [refresh]="refresh"
+                           (eventClicked)="handleEvent('Clicked', $event.event)"
+                           (eventTimesChanged)="eventTimesChanged($event)"
+                            [locale]="locale"
+                         >
+    </mwl-calendar-day-view>
+  </div>
+</div>
+

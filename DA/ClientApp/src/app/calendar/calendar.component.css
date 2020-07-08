@@ -1,0 +1,45 @@
+
+
+h1 {
+  font-size: 24px;
+  color: #707070;
+}
+
+,
+.container {
+  margin: 40px;
+  margin-left: 100px;
+}
+
+.buttonGray {
+  border-radius: 12px;
+  color: #707070;
+  background-color: #D4D4D4;
+}
+
+  .buttonGray:hover {
+    background-color: #F8F4F4;
+    color: #FEAE5F;
+  }
+
+  .buttonGray:click {
+    background-color: white;
+    color: #FEAE5F;
+  }
+
+.month {
+  color: #707070;
+  text-align: center;
+  font-size: 20px;
+}
+.outerDiv
+{
+    margin-top: 30px;
+}
+.schulungh1
+{
+    margin-left: 50px;
+}
+
+
+
