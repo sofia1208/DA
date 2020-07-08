@@ -22,7 +22,7 @@ h1 {
     color: #FEAE5F;
   }
 
-  .buttonGray:click {
+  .buttonGray.click {
     background-color: white;
     color: #FEAE5F;
   }
@@ -40,6 +40,27 @@ h1 {
 {
     margin-left: 50px;
 }
-
+.activeSchooling {
+  background-color: #8CEE88;
+  border-radius: 12px;
+}
+.takenSchooling {
+  background-color: #F28C8C;
+  border-radius: 12px;
+}
+.filterBtn{
+    justify-items: right
+}
+.categoryBtn {
+  border: none;
+  margin: 3px;
+  color: #707070;
+  background: #FEAE5F;
+  border-radius: 12px;
+  outline: none;
+}
+  .categoryBtn:hover {
+    background: #E19E5D;
+  }
 
 

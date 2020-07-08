@@ -30,6 +30,7 @@ import {
   DAYS_OF_WEEK,
 } from 'angular-calendar';
 import { CustomDateFormatter } from './customdateformatter';
+import { Schooling } from './Schooling';
 
 @Component({
   selector: 'app-calendar',
@@ -75,46 +76,55 @@ export class CalendarComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
+  events: Schooling[] = [
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
       title: 'moveIT@SSQ Grundlagen',
       color: colors.red,
-      cssClass: 'event.css',
+     
       allDay: true,
       resizable: {
         beforeStart: true,
         afterEnd: true,
+       
       },
       draggable: true,
+      isFree: false,
+    
     },
     {
       start: startOfDay(new Date()),
       title: 'moveIT@SSQ Grundlagen',
-      color: colors.yellow,
+      color: colors.green,
+      isFree: true,
    
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
       title: 'moveIT@SSQ Grundlagens',
-      color: colors.blue,
+      color: colors.green,
       allDay: true,
+      isFree: false,
     },
     {
       start: addHours(startOfDay(new Date()), 2),
       end: addHours(new Date(), 2),
       title: 'moveIT@SSQ Grundlagen',
-      color: colors.yellow,
+      color: colors.red,
    
       resizable: {
         beforeStart: true,
         afterEnd: true,
       },
       draggable: true,
+      isFree: true,
     },
   ];
+  clickOnEvent(id :number): void {
+     //TODO:bei Event eine ID mitgeben,  get Request mit ID
+}
 
   activeDayIsOpen: boolean = false;
 
@@ -145,6 +155,7 @@ export class CalendarComponent implements OnInit {
           ...event,
           start: newStart,
           end: newEnd,
+          isFree: true,
         };
       }
       return iEvent;
@@ -170,6 +181,7 @@ export class CalendarComponent implements OnInit {
           beforeStart: true,
           afterEnd: true,
         },
+        isFree: true,
       },
     ];
   }
@@ -191,17 +203,14 @@ export class CalendarComponent implements OnInit {
 
 const colors: any = {
   red: {
-    primary: '#ad2121',
+    primary: '#F28C8C',
     secondary: '#FAE3E3',
   },
-  blue: {
-    primary: '#1e90ff',
+  green: {
+    primary: '#8CEE88',
     secondary: '#D1E8FF',
   },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
+  
 };
 
 
