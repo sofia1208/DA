@@ -22,7 +22,7 @@ h1 {
     color: #FEAE5F;
   }
 
-  .buttonGray:click {
+  .buttonGray.click {
     background-color: white;
     color: #FEAE5F;
   }
@@ -48,6 +48,13 @@ h1 {
   background-color: #F28C8C;
   border-radius: 12px;
 }
-
+.filterBtn{
+    justify-items: right
+}
+.categoryBtn {
+  border: none;
+  color: #707070;
+  background: #FEAE5F;
+}
 
 
