@@ -7,19 +7,21 @@ using System.Threading.Tasks;
 
 namespace Schulungskalender.Services {
     public class SchoolingService {
+        private List<SchoolingSummaryDTO> testList;
+        public SchoolingService() {
+            testList = new List<SchoolingSummaryDTO>() { };
+            testList.Add(new SchoolingSummaryDTO() { Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Grundlagen", Organizer = "moveIT Software GmbH", Price = 500 });
+            testList.Add(new SchoolingSummaryDTO() { Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Workshop", Organizer = "moveIT Software GmbH", Price = 510 });
+            testList.Add(new SchoolingSummaryDTO() { Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Administrator", Organizer = "moveIT Software GmbH", Price = 520 });
+            testList.Add(new SchoolingSummaryDTO() { Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Kombimodell", Organizer = "moveIT Software GmbH", Price = 530 });
+        }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            var list = new List<SchoolingSummaryDTO>() { };
-            list.Add(new SchoolingSummaryDTO() { Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Grundlage", Organizer = "moveIT Software GmbH", Price = 500 });
-            list.Add(new SchoolingSummaryDTO() { Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Workshop", Organizer = "moveIT Software GmbH", Price = 510 });
-            list.Add(new SchoolingSummaryDTO() { Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Administrator", Organizer = "moveIT Software GmbH", Price = 520 });
-            list.Add(new SchoolingSummaryDTO() { Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Kombimodell", Organizer = "moveIT Software GmbH", Price = 530 });
+            return testList.Where(x => x.Name.Split('+')[1].Trim().Equals(type)).ToList();
+        }
 
-            if(type == "" || type == null) {
-                return list;
-            }
-            return list.Where(x => x.Name.Split('+')[1].Trim().Equals(type)).ToList();
-
+        public List<SchoolingSummaryDTO> Summary() {
+            return testList;
         }
 
         public SchoolingDetailDTO GetDetails(int id) {

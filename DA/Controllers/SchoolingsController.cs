@@ -24,6 +24,11 @@ namespace DA.Controllers {
             return schoolingService.Summary(type);
         }
 
+        [HttpGet("Summary")]
+        public List<SchoolingSummaryDTO> Summary() {
+            return schoolingService.Summary();
+        }
+
         [HttpGet("Details/{id}")]
         public SchoolingDetailDTO Details(int id) {
             return schoolingService.GetDetails(id);
