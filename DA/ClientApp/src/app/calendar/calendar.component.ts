@@ -42,9 +42,8 @@ import { CustomDateFormatter } from './customdateformatter';
       useClass: CustomDateFormatter,
     },
   ],
-  styles: [
-  ]
-  ,
+  
+  
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
@@ -80,7 +79,7 @@ export class CalendarComponent implements OnInit {
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
-      title: 'A 3 day event',
+      title: 'moveIT@SSQ Grundlagen',
       color: colors.red,
       cssClass: 'event.css',
       allDay: true,
@@ -92,21 +91,21 @@ export class CalendarComponent implements OnInit {
     },
     {
       start: startOfDay(new Date()),
-      title: 'An event with no end date',
+      title: 'moveIT@SSQ Grundlagen',
       color: colors.yellow,
    
     },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
+      title: 'moveIT@SSQ Grundlagens',
       color: colors.blue,
       allDay: true,
     },
     {
       start: addHours(startOfDay(new Date()), 2),
       end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
+      title: 'moveIT@SSQ Grundlagen',
       color: colors.yellow,
    
       resizable: {
@@ -117,22 +116,22 @@ export class CalendarComponent implements OnInit {
     },
   ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   // constructor(private modal: NgbModal) { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
+    //if (isSameMonth(date, this.viewDate)) {
+    //  if (
+    //    (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+    //    events.length === 0
+    //  ) {
+    //    this.activeDayIsOpen = false;
+    //  } else {
+    //    this.activeDayIsOpen = true;
+    //  }
+    //  this.viewDate = date;
+    //}
   }
 
   eventTimesChanged({
@@ -206,8 +205,4 @@ const colors: any = {
 };
 
 
-//export class AppComponent {
-//  
 
- 
-//}

@@ -16,7 +16,7 @@
                    [view]="view"
                    [(viewDate)]="viewDate"
                    (viewDateChange)="closeOpenMonthViewDay()">
-                    <
+                <
               </div>
               <div class="btn buttonGray "
                    mwlCalendarToday
@@ -32,37 +32,29 @@
               </div>
 
             </div>
-            </div>
           </div>
+        </div>
 
-          <div class="col-sm">
-            <div class="btn-group">
-              <div class="btn buttonGray"
-                   (click)="setView(CalendarView.Month)"
-                  
-                   [class.active]="view === CalendarView.Month"
-                    
-                   >
-                Monat
-              </div>
-              <div class="btn buttonGray"
-                   (click)="setView(CalendarView.Week)"
-                   [class.active]="view === CalendarView.Week"
-                   
-                 >
-                Woche
-              </div>
-              <div class="btn buttonGray"
-                   (click)="setView(CalendarView.Day)"
-                   [class.active]="view === CalendarView.Day"
-                
-           
-               >
-                Tag
-              </div>
+        <div class="col-sm">
+          <div class="btn-group">
+            <div class="btn buttonGray"
+                 (click)="setView(CalendarView.Month)"
+                 [class.active]="view === CalendarView.Month">
+              Monat
+            </div>
+            <div class="btn buttonGray"
+                 (click)="setView(CalendarView.Week)"
+                 [class.active]="view === CalendarView.Week">
+              Woche
+            </div>
+            <div class="btn buttonGray"
+                 (click)="setView(CalendarView.Day)"
+                 [class.active]="view === CalendarView.Day">
+              Tag
             </div>
           </div>
         </div>
+      </div>
 
       <div>
 
@@ -73,7 +65,7 @@
 
       <div class="col-md-4">
         <div class="btn-group">
-         
+
         </div>
       </div>
 
@@ -84,6 +76,21 @@
     <br />
 
   </div>
+  <ng-template #customCellTemplate let-day="day" let-locale="locale" let-tooltipPlacement="tooltipPlacement" let-event="event">
+    <div class="cal-cell-top">
+      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+      <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+    </div>
+    <p style="margin: 5px; ">   {{event.title}} </p>
+
+  </ng-template>
+  <ng-template #tooltipTemplate let-event="event">
+    <div>
+     
+      {{event.title}}
+   
+    </div>
+  </ng-template>
   <div></div>
   <div [ngSwitch]="view">
     <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
@@ -95,10 +102,9 @@
                              (eventClicked)="handleEvent('Clicked', $event.event)"
                              (eventTimesChanged)="eventTimesChanged($event)"
                              [locale]="locale"
-                               [weekendDays]="weekendDays"
-                            [weekStartsOn]="weekStartsOn"
-                          
-                             >
+                             [weekendDays]="weekendDays"
+                             [weekStartsOn]="weekStartsOn"
+                             [cellTemplate]="customCellTemplate">
     </mwl-calendar-month-view>
     <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
                             [viewDate]="viewDate"
@@ -106,10 +112,9 @@
                             [refresh]="refresh"
                             (eventClicked)="handleEvent('Clicked', $event.event)"
                             (eventTimesChanged)="eventTimesChanged($event)"
-                             [locale]="locale"
+                            [locale]="locale"
                             [weekendDays]="weekendDays"
-                            [weekStartsOn]="weekStartsOn"
-                          >
+                            [weekStartsOn]="weekStartsOn">
     </mwl-calendar-week-view>
     <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
                            [viewDate]="viewDate"
@@ -117,8 +122,7 @@
                            [refresh]="refresh"
                            (eventClicked)="handleEvent('Clicked', $event.event)"
                            (eventTimesChanged)="eventTimesChanged($event)"
-                            [locale]="locale"
-                         >
+                           [locale]="locale">
     </mwl-calendar-day-view>
   </div>
 </div>
