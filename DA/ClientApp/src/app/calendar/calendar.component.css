@@ -53,8 +53,14 @@ h1 {
 }
 .categoryBtn {
   border: none;
+  margin: 3px;
   color: #707070;
   background: #FEAE5F;
+  border-radius: 12px;
+  outline: none;
 }
+  .categoryBtn:hover {
+    background: #E19E5D;
+  }
 
 
