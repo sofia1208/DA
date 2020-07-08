@@ -76,12 +76,12 @@
     <br />
 
   </div>
-  <ng-template #customCellTemplate let-day="day" let-locale="locale" let-tooltipPlacement="tooltipPlacement" let-event="event">
+  <ng-template #customCellTemplate let-day="day" let-locale="locale" let-tooltipPlacement="tooltipPlacement" >
     <div class="cal-cell-top">
       <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
       <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
     </div>
-    <p style="margin: 5px; ">   {{event.title}} </p>
+    <p style="margin: 5px; ">   </p>
 
   </ng-template>
   <ng-template #tooltipTemplate let-event="event">
