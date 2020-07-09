@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Schulungskalender.Services;
+using DbLib;
 
 namespace DA
 {
@@ -23,6 +24,7 @@ namespace DA
         {
             services.AddControllersWithViews();
             services.AddScoped<SchoolingService>();
+            services.AddScoped<DbContext>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
