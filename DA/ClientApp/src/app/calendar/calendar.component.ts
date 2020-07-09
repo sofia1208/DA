@@ -31,6 +31,9 @@ import {
 } from 'angular-calendar';
 import { CustomDateFormatter } from './customdateformatter';
 import { Schooling } from './Schooling';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { SchoolingGet } from './SchoolingGet';
 
 @Component({
   selector: 'app-calendar',
@@ -49,11 +52,19 @@ import { Schooling } from './Schooling';
 })
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  constructor() { }
-
+  constructor(private http: HttpClient) { }
+  schoolings: SchoolingGet[] = [];
+  events: Schooling[] = [];
+  url = 'https://localhost:5001/schoolings/summary';
   ngOnInit() {
-
+    console.log('ngOnInit');
+    this.http.get<SchoolingGet[]>(this.url)
+      .subscribe(x => this.schoolings = x);
+   
+    this.schoolingsToEvents();
   }
+
+
   locale: string = 'de';
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 
@@ -63,72 +74,79 @@ export class CalendarComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
-
+ 
 
 
   modalData: {
     action: string;
     event: CalendarEvent;
   };
+ 
+  getSummary(): void {
+    this.http.get<SchoolingGet[]>(this.url)
+     .subscribe(x => this.schoolings = x);
+       this.schoolingsToEvents();
 
+  }
 
-
-
+   
   refresh: Subject<any> = new Subject();
 
-  events: Schooling[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'moveIT@SSQ Grundlagen',
-      color: colors.red,
+ 
+ 
+  //events: Schooling[] = [
+  //  {
+  //    start: subDays(startOfDay(new Date()), 1),
+  //    end: addDays(new Date(), 1),
+  //    title: 'moveIT@SSQ Grundlagen',
+  //    color: colors.red,
      
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
+  //    allDay: true,
+  //    resizable: {
+  //      beforeStart: true,
+  //      afterEnd: true,
        
-      },
-      draggable: true,
-      isFree: false,
+  //    },
+  //    draggable: true,
+  //    isFree: false,
     
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'moveIT@SSQ Grundlagen',
-      color: colors.green,
-      isFree: true,
+  //  },
+  //  {
+  //    start: startOfDay(new Date()),
+  //    title: 'moveIT@SSQ Grundlagen',
+  //    color: colors.green,
+  //    isFree: true,
    
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'moveIT@SSQ Grundlagens',
-      color: colors.green,
-      allDay: true,
-      isFree: false,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'moveIT@SSQ Grundlagen',
-      color: colors.red,
+  //  },
+  //  {
+  //    start: subDays(endOfMonth(new Date()), 3),
+  //    end: addDays(endOfMonth(new Date()), 3),
+  //    title: 'moveIT@SSQ Grundlagens',
+  //    color: colors.green,
+  //    allDay: true,
+  //    isFree: false,
+  //  },
+  //  {
+  //    start: addHours(startOfDay(new Date()), 2),
+  //    end: addHours(new Date(), 2),
+  //    title: 'moveIT@SSQ Grundlagen',
+  //    color: colors.red,
    
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-      isFree: true,
-    },
-  ];
+  //    resizable: {
+  //      beforeStart: true,
+  //      afterEnd: true,
+  //    },
+  //    draggable: true,
+  //    isFree: true,
+  //  },
+  //];
   clickOnEvent(id :number): void {
      //TODO:bei Event eine ID mitgeben,  get Request mit ID
 }
 
   activeDayIsOpen: boolean = false;
 
-  // constructor(private modal: NgbModal) { }
+ 
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     //if (isSameMonth(date, this.viewDate)) {
@@ -197,8 +215,32 @@ export class CalendarComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-}
 
+  private getSchoolings(): Observable<SchoolingGet[]> {
+    return this.http.get<SchoolingGet[]>(this.url);
+  }
+  private schoolingsToEvents(): void {
+    var ret: Schooling[] = [] ;
+    for (var i = 0; i < this.schoolings.length; i++) {
+     
+      const schooling: Schooling = {
+        isFree: true,
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+        title: this.schoolings[i].name,
+        id: i,
+      };
+     
+      
+      this.events.push(schooling);
+      this.handleEvent('Dropped or resized', schooling);
+      
+    }
+ 
+  
+  }
+
+}
 
 
 const colors: any = {
@@ -208,7 +250,7 @@ const colors: any = {
   },
   green: {
     primary: '#8CEE88',
-    secondary: '#D1E8FF',
+    secondary: '#90ee90',
   },
   
 };

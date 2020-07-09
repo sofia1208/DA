@@ -357,9 +357,10 @@
   .cal-week-view .cal-day-column {
     border-left-color: #e1e1e1; }
   .cal-week-view .cal-event {
-    background-color: #d1e8ff;
+    background-color: #8CEE88;
     border-color: #1e90ff;
-    color: #1e90ff; }
+    color: #1e90ff;
+  }
   .cal-week-view .cal-all-day-events {
     border-color: #e1e1e1; }
   .cal-week-view .cal-header.cal-today {
