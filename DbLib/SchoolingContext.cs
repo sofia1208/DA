@@ -3,18 +3,20 @@ namespace DbLib {
    
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Runtime.InteropServices;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
 
-    public partial class SchoolingContext : Microsoft.EntityFrameworkCore.DbContext {
+    public partial class SchoolingContext : DbContext {
         public SchoolingContext(DbContextOptions<SchoolingContext> options) : base(options) { }
         public SchoolingContext() { }
 
-        public virtual DbSet<Address> addresses { get; set; }
-        public virtual DbSet<Company> companies { get; set; }
-        public virtual DbSet<Organizer> organizers { get; set; }
-        public virtual DbSet<Person> persons { get; set; }
-        public virtual DbSet<Schooling> schoolings { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Organizer> Organizers { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
+        public virtual DbSet<Schooling> Schoolings { get; set; }
+        public virtual DbSet<Registration> Registrations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
@@ -26,7 +28,9 @@ namespace DbLib {
 
 
 
-        //protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder) {
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
+            
             //modelBuilder.Entity<address>()
             //    .Property(e => e.street)
             //    .IsUnicode(false);
@@ -111,6 +115,6 @@ namespace DbLib {
             //    .HasMany(e => e.persons)
             //    .WithMany(e => e.schoolings)
             //    .Map(m => m.ToTable("registrations", "educationPlanner").MapLeftKey("schooling_id").MapRightKey("person_id"));
-        //}
+        }
     }
 }

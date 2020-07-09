@@ -12,7 +12,7 @@ namespace DbLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Schooling()
         {
-            persons = new HashSet<Person>();
+            registrations = new HashSet<Registration>();
         }
 
         [Key]
@@ -44,6 +44,6 @@ namespace DbLib
         public virtual Organizer organizer { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> persons { get; set; }
+        public virtual ICollection<Registration> registrations { get; set; }
     }
 }

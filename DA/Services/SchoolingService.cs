@@ -43,7 +43,7 @@ namespace Schulungskalender.Services {
             //};
 
             //mail.Send();
-            var length = db.addresses.Count();
+            var length = db.Addresses.Count();
             Console.WriteLine(length);
 
             return new SchoolingDetailDTO() {Id = length, City = "Wels", Email = "mail@test.com", End = DateTime.Now, Start = DateTime.Now.AddDays(-1), Organizer = "MoveIT, trainings@moveit.at", Phone = "+43 1234 56789", Price = 285, Street = "Durisolstraße 7" };
