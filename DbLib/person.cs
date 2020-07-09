@@ -7,12 +7,12 @@ namespace DbLib
     using System.Data.Entity.Spatial;
 
     [Table("educationPlanner.persons")]
-    public partial class person
+    public partial class Person
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public person()
+        public Person()
         {
-            schoolings = new HashSet<schooling>();
+            schoolings = new HashSet<Schooling>();
         }
 
         [Key]
@@ -32,9 +32,8 @@ namespace DbLib
 
         public int company_id { get; set; }
 
-        public virtual company company { get; set; }
+        public virtual Company company { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<schooling> schoolings { get; set; }
+        public virtual ICollection<Schooling> schoolings { get; set; }
     }
 }

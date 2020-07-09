@@ -11,9 +11,9 @@ using DbLib;
 namespace Schulungskalender.Services {
     public class SchoolingService {
         private List<SchoolingSummaryDTO> testList;
-        private DbContext db;
+        private SchoolingContext db;
         public SchoolingService() {
-            db = new DbContext();
+            db = new SchoolingContext();
            
             testList = new List<SchoolingSummaryDTO>() { };
             testList.Add(new SchoolingSummaryDTO() { Id = 1, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Grundlagen", Organizer = "moveIT Software GmbH", Price = 500 });

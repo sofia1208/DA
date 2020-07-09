@@ -7,12 +7,12 @@ namespace DbLib
     using System.Data.Entity.Spatial;
 
     [Table("educationPlanner.organizers")]
-    public partial class organizer
+    public partial class Organizer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public organizer()
+        public Organizer()
         {
-            schoolings = new HashSet<schooling>();
+            schoolings = new HashSet<Schooling>();
         }
 
         [Key]
@@ -39,6 +39,6 @@ namespace DbLib
         public string phone { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<schooling> schoolings { get; set; }
+        public virtual ICollection<Schooling> schoolings { get; set; }
     }
 }

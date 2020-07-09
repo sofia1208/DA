@@ -7,13 +7,13 @@ namespace DbLib
     using System.Data.Entity.Spatial;
 
     [Table("educationPlanner.addresses")]
-    public partial class address
+    public partial class Address
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public address()
+        public Address()
         {
-            companies = new HashSet<company>();
-            schoolings = new HashSet<schooling>();
+            companies = new HashSet<Company>();
+            schoolings = new HashSet<Schooling>();
         }
 
         [Key]
@@ -36,9 +36,9 @@ namespace DbLib
         public string country { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<company> companies { get; set; }
+        public virtual ICollection<Company> companies { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<schooling> schoolings { get; set; }
+        public virtual ICollection<Schooling> schoolings { get; set; }
     }
 }
