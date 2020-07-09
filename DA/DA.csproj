@@ -13,7 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.2" />
+    <PackageReference Include="MySql.Data" Version="8.0.20" />
+    <PackageReference Include="MySql.Data.Entity" Version="6.9.11" />
+    <PackageReference Include="MySql.Data.EntityFramework" Version="8.0.20" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,11 +34,13 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\calendar\CustomDateFormatter.ts" />
     <None Remove="ClientApp\src\app\calendar\Schooling.ts" />
+    <None Remove="ClientApp\src\app\calendar\SchoolingGet.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\calendar\CustomDateFormatter.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\Schooling.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\calendar\SchoolingGet.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
