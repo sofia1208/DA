@@ -3,12 +3,15 @@ using Schulungskalender.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.Net.Mail;
+using DA;
 
 namespace Schulungskalender.Services {
     public class SchoolingService {
         private List<SchoolingSummaryDTO> testList;
         public SchoolingService() {
+            //SqlConnection sqlConnection = new SqlConnection("server=127.0.0.1;user id=ep;port=3311;database=educationPlanner");
             testList = new List<SchoolingSummaryDTO>() { };
             testList.Add(new SchoolingSummaryDTO() { Id = 1, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Grundlagen", Organizer = "moveIT Software GmbH", Price = 500 });
             testList.Add(new SchoolingSummaryDTO() { Id = 2, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Workshop", Organizer = "moveIT Software GmbH", Price = 510 });
@@ -25,6 +28,16 @@ namespace Schulungskalender.Services {
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
+            //var mail = new MailMaker() {
+            //    Absender = "isi.gaubinger@gmail.com",
+            //    Empfänger = new List<string>() { "isabelle.arthofer@gmail.com" },
+            //    Betreff = "Test",
+            //    Nachricht = "Testmail",
+            //    Servername = "smtp.web.de",
+            //    Port = "25"
+            //};
+
+            //mail.Send();
             return new SchoolingDetailDTO() {Id = id, City = "Wels", Email = "mail@test.com", End = DateTime.Now, Start = DateTime.Now.AddDays(-1), Organizer = "MoveIT, trainings@moveit.at", Phone = "+43 1234 56789", Price = 285, Street = "Durisolstraße 7" };
         }
 

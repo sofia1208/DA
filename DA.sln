@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DA", "DA\DA.csproj", "{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DA", "DA\DA.csproj", "{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbLib", "DbLib\DbLib.csproj", "{3366936E-7180-4B19-A3CE-3BFBE47CABD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3366936E-7180-4B19-A3CE-3BFBE47CABD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3366936E-7180-4B19-A3CE-3BFBE47CABD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3366936E-7180-4B19-A3CE-3BFBE47CABD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3366936E-7180-4B19-A3CE-3BFBE47CABD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
