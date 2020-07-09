@@ -216,7 +216,7 @@ const colors: any = {
   },
   green: {
     primary: '#8CEE88',
-    secondary: '#D1E8FF',
+    secondary: '#90ee90',
   },
   
 };
