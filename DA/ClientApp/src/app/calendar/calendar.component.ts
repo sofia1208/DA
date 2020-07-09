@@ -31,6 +31,8 @@ import {
 } from 'angular-calendar';
 import { CustomDateFormatter } from './customdateformatter';
 import { Schooling } from './Schooling';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
@@ -49,11 +51,13 @@ import { Schooling } from './Schooling';
 })
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
 
   }
+  schoolings: string[];
+  url = 'https://localhost:5001/schoolings/summary';
   locale: string = 'de';
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 
@@ -71,7 +75,11 @@ export class CalendarComponent implements OnInit {
     event: CalendarEvent;
   };
 
-
+  getSummary(): void {
+    this.http.get<string[]>(this.url)
+      .subscribe(x => this.schoolings = x);
+    console.log(this.schoolings);
+  }
 
 
   refresh: Subject<any> = new Subject();
@@ -208,7 +216,7 @@ const colors: any = {
   },
   green: {
     primary: '#8CEE88',
-    secondary: '#D1E8FF',
+    secondary: '#90ee90',
   },
   
 };
