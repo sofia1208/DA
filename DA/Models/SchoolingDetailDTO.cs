@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Schulungskalender.Models {
     public class SchoolingDetailDTO {
+        public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int Price { get; set; }
