@@ -17,7 +17,7 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            return testList.Where(x => x.Name.Split('+')[1].Trim().Equals(type)).ToList();
+            return testList.Where(x => x.Name.ToLower().Split('+')[1].Trim().Equals(type)).ToList();
         }
 
         public List<SchoolingSummaryDTO> Summary() {

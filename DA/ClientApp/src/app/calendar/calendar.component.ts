@@ -39,7 +39,8 @@ import { SchoolingGet } from './SchoolingGet';
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css', '/angular-calendar.css'
-   ],
+  ],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: CalendarDateFormatter,
@@ -56,10 +57,11 @@ export class CalendarComponent implements OnInit {
   events: Schooling[] = [];
   constructor(private http: HttpClient) { }
 
-  url = 'https://localhost:5001/schoolings/summary';
+  //url = 'https://localhost:5001/schoolings/summary';
   ngOnInit() {
     console.log('ngOnInit');
     this.getSummary();
+
   }
 
 
@@ -81,8 +83,8 @@ export class CalendarComponent implements OnInit {
   };
  
   getSummary(): void {
-    console.log(this.schoolings.length);
-    this.getSchoolings()
+  
+    this.getSchoolings('https://localhost:5001/schoolings/summary')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -90,11 +92,85 @@ export class CalendarComponent implements OnInit {
       }
        , err => {
           console.log(`${err.message}`)
-        })
-      ;
+        });
     this.schoolingsToEvents();
    
     console.log(this.schoolings.length);
+  }
+
+
+
+  getGrundlagen(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+    console.log(this.schoolings.length);
+
+  }
+  getWorkshop(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/workshop')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+    console.log(this.schoolings.length);
+
+  }
+  getAdmin(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/administrator')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+       
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+  
+    console.log(this.schoolings.length);
+
+  }
+  getKombimodell(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/kombimodell')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+    console.log(this.schoolings.length);
+
   }
 
    
@@ -224,8 +300,8 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  private getSchoolings(): Observable<SchoolingGet[]> {
-    return this.http.get<SchoolingGet[]>(this.url);
+  private getSchoolings(url: string): Observable<SchoolingGet[]> {
+    return this.http.get<SchoolingGet[]>(url);
    
   }
   private schoolingsToEvents(): void {
@@ -242,7 +318,8 @@ export class CalendarComponent implements OnInit {
      
       
       this.events.push(schooling);
-      this.handleEvent('Dropped or resized', schooling);
+      this.refresh.next();
+      
       
     }
  
