@@ -52,16 +52,14 @@ import { SchoolingGet } from './SchoolingGet';
 })
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  constructor(private http: HttpClient) { }
   schoolings: SchoolingGet[] = [];
   events: Schooling[] = [];
+  constructor(private http: HttpClient) { }
+
   url = 'https://localhost:5001/schoolings/summary';
   ngOnInit() {
     console.log('ngOnInit');
-    this.http.get<SchoolingGet[]>(this.url)
-      .subscribe(x => this.schoolings = x);
-   
-    this.schoolingsToEvents();
+    this.getSummary();
   }
 
 
@@ -83,10 +81,20 @@ export class CalendarComponent implements OnInit {
   };
  
   getSummary(): void {
-    this.http.get<SchoolingGet[]>(this.url)
-     .subscribe(x => this.schoolings = x);
-       this.schoolingsToEvents();
-
+    console.log(this.schoolings.length);
+    this.getSchoolings()
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+       
+      }
+       , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+   
+    console.log(this.schoolings.length);
   }
 
    
@@ -218,6 +226,7 @@ export class CalendarComponent implements OnInit {
 
   private getSchoolings(): Observable<SchoolingGet[]> {
     return this.http.get<SchoolingGet[]>(this.url);
+   
   }
   private schoolingsToEvents(): void {
     var ret: Schooling[] = [] ;

@@ -1,0 +1,8 @@
+C:\Users\sofia\source\repos\NewFolder\DbLib\bin\Debug\netcoreapp3.1\DbLib.deps.json
+C:\Users\sofia\source\repos\NewFolder\DbLib\bin\Debug\netcoreapp3.1\DbLib.dll
+C:\Users\sofia\source\repos\NewFolder\DbLib\bin\Debug\netcoreapp3.1\DbLib.pdb
+C:\Users\sofia\source\repos\NewFolder\DbLib\obj\Debug\netcoreapp3.1\DbLib.csprojAssemblyReference.cache
+C:\Users\sofia\source\repos\NewFolder\DbLib\obj\Debug\netcoreapp3.1\DbLib.AssemblyInfoInputs.cache
+C:\Users\sofia\source\repos\NewFolder\DbLib\obj\Debug\netcoreapp3.1\DbLib.AssemblyInfo.cs
+C:\Users\sofia\source\repos\NewFolder\DbLib\obj\Debug\netcoreapp3.1\DbLib.dll
+C:\Users\sofia\source\repos\NewFolder\DbLib\obj\Debug\netcoreapp3.1\DbLib.pdb

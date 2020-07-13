@@ -1,0 +1,12 @@
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\bin\Debug\EntityFramework.dll
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\bin\Debug\EntityFramework.xml
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\obj\Debug\DbLibrary.csprojAssemblyReference.cache
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\obj\Debug\DbLibrary.csproj.CoreCompileInputs.cache
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\obj\Debug\DbLibrary.dll
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\obj\Debug\DbLibrary.pdb
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\bin\Debug\DbLibrary.dll.config
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\bin\Debug\DbLibrary.dll
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\bin\Debug\DbLibrary.pdb
+C:\Users\sofia\source\repos\NewFolder\DbLibrary\obj\Debug\DbLibrary.csproj.CopyComplete
