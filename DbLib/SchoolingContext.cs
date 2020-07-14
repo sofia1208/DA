@@ -20,7 +20,7 @@ namespace DbLib {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
-                var con = "server=10.90.90.222;user id=ep;port=3313;database=educationPlanner;password=eDpL2%0!;persistsecurityinfo=True;providerName=;MySql.Data.MySqlClient;";
+                var con = "server=10.90.90.222;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True;database=educationPlanner";
                 optionsBuilder.UseSqlServer(con);
                     
             }

@@ -12,6 +12,7 @@ namespace DA.Models {
         public DateTime End { get; set; }
         public int Price { get; set; }
         public string Organizer { get; set; }
+        public bool IsFree { get; set; }
 
     }
 }
