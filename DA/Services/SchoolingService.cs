@@ -9,26 +9,30 @@ using DA;
 using DbLib;
 using MySql.Data.Entity;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace Schulungskalender.Services {
     public class SchoolingService {
         private List<SchoolingSummaryDTO> testList;
 
-        //DataTable dataTable = new DataTable();
+        DataTable dataTable = new DataTable();
         public SchoolingService() {
-            //var con = "Server=10.0.0.12:3313;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
+            var con = "Server=10.90.90.222;Port=3313;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
 
-            //using SqlConnection db = new SqlConnection(con);
+            var db = new MySqlConnection(con);
+            db.Open();
 
-            //SqlCommand cmd = new SqlCommand("SELECT * FROM adresses", db);
-            //db.Open();
+            var cmd = new MySqlCommand("SELECT * FROM addresses", db);
 
-            //SqlDataAdapter da = new SqlDataAdapter(cmd);
-            //da.Fill(dataTable);
-            //db.Close();
-            //da.Dispose();
 
-            
+            AddressDTO addressDTO;
+            using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                while (reader.Read()) {
+                    Console.WriteLine(reader.GetInt32(0));
+                }
+            }
+
+
 
             testList = new List<SchoolingSummaryDTO>() { };
             testList.Add(new SchoolingSummaryDTO() { Id = 1, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Grundlagen", Organizer = "moveIT Software GmbH", Price = 500 });
@@ -59,10 +63,10 @@ namespace Schulungskalender.Services {
 
             //mail.Send();
 
-            SchoolingContext db = new SchoolingContext();
-            int length = db.Addresses.Count();
+            //SchoolingContext db = new SchoolingContext();
+            //int length = db.Addresses.Count();
 
-            return new SchoolingDetailDTO() {Id = length, City = "Wels", Email = "mail@test.com", End = DateTime.Now, Start = DateTime.Now.AddDays(-1), Organizer = "MoveIT, trainings@moveit.at", Phone = "+43 1234 56789", Price = 285, Street = "Durisolstraße 7" };
+            return new SchoolingDetailDTO() {Id = id, City = "Wels", Email = "mail@test.com", End = DateTime.Now, Start = DateTime.Now.AddDays(-1), Organizer = "MoveIT, trainings@moveit.at", Phone = "+43 1234 56789", Price = 285, Street = "Durisolstraße 7" };
         }
 
         public FullRegistrationDTO Register(FullRegistrationDTO registration) {
