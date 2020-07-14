@@ -17,20 +17,20 @@ namespace Schulungskalender.Services {
 
         DataTable dataTable = new DataTable();
         public SchoolingService() {
-            var con = "Server=10.90.90.222;Port=3313;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
+            //var con = "Server=10.90.90.222;Port=3313;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
 
-            var db = new MySqlConnection(con);
-            db.Open();
+            //var db = new MySqlConnection(con);
+            //db.Open();
 
-            var cmd = new MySqlCommand("SELECT * FROM addresses", db);
+            //var cmd = new MySqlCommand("SELECT * FROM addresses", db);
 
 
-            AddressDTO addressDTO;
-            using (MySqlDataReader reader = cmd.ExecuteReader()) {
-                while (reader.Read()) {
-                    Console.WriteLine(reader.GetInt32(0));
-                }
-            }
+            //AddressDTO addressDTO;
+            //using (MySqlDataReader reader = cmd.ExecuteReader()) {
+            //    while (reader.Read()) {
+            //        Console.WriteLine(reader.GetInt32(0));
+            //    }
+            //}
 
 
 

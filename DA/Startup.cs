@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DA {
     public class Startup {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
@@ -22,6 +23,16 @@ namespace DA {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllersWithViews();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyHeader());
+            });
+          
             services.AddScoped<SchoolingService>();
 
             string connectionString = Configuration.GetConnectionString("SchoolingContext");
@@ -50,7 +61,8 @@ namespace DA {
             if (!env.IsDevelopment()) {
                 app.UseSpaStaticFiles();
             }
-
+            
+            app.UseCors("CorsPolicy");
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {

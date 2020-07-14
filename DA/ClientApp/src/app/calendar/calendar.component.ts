@@ -30,10 +30,12 @@ import {
   DAYS_OF_WEEK,
 } from 'angular-calendar';
 import { CustomDateFormatter } from './customdateformatter';
-import { Schooling } from './Schooling';
+import { CustomEvent } from './CustomEvent';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SchoolingGet } from './SchoolingGet';
+import { Holiday } from './Holiday';
+import { HolidayAPI } from './HolidayAPI';
 
 @Component({
   selector: 'app-calendar',
@@ -54,13 +56,15 @@ import { SchoolingGet } from './SchoolingGet';
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   schoolings: SchoolingGet[] = [];
-  events: Schooling[] = [];
+  events: CustomEvent[] = [];
+  holidays: HolidayAPI[] = [];
   constructor(private http: HttpClient) { }
 
-  //url = 'https://localhost:5001/schoolings/summary';
+  
   ngOnInit() {
     console.log('ngOnInit');
     this.getSummary();
+    this.getHolidays();
 
   }
 
@@ -74,7 +78,6 @@ export class CalendarComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
-
 
 
   modalData: {
@@ -100,22 +103,33 @@ export class CalendarComponent implements OnInit {
   onDateClick(): void {
   }
 
+  getHolidays(): void {
+    //TO DO Jahr dynamisch machen
+    this.getHolidaysHTTP('https://getfestivo.com/v2/holidays?api_key=4995fde4f1b7998b6d7632886ede685a&country=AT&year=2020&language=de')
+      .subscribe(data => {
+     
+        this.holidays = data;
+      })
+  
+  }
 
 
   getGrundlagen(): void {
-    this.schoolings = [];
-    this.events = [];
-    this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
-      .subscribe(data => {
-        this.schoolings = data;
-        this.schoolingsToEvents();
+    console.log(this.holidays);
+    console.log(this.holidays.length);
+    //this.schoolings = [];
+    //this.events = [];
+    //this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
+    //  .subscribe(data => {
+    //    this.schoolings = data;
+    //    this.schoolingsToEvents();
 
-      }
-        , err => {
-          console.log(`${err.message}`)
-        })
-      ;
-    this.schoolingsToEvents();
+    //  }
+    //    , err => {
+    //      console.log(`${err.message}`)
+    //    })
+    //  ;
+    //this.schoolingsToEvents();
 
     console.log(this.schoolings.length);
 
@@ -260,6 +274,7 @@ export class CalendarComponent implements OnInit {
           start: newStart,
           end: newEnd,
           isFree: true,
+          isHoliday: false,
         };
       }
       return iEvent;
@@ -286,6 +301,7 @@ export class CalendarComponent implements OnInit {
           afterEnd: true,
         },
         isFree: true,
+        isHoliday:false,
       },
     ];
   }
@@ -306,16 +322,21 @@ export class CalendarComponent implements OnInit {
     return this.http.get<SchoolingGet[]>(url);
    
   }
+  private getHolidaysHTTP(url: string): Observable<HolidayAPI[]> {
+    return this.http.get<HolidayAPI[]>(url);
+
+  }
   private schoolingsToEvents(): void {
-    var ret: Schooling[] = [] ;
+    var ret: CustomEvent[] = [] ;
     for (var i = 0; i < this.schoolings.length; i++) {
      
-      const schooling: Schooling = {
+      const schooling: CustomEvent = {
         isFree: true,
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
         title: this.schoolings[i].name,
         id: i,
+        isHoliday: false,
       };
      
       
@@ -327,8 +348,13 @@ export class CalendarComponent implements OnInit {
  
   
   }
+  private holidaysToEvents(): void {
+
+
+  }
 
 }
+
 
 
 const colors: any = {
