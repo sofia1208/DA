@@ -9,33 +9,42 @@ using DA;
 using DbLib;
 using MySql.Data.Entity;
 using System.Data;
+using Microsoft.Data.SqlClient;
+using SqlConnection = System.Data.SqlClient.SqlConnection;
+using SqlCommand = System.Data.SqlClient.SqlCommand;
 
 namespace Schulungskalender.Services {
     public class SchoolingService {
         private List<SchoolingSummaryDTO> testList;
 
-        //DataTable dataTable = new DataTable();
+        DataTable dataTable = new DataTable();
         public SchoolingService() {
-            //var con = "Server=10.0.0.12:3313;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
+            //var con = "Server=10.90.90.222;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
 
-            //using SqlConnection db = new SqlConnection(con);
+            //using (SqlConnection db = new SqlConnection())
+            //{
+            //    db.ConnectionString = con;
+            //    SqlCommand cmd = new SqlCommand("select * from adresses", db);
+            //    cmd.Connection = db;
+            //    db.Open();
 
-            //SqlCommand cmd = new SqlCommand("SELECT * FROM adresses", db);
-            //db.Open();
+            //    System.Data.SqlClient.SqlDataAdapter da = new System.Data.SqlClient.SqlDataAdapter(cmd);
+            //    da.Fill(dataTable);
+            //    db.Close();
 
-            //SqlDataAdapter da = new SqlDataAdapter(cmd);
-            //da.Fill(dataTable);
-            //db.Close();
-            //da.Dispose();
+            //}
 
 
 
-            testList = new List<SchoolingSummaryDTO>() { };
-            testList.Add(new SchoolingSummaryDTO() { Id = 1, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Grundlagen", Organizer = "moveIT Software GmbH", Price = 500 });
-            testList.Add(new SchoolingSummaryDTO() { Id = 2, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Workshop", Organizer = "moveIT Software GmbH", Price = 510 });
-            testList.Add(new SchoolingSummaryDTO() { Id = 3, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Administrator", Organizer = "moveIT Software GmbH", Price = 520 });
-            testList.Add(new SchoolingSummaryDTO() { Id = 4, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Kombimodell", Organizer = "moveIT Software GmbH", Price = 530 });
-        }
+
+
+
+                testList = new List<SchoolingSummaryDTO>() { };
+                testList.Add(new SchoolingSummaryDTO() { Id = 1, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Grundlagen", Organizer = "moveIT Software GmbH", Price = 500 });
+                testList.Add(new SchoolingSummaryDTO() { Id = 2, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Workshop", Organizer = "moveIT Software GmbH", Price = 510 });
+                testList.Add(new SchoolingSummaryDTO() { Id = 3, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Administrator", Organizer = "moveIT Software GmbH", Price = 520 });
+                testList.Add(new SchoolingSummaryDTO() { Id = 4, Address = "Wels", Start = DateTime.Now.AddDays(-2), End = DateTime.Now, Name = "moveIT@ISS+Kombimodell", Organizer = "moveIT Software GmbH", Price = 530 });
+            }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
 
