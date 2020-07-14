@@ -14,7 +14,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { registerLocaleData } from '@angular/common';
 import localG from '@angular/common/locales/de';
 import { CalendarComponent } from './calendar/calendar.component';
-//import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material/';
+
 registerLocaleData(localG);
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent }];
@@ -25,15 +27,19 @@ const routes: Routes = [
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    CalendarComponent
+    CalendarComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
    HttpClientModule,
     FormsModule,
-   // NgbModalModule,
+
+
     RouterModule.forRoot(routes),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    BrowserAnimationsModule,
+   // MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
   exports: [RouterModule],
   providers: [],

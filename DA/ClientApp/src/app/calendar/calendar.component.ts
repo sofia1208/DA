@@ -74,7 +74,7 @@ export class CalendarComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
- 
+
 
 
   modalData: {
@@ -96,6 +96,8 @@ export class CalendarComponent implements OnInit {
     this.schoolingsToEvents();
    
     console.log(this.schoolings.length);
+  }
+  onDateClick(): void {
   }
 
 
