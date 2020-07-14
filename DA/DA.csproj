@@ -18,6 +18,8 @@
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
+  
+
 
   <ItemGroup>
     <Compile Remove="ClientApp\src\LanguageClass.cs" />

@@ -39,7 +39,8 @@ import { SchoolingGet } from './SchoolingGet';
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css', '/angular-calendar.css'
-   ],
+  ],
+  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: CalendarDateFormatter,
@@ -52,16 +53,15 @@ import { SchoolingGet } from './SchoolingGet';
 })
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  constructor(private http: HttpClient) { }
   schoolings: SchoolingGet[] = [];
   events: Schooling[] = [];
-  url = 'https://localhost:5001/schoolings/summary';
+  constructor(private http: HttpClient) { }
+
+  //url = 'https://localhost:5001/schoolings/summary';
   ngOnInit() {
     console.log('ngOnInit');
-    this.http.get<SchoolingGet[]>(this.url)
-      .subscribe(x => this.schoolings = x);
-   
-    this.schoolingsToEvents();
+    this.getSummary();
+
   }
 
 
@@ -74,7 +74,7 @@ export class CalendarComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
- 
+
 
 
   modalData: {
@@ -83,9 +83,95 @@ export class CalendarComponent implements OnInit {
   };
  
   getSummary(): void {
-    this.http.get<SchoolingGet[]>(this.url)
-     .subscribe(x => this.schoolings = x);
-       this.schoolingsToEvents();
+  
+    this.getSchoolings('https://localhost:5001/schoolings/summary')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+       
+      }
+       , err => {
+          console.log(`${err.message}`)
+        });
+    this.schoolingsToEvents();
+   
+    console.log(this.schoolings.length);
+  }
+  onDateClick(): void {
+  }
+
+
+
+  getGrundlagen(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+    console.log(this.schoolings.length);
+
+  }
+  getWorkshop(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/workshop')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+    console.log(this.schoolings.length);
+
+  }
+  getAdmin(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/administrator')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+       
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+  
+    console.log(this.schoolings.length);
+
+  }
+  getKombimodell(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/kombimodell')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+    console.log(this.schoolings.length);
 
   }
 
@@ -216,8 +302,9 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  private getSchoolings(): Observable<SchoolingGet[]> {
-    return this.http.get<SchoolingGet[]>(this.url);
+  private getSchoolings(url: string): Observable<SchoolingGet[]> {
+    return this.http.get<SchoolingGet[]>(url);
+   
   }
   private schoolingsToEvents(): void {
     var ret: Schooling[] = [] ;
@@ -233,7 +320,8 @@ export class CalendarComponent implements OnInit {
      
       
       this.events.push(schooling);
-      this.handleEvent('Dropped or resized', schooling);
+      this.refresh.next();
+      
       
     }
  

@@ -6,7 +6,11 @@
     <div class="container">
       <div class="row">
         <div class="col-sm">
-          <h3 class="month">{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3>
+          <h3 class="month" (click)="onDateClick()">{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3>
+     
+          <input type="date" placeholder="viewDate" data-date-format="yyyy-MM-dd" [(ngModel)]="viewDate" />
+     
+      
         </div>
         <div class="col-sm">
           <div class="btn-group">
@@ -100,10 +104,10 @@
     <div style="margin:15px" class="container">
       <div class="btn-group filterBtn">
         Filtern nach:
-        <button class="categoryBtn" (click)="getSummary()">Grundlagen</button>
-        <button class="categoryBtn">Workshop</button>
-        <button class="categoryBtn">Administrator</button>
-        <button class="categoryBtn">Kombimodell</button>
+        <button class="categoryBtn" (click)="getGrundlagen()">Grundlagen</button>
+        <button class="categoryBtn" (click)="getWorkshop()">Workshop</button>
+        <button class="categoryBtn" (click)="getAdmin()">Administrator</button>
+        <button class="categoryBtn" (click)="getKombimodell()">Kombimodell</button>
       </div>
      </div>
       </div>
