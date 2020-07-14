@@ -51,7 +51,9 @@
     <PackageReference Include="MySql.Data.Entity" Version="6.10.9" />
     <PackageReference Include="MySqlConnector" Version="1.0.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
     <PackageReference Include="System.Management" Version="4.7.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.1" />
   </ItemGroup>
 
   <ItemGroup>
