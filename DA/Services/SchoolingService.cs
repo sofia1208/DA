@@ -11,6 +11,7 @@ using MySql.Data.Entity;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Text;
+using System.Net;
 
 namespace Schulungskalender.Services {
     public class SchoolingService {
@@ -39,7 +40,7 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            return schoolings.Select(x => converter.GetSchoolingSummary(x, IsSchoolingFree(x.Id))).Where(x => x.Name.Split('+')[1].Trim().Equals(type)).ToList();
+            return schoolings.Select(x => converter.GetSchoolingSummary(x, IsSchoolingFree(x.Id))).Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).ToList();
         }
 
         public List<SchoolingSummaryDTO> Summary() {
@@ -47,16 +48,27 @@ namespace Schulungskalender.Services {
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
-            //var mail = new MailMaker() {
-            //    Absender = "isi.gaubinger@gmail.com",
-            //    Empfänger = new List<string>() { "isabelle.arthofer@gmail.com" },
-            //    Betreff = "Test",
-            //    Nachricht = "Testmail",
-            //    Servername = "smtp.web.de",
-            //    Port = "25"
-            //};
 
-            //mail.Send();
+            //try {
+            //    var smtpClient = new SmtpClient("smtp.gmail.com") {
+            //        Port = 587,
+            //        Credentials = new NetworkCredential("isi.gaubinger@gmail.com", "isagau150"),
+            //        EnableSsl = true,
+            //    };
+
+            //    var mailMessage = new MailMessage {
+            //        From = new MailAddress("isi.gaubinger@gmail.com"),
+            //        Subject = "Test",
+            //        Body = "<h1>Test</h1>",
+            //        IsBodyHtml = true,
+            //    };
+            //    mailMessage.To.Add("isabelle.arthofer@gmail.com");
+
+            //    SmtpClient.Send(mailMessage);
+            //}
+            //catch (Exception e) {
+            //    Console.WriteLine(e.Message);
+            //}
 
             var schooling = schoolings.Find(x => x.Id == id);
             var address = addresses.Find(x => x.Id == schooling.AddressId);
