@@ -57,7 +57,8 @@ export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   schoolings: SchoolingGet[] = [];
   events: CustomEvent[] = [];
-  holidays: HolidayAPI[] = [];
+  holidayApis: HolidayAPI[] = [];
+  holidays: Holiday[] = [];
   constructor(private http: HttpClient) { }
 
   
@@ -107,16 +108,15 @@ export class CalendarComponent implements OnInit {
     //TO DO Jahr dynamisch machen
     this.getHolidaysHTTP('https://getfestivo.com/v2/holidays?api_key=4995fde4f1b7998b6d7632886ede685a&country=AT&year=2020&language=de')
       .subscribe(data => {
-     
-        this.holidays = data;
-      })
+
+        this.holidayApis = data;
+      });
   
   }
 
 
   getGrundlagen(): void {
-    console.log(this.holidays);
-    console.log(this.holidays.length);
+    this.holidaysToEvents();
     //this.schoolings = [];
     //this.events = [];
     //this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
@@ -349,11 +349,62 @@ export class CalendarComponent implements OnInit {
   
   }
   private holidaysToEvents(): void {
+    //let holi = JSON.parse(this.holidays.toString());
+
+    let jsonObject = JSON.parse(JSON.stringify(this.holidayApis));
+    let holidays = jsonObject.holidays;
+    console.log(holidays);
+    this.convertToGerman(holidays);
+    //let arrayOfBlob = new Array<Blob>();
+    //let file = new File(arrayOfBlob,"holidayGermanNames.csv", { type: 'application/csv' });
+    //this.changeListener(file);
+    //console.log(this.holidays.);
+
+  }
+  private convertToGerman(hol: string []): void {
+    //for (var i in hol) {
+    //  let jsonObject = JSON.parse(JSON.stringify(i));
+    
+    //}
+
+    this.http.get('assets/holidayGermanNames.csv', { responseType: 'text' })
+      .subscribe(
+        data => {
+          console.log(data);
+          let csvToRowArray = data.split("\n");
+          for (let index = 1; index < csvToRowArray.length - 1; index++) {
+            let row = csvToRowArray[index].split(";");
+            this.holidays.push(new Holiday(row[1],new Date()));
+            console.log(this.holidays);
 
 
+          //  this.userArray.push(new User(parseInt(row[0], 10), row[1], row[2].trim()));
+          }
+         // console.log(this.userArray);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+  public changeListener(file: File) {
+    console.log(file);
+  
+    
+      console.log(file.name);
+      console.log(file.size);
+      console.log(file.type);
+      let reader: FileReader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = (e) => {
+        let csv: string = reader.result as string;
+        console.log(csv);
+      }
+    
   }
 
 }
+
 
 
 
