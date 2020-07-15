@@ -329,10 +329,10 @@ export class CalendarComponent implements OnInit {
   private schoolingsToEvents(): void {
     var ret: CustomEvent[] = [] ;
     for (var i = 0; i < this.schoolings.length; i++) {
-     
+      console.log(this.schoolings[i]);
       const schooling: CustomEvent = {
         isFree: true,
-        start: startOfDay(new Date()),
+        start: this.schoolings[i].start,
         end: endOfDay(new Date()),
         title: this.schoolings[i].name,
         id: i,
