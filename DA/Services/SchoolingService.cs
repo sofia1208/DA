@@ -14,15 +14,16 @@ using System.Text;
 
 namespace Schulungskalender.Services {
     public class SchoolingService {
+        RessourceDtoConverter converter;
+
         private List<AddressRessource> addresses;
         private List<CompanyRessource> companies;
         private List<OrganizerRessource> organizers;
         private List<PersonRessource> persons;
         private List<RegistrationRessource> registrations;
         private List<SchoolingRessource> schoolings;
-       
 
-        DataTable dataTable = new DataTable();
+
         public SchoolingService() {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -32,16 +33,17 @@ namespace Schulungskalender.Services {
             persons = new List<PersonRessource>();
             registrations = new List<RegistrationRessource>();
             schoolings = new List<SchoolingRessource>();
-
             fillLists();
+
+            converter = new RessourceDtoConverter();
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            return null;
+            return schoolings.Select(x => converter.GetSchoolingSummary(x, IsSchoolingFree(x.Id))).Where(x => x.Name.Split('+')[1].Trim().Equals(type)).ToList();
         }
 
-        public List<SchoolingSummaryDTO> Summary() { 
-            return null;
+        public List<SchoolingSummaryDTO> Summary() {
+            return schoolings.Select(x => converter.GetSchoolingSummary(x, IsSchoolingFree(x.Id))).ToList();
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
@@ -56,11 +58,11 @@ namespace Schulungskalender.Services {
 
             //mail.Send();
 
-            //SchoolingContext db = new SchoolingContext();
-            //int length = db.Addresses.Count();
-            //Console.WriteLine(length);
+            var schooling = schoolings.Find(x => x.Id == id);
+            var address = addresses.Find(x => x.Id == schooling.AddressId);
+            var organizer = organizers.Find(x => x.Id == schooling.OrganizerId);
 
-            return new SchoolingDetailDTO() {Id = id, City = "Wels", Email = "mail@test.com", End = DateTime.Now, Start = DateTime.Now.AddDays(-1), Organizer = "MoveIT, trainings@moveit.at", Phone = "+43 1234 56789", Price = 285, Street = "Durisolstraße 7" };
+            return converter.GetSchoolingDetail(schooling, address, organizer, IsSchoolingFree(id));
         }
 
         public RegistrationDTO Register(RegistrationDTO registration) {
@@ -118,7 +120,7 @@ namespace Schulungskalender.Services {
             using (MySqlDataReader reader = getSchoolingsCmd.ExecuteReader()) {
                 while (reader.Read()) {
                     bool reservation = (reader.GetInt32(5) == 1) ? true : false;
-                    schooling = new SchoolingRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), AddressId = reader.GetInt32(2), Start = reader.GetDateTime(3), End = reader.GetDateTime(4), Reservation = reservation, ReservationDate = reader.GetDateTime(6), OrganizerId = reader.GetInt32(7), Places = reader.GetInt32(8) };
+                    schooling = new SchoolingRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), AddressId = reader.GetInt32(2), Start = reader.GetDateTime(3), End = reader.GetDateTime(4), Reservation = reservation, ReservationDate = reader.GetDateTime(6), OrganizerId = reader.GetInt32(7), Places = reader.GetInt32(8), Price = reader.GetDouble(9) };
                     schoolings.Add(schooling);
                 }
             }

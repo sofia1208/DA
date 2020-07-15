@@ -14,5 +14,6 @@ namespace Schulungskalender.Models {
         public DateTime ReservationDate { get; set; }
         public int OrganizerId { get; set; }
         public int Places { get; set; }
+        public double Price { get; set; }
     }
 }
