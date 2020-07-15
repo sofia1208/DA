@@ -111,8 +111,12 @@ export class CalendarComponent implements OnInit {
       .subscribe(data => {
 
         this.holidayApis = data;
+   
       });
-    this.holidaysToEvents();
+  
+    //  this.holidaysToEvents();
+    
+  
   }
 
 
@@ -131,6 +135,8 @@ export class CalendarComponent implements OnInit {
     //    })
     //  ;
     //this.schoolingsToEvents();
+
+    this.holidaysToEvents();
 
     console.log(this.schoolings.length);
 
@@ -195,52 +201,8 @@ export class CalendarComponent implements OnInit {
 
  
  
-  //events: Schooling[] = [
-  //  {
-  //    start: subDays(startOfDay(new Date()), 1),
-  //    end: addDays(new Date(), 1),
-  //    title: 'moveIT@SSQ Grundlagen',
-  //    color: colors.red,
-     
-  //    allDay: true,
-  //    resizable: {
-  //      beforeStart: true,
-  //      afterEnd: true,
-       
-  //    },
-  //    draggable: true,
-  //    isFree: false,
-    
-  //  },
-  //  {
-  //    start: startOfDay(new Date()),
-  //    title: 'moveIT@SSQ Grundlagen',
-  //    color: colors.green,
-  //    isFree: true,
-   
-  //  },
-  //  {
-  //    start: subDays(endOfMonth(new Date()), 3),
-  //    end: addDays(endOfMonth(new Date()), 3),
-  //    title: 'moveIT@SSQ Grundlagens',
-  //    color: colors.green,
-  //    allDay: true,
-  //    isFree: false,
-  //  },
-  //  {
-  //    start: addHours(startOfDay(new Date()), 2),
-  //    end: addHours(new Date(), 2),
-  //    title: 'moveIT@SSQ Grundlagen',
-  //    color: colors.red,
-   
-  //    resizable: {
-  //      beforeStart: true,
-  //      afterEnd: true,
-  //    },
-  //    draggable: true,
-  //    isFree: true,
-  //  },
-  //];
+  
+
   clickOnEvent(id :number): void {
      //TODO:bei Event eine ID mitgeben,  get Request mit ID
 }
@@ -250,6 +212,7 @@ export class CalendarComponent implements OnInit {
  
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    console.log(events[0].id)
     //if (isSameMonth(date, this.viewDate)) {
     //  if (
     //    (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -286,8 +249,7 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
+    console.log(event.id);
   }
 
   addEvent(): void {
@@ -371,53 +333,62 @@ export class CalendarComponent implements OnInit {
     let holidays = jsonObject.holidays;
     console.log(holidays);
     this.convertToGerman(holidays);
-    //let arrayOfBlob = new Array<Blob>();
-    //let file = new File(arrayOfBlob,"holidayGermanNames.csv", { type: 'application/csv' });
-    //this.changeListener(file);
-    //console.log(this.holidays.);
+    this.createHolidayEvents();
 
   }
   private convertToGerman(hol: string []): void {
-    //for (var i in hol) {
-    //  let jsonObject = JSON.parse(JSON.stringify(i));
-    
-    //}
+  
 
     this.http.get('assets/holidayGermanNames.csv', { responseType: 'text' })
       .subscribe(
         data => {
           console.log(data);
           let csvToRowArray = data.split("\n");
-          for (let index = 1; index < csvToRowArray.length - 1; index++) {
+          for (let index = 0; index < csvToRowArray.length; index++) {
             let row = csvToRowArray[index].split(";");
-            this.holidays.push(new Holiday(row[1],new Date()));
+
+            for (var i = 0; i < hol.length; i++) {
+              let jsonObject = JSON.parse(JSON.stringify(hol[i]));
+              if (row[0].match(jsonObject.name)) {
+                this.holidays.push(new Holiday(row[1], new Date(jsonObject.date)));
+              }
+            }
+           
+
+           
             console.log(this.holidays.length);
-
-
-          //  this.userArray.push(new User(parseInt(row[0], 10), row[1], row[2].trim()));
           }
-         // console.log(this.userArray);
+    
         },
         error => {
           console.log(error);
         }
-      );
-  }
-  public changeListener(file: File) {
-    console.log(file);
-  
-    
-      console.log(file.name);
-      console.log(file.size);
-      console.log(file.type);
-      let reader: FileReader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = (e) => {
-        let csv: string = reader.result as string;
-        console.log(csv);
-      }
+    );
+
     
   }
+
+  private createHolidayEvents(): void {
+    for (var i = 0; i < this.holidays.length; i++) {
+      
+          title: this.holidays[i].name,
+          start: startOfDay(this.holidays[i].date),
+          end: endOfDay(this.holidays[i].date),
+          color: colors.red,
+          draggable: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          },
+          isFree: true,
+          isHoliday: true,
+          hasMoreDays: false,
+        }
+      
+;
+    }
+  }
+
 
 }
 
@@ -433,6 +404,7 @@ const colors: any = {
     primary: '#8CEE88',
     secondary: '#90ee90',
   },
+
   
 };
 

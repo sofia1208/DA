@@ -1,14 +1,14 @@
-<div class="outerDiv">
+<div class="outerDiv" >
   <h1 class="schulungh1">
     Schulungen und Workshops
   </h1>
-  <div class="row text-center">
+  <div class="row">
     <div class="container">
       <div class="row">
-        <div class="col-sm">
+        <div class="col rowPostition">
           <h3 class="month" (click)="onDateClick()">{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3> 
         </div>
-        <div class="col-sm">
+        <div class="col rowPostition">
           <div class="btn-group">
             <div>
               <div class="btn buttonGray "
@@ -35,7 +35,7 @@
           </div>
         </div>
 
-        <div class="col-sm">
+        <div class="col rowPostition">
           <div class="btn-group">
             <div class="btn buttonGray"
                  (click)="setView(CalendarView.Month)"
@@ -86,7 +86,7 @@
      <span *ngFor="let ev of day.events">
 
        <span *ngIf="ev.isFree&&ev.hasMoreDays">
-         <p class="activeSchooling" style="font-size:17px;">{{ ev.title }}</p>
+         <p class="activeSchooling" style=" font-size:17px;">{{ ev.title }}</p>
        </span>
        <span *ngIf="!ev.isFree&&ev.hasMoreDays">
          <p class="moreDays" style="font-size:17px;">{{ ev.title }}</p>
@@ -107,7 +107,7 @@
   <div>
     <div style="margin:15px" class="container">
       <div class="btn-group filterBtn">
-        Filtern nach:
+        <p class="filterBtn">Filter nach:</p>
         <button class="categoryBtn" (click)="getGrundlagen()">Grundlagen</button>
         <button class="categoryBtn" (click)="getWorkshop()">Workshop</button>
         <button class="categoryBtn" (click)="getAdmin()">Administrator</button>
@@ -153,4 +153,12 @@
         </mwl-calendar-day-view>
       </div>
     </div>
+<div id="detailView" class="detailview" [hidden]="hidden">
+
+ 
+   <h1 class="schulungh1">moveIt@SQQ + Grundlagen</h1>
+
+
+
+</div>
 
