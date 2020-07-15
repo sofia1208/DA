@@ -11,7 +11,7 @@ namespace DA {
     public class RessourceDtoConverter {
 
         public SchoolingSummaryDTO GetSchoolingSummary(SchoolingRessource schooling, bool isFree) {
-            return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree };
+            return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start, End = schooling.End };
         }
 
         public SchoolingDetailDTO GetSchoolingDetail(SchoolingRessource schooling, AddressRessource address, OrganizerRessource organizer, bool isFree) {
