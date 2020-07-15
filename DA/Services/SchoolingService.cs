@@ -3,11 +3,8 @@ using Schulungskalender.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.SqlClient;
 using System.Net.Mail;
 using DA;
-using DbLib;
-using MySql.Data.Entity;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Text;
@@ -49,26 +46,27 @@ namespace Schulungskalender.Services {
 
         public SchoolingDetailDTO GetDetails(int id) {
 
-            //try {
-            //    var smtpClient = new SmtpClient("smtp.gmail.com") {
-            //        Port = 587,
-            //        Credentials = new NetworkCredential("isi.gaubinger@gmail.com", "isagau150"),
-            //        EnableSsl = true,
-            //    };
+            try {
+                var smtpClient = new SmtpClient("smtp.gmail.com") {
+                    Port = 587,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("isabelle.arthofer@gmail.com", "3dfj#8JkIA"),
+                    EnableSsl = true,
+                };
 
-            //    var mailMessage = new MailMessage {
-            //        From = new MailAddress("isi.gaubinger@gmail.com"),
-            //        Subject = "Test",
-            //        Body = "<h1>Test</h1>",
-            //        IsBodyHtml = true,
-            //    };
-            //    mailMessage.To.Add("isabelle.arthofer@gmail.com");
+                var mailMessage = new MailMessage {
+                    From = new MailAddress("isabelle.arthofer@gmail.com"),
+                    Subject = "Test",
+                    Body = "<h1>Test</h1>",
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add("isi.gaubinger@gmail.com");
 
-            //    SmtpClient.Send(mailMessage);
-            //}
-            //catch (Exception e) {
-            //    Console.WriteLine(e.Message);
-            //}
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
 
             var schooling = schoolings.Find(x => x.Id == id);
             var address = addresses.Find(x => x.Id == schooling.AddressId);
