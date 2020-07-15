@@ -79,7 +79,7 @@ namespace Schulungskalender.Services {
             AddressRessource address;
             using (MySqlDataReader reader = getAddressesCmd.ExecuteReader()) {
                 while (reader.Read()) {
-                    address = new AddressRessource() { Id = reader.GetInt32(0), Street = reader.GetString(1), StreetNumber = reader.GetInt32(2), ZipCode = reader.GetInt32(3), City = reader.GetString(4), Country = reader.GetString(5) };
+                    address = new AddressRessource() { Id = reader.GetInt32(0), Street = reader.GetString(1) ?? "", StreetNumber = reader.GetInt32(2), ZipCode = reader.GetInt32(3), City = reader.GetString(4), Country = reader.GetString(5) };
                     addresses.Add(address);
                 }
             }
