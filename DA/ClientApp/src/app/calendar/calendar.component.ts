@@ -37,6 +37,7 @@ import { SchoolingGet } from './SchoolingGet';
 import { Holiday } from './Holiday';
 import { HolidayAPI } from './HolidayAPI';
 
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -111,12 +112,12 @@ export class CalendarComponent implements OnInit {
 
         this.holidayApis = data;
       });
-  
+    this.holidaysToEvents();
   }
 
 
   getGrundlagen(): void {
-    this.holidaysToEvents();
+  
     //this.schoolings = [];
     //this.events = [];
     //this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
@@ -275,6 +276,8 @@ export class CalendarComponent implements OnInit {
           end: newEnd,
           isFree: true,
           isHoliday: false,
+
+          hasMoreDays: false,
         };
       }
       return iEvent;
@@ -301,7 +304,8 @@ export class CalendarComponent implements OnInit {
           afterEnd: true,
         },
         isFree: true,
-        isHoliday:false,
+        isHoliday: false,
+        hasMoreDays: false,
       },
     ];
   }
@@ -329,14 +333,26 @@ export class CalendarComponent implements OnInit {
   private schoolingsToEvents(): void {
     var ret: CustomEvent[] = [] ;
     for (var i = 0; i < this.schoolings.length; i++) {
-      console.log(this.schoolings[i]);
+      let start = new Date(this.schoolings[i].start);
+      let end = new Date(this.schoolings[i].end);
+      let moreDays = false;
+  
+      if (start.getDay() != end.getDay()) {
+        moreDays = true;
+      }
+
+      console.log(this.schoolings)
       const schooling: CustomEvent = {
         isFree: true,
-        start: this.schoolings[i].start,
-        end: endOfDay(new Date()),
+        start: startOfDay(start),
+        end: endOfDay(end),
         title: this.schoolings[i].name,
         id: i,
+        allDay: true,
         isHoliday: false,
+        hasMoreDays: moreDays,
+      
+
       };
      
       
@@ -375,7 +391,7 @@ export class CalendarComponent implements OnInit {
           for (let index = 1; index < csvToRowArray.length - 1; index++) {
             let row = csvToRowArray[index].split(";");
             this.holidays.push(new Holiday(row[1],new Date()));
-            console.log(this.holidays);
+            console.log(this.holidays.length);
 
 
           //  this.userArray.push(new User(parseInt(row[0], 10), row[1], row[2].trim()));

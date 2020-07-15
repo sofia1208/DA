@@ -42,12 +42,15 @@ h1 {
 }
 .activeSchooling {
   background-color: #8CEE88;
-  border-radius: 12px;
+  border-radius: 2px;
+  color: #707070;
 }
 .takenSchooling {
   background-color: #F28C8C;
-  border-radius: 12px;
+  border-radius: 2px;
+  color: #707070;
 }
+
 .filterBtn{
     justify-items: right
 }
@@ -62,5 +65,10 @@ h1 {
   .categoryBtn:hover {
     background: #E19E5D;
   }
+.moreDays {
+  background-color: violet;
+  border-radius: 2px;
+  color: #707070;
+}
 
 

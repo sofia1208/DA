@@ -6,11 +6,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm">
-          <h3 class="month" (click)="onDateClick()">{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3>
-     
-          <input type="date" placeholder="Datum" data-date-format="yyyy-MM-dd"  />
-     
-      
+          <h3 class="month" (click)="onDateClick()">{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3> 
         </div>
         <div class="col-sm">
           <div class="btn-group">
@@ -82,21 +78,29 @@
   </div>
   <ng-template #customCellTemplate let-day="day" let-locale="locale" let-days="days" let-dayEvents="dayEvents">
     <div class="cal-cell-top">
-      <!--<span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>-->
+     
       <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
     </div>
 
-    <div  >
-      <span *ngFor="let ev of day.events">
-        <span *ngIf="ev.isFree" >
-          <p class="activeSchooling" style="margin: 5px;  font-size:17px;" >{{ ev.title }}</p>
-        </span>
-        <span *ngIf="!ev.isFree" >
-          <p class="takenSchooling" style="margin: 5px;  font-size:17px;" >{{ ev.title }}</p>
-        </span>
-   
-      </span>
-    </div>
+   <div  >
+     <span *ngFor="let ev of day.events">
+
+       <span *ngIf="ev.isFree&&ev.hasMoreDays">
+         <p class="activeSchooling" style="font-size:17px;">{{ ev.title }}</p>
+       </span>
+       <span *ngIf="!ev.isFree&&ev.hasMoreDays">
+         <p class="moreDays" style="font-size:17px;">{{ ev.title }}</p>
+       </span>
+       <span *ngIf="ev.isFree&&!ev.hasMoreDays">
+         <p class="activeSchooling" style="margin: 6px;  font-size:17px;">{{ ev.title }}</p>
+       </span>
+       <span *ngIf="!ev.isFree&&!ev.hasMoreDays">
+         <p class="takenSchooling" style="margin: 6px;  font-size:17px;">{{ ev.title }}</p>
+       </span>
+
+
+     </span>
+</div>
 
 </ng-template>
  
@@ -132,6 +136,8 @@
                                 (eventClicked)="handleEvent('Clicked', $event.event)"
                                 (eventTimesChanged)="eventTimesChanged($event)"
                                 [locale]="locale"
+                                [dayStartHour]="7"
+                                [dayEndHour]="21"
                                 [weekendDays]="weekendDays"
                                 [weekStartsOn]="weekStartsOn">
         </mwl-calendar-week-view>
@@ -139,6 +145,8 @@
                                [viewDate]="viewDate"
                                [events]="events"
                                [refresh]="refresh"
+                               [dayStartHour]="7"
+                                [dayEndHour]="21"
                                (eventClicked)="handleEvent('Clicked', $event.event)"
                                (eventTimesChanged)="eventTimesChanged($event)"
                                [locale]="locale">
