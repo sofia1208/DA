@@ -25,7 +25,7 @@ namespace DA {
             services.AddScoped<SchoolingService>();
 
             string connectionString = Configuration.GetConnectionString("SchoolingContext");
-            services.AddDbContext<SchoolingContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<SchoolingContext>(options => options.UseMySql(connectionString));
 
 
             // In production, the Angular files will be served from this directory

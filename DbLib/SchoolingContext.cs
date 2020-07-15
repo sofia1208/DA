@@ -21,7 +21,7 @@ namespace DbLib {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
                 var con = "server=10.90.90.222;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True;database=educationPlanner";
-                optionsBuilder.UseSqlServer(con);
+                optionsBuilder.UseMySql(con);
                     
             }
         }

@@ -238,3 +238,7 @@ C:\Users\isabe\Documents\Schule\Diplomarbeit\Schulungskalender\DbLib\bin\Debug\M
 C:\Users\isabe\Documents\Schule\Diplomarbeit\Schulungskalender\DbLib\bin\Debug\Microsoft.IdentityModel.Tokens.xml
 C:\Users\isabe\Documents\Schule\Diplomarbeit\Schulungskalender\DbLib\bin\Debug\MySqlConnector.xml
 C:\Users\isabe\Documents\Schule\Diplomarbeit\Schulungskalender\DbLib\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\isabe\Documents\Schule\Diplomarbeit\Schulungskalender\DbLib\bin\Debug\System.Text.Encoding.CodePages.dll
+C:\Users\isabe\Documents\Schule\Diplomarbeit\Schulungskalender\DbLib\bin\Debug\System.Text.Encoding.CodePages.xml
+C:\Users\isabe\Documents\Schule\Diplomarbeit\Schulungskalender\DbLib\bin\Debug\System.Diagnostics.PerformanceCounter.dll
+C:\Users\isabe\Documents\Schule\Diplomarbeit\Schulungskalender\DbLib\bin\Debug\System.Diagnostics.PerformanceCounter.xml
