@@ -15,6 +15,7 @@ namespace Schulungskalender.Models {
         public int StreetNumber { get; set; }
         public string Country { get; set; }
         public string Organizer { get; set; }
+        public string ContactPerson { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public bool IsFree { get; set; }
