@@ -68,10 +68,25 @@ namespace Schulungskalender.Services {
 
             foreach (var person in registration.Participants) {
                 var split = person.Split(';');
+                if (FindPerson(split[0], split[1], split[2], company.Id) != null) {
+                    isRegistrationSuccessful = db.InsertPerson(split, company.Id);
+                }
             }
 
+            db.getPersons(ref persons);
 
-            //mailMaker.sendMail();
+            foreach (var personString in registration.Participants) {
+                var split = personString.Split(';');
+                var personRessource = FindPerson(split[0], split[1], split[2], company.Id);
+                isRegistrationSuccessful = db.InsertRegistration(registration.SchoolingId, personRessource.Id);
+            }
+
+            db.getRegistrations(ref registrations);
+
+
+            if (isRegistrationSuccessful) {
+                //mailMaker.sendMail();
+            }
             return registration;
         }
 
@@ -102,6 +117,6 @@ namespace Schulungskalender.Services {
             return persons.Find(x => x.Firstname == firstname && x.Lastname == lastname && x.Email == email && x.CompanyId == company_id);
         }
 
-        
+
     }
 }

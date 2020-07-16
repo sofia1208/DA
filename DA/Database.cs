@@ -70,6 +70,7 @@ namespace DA {
             }
         }
 
+
         public void getPersons(ref List<PersonRessource> persons) {
             persons = new List<PersonRessource>();
 
@@ -146,6 +147,41 @@ namespace DA {
 
             return true;
 
+        }
+
+        public bool InsertPerson(string[] split, int company_id) {
+            try {
+                string insertstatement = $"Insert into persons (firstname, lastname, email, company_id) Values ({split[0]}, {split[1]}, {split[2]}, {company_id}";
+                var insertPersonCmd = new MySqlCommand(insertstatement, connection);
+                insertPersonCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                return false;
+            }
+            finally {
+                if (connection != null)
+                    connection.Close();
+            }
+
+            return true;
+        }
+
+        public bool InsertRegistration(int schooling_id, int person_id) {
+            try {
+                string insertstatement = $"Insert into registrations (schooling_id, person_id) Values ({schooling_id}, {person_id}";
+                var insertRegistrationCmd = new MySqlCommand(insertstatement, connection);
+                insertRegistrationCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                return false;
+            }
+
+            finally {
+                if (connection != null)
+                    connection.Close();
+            }
+
+            return true;
         }
 
         //public CompanyRessource InsertCompanyRessource(RegistrationDTO registrationDTO) {

@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace DA.Models {
     public class RegistrationDTO {
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public string SchoolingAddress { get; set; }
+        public int SchoolingId { get; set; }
         public string Company { get; set; }
         public string Phone { get; set; }
         public string CompanyEmail { get; set; }
