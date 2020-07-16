@@ -16,7 +16,7 @@ import localG from '@angular/common/locales/de';
 import { CalendarComponent } from './calendar/calendar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material/';
-import { MatGridListModule } from '@angular/material/grid-list';
+
 
 registerLocaleData(localG);
 const routes: Routes = [
@@ -35,7 +35,7 @@ const routes: Routes = [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
    HttpClientModule,
     FormsModule,
-    MatGridListModule,
+
 
 
     RouterModule.forRoot(routes),

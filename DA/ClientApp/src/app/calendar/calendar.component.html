@@ -157,19 +157,37 @@
   </div>
 
 
-  <div id="detailView" class="detailview" [hidden]="hidden">
+  <div *ngIf="!hidden"  class="detailview" >
 
 
-    <h1 class="schulungh1">{{detailTitle}}</h1>
+    <h1 detailView class="schulungh1">{{detailTitle}}</h1>
+    <div class="row outerRow">
+      <div class="column col1">
+        <div class="row innerRows">Termin</div>
+        <div class="row innerRows">Uhrzeit</div>
+        <div class="row innerRows">Preis</div>
+        <div class="row innerRows">Organisator</div>
+        <div class="row innerRows">Kontaktperson</div>
+        <div class="row innerRows">Telefon</div>
+        <div class="row innerRows">Adresse</div>
+      </div>
 
-    <mat-grid-list cols="2" rowHeight="2:1">
-      <mat-grid-tile>1</mat-grid-tile>
-      <mat-grid-tile>2</mat-grid-tile>
-      <mat-grid-tile>3</mat-grid-tile>
-      <mat-grid-tile>4</mat-grid-tile>
-    </mat-grid-list>
+      <div class="column col2">
+        <div class="row innerRows">{{termin}}</div>
+        <div class="row innerRows">{{uhrzeit}}</div>
+        <div class="row innerRows">{{preis}}</div>
+        <div class="row innerRows">{{organisator}}</div>
+        <div class="row innerRows">{{kontaktperson}}</div>
+        <div class="row innerRows">{{telefon}}</div>
+        <div class="row innerRows">{{adresse}}</div>
+      </div>
 
+    </div>
+   
+   
+ 
   </div>
 </div>
 
+      
 

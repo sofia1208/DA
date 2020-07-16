@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
 
 import {
 
@@ -36,6 +36,7 @@ import { Observable } from 'rxjs';
 import { SchoolingGet } from './SchoolingGet';
 import { Holiday } from './Holiday';
 import { HolidayAPI } from './HolidayAPI';
+import { element } from 'protractor';
 
 
 @Component({
@@ -60,8 +61,20 @@ export class CalendarComponent implements OnInit {
   events: CustomEvent[] = [];
   holidayApis: HolidayAPI[] = [];
   holidays: Holiday[] = [];
-  constructor(private http: HttpClient) { }
 
+
+  uhrzeit: string = '';
+  preis: string = '';
+  organisator: string = '';
+  kontaktperson: string = '';
+  telefon: string = '';
+  adresse: string = '';
+
+
+
+
+  constructor(private http: HttpClient) { }
+ 
   
   ngOnInit() {
     console.log('ngOnInit');
@@ -70,19 +83,19 @@ export class CalendarComponent implements OnInit {
     
 
   }
-
+  @ViewChild('detailView', { static: true }) detailView: ElementRef;
 
   locale: string = 'de';
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 
   weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   view: CalendarView = CalendarView.Day;
-
+  
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
   detailTitle: string = '';
-
+  hidden: boolean= true;
   modalData: {
     action: string;
     event: CalendarEvent;
@@ -206,9 +219,30 @@ export class CalendarComponent implements OnInit {
   
 
   clickOnEvent(event: CalendarEvent): void {
-     //TO-DO:bei Event eine ID mitgeben,  get Request mit ID
+    this.hidden = false;
+   // this.detailView.nativeElement.scrollIntoView();
+    let schooling= new SchoolingGet;
+    this.getDetail('https://localhost:5001/schoolings/details/21')
+      .subscribe(data => {
+        schooling = data;
+        console.log(data);
+        this.telefon = schooling.phone;
+        this.adresse = schooling.address;
+        this.kontaktperson = schooling.kontaktperson;
+        this.uhrzeit = schooling.startDate.toISOString();
+        
+        
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+
+
    
-}
+  }
+
 
   activeDayIsOpen: boolean = false;
 
@@ -217,6 +251,7 @@ export class CalendarComponent implements OnInit {
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     // TO-DO: Bei mehreren Events an einem Tag?
     this.detailTitle = events[0].title;
+    this.clickOnEvent(event[0]);
   }
 
   eventTimesChanged({
@@ -277,6 +312,10 @@ export class CalendarComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+  private getDetail(url: string): Observable<SchoolingGet> {
+    return this.http.get<SchoolingGet>(url);
+
   }
 
   private getSchoolings(url: string): Observable<SchoolingGet[]> {

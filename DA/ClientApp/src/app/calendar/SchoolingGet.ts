@@ -6,5 +6,14 @@ export class SchoolingGet {
   name: string;
   organizer: string;
   price: number;
+  isFree: boolean;
+  phone: string;
+  email: string;
+  kontaktperson: string;
+  startDate: Date;
+  endDate: Date;
+
+  
+
 
 }

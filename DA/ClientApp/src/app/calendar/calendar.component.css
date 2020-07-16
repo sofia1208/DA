@@ -83,7 +83,7 @@ margin: auto
   color: #707070;
 }
 .detailview{
-    margin-top: 20px;
+    margin-top: 40px;
     
 }
 [hidden] {
@@ -101,5 +101,19 @@ margin: auto
   padding: 10px;
   margin: 10px;
 }
-
+.outerRow {
+  margin: 50px;
+  margin-left: 70px;
+  font-size: 20px;
+  color: #707070;
+}
+.col1{
+width: 25%
+}
+.col2{
+    width: 75%
+}
+.innerRows{
+    height: 30px;
+}
 
