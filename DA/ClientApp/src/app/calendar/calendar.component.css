@@ -48,11 +48,15 @@ h1 {
   background-color: #8CEE88;
   border-radius: 2px;
   color: #707070;
+  padding: 10px;
+  margin: 10px;
 }
 .takenSchooling {
   background-color: #F28C8C;
   border-radius: 2px;
   color: #707070;
+  padding: 10px;
+  margin: 10px;
 }
 
 .filterBtn {
@@ -74,7 +78,8 @@ margin: auto
   }
 .moreDays {
   background-color: violet;
-
+  padding: 10px;
+  margin: 10px;
   color: #707070;
 }
 .detailview{
@@ -91,4 +96,10 @@ margin: auto
 .mat-typography p{
     margin:auto;
 }
+.holiday {
+  background-color: #DEEFF5;
+  padding: 10px;
+  margin: 10px;
+}
+
 

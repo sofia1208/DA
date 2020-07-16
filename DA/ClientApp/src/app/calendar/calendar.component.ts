@@ -67,6 +67,7 @@ export class CalendarComponent implements OnInit {
     console.log('ngOnInit');
     this.getSummary();
     this.getHolidays();
+    
 
   }
 
@@ -80,7 +81,7 @@ export class CalendarComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
-
+  detailTitle: string = '';
 
   modalData: {
     action: string;
@@ -106,37 +107,38 @@ export class CalendarComponent implements OnInit {
   }
 
   getHolidays(): void {
-    //TO DO Jahr dynamisch machen
+    //TO-DO Jahr dynamisch machen
     this.getHolidaysHTTP('https://getfestivo.com/v2/holidays?api_key=4995fde4f1b7998b6d7632886ede685a&country=AT&year=2020&language=de')
       .subscribe(data => {
 
         this.holidayApis = data;
+        this.holidaysToEvents();
    
       });
+
   
-    //  this.holidaysToEvents();
-    
+  
   
   }
 
 
   getGrundlagen(): void {
   
-    //this.schoolings = [];
-    //this.events = [];
-    //this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
-    //  .subscribe(data => {
-    //    this.schoolings = data;
-    //    this.schoolingsToEvents();
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
 
-    //  }
-    //    , err => {
-    //      console.log(`${err.message}`)
-    //    })
-    //  ;
-    //this.schoolingsToEvents();
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
 
-    this.holidaysToEvents();
+   
 
     console.log(this.schoolings.length);
 
@@ -203,8 +205,9 @@ export class CalendarComponent implements OnInit {
  
   
 
-  clickOnEvent(id :number): void {
-     //TODO:bei Event eine ID mitgeben,  get Request mit ID
+  clickOnEvent(event: CalendarEvent): void {
+     //TO-DO:bei Event eine ID mitgeben,  get Request mit ID
+   
 }
 
   activeDayIsOpen: boolean = false;
@@ -212,18 +215,8 @@ export class CalendarComponent implements OnInit {
  
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    console.log(events[0].id)
-    //if (isSameMonth(date, this.viewDate)) {
-    //  if (
-    //    (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-    //    events.length === 0
-    //  ) {
-    //    this.activeDayIsOpen = false;
-    //  } else {
-    //    this.activeDayIsOpen = true;
-    //  }
-    //  this.viewDate = date;
-    //}
+    // TO-DO: Bei mehreren Events an einem Tag?
+    this.detailTitle = events[0].title;
   }
 
   eventTimesChanged({
@@ -250,6 +243,8 @@ export class CalendarComponent implements OnInit {
 
   handleEvent(action: string, event: CalendarEvent): void {
     console.log(event.id);
+    this.detailTitle = event.title;
+    this.clickOnEvent(event);
   }
 
   addEvent(): void {
@@ -355,10 +350,10 @@ export class CalendarComponent implements OnInit {
             }
            
 
-           
-            console.log(this.holidays.length);
+         
+          
           }
-    
+          this.createHolidayEvents();
         },
         error => {
           console.log(error);
@@ -370,22 +365,21 @@ export class CalendarComponent implements OnInit {
 
   private createHolidayEvents(): void {
     for (var i = 0; i < this.holidays.length; i++) {
-      
-          title: this.holidays[i].name,
-          start: startOfDay(this.holidays[i].date),
-          end: endOfDay(this.holidays[i].date),
-          color: colors.red,
-          draggable: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true,
-          },
-          isFree: true,
-          isHoliday: true,
-          hasMoreDays: false,
-        }
-      
-;
+      const holiday: CustomEvent = {
+        isFree: true,
+        start: startOfDay(this.holidays[i].date),
+        end: endOfDay(this.holidays[i].date),
+        title: this.holidays[i].name,
+        id: this.events.length,
+        allDay: true,
+        isHoliday: true,
+        hasMoreDays: false,
+
+
+      };
+      this.events.push(holiday);
+      this.refresh.next();
+          
     }
   }
 
