@@ -60,7 +60,7 @@ export class CalendarComponent implements OnInit {
   //url = 'https://localhost:5001/schoolings/summary';
   ngOnInit() {
     console.log('ngOnInit');
-    this.getSummary();
+    this.GetSummary();
 
   }
 
@@ -82,9 +82,9 @@ export class CalendarComponent implements OnInit {
     event: CalendarEvent;
   };
  
-  getSummary(): void {
+  GetSummary(): void {
   
-    this.getSchoolings('https://localhost:5001/schoolings/summary')
+    this.GetSchoolings('https://localhost:5001/schoolings/summary')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -102,10 +102,10 @@ export class CalendarComponent implements OnInit {
 
 
 
-  getGrundlagen(): void {
+  GetGrundlagen(): void {
     this.schoolings = [];
     this.events = [];
-    this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
+    this.GetSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -120,10 +120,10 @@ export class CalendarComponent implements OnInit {
     console.log(this.schoolings.length);
 
   }
-  getWorkshop(): void {
+  GetWorkshop(): void {
     this.schoolings = [];
     this.events = [];
-    this.getSchoolings('https://localhost:5001/schoolings/summary/workshop')
+    this.GetSchoolings('https://localhost:5001/schoolings/summary/workshop')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -138,10 +138,10 @@ export class CalendarComponent implements OnInit {
     console.log(this.schoolings.length);
 
   }
-  getAdmin(): void {
+  GetAdmin(): void {
     this.schoolings = [];
     this.events = [];
-    this.getSchoolings('https://localhost:5001/schoolings/summary/administrator')
+    this.GetSchoolings('https://localhost:5001/schoolings/summary/administrator')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -156,10 +156,10 @@ export class CalendarComponent implements OnInit {
     console.log(this.schoolings.length);
 
   }
-  getKombimodell(): void {
+  GetKombimodell(): void {
     this.schoolings = [];
     this.events = [];
-    this.getSchoolings('https://localhost:5001/schoolings/summary/kombimodell')
+    this.GetSchoolings('https://localhost:5001/schoolings/summary/kombimodell')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -227,7 +227,7 @@ export class CalendarComponent implements OnInit {
   //  },
   //];
   clickOnEvent(id :number): void {
-     //TODO:bei Event eine ID mitgeben,  get Request mit ID
+     //TODO:bei Event eine ID mitgeben,  Get Request mit ID
 }
 
   activeDayIsOpen: boolean = false;
@@ -302,8 +302,8 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  private getSchoolings(url: string): Observable<SchoolingGet[]> {
-    return this.http.get<SchoolingGet[]>(url);
+  private GetSchoolings(url: string): Observable<SchoolingGet[]> {
+    return this.http.Get<SchoolingGet[]>(url);
    
   }
   private schoolingsToEvents(): void {

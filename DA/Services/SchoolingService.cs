@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using System.Text;
 using System.Net;
 using System.Diagnostics;
+using DbLib;
 
 namespace Schulungskalender.Services {
     public class SchoolingService {
@@ -30,16 +31,16 @@ namespace Schulungskalender.Services {
             converter = new RessourceDtoConverter();
             mailMaker = new MailMaker();
             db = new Database();
-            
+
             fillLists();
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            return schoolings.Select(x => converter.GetSchoolingSummary(x, IsSchoolingFree(x.Id))).Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).ToList();
+            return schoolings.Select(x => converter.GetSchoolingSummaryDTO(x, IsSchoolingFree(x.Id))).Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).ToList();
         }
 
         public List<SchoolingSummaryDTO> Summary() {
-            return schoolings.Select(x => converter.GetSchoolingSummary(x, IsSchoolingFree(x.Id))).ToList();
+            return schoolings.Select(x => converter.GetSchoolingSummaryDTO(x, IsSchoolingFree(x.Id))).ToList();
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
@@ -47,12 +48,30 @@ namespace Schulungskalender.Services {
             var address = addresses.Find(x => x.Id == schooling.AddressId);
             var organizer = organizers.Find(x => x.Id == schooling.OrganizerId);
 
-            return converter.GetSchoolingDetail(schooling, address, organizer, IsSchoolingFree(id));
+            return converter.GetSchoolingDetailDTO(schooling, address, organizer, IsSchoolingFree(id));
         }
 
         public RegistrationDTO Register(RegistrationDTO registration) {
-            //mailMaker.sendMail();
+            bool isRegistrationSuccessful = true;
 
+            if (FindAddress(registration) != null) {
+                isRegistrationSuccessful = db.InsertAddress(registration);
+                db.getAddresses(ref addresses);
+            }
+            var address = FindAddress(registration);
+
+            if (FindCompany(registration, address.Id) != null) {
+                isRegistrationSuccessful = db.InsertCompany(registration, address.Id);
+                db.getCompanies(ref companies);
+            }
+            var company = FindCompany(registration, address.Id);
+
+            foreach (var person in registration.Participants) {
+                var split = person.Split(';');
+            }
+
+
+            //mailMaker.sendMail();
             return registration;
         }
 
@@ -70,5 +89,19 @@ namespace Schulungskalender.Services {
         private bool IsSchoolingFree(int id) {
             return (schoolings.Find(x => x.Id == id).Places - registrations.Where(x => x.SchoolingId == id).Count() > 0) ? true : false;
         }
+
+        private AddressRessource FindAddress(RegistrationDTO registration) {
+            return addresses.Find(x => x.ZipCode == registration.ZipCode && x.Street == registration.Street && x.StreetNumber == registration.StreetNumber && x.City == registration.City && x.Country == registration.Country);
+        }
+
+        private CompanyRessource FindCompany(RegistrationDTO registration, int addressId) {
+            return companies.Find(x => x.Email == registration.CompanyEmail && x.Name == registration.Company && x.Phone == registration.Phone && x.AddressId == addressId);
+        }
+
+        private PersonRessource FindPerson(string firstname, string lastname, string email, int company_id) {
+            return persons.Find(x => x.Firstname == firstname && x.Lastname == lastname && x.Email == email && x.CompanyId == company_id);
+        }
+
+        
     }
 }

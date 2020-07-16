@@ -22,7 +22,7 @@ exports.config = {
       project: require("path").join(__dirname, "./tsconfig.e2e.json")
     });
     jasmine
-      .getEnv()
+      .GetEnv()
       .addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   }
 };
