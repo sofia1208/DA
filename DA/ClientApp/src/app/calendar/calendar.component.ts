@@ -68,8 +68,8 @@ export class CalendarComponent implements OnInit {
 
   startDate: Date;
   endDate: Date;
-  startTime: Date;
-  endTime: Date;
+  startTime: string;
+  endTime: string;
   preis: string = '';
   organisator: string = '';
   kontaktperson: string = '';
@@ -102,11 +102,11 @@ export class CalendarComponent implements OnInit {
   
   CalendarView = CalendarView;
   @ViewChildren("detailView") detailView: QueryList<any>
-
- // @ViewChild('detailView', { static: false }) detailView: ElementRef;
+  //TO-DO scrollen
   viewDate: Date = new Date();
   detailTitle: string = '';
-  hidden: boolean= true;
+  hidden: boolean = true;
+
   modalData: {
     action: string;
     event: CalendarEvent;
@@ -131,8 +131,10 @@ export class CalendarComponent implements OnInit {
   }
 
   getHolidays(): void {
-    //TO-DO Jahr dynamisch machen
-    this.getHolidaysHTTP('https://getfestivo.com/v2/holidays?api_key=4995fde4f1b7998b6d7632886ede685a&country=AT&year=2020&language=de')
+  
+    let now = new Date().getFullYear();
+   
+    this.getHolidaysHTTP(`https://getfestivo.com/v2/holidays?api_key=4995fde4f1b7998b6d7632886ede685a&country=AT&year=${now}&language=de`)
       .subscribe(data => {
 
         this.holidayApis = data;
@@ -229,24 +231,34 @@ export class CalendarComponent implements OnInit {
  
   
 
-  clickOnEvent(event: CalendarEvent): void {
+  clickOnEvent(event: CustomEvent): void {
     this.hidden = false;
-    this.detailView.length;
-    let schooling = new SchoolingDto;
-     let id = event.id;
-    this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
-      .subscribe(data => {
-        schooling = data;
-        console.log(data);
-        
-        this.fillDetails(schooling);
-  
+ 
+      let schooling = new SchoolingDto;
+    let id = event.id;
+    if (event.isHoliday) {
 
-      }
-        , err => {
-          console.log(`${err.message}`)
-        })
-      ;
+    }
+    else {
+      this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
+        .subscribe(data => {
+          schooling = data;
+          console.log(data);
+
+          this.fillDetails(schooling);
+
+
+        }
+          , err => {
+            console.log(`${err.message}`)
+          })
+        ;
+    }
+    
+   
+
+    
+   
 
 
    
@@ -256,20 +268,21 @@ export class CalendarComponent implements OnInit {
   activeDayIsOpen: boolean = false;
 
   fillDetails(schooling: SchoolingDto) {
-    //TO-DO Deutsche Uhrzeit
+    
     this.telefon = schooling.phone;
-    this.startTime = new Date(schooling.start);
-    this.endTime = new Date(schooling.end);
+    this.startTime = new Date(schooling.start).getHours() + ":" + new Date(schooling.start).getMinutes();
+    this.endTime = new Date(schooling.end).getHours() + ":" + new Date(schooling.start).getMinutes();
     this.preis = schooling.price.toString() + " €";
     this.organisator = schooling.organizer;
-    this.kontaktperson = "";
+    this.kontaktperson = schooling.contactPerson;
+   
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
-    this.adresse = schooling.streetNumber + " " + schooling.zipcode + " " + schooling.city + ", " + schooling.country;
-        //this.kontaktperson = schooling.kontaktperson;
+    this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
+    this.refresh.next();
   }
   
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  dayClicked({ date, events }: { date: Date; events: CustomEvent[] }): void {
     // TO-DO: Bei mehreren Events an einem Tag?
     this.detailTitle = events[0].title;
     let event = events[0];
@@ -295,10 +308,10 @@ export class CalendarComponent implements OnInit {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+   
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
+  handleEvent(action: string, event: CustomEvent): void {
     console.log(event.id);
     this.detailTitle = event.title;
     this.clickOnEvent(event);

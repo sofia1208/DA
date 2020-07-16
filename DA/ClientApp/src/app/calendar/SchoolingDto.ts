@@ -3,17 +3,17 @@ export class SchoolingDto {
  
   start: string;
   end: string;
-  zipcode: number;
+  zipCode: number;
   city: string;
   streetNumber: number;
   country: string;
-  
+  street: string;
   organizer: string;
   price: number;
   isFree: boolean;
   phone: string;
   email: string;
-  kontaktperson: string;
+  contactPerson: string;
   
 }
 
