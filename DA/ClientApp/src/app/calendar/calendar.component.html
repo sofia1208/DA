@@ -160,7 +160,7 @@
   <div *ngIf="!hidden"  class="detailview" >
 
 
-    <h1 detailView class="schulungh1">{{detailTitle}}</h1>
+    <h1 #detailView class="schulungh1">{{detailTitle}}</h1>
     <div class="row outerRow">
       <div class="column col1">
         <div class="row innerRows">Termin</div>
@@ -173,8 +173,8 @@
       </div>
 
       <div class="column col2">
-        <div class="row innerRows">{{termin}}</div>
-        <div class="row innerRows">{{uhrzeit}}</div>
+        <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
+        <div class="row innerRows">{{startTime | date:'h:mm':'de'}} - {{endTime | date:'h:mm':'de'}}</div>
         <div class="row innerRows">{{preis}}</div>
         <div class="row innerRows">{{organisator}}</div>
         <div class="row innerRows">{{kontaktperson}}</div>
@@ -183,7 +183,7 @@
       </div>
 
     </div>
-   
+     <button class="btnLogin">Anmelden</button>
    
  
   </div>

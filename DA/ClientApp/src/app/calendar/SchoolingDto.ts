@@ -1,13 +1,19 @@
 export class SchoolingDto {
   id: number;
-  address: string;
+ 
   start: string;
   end: string;
-  name: string;
+  zipcode: number;
+  city: string;
+  streetNumber: number;
+  country: string;
+  
   organizer: string;
   price: number;
   isFree: boolean;
   phone: string;
   email: string;
   kontaktperson: string;
+  
 }
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 
 import {
 
@@ -38,7 +38,9 @@ import { Holiday } from './Holiday';
 import { HolidayAPI } from './HolidayAPI';
 import { element } from 'protractor';
 import { SchoolingDto } from './SchoolingDto';
-
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+registerLocaleData(localeDe, 'de');
 
 @Component({
   selector: 'app-calendar',
@@ -57,14 +59,17 @@ import { SchoolingDto } from './SchoolingDto';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
+ @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
+
   schoolings: SchoolingGet[] = [];
   events: CustomEvent[] = [];
   holidayApis: HolidayAPI[] = [];
   holidays: Holiday[] = [];
 
-
-  uhrzeit: string = '';
+  startDate: Date;
+  endDate: Date;
+  startTime: Date;
+  endTime: Date;
   preis: string = '';
   organisator: string = '';
   kontaktperson: string = '';
@@ -75,6 +80,9 @@ export class CalendarComponent implements OnInit {
 
 
   constructor(private http: HttpClient) { }
+  ngAfterViewInit(): void {
+ 
+    }
  
   
   ngOnInit() {
@@ -84,8 +92,8 @@ export class CalendarComponent implements OnInit {
     
 
   }
-  @ViewChild('detailView', { static: true }) detailView: ElementRef;
 
+  
   locale: string = 'de';
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 
@@ -93,7 +101,9 @@ export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Day;
   
   CalendarView = CalendarView;
+  @ViewChildren("detailView") detailView: QueryList<any>
 
+ // @ViewChild('detailView', { static: false }) detailView: ElementRef;
   viewDate: Date = new Date();
   detailTitle: string = '';
   hidden: boolean= true;
@@ -221,18 +231,16 @@ export class CalendarComponent implements OnInit {
 
   clickOnEvent(event: CalendarEvent): void {
     this.hidden = false;
-   // this.detailView.nativeElement.scrollIntoView();
-    let schooling= new SchoolingDto;
-    this.getDetail('https://localhost:5001/schoolings/details/21')
+    this.detailView.length;
+    let schooling = new SchoolingDto;
+     let id = event.id;
+    this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
       .subscribe(data => {
         schooling = data;
         console.log(data);
-        //this.telefon = schooling.phone;
-        //this.adresse = schooling.address;
-        //this.kontaktperson = schooling.kontaktperson;
+        
+        this.fillDetails(schooling);
   
-        
-        
 
       }
         , err => {
@@ -247,12 +255,25 @@ export class CalendarComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
- 
-
+  fillDetails(schooling: SchoolingDto) {
+    //TO-DO Deutsche Uhrzeit
+    this.telefon = schooling.phone;
+    this.startTime = new Date(schooling.start);
+    this.endTime = new Date(schooling.end);
+    this.preis = schooling.price.toString() + " €";
+    this.organisator = schooling.organizer;
+    this.kontaktperson = "";
+    this.startDate = new Date(schooling.start);
+    this.endDate = new Date(schooling.end);
+    this.adresse = schooling.streetNumber + " " + schooling.zipcode + " " + schooling.city + ", " + schooling.country;
+        //this.kontaktperson = schooling.kontaktperson;
+  }
+  
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     // TO-DO: Bei mehreren Events an einem Tag?
     this.detailTitle = events[0].title;
-    this.clickOnEvent(event[0]);
+    let event = events[0];
+    this.clickOnEvent(event);
   }
 
   eventTimesChanged({
@@ -344,7 +365,7 @@ export class CalendarComponent implements OnInit {
         start: startOfDay(start),
         end: endOfDay(end),
         title: this.schoolings[i].name,
-        id: i,
+        id: this.schoolings[i].id,
         allDay: true,
         isHoliday: false,
         hasMoreDays: moreDays,
