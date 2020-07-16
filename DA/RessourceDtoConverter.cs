@@ -15,10 +15,10 @@ namespace DA {
         }
 
         public SchoolingDetailDTO GetSchoolingDetail(SchoolingRessource schooling, AddressRessource address, OrganizerRessource organizer, bool isFree) {
-            return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street?? null, IsFree = isFree };
+            return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, IsFree = isFree };
         }
 
-        public RegistrationDTO getSchoolingRegistration() {
+        public RegistrationDTO GetSchoolingRegistration() {
             return null;
         }
     }
