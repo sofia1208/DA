@@ -51,7 +51,7 @@ namespace Schulungskalender.Services {
         }
 
         public RegistrationDTO Register(RegistrationDTO registration) {
-            mailMaker.sendMail();
+            //mailMaker.sendMail();
 
             return registration;
         }
