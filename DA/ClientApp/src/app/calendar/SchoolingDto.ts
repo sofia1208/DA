@@ -1,4 +1,4 @@
-export class SchoolingGet {
+export class SchoolingDto {
   id: number;
   address: string;
   start: string;
@@ -7,9 +7,7 @@ export class SchoolingGet {
   organizer: string;
   price: number;
   isFree: boolean;
- 
-
-  
-
-
+  phone: string;
+  email: string;
+  kontaktperson: string;
 }

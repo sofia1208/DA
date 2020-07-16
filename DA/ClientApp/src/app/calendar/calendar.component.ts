@@ -37,6 +37,7 @@ import { SchoolingGet } from './SchoolingGet';
 import { Holiday } from './Holiday';
 import { HolidayAPI } from './HolidayAPI';
 import { element } from 'protractor';
+import { SchoolingDto } from './SchoolingDto';
 
 
 @Component({
@@ -221,15 +222,15 @@ export class CalendarComponent implements OnInit {
   clickOnEvent(event: CalendarEvent): void {
     this.hidden = false;
    // this.detailView.nativeElement.scrollIntoView();
-    let schooling= new SchoolingGet;
+    let schooling= new SchoolingDto;
     this.getDetail('https://localhost:5001/schoolings/details/21')
       .subscribe(data => {
         schooling = data;
         console.log(data);
-        this.telefon = schooling.phone;
-        this.adresse = schooling.address;
-        this.kontaktperson = schooling.kontaktperson;
-        this.uhrzeit = schooling.startDate.toISOString();
+        //this.telefon = schooling.phone;
+        //this.adresse = schooling.address;
+        //this.kontaktperson = schooling.kontaktperson;
+  
         
         
 
@@ -313,8 +314,8 @@ export class CalendarComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-  private getDetail(url: string): Observable<SchoolingGet> {
-    return this.http.get<SchoolingGet>(url);
+  private getDetail(url: string): Observable<SchoolingDto> {
+    return this.http.get<SchoolingDto>(url);
 
   }
 
