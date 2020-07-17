@@ -107,6 +107,8 @@
 
   </ng-template>
 
+
+
   <div>
     <div style="margin:15px" class="container">
       <div class="btn-group filterBtn">
@@ -142,7 +144,8 @@
                             [dayStartHour]="7"
                             [dayEndHour]="21"
                             [weekendDays]="weekendDays"
-                            [weekStartsOn]="weekStartsOn">
+                            [weekStartsOn]="weekStartsOn"
+                            >
     </mwl-calendar-week-view>
     <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
                            [viewDate]="viewDate"
@@ -157,7 +160,7 @@
   </div>
 
 
-  <div *ngIf="!hidden"  class="detailview" >
+  <div *ngIf="!hidden" class="detailview">
 
 
     <h1 #detailView class="schulungh1">{{detailTitle}}</h1>
@@ -182,18 +185,18 @@
         <div class="row innerRows">{{adresse}}</div>
       </div>
       <div class="column col1">
-       
-      
-          <button class="btnLogin">Anmelden</button>
-        
+
+
+        <button class="btnLogin">Anmelden</button>
+
 
 
       </div>
-   
+
     </div>
-     
-        
- 
+
+
+
   </div>
 </div>
 

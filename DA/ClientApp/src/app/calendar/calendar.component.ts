@@ -232,7 +232,7 @@ export class CalendarComponent implements OnInit {
   
 
   clickOnEvent(event: CustomEvent): void {
-    this.hidden = false;
+ 
  
       let schooling = new SchoolingDto;
     let id = event.id;
@@ -240,6 +240,7 @@ export class CalendarComponent implements OnInit {
 
     }
     else {
+      this.hidden = false;
       this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
         .subscribe(data => {
           schooling = data;
@@ -270,8 +271,7 @@ export class CalendarComponent implements OnInit {
   fillDetails(schooling: SchoolingDto) {
     
     this.telefon = schooling.phone;
-    this.startTime = new Date(schooling.start).getHours() + ":" + new Date(schooling.start).getMinutes();
-    this.endTime = new Date(schooling.end).getHours() + ":" + new Date(schooling.start).getMinutes();
+    this.convertToGermanTime(schooling);
     this.preis = schooling.price.toString() + " €";
     this.organisator = schooling.organizer;
     this.kontaktperson = schooling.contactPerson;
@@ -281,7 +281,24 @@ export class CalendarComponent implements OnInit {
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
     this.refresh.next();
   }
-  
+  convertToGermanTime(schooling: SchoolingDto) {
+    let start = new Date(schooling.start);
+    let end = new Date(schooling.end);
+    if (start.getHours() < 10) {
+      this.startTime = "0" + start.getHours();
+    }
+    if (end.getHours() < 10) {
+      this.endTime = "0" + start.getHours();
+    }
+    if (start.getMinutes() < 10) {
+      this.startTime = this.startTime + ":0" + start.getMinutes(); 
+    }
+    if (end.getMinutes() < 10) {
+      this.endTime = this.endTime + ":0" + end.getMinutes();
+    }
+
+
+  }
   dayClicked({ date, events }: { date: Date; events: CustomEvent[] }): void {
     // TO-DO: Bei mehreren Events an einem Tag?
     this.detailTitle = events[0].title;
@@ -375,11 +392,11 @@ export class CalendarComponent implements OnInit {
       console.log(this.schoolings)
       const schooling: CustomEvent = {
         isFree: true,
-        start: startOfDay(start),
-        end: endOfDay(end),
+        start: start,
+        end: end,
         title: this.schoolings[i].name,
         id: this.schoolings[i].id,
-        allDay: true,
+        allDay: false,
         isHoliday: false,
         hasMoreDays: moreDays,
       
