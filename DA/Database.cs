@@ -1,4 +1,5 @@
-﻿using DbLib;
+﻿using DA.Models;
+using DbLib;
 using MySql.Data.MySqlClient;
 using Schulungskalender.Models;
 using System;
@@ -18,7 +19,7 @@ namespace DA {
             connection.Open();
         }
 
-        public void getAllTables(ref List<AddressRessource> addresses, ref List<CompanyRessource> companies, ref List<SchoolingRessource>schoolings, ref List<OrganizerRessource> organizers, ref List<RegistrationRessource> registrations, ref List<PersonRessource> persons) {
+        public void getAllTables(ref List<AddressRessource> addresses, ref List<CompanyRessource> companies, ref List<SchoolingRessource> schoolings, ref List<OrganizerRessource> organizers, ref List<RegistrationRessource> registrations, ref List<PersonRessource> persons) {
             getAddresses(ref addresses);
             getCompanies(ref companies);
             getOrganizers(ref organizers);
@@ -28,6 +29,7 @@ namespace DA {
         }
 
         public void getAddresses(ref List<AddressRessource> addresses) {
+            addresses = new List<AddressRessource>();
 
             var getAddressesCmd = new MySqlCommand("SELECT * FROM addresses", connection);
 
@@ -41,6 +43,7 @@ namespace DA {
         }
 
         public void getCompanies(ref List<CompanyRessource> companies) {
+            companies = new List<CompanyRessource>();
 
             var getCompaniesCmd = new MySqlCommand("SELECT * FROM companies", connection);
 
@@ -54,6 +57,8 @@ namespace DA {
         }
 
         public void getOrganizers(ref List<OrganizerRessource> organizers) {
+            organizers = new List<OrganizerRessource>();
+
             var getOrganizersCmd = new MySqlCommand("SELECT * FROM organizers", connection);
 
             OrganizerRessource organizer;
@@ -65,7 +70,10 @@ namespace DA {
             }
         }
 
+
         public void getPersons(ref List<PersonRessource> persons) {
+            persons = new List<PersonRessource>();
+
             var getPersonsCmd = new MySqlCommand("SELECT * FROM persons", connection);
 
             PersonRessource person;
@@ -78,6 +86,8 @@ namespace DA {
         }
 
         public void getSchoolings(ref List<SchoolingRessource> schoolings) {
+            schoolings = new List<SchoolingRessource>();
+
             var getSchoolingsCmd = new MySqlCommand("SELECT * FROM schoolings", connection);
 
             SchoolingRessource schooling;
@@ -91,6 +101,8 @@ namespace DA {
         }
 
         public void getRegistrations(ref List<RegistrationRessource> registrations) {
+            registrations = new List<RegistrationRessource>();
+
             var getRegistrationCmd = new MySqlCommand("SELECT * FROM registrations", connection);
 
             RegistrationRessource registration;
@@ -101,5 +113,79 @@ namespace DA {
                 }
             }
         }
+
+        public bool InsertAddress(RegistrationDTO registrationDTO) {
+            try {
+                string insertstatement = $"Insert into addresses (street, street_number, city, zip_code, country) Values ({registrationDTO.Street}, {registrationDTO.StreetNumber}, {registrationDTO.City}, {registrationDTO.ZipCode}, {registrationDTO.Country}";
+                var insertAddressCmd = new MySqlCommand(insertstatement, connection);
+                insertAddressCmd.ExecuteNonQuery();
+            }catch(Exception e) {
+                return false;
+            }
+            finally {
+                if (connection != null)
+                    connection.Close();
+            }
+
+            return true;
+
+        }
+
+        public bool InsertCompany(RegistrationDTO registrationDTO, int address_id) {
+            try {
+                string insertstatement = $"Insert into companies (name, email, phone, address_id) Values ({registrationDTO.Company}, {registrationDTO.CompanyEmail}, {registrationDTO.Phone}, {address_id}";
+                var insertCompanyCmd = new MySqlCommand(insertstatement, connection);
+                insertCompanyCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                return false;
+            }
+            finally {
+                if (connection != null)
+                    connection.Close();
+            }
+
+            return true;
+
+        }
+
+        public bool InsertPerson(string[] split, int company_id) {
+            try {
+                string insertstatement = $"Insert into persons (firstname, lastname, email, company_id) Values ({split[0]}, {split[1]}, {split[2]}, {company_id}";
+                var insertPersonCmd = new MySqlCommand(insertstatement, connection);
+                insertPersonCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                return false;
+            }
+            finally {
+                if (connection != null)
+                    connection.Close();
+            }
+
+            return true;
+        }
+
+        public bool InsertRegistration(int schooling_id, int person_id) {
+            try {
+                string insertstatement = $"Insert into registrations (schooling_id, person_id) Values ({schooling_id}, {person_id}";
+                var insertRegistrationCmd = new MySqlCommand(insertstatement, connection);
+                insertRegistrationCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                return false;
+            }
+
+            finally {
+                if (connection != null)
+                    connection.Close();
+            }
+
+            return true;
+        }
+
+        //public CompanyRessource InsertCompanyRessource(RegistrationDTO registrationDTO) {
+        //    string insertStatement = $"Insert into companies (name, phone, email address) VALUES ({registrationDTO.Company}, {registrationDTO.Phone}, {registrationDTO.CompanyEmail}";
+        //}
     }
 }

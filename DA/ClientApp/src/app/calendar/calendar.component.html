@@ -82,7 +82,7 @@
   </div>
   <ng-template #customCellTemplate let-day="day" let-locale="locale" let-days="days" let-dayEvents="dayEvents">
     <div class="cal-cell-top">
-      <!--<span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>-->
+      <!--<span class="cal-day-badge" *ngIf="day.badGetotal > 0">{{ day.badGetotal }}</span>-->
       <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
     </div>
 
@@ -104,10 +104,10 @@
     <div style="margin:15px" class="container">
       <div class="btn-group filterBtn">
         Filtern nach:
-        <button class="categoryBtn" (click)="getGrundlagen()">Grundlagen</button>
-        <button class="categoryBtn" (click)="getWorkshop()">Workshop</button>
-        <button class="categoryBtn" (click)="getAdmin()">Administrator</button>
-        <button class="categoryBtn" (click)="getKombimodell()">Kombimodell</button>
+        <button class="categoryBtn" (click)="GetGrundlagen()">Grundlagen</button>
+        <button class="categoryBtn" (click)="GetWorkshop()">Workshop</button>
+        <button class="categoryBtn" (click)="GetAdmin()">Administrator</button>
+        <button class="categoryBtn" (click)="GetKombimodell()">Kombimodell</button>
       </div>
      </div>
       </div>
