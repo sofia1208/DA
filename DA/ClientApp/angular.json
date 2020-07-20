@@ -149,5 +149,8 @@
       }
     }
   },
-  "defaultProject": "DA"
+  "defaultProject": "DA",
+  "cli": {
+    "analytics": false
+  }
 }

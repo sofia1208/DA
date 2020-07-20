@@ -35,11 +35,11 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            return schoolings.Select(x => converter.GetSchoolingSummary(x, IsSchoolingFree(x.Id))).Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).ToList();
+            return schoolings.Select(x => converter.GetSchoolingSummaryDTO(x, IsSchoolingFree(x.Id))).Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).ToList();
         }
 
         public List<SchoolingSummaryDTO> Summary() {
-            return schoolings.Select(x => converter.GetSchoolingSummary(x, IsSchoolingFree(x.Id))).ToList();
+            return schoolings.Select(x => converter.GetSchoolingSummaryDTO(x, IsSchoolingFree(x.Id))).ToList();
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
