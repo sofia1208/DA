@@ -12,13 +12,12 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { registerLocaleData } from '@angular/common';
-import localDe from '@angular/common/locales/de';
+import localG from '@angular/common/locales/de';
 import { CalendarComponent } from './calendar/calendar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material/';
 
-import { LOCALE_ID } from '@angular/core';
-registerLocaleData(localDe, 'de');
+registerLocaleData(localG);
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent }];
 @NgModule({
@@ -37,14 +36,13 @@ const routes: Routes = [
     FormsModule,
 
 
-
     RouterModule.forRoot(routes),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     BrowserAnimationsModule,
    // MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
   exports: [RouterModule],
-  providers: [{ provide: LOCALE_ID, useValue: "de" }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

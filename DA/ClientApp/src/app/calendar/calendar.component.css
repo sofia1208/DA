@@ -5,13 +5,10 @@ h1 {
   color: #707070;
 }
 
-.schulungh1
-{
-    margin-left: 10%
-}
+,
 .container {
-   width: 100%;
-  
+  margin: 40px;
+  margin-left: 100px;
 }
 
 .buttonGray {
@@ -33,87 +30,37 @@ h1 {
 .month {
   color: #707070;
   text-align: center;
-  font-size: 30px;
-}
-.rowPostition {
-  text-align: center;
-  
+  font-size: 20px;
 }
 .outerDiv
 {
-   margin: 35px;
+    margin-top: 30px;
 }
-
+.schulungh1
+{
+    margin-left: 50px;
+}
 .activeSchooling {
   background-color: #8CEE88;
-  border-radius: 2px;
-  color: #707070;
-  padding: 10px;
-  margin: 10px;
+  border-radius: 12px;
 }
 .takenSchooling {
   background-color: #F28C8C;
-  border-radius: 2px;
-  color: #707070;
-  padding: 10px;
-  margin: 10px;
+  border-radius: 12px;
 }
-
-.filterBtn {
-margin: auto
+.filterBtn{
+    justify-items: right
 }
 .categoryBtn {
   border: none;
   margin: 3px;
-  padding: 7px;
   color: #707070;
   background: #FEAE5F;
   border-radius: 12px;
   outline: none;
-  font-size: 15px;
 }
   .categoryBtn:hover {
-  
     background: #E19E5D;
   }
-.moreDays {
-  background-color: violet;
-  padding: 10px;
-  margin: 10px;
-  color: #707070;
-}
-.detailview{
-    margin-top: 40px;
-    
-}
-[hidden] {
-  display: none !important;
-}
-.mat-typography h3{
-    margin-top: 3px;
-    font-size: 20px;
-}
-.mat-typography p{
-    margin:auto;
-}
-.holiday {
-  background-color: #DEEFF5;
-  padding: 10px;
-  margin: 10px;
-}
-.outerRow {
-  margin: 50px;
-  margin-left: 70px;
-  font-size: 20px;
-  color: #707070;
-}
-.col1{
-width: 25%
-}
-.col2{
-    width: 75%
-}
-.innerRows{
-    height: 30px;
-}
+
 

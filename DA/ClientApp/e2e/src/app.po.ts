@@ -2,10 +2,10 @@ import { browser, by, element } from 'protractor';
 
 export class AppPage {
   navigateTo() {
-    return browser.get('/');
+    return browser.Get('/');
   }
 
-  getMainHeading() {
-    return element(by.css('app-root h1')).getText();
+  GetMainHeading() {
+    return element(by.css('app-root h1')).GetText();
   }
 }
