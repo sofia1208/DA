@@ -1,0 +1,100 @@
+<div class="outerDiv">
+  <h1 class="schulungh1">
+    Anmeldung
+  </h1>
+  <h3 #detailView class="detailTitle">{{detailTitle}}</h3>
+  <div class="detailview">
+
+
+
+    <div class="row outerRow">
+      <div class="column col1">
+        <div class="row innerRows">Termin</div>
+        <div class="row innerRows">Uhrzeit</div>
+        <div class="row innerRows">Preis</div>
+        <div class="row innerRows">Organisator</div>
+        <div class="row innerRows">Kontaktperson</div>
+        <div class="row innerRows">Telefon</div>
+        <div class="row innerRows">Adresse</div>
+      </div>
+
+      <div class="column col2">
+        <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
+        <div class="row innerRows">{{startTime}} - {{endTime}}</div>
+        <div class="row innerRows">{{preis}}</div>
+        <div class="row innerRows">{{organisator}}</div>
+        <div class="row innerRows">{{kontaktperson}}</div>
+        <div class="row innerRows">{{telefon}}</div>
+        <div class="row innerRows">{{adresse}}</div>
+      </div>
+
+
+    </div>
+    <h3 class="firma">Firma</h3>
+
+    <!--<form>
+      <div class="row innerRows input">Name</div>
+      <input class="row innerRows inputText input">
+    </form>
+    <form>
+      <div class="row innerRows input">Telefonnummer</div>
+      <input class="row innerRows inputText input">
+    </form>
+    <form>
+      <div class="row innerRows input">E-Mail</div>
+      <input class="row innerRows inputText input">
+    </form>
+    <form>
+      <div class="row innerRows input">Straße</div>
+      <input class="row innerRows inputText input">
+    </form>
+    <form>
+      <div class="row innerRows input">Hausnummer</div>
+      <input class="row innerRows inputText input">
+    </form>
+    <form>
+      <div class="row innerRows input">Postleitzahl</div>
+      <input class="row innerRows inputText input">
+    </form>
+    <form>
+      <div class="row innerRows input">Stadt</div>
+      <input class="row innerRows inputText input">
+    </form>
+    <form>
+      <div class="row innerRows input">Land</div>
+      <input class="row innerRows inputText input">
+    </form>-->
+    <div class="row outerRow">
+
+      <div class="column col1">
+        <div class="row innerRows">Name</div>
+        <div class="row innerRows">Telefonnummer</div>
+        <div class="row innerRows">E-Mail</div>
+        <div class="row innerRows">Straße</div>
+        <div class="row innerRows">Hausnummer</div>
+        <div class="row innerRows">Postleitzahl</div>
+        <div class="row innerRows">Stadt</div>
+        <div class="row innerRows">Land</div>
+
+      </div>
+
+      <div class="column col2">
+        <input class="row innerRows inputText">
+        <input class="row innerRows inputText">
+        <input class="row innerRows inputText">
+        <input class="row innerRows inputText">
+        <input class="row innerRows inputText">
+        <input class="row innerRows inputText">
+        <input class="row innerRows inputText">
+        <input class="row innerRows inputText">
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>
+
+
+

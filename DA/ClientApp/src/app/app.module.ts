@@ -18,9 +18,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { LOCALE_ID } from '@angular/core';
+import { RegistrationComponent } from './registration/registration.component';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
-  { path: 'calendar', component: CalendarComponent }];
+  { path: 'calendar', component: CalendarComponent },
+  { path: 'registration', component: RegistrationComponent }];
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,7 @@ const routes: Routes = [
     CounterComponent,
     FetchDataComponent,
     CalendarComponent,
+    RegistrationComponent,
 
   ],
   imports: [

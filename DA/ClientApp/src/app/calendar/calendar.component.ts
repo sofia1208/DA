@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,  ViewChildren, QueryList } from '@angular/core';
 
 import {
 
@@ -9,12 +9,6 @@ import {
 import {
   startOfDay,
   endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
   
 } from 'date-fns';
 
@@ -22,7 +16,7 @@ import { Subject } from 'rxjs';
 
 import {
   CalendarEvent,
-  CalendarEventAction,
+ 
   CalendarEventTimesChangedEvent,
   CalendarView,
   CalendarDateFormatter,
@@ -36,7 +30,7 @@ import { Observable } from 'rxjs';
 import { SchoolingGet } from './SchoolingGet';
 import { Holiday } from './Holiday';
 import { HolidayAPI } from './HolidayAPI';
-import { element } from 'protractor';
+
 import { SchoolingDto } from './SchoolingDto';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
@@ -237,7 +231,7 @@ export class CalendarComponent implements OnInit {
       let schooling = new SchoolingDto;
     let id = event.id;
     if (event.isHoliday) {
-
+      this.hidden = true;
     }
     else {
       this.hidden = false;
@@ -288,7 +282,7 @@ export class CalendarComponent implements OnInit {
       this.startTime = "0" + start.getHours();
     }
     if (end.getHours() < 10) {
-      this.endTime = "0" + start.getHours();
+      this.endTime = "0" + end.getHours();
     }
     if (start.getMinutes() < 10) {
       this.startTime = this.startTime + ":0" + start.getMinutes(); 
