@@ -1,0 +1,147 @@
+
+
+h1 {
+  font-size: 24px;
+  color: #707070;
+}
+
+.schulungh1 {
+
+}
+
+.container {
+  width: 100%;
+}
+
+.buttonGray {
+  border-radius: 12px;
+  color: #707070;
+  background-color: #D4D4D4;
+}
+
+  .buttonGray:hover {
+    background-color: #F8F4F4;
+    color: #FEAE5F;
+  }
+
+  .buttonGray.click {
+    background-color: white;
+    color: #FEAE5F;
+  }
+
+.month {
+  color: #707070;
+  text-align: center;
+  font-size: 30px;
+}
+
+.rowPostition {
+  text-align: center;
+}
+
+.outerDiv {
+  margin: 35px;
+}
+
+.activeSchooling {
+  background-color: #8CEE88;
+  border-radius: 2px;
+  color: #707070;
+  padding: 10px;
+  margin: 10px;
+}
+
+.takenSchooling {
+  background-color: #F28C8C;
+  border-radius: 2px;
+  color: #707070;
+  padding: 10px;
+  margin: 10px;
+}
+
+.filterBtn {
+  margin: auto
+}
+
+.categoryBtn {
+  border: none;
+  margin: 3px;
+  padding: 7px;
+  color: #707070;
+  background: #FEAE5F;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+}
+
+  .categoryBtn:hover {
+    background: #E19E5D;
+  }
+
+.detailview {
+  margin-top: 5px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.mat-typography h3 {
+  margin-top: 3px;
+  font-size: 20px;
+}
+
+.mat-typography p {
+  margin: auto;
+}
+
+.holiday {
+  background-color: #DEEFF5;
+  padding: 10px;
+  margin: 10px;
+}
+
+.outerRow {
+  margin: 13px;
+  margin-left: 20px;
+  font-size: 18px;
+  color: #707070;
+}
+
+.col1 {
+  width: 25%
+}
+
+.col2 {
+  width: 50%
+}
+
+.innerRows {
+  height: 30px;
+  margin-bottom: 5px;
+}
+.detailTitle {
+  color: #FEAE5F;
+  font-size: 20px;
+}
+
+.inputText {
+
+  margin-left: 20px;
+  border-radius: 12px;
+}
+.firma {
+  margin-top: 13px;
+  margin-bottom: 5px;
+  color: #707070;
+}
+.input,
+.submit {
+  display: inline-table;
+  padding: 10px 15px;
+  font-size: 20px;
+  margin: 10px;
+  border-radius: 12px;
+  -webkit-appearance: none;
+}
+

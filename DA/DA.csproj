@@ -27,7 +27,8 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\calendar\CustomDateFormatter.ts" />
-    <None Remove="ClientApp\src\app\calendar\Schooling.ts" />
+    <None Remove="ClientApp\src\app\calendar\CustomEvent.ts" />
+    <None Remove="ClientApp\src\app\calendar\Holiday.ts" />
     <None Remove="ClientApp\src\app\calendar\SchoolingGet.ts" />
   </ItemGroup>
 
@@ -37,6 +38,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
@@ -52,6 +54,7 @@
     </PackageReference>
     <PackageReference Include="MySql.Data.Entity" Version="6.10.9" />
     <PackageReference Include="MySqlConnector" Version="1.0.0" />
+    <PackageReference Include="Nager.Date" Version="1.26.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
     <PackageReference Include="System.Management" Version="4.7.0" />
@@ -70,8 +73,15 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\calendar\CustomDateFormatter.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\calendar\Schooling.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\calendar\Holiday.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\calendar\CustomEvent.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\SchoolingGet.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ClientApp\src\assets\holidayGermanNames.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
