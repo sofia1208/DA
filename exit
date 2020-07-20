@@ -1,0 +1,559 @@
+[33mcommit 49ce77d652e4340fcfe7dc8bdef55329d9424a4d[m[33m ([m[1;36mHEAD -> [m[1;32mfrontend[m[33m)[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Mon Jul 20 08:04:17 2020 +0200
+
+    commit update
+
+[33mcommit 00282c72298e4391be85e163c855dd409a190cfb[m[33m ([m[1;31morigin/frontend[m[33m)[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Mon Jul 20 08:02:44 2020 +0200
+
+    update cli
+
+[33mcommit 22129f71055d8c66b9e000e88825af790885c77b[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Mon Jul 20 07:52:29 2020 +0200
+
+    before update
+
+[33mcommit e20775a59d38227bfe6251df4aae41bc3b631ac2[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Mon Jul 20 07:36:18 2020 +0200
+
+    commit before update
+
+[33mcommit 21adac930fcd8fb1a2058d71d59fc1dff0d23ff7[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Fri Jul 17 10:21:35 2020 +0200
+
+    some bug fixes
+
+[33mcommit 871732926ce06260ab329b84812dba9c45a5429d[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 16 13:16:04 2020 +0200
+
+    bug fixes details
+
+[33mcommit 4a88b784b260dfed1c6035aa22fb5c5571cb5b5f[m
+Merge: d8fbb4b e6c3722
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 16 12:23:53 2020 +0200
+
+    Merge branch 'master' into frontend
+
+[33mcommit d8fbb4b4cdec384d5a5a6613dbfc11c28a94da44[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 16 12:23:00 2020 +0200
+
+    detail some bux fixes
+
+[33mcommit e6c37225dfa76c0d011c6b36915fafb6bbfdd745[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 16 10:18:04 2020 +0200
+
+    minor fixes
+
+[33mcommit cb55034cc22803020379b82d73bca935eb756454[m
+Merge: ad4b6c7 cafd7dd
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 16 10:12:48 2020 +0200
+
+    Merge branch 'master' into frontend
+
+[33mcommit ad4b6c7350a7f31c2fd25c1778ea55ca2cfe4412[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 16 10:11:32 2020 +0200
+
+    merge commit
+
+[33mcommit cafd7ddeab3d48724f48960257b1dd6f05cc0d46[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 16 10:08:53 2020 +0200
+
+    fixed SchoolingDetailDto
+
+[33mcommit 7c0240a037fd4fc5c7b8310f6ea21d59dba80a45[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 16 10:03:46 2020 +0200
+
+    detailView
+
+[33mcommit 5c932824669359886943f3099f75ade8b3f23d7d[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 16 08:39:35 2020 +0200
+
+    holidays done
+
+[33mcommit da114b6733674effd4398f8d2d862c28b56931de[m
+Merge: 2dd943a 1095916
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 16 07:30:06 2020 +0200
+
+    Merge branch 'backend'
+
+[33mcommit 10959160e77acc0d4ac497bdde2f896c607a4ceb[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 16 07:29:42 2020 +0200
+
+    merge commit
+
+[33mcommit 4b6f1702c33f56359ab21bfd9383db0a06df30eb[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 15 13:47:41 2020 +0200
+
+    holiday events
+
+[33mcommit e82308989672d687372a79b4f1b11973e73d3aa3[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 13:44:11 2020 +0200
+
+    code cleanup
+
+[33mcommit ad5e907a1dc56422bea3bb28c5a0d23bd2b89fc8[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 12:41:12 2020 +0200
+
+    automatic mails work
+
+[33mcommit 2dd943a0b267459fc03311306cc939054f35364d[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 11:20:47 2020 +0200
+
+    bug fix
+
+[33mcommit 271e420265fe8b95d428ff84527669b43a67db3e[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 11:20:16 2020 +0200
+
+    automatic mails 2.0
+
+[33mcommit dc120c7c0cc529146fe735193a6870d9e6cd6cfe[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 15 10:56:31 2020 +0200
+
+    layout
+
+[33mcommit 1cb2ac599b551efde4cff10cac99d7d032c33071[m
+Merge: adef0ec bf3c708
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 10:15:59 2020 +0200
+
+    Merge branch 'master' into backend
+
+[33mcommit adef0ec74001d6ca50b2edec3336e9b2514f13b9[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 10:15:36 2020 +0200
+
+    bug fix
+
+[33mcommit fd5dc3c91d295cf9d39dacc40f2649bb21d79736[m
+Merge: bf5f664 bf3c708
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 15 09:00:15 2020 +0200
+
+    Merge branch 'master' into frontend
+
+[33mcommit bf5f6645e473e39d24b41f7615dcf49d11eb7f6e[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 15 08:59:10 2020 +0200
+
+    frontend merge
+
+[33mcommit bf3c708528baa018b2d6d81bc995186c506764b1[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 08:57:41 2020 +0200
+
+    minor fixes for schoolingSummary
+
+[33mcommit 5e21751e9c335ba53a036fd0732978f3579e4ab6[m
+Merge: e935086 f1c7621
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 15 08:47:45 2020 +0200
+
+    Merge branch 'master' into frontend
+
+[33mcommit e935086f197b901ca87db89a8adae80b9edec229[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 15 08:45:00 2020 +0200
+
+    Holidays German
+
+[33mcommit f1c7621a8ce8a75bb7982f44d7341bb0c1193cca[m
+Merge: ce256f8 1d7b3aa
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 08:41:26 2020 +0200
+
+    Merge branch 'backend'
+
+[33mcommit 1d7b3aaceaa465a5020189f6a84bcacc2218d81e[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 15 08:39:28 2020 +0200
+
+    get data from database
+
+[33mcommit 58c0f48cbc188e4309a255d70e7a1fbbbe1f0ae1[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 13:08:13 2020 +0200
+
+    get lists from database
+
+[33mcommit ed72cac8d24d8c09b4f6628a4f7f3dbe35700332[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 13:04:58 2020 +0200
+
+    get holidays
+
+[33mcommit a55377997f230862a1b7a96dc358393678ac13ef[m
+Merge: c4c7595 ce256f8
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 09:26:38 2020 +0200
+
+    merge comm
+
+[33mcommit c4c75950dd4b9152e31960b3aad03e007a0facc8[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 09:25:29 2020 +0200
+
+    pull commit
+
+[33mcommit cc7b791d442b5d9d0a190e8af1b4b852654018a3[m
+Merge: 9b01aba 655a7cc
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 09:23:07 2020 +0200
+
+    commit changes
+
+[33mcommit ce256f8ff616719d46f0aaad5ddfdb1380a3fd24[m
+Merge: 655a7cc 6dc5d3e
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 09:05:14 2020 +0200
+
+    Merge branch 'backend'
+
+[33mcommit 6dc5d3e96461306acac923b985933fe0f05b8807[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 08:58:00 2020 +0200
+
+    database connection 1.0
+
+[33mcommit 9b01aba2596fe28fa932134e7e006d9943c9bcf7[m
+Merge: 63bd1a0 1ec774c
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 08:14:21 2020 +0200
+
+    merge
+
+[33mcommit 63bd1a0e59c982a44f36ba4365830bac35e3337f[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 08:06:32 2020 +0200
+
+    commit frontend
+
+[33mcommit 655a7ccba7ed5ca4c7957b15ffd93610ed645936[m
+Merge: 5a1d77f dfc36e9
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 08:03:43 2020 +0200
+
+    commit changes
+
+[33mcommit 5a1d77ffdfcb22df642542202137516c6a2da1a4[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 08:02:08 2020 +0200
+
+    merge master
+
+[33mcommit 0e96ca7813d5fa290bef483bf93a5466e7802801[m
+Merge: 363dd22 1ec774c
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 08:00:27 2020 +0200
+
+    commit add lib
+
+[33mcommit dfc36e93943891c83da1fd06053fec8f2bad6764[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 07:47:55 2020 +0200
+
+    fixed merge fails
+
+[33mcommit 363dd22176b181c7e0c140b85ed6937c403d33ba[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 07:41:10 2020 +0200
+
+    merge commit
+
+[33mcommit 1ec774c42bb99762df4445491046dec6316daaea[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 07:36:55 2020 +0200
+
+    removed wrong libraries
+
+[33mcommit 3255b504b7e4f314ce37e3357bc3d597fbac7ac0[m
+Merge: ef0d187 af034bc
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 07:34:39 2020 +0200
+
+    Merge branch 'master' of https://github.com/sofia1208/DA
+
+[33mcommit ef0d187af242bf02a65e1909c172a9da14fa8df0[m
+Merge: fb3c45d 78b13a0
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 07:32:45 2020 +0200
+
+    Merge branch 'backend'
+
+[33mcommit af034bc59e0bf63be7dfae7994a9f46199b0ca19[m
+Merge: 737f8be fb3c45d
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 07:21:22 2020 +0200
+
+    Merge branch 'master' into frontend
+
+[33mcommit fb3c45d7bdb25ea174a2f465b981b39a18f9818a[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 07:19:48 2020 +0200
+
+    backend merge
+
+[33mcommit 78b13a0115eaf0a7979d5b3fc09b5df534b3e8c7[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Tue Jul 14 07:17:27 2020 +0200
+
+    database connection fixes
+
+[33mcommit 737f8be032517d2edcd382b6d0868ad015da71d1[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Tue Jul 14 07:15:16 2020 +0200
+
+    Frontend merge commit
+
+[33mcommit a35e791f69bbe6cf4a68763ed32183f3fad523fa[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Mon Jul 13 08:51:03 2020 +0200
+
+    Filtern
+
+[33mcommit 9dcf8d9c07581f339bb3ccb5157dd766f057e60e[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Mon Jul 13 08:21:49 2020 +0200
+
+    Load schoolings from the beginning bug fixes
+
+[33mcommit 70f134b23ac1ef807c52d50ed35a4d45e13bfe12[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 9 14:41:07 2020 +0200
+
+    fixed some more database connection issues
+
+[33mcommit 02a87d0351a1bb2acfb612aa2060edf7158d28a2[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 9 14:08:17 2020 +0200
+
+    fixed some database connection problem
+
+[33mcommit 0dd99a4ff040b20cda0f953c1e56ab5095f399af[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 9 13:07:20 2020 +0200
+
+    backend verbindung zu datenbank
+
+[33mcommit d67ccee93dc048a81315fdbafc72a33b18d023cd[m
+Merge: 175e2e2 30940da
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 9 11:34:14 2020 +0200
+
+    Merge branch 'master' into backend
+
+[33mcommit 30940da54b9a670984d38b68db44f44450c5df03[m
+Merge: 3674ed6 6e41239
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 9 11:27:22 2020 +0200
+
+    master merge
+
+[33mcommit 3674ed6b490b673aef46b44efafc849b80808ec0[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 9 11:25:25 2020 +0200
+
+    Commit frontend
+
+[33mcommit 6e41239eadcf138341a206d6068c40e6ef5bb5ed[m
+Merge: 682babe 9ba0195
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 9 11:23:43 2020 +0200
+
+    calendar events from database
+
+[33mcommit 682babe8eacf9578afb1c41bd76d5b64cc74e69e[m
+Merge: 8d635cc f07d678
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 9 11:19:01 2020 +0200
+
+    conntect to database
+
+[33mcommit 175e2e21853420de12f30571a40a8aa783b6efcf[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 9 11:18:57 2020 +0200
+
+    starting Automatic Mails, Connection to database
+
+[33mcommit 9ba019541a42d42a7249b3644331f065913b6a03[m
+Merge: 8d635cc f07d678
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 9 07:43:32 2020 +0200
+
+    Merge branch 'master' into frontend
+
+[33mcommit 8d635cc8525271a219cbf24855c1f54d2c2179d9[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 9 07:41:54 2020 +0200
+
+    frontend commit
+
+[33mcommit f07d67867cb56032eb7ac174d7594fb76e1a7d4b[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 9 07:38:56 2020 +0200
+
+    merge commit
+
+[33mcommit 049e28e647e3a12a4c4bad7b4abc0570ecf44e67[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Thu Jul 9 07:38:56 2020 +0200
+
+    backend fix 09.07.
+
+[33mcommit d83bbb1844c94789d3f268e0cb5f522e2b189f8c[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Thu Jul 9 07:38:12 2020 +0200
+
+    starting commit 09.07
+
+[33mcommit 6629eb542d7f69e44ba8c1177ec017f5a3bb4c01[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 15:22:36 2020 +0200
+
+    connect to backend
+
+[33mcommit 25c2b4eff80f51c3aac16c4c441006a5eacc7388[m
+Merge: 19f6d72 e716e03
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 14:41:32 2020 +0200
+
+    Merge branch 'frontend'
+
+[33mcommit e716e03102de8a1b16bc4993b864f5399e827e6a[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 14:40:16 2020 +0200
+
+    merge commit 8.7
+
+[33mcommit 8aa843b2aaf05c0cdeb31ed2d9eb6b6aa0885984[m
+Merge: 7db8bcf 63f490b
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 14:38:44 2020 +0200
+
+    Merge branch 'master' into frontend
+
+[33mcommit 19f6d72b22a8ecd8c7cba135f570fea85179f508[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 14:37:34 2020 +0200
+
+    commit merge 2
+
+[33mcommit 7db8bcf1e290a9635e26fee494c2af911f0183dc[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 14:34:19 2020 +0200
+
+    color scheme
+
+[33mcommit 63f490b9a2a7021250210388802eb84f54f4d434[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 8 14:30:26 2020 +0200
+
+    filter Schoolings
+
+[33mcommit 9ee4b152f1466cb9b30da7ba9ae272e58a4ad579[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 14:22:35 2020 +0200
+
+    Schooling filter
+
+[33mcommit 3e7adbb722df70056d8e19305b128ede86396270[m
+Merge: 9001ea2 88b0bde
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 8 14:13:37 2020 +0200
+
+    Merge branch 'master' of https://github.com/sofia1208/DA
+
+[33mcommit 9001ea2682361abbf7b02eaaca5feaa3acf18f6b[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 8 14:09:38 2020 +0200
+
+    filter schoolings
+
+[33mcommit b171965b51d61be9ec091dad9680833dca362112[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 13:40:44 2020 +0200
+
+    Calendar Events with new attribute
+
+[33mcommit 88b0bdea2e0d77265a23b33b47ee3f6211a70f6a[m
+Merge: 8b09c69 9eea013
+Author: sofia1208 <47629129+sofia1208@users.noreply.github.com>
+Date:   Wed Jul 8 11:31:10 2020 +0200
+
+    Merge pull request #1 from sofia1208/frontend
+    
+    Frontend merge
+
+[33mcommit 9eea013b1ef30aca953a269211073855d8dcb70e[m
+Merge: dcf4a20 8b09c69
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 11:29:55 2020 +0200
+
+    Merge branch 'master' into frontend
+
+[33mcommit dcf4a200f6231917b6b2a91ffbe3e9fc45575625[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 11:28:19 2020 +0200
+
+    merge commit
+
+[33mcommit b1b8163914ed7cc55c98dec79df99d29d6a80075[m
+Merge: 38a2bb1 fb6b878
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 11:17:16 2020 +0200
+
+    merge result
+
+[33mcommit fb6b8781335ee9b18d7b46aa88a180bd15c7750c[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 11:15:51 2020 +0200
+
+    merge commit
+
+[33mcommit 8b09c694b4e058a22aad9f86ea49ea4dac652787[m
+Merge: 21cb2a8 a8798b0
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 8 11:10:13 2020 +0200
+
+    merge
+
+[33mcommit 38a2bb1a652ccb7de7fb661be8dc26d8e27588c3[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 11:07:19 2020 +0200
+
+    done
+
+[33mcommit 21cb2a85a69c005ef8c948799a5ebf9e13a3f019[m
+Author: iarthofer16 <47629174+iarthofer16@users.noreply.github.com>
+Date:   Wed Jul 8 11:06:29 2020 +0200
+
+    merge commit
+
+[33mcommit a4212933910adf2a70b493c582cf9de55d70b487[m
+Author: sofia1208 <sofia.schmidmair@live.de>
+Date:   Wed Jul 8 11:03:03 2020 +0200
+
+    Customized template
+
+[33mcommit 1c11be593926062cf7ace76d7b5ec513fb50ee5b[
