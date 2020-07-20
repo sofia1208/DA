@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CustomDateFormatter extends CalendarDateFormatter {
-  // TODO: add explicit constructor
-
  
 
   public dayViewHour({ date, locale }: DateFormatterParams): string {

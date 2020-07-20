@@ -1,10 +1,15 @@
 export class SchoolingGet {
   id: number;
   address: string;
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
   name: string;
   organizer: string;
   price: number;
+  isFree: boolean;
+ 
+
+  
+
 
 }

@@ -2,13 +2,17 @@
   text-align: center;
   font-weight: bolder; }
 
-.cal-month-view .cal-header .cal-cell {
-  padding: 5px 0;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
-  display: block;
-  white-space: nowrap; }
+  .cal-month-view .cal-header .cal-cell {
+    padding: 5px 0;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    display: block;
+    color: #707070;
+     
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    white-space: nowrap;
+  }
 
 .cal-month-view .cal-days {
   border: 1px solid;
@@ -184,6 +188,7 @@
         -ms-flex: 1;
             flex: 1;
     text-align: center;
+    color: #707070;
     padding: 5px; }
     .cal-week-view .cal-day-headers .cal-header:not(:last-child) {
       border-right: 1px solid; }
@@ -358,8 +363,9 @@
     border-left-color: #e1e1e1; }
   .cal-week-view .cal-event {
     background-color: #8CEE88;
-    border-color: #1e90ff;
-    color: #1e90ff;
+    border-color: #5ba658;
+    color: #707070;
+    font-size: 14px;
   }
   .cal-week-view .cal-all-day-events {
     border-color: #e1e1e1; }

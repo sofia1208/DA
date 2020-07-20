@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 
 import {
 
@@ -30,10 +30,17 @@ import {
   DAYS_OF_WEEK,
 } from 'angular-calendar';
 import { CustomDateFormatter } from './customdateformatter';
-import { Schooling } from './Schooling';
+import { CustomEvent } from './CustomEvent';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SchoolingGet } from './SchoolingGet';
+import { Holiday } from './Holiday';
+import { HolidayAPI } from './HolidayAPI';
+import { element } from 'protractor';
+import { SchoolingDto } from './SchoolingDto';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+registerLocaleData(localeDe, 'de');
 
 @Component({
   selector: 'app-calendar',
@@ -52,39 +59,62 @@ import { SchoolingGet } from './SchoolingGet';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  schoolings: SchoolingGet[] = [];
-  events: Schooling[] = [];
-  constructor(private http: HttpClient) { }
+ @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
 
-  //url = 'https://localhost:5001/schoolings/summary';
+  schoolings: SchoolingGet[] = [];
+  events: CustomEvent[] = [];
+  holidayApis: HolidayAPI[] = [];
+  holidays: Holiday[] = [];
+
+  startDate: Date;
+  endDate: Date;
+  startTime: Date;
+  endTime: Date;
+  preis: string = '';
+  organisator: string = '';
+  kontaktperson: string = '';
+  telefon: string = '';
+  adresse: string = '';
+
+
+
+
+  constructor(private http: HttpClient) { }
+  ngAfterViewInit(): void {
+ 
+    }
+ 
+  
   ngOnInit() {
     console.log('ngOnInit');
-    this.GetSummary();
+    this.getSummary();
+    this.getHolidays();
+    
 
   }
 
-
+  
   locale: string = 'de';
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 
   weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
   view: CalendarView = CalendarView.Day;
-
+  
   CalendarView = CalendarView;
+  @ViewChildren("detailView") detailView: QueryList<any>
 
+ // @ViewChild('detailView', { static: false }) detailView: ElementRef;
   viewDate: Date = new Date();
-
-
-
+  detailTitle: string = '';
+  hidden: boolean= true;
   modalData: {
     action: string;
     event: CalendarEvent;
   };
  
-  GetSummary(): void {
+  getSummary(): void {
   
-    this.GetSchoolings('https://localhost:5001/schoolings/summary')
+    this.getSchoolings('https://localhost:5001/schoolings/summary')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -100,12 +130,47 @@ export class CalendarComponent implements OnInit {
   onDateClick(): void {
   }
 
+  getHolidays(): void {
+    //TO-DO Jahr dynamisch machen
+    this.getHolidaysHTTP('https://getfestivo.com/v2/holidays?api_key=4995fde4f1b7998b6d7632886ede685a&country=AT&year=2020&language=de')
+      .subscribe(data => {
+
+        this.holidayApis = data;
+        this.holidaysToEvents();
+   
+      });
+
+  
+  
+  
+  }
 
 
-  GetGrundlagen(): void {
+  getGrundlagen(): void {
+  
     this.schoolings = [];
     this.events = [];
-    this.GetSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
+    this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+   
+
+    console.log(this.schoolings.length);
+
+  }
+  getWorkshop(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/workshop')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -120,28 +185,10 @@ export class CalendarComponent implements OnInit {
     console.log(this.schoolings.length);
 
   }
-  GetWorkshop(): void {
+  getAdmin(): void {
     this.schoolings = [];
     this.events = [];
-    this.GetSchoolings('https://localhost:5001/schoolings/summary/workshop')
-      .subscribe(data => {
-        this.schoolings = data;
-        this.schoolingsToEvents();
-
-      }
-        , err => {
-          console.log(`${err.message}`)
-        })
-      ;
-    this.schoolingsToEvents();
-
-    console.log(this.schoolings.length);
-
-  }
-  GetAdmin(): void {
-    this.schoolings = [];
-    this.events = [];
-    this.GetSchoolings('https://localhost:5001/schoolings/summary/administrator')
+    this.getSchoolings('https://localhost:5001/schoolings/summary/administrator')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -156,10 +203,10 @@ export class CalendarComponent implements OnInit {
     console.log(this.schoolings.length);
 
   }
-  GetKombimodell(): void {
+  getKombimodell(): void {
     this.schoolings = [];
     this.events = [];
-    this.GetSchoolings('https://localhost:5001/schoolings/summary/kombimodell')
+    this.getSchoolings('https://localhost:5001/schoolings/summary/kombimodell')
       .subscribe(data => {
         this.schoolings = data;
         this.schoolingsToEvents();
@@ -180,72 +227,53 @@ export class CalendarComponent implements OnInit {
 
  
  
-  //events: Schooling[] = [
-  //  {
-  //    start: subDays(startOfDay(new Date()), 1),
-  //    end: addDays(new Date(), 1),
-  //    title: 'moveIT@SSQ Grundlagen',
-  //    color: colors.red,
-     
-  //    allDay: true,
-  //    resizable: {
-  //      beforeStart: true,
-  //      afterEnd: true,
-       
-  //    },
-  //    draggable: true,
-  //    isFree: false,
-    
-  //  },
-  //  {
-  //    start: startOfDay(new Date()),
-  //    title: 'moveIT@SSQ Grundlagen',
-  //    color: colors.green,
-  //    isFree: true,
+  
+
+  clickOnEvent(event: CalendarEvent): void {
+    this.hidden = false;
+    this.detailView.length;
+    let schooling = new SchoolingDto;
+     let id = event.id;
+    this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
+      .subscribe(data => {
+        schooling = data;
+        console.log(data);
+        
+        this.fillDetails(schooling);
+  
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+
+
    
-  //  },
-  //  {
-  //    start: subDays(endOfMonth(new Date()), 3),
-  //    end: addDays(endOfMonth(new Date()), 3),
-  //    title: 'moveIT@SSQ Grundlagens',
-  //    color: colors.green,
-  //    allDay: true,
-  //    isFree: false,
-  //  },
-  //  {
-  //    start: addHours(startOfDay(new Date()), 2),
-  //    end: addHours(new Date(), 2),
-  //    title: 'moveIT@SSQ Grundlagen',
-  //    color: colors.red,
-   
-  //    resizable: {
-  //      beforeStart: true,
-  //      afterEnd: true,
-  //    },
-  //    draggable: true,
-  //    isFree: true,
-  //  },
-  //];
-  clickOnEvent(id :number): void {
-     //TODO:bei Event eine ID mitgeben,  Get Request mit ID
-}
+  }
+
 
   activeDayIsOpen: boolean = false;
 
- 
-
+  fillDetails(schooling: SchoolingDto) {
+    //TO-DO Deutsche Uhrzeit
+    this.telefon = schooling.phone;
+    this.startTime = new Date(schooling.start);
+    this.endTime = new Date(schooling.end);
+    this.preis = schooling.price.toString() + " €";
+    this.organisator = schooling.organizer;
+    this.kontaktperson = "";
+    this.startDate = new Date(schooling.start);
+    this.endDate = new Date(schooling.end);
+    this.adresse = schooling.streetNumber + " " + schooling.zipcode + " " + schooling.city + ", " + schooling.country;
+        //this.kontaktperson = schooling.kontaktperson;
+  }
+  
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    //if (isSameMonth(date, this.viewDate)) {
-    //  if (
-    //    (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-    //    events.length === 0
-    //  ) {
-    //    this.activeDayIsOpen = false;
-    //  } else {
-    //    this.activeDayIsOpen = true;
-    //  }
-    //  this.viewDate = date;
-    //}
+    // TO-DO: Bei mehreren Events an einem Tag?
+    this.detailTitle = events[0].title;
+    let event = events[0];
+    this.clickOnEvent(event);
   }
 
   eventTimesChanged({
@@ -260,6 +288,9 @@ export class CalendarComponent implements OnInit {
           start: newStart,
           end: newEnd,
           isFree: true,
+          isHoliday: false,
+
+          hasMoreDays: false,
         };
       }
       return iEvent;
@@ -268,8 +299,9 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
+    console.log(event.id);
+    this.detailTitle = event.title;
+    this.clickOnEvent(event);
   }
 
   addEvent(): void {
@@ -286,6 +318,8 @@ export class CalendarComponent implements OnInit {
           afterEnd: true,
         },
         isFree: true,
+        isHoliday: false,
+        hasMoreDays: false,
       },
     ];
   }
@@ -301,21 +335,42 @@ export class CalendarComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+  private getDetail(url: string): Observable<SchoolingDto> {
+    return this.http.get<SchoolingDto>(url);
 
-  private GetSchoolings(url: string): Observable<SchoolingGet[]> {
-    return this.http.Get<SchoolingGet[]>(url);
+  }
+
+  private getSchoolings(url: string): Observable<SchoolingGet[]> {
+    return this.http.get<SchoolingGet[]>(url);
    
   }
+  private getHolidaysHTTP(url: string): Observable<HolidayAPI[]> {
+    return this.http.get<HolidayAPI[]>(url);
+
+  }
   private schoolingsToEvents(): void {
-    var ret: Schooling[] = [] ;
+    var ret: CustomEvent[] = [] ;
     for (var i = 0; i < this.schoolings.length; i++) {
-     
-      const schooling: Schooling = {
+      let start = new Date(this.schoolings[i].start);
+      let end = new Date(this.schoolings[i].end);
+      let moreDays = false;
+  
+      if (start.getDay() != end.getDay()) {
+        moreDays = true;
+      }
+
+      console.log(this.schoolings)
+      const schooling: CustomEvent = {
         isFree: true,
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
+        start: startOfDay(start),
+        end: endOfDay(end),
         title: this.schoolings[i].name,
-        id: i,
+        id: this.schoolings[i].id,
+        allDay: true,
+        isHoliday: false,
+        hasMoreDays: moreDays,
+      
+
       };
      
       
@@ -327,8 +382,72 @@ export class CalendarComponent implements OnInit {
  
   
   }
+  private holidaysToEvents(): void {
+    //let holi = JSON.parse(this.holidays.toString());
+
+    let jsonObject = JSON.parse(JSON.stringify(this.holidayApis));
+    let holidays = jsonObject.holidays;
+    console.log(holidays);
+    this.convertToGerman(holidays);
+    this.createHolidayEvents();
+
+  }
+  private convertToGerman(hol: string []): void {
+  
+
+    this.http.get('assets/holidayGermanNames.csv', { responseType: 'text' })
+      .subscribe(
+        data => {
+          console.log(data);
+          let csvToRowArray = data.split("\n");
+          for (let index = 0; index < csvToRowArray.length; index++) {
+            let row = csvToRowArray[index].split(";");
+
+            for (var i = 0; i < hol.length; i++) {
+              let jsonObject = JSON.parse(JSON.stringify(hol[i]));
+              if (row[0].match(jsonObject.name)) {
+                this.holidays.push(new Holiday(row[1], new Date(jsonObject.date)));
+              }
+            }
+           
+
+         
+          
+          }
+          this.createHolidayEvents();
+        },
+        error => {
+          console.log(error);
+        }
+    );
+
+    
+  }
+
+  private createHolidayEvents(): void {
+    for (var i = 0; i < this.holidays.length; i++) {
+      const holiday: CustomEvent = {
+        isFree: true,
+        start: startOfDay(this.holidays[i].date),
+        end: endOfDay(this.holidays[i].date),
+        title: this.holidays[i].name,
+        id: this.events.length,
+        allDay: true,
+        isHoliday: true,
+        hasMoreDays: false,
+
+
+      };
+      this.events.push(holiday);
+      this.refresh.next();
+          
+    }
+  }
+
 
 }
+
+
 
 
 const colors: any = {
@@ -340,6 +459,7 @@ const colors: any = {
     primary: '#8CEE88',
     secondary: '#90ee90',
   },
+
   
 };
 
