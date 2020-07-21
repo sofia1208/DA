@@ -51,41 +51,44 @@ namespace Schulungskalender.Services {
         }
 
         public RegistrationDTO Register(RegistrationDTO registration) {
-            bool isRegistrationSuccessful = true;
+            //bool isRegistrationSuccessful = true;
 
-            if (FindAddress(registration) != null) {
-                isRegistrationSuccessful = db.InsertAddress(registration);
-                db.getAddresses(ref addresses);
-            }
-            var address = FindAddress(registration);
+            //if (FindAddress(registration) != null) {
+            //    isRegistrationSuccessful = db.InsertAddress(registration);
+            //    db.getAddresses(ref addresses);
+            //}
+            //var address = FindAddress(registration);
 
-            if (FindCompany(registration, address.Id) != null) {
-                isRegistrationSuccessful = db.InsertCompany(registration, address.Id);
-                db.getCompanies(ref companies);
-            }
-            var company = FindCompany(registration, address.Id);
+            //if (FindCompany(registration, address.Id) != null) {
+            //    isRegistrationSuccessful = db.InsertCompany(registration, address.Id);
+            //    db.getCompanies(ref companies);
+            //}
+            //var company = FindCompany(registration, address.Id);
 
-            foreach (var person in registration.Participants) {
-                var split = person.Split(';');
-                if (FindPerson(split[0], split[1], split[2], company.Id) != null) {
-                    isRegistrationSuccessful = db.InsertPerson(split, company.Id);
-                }
-            }
+            //foreach (var person in registration.Participants) {
+            //    var split = person.Split(';');
+            //    if (FindPerson(split[0], split[1], split[2], company.Id) != null) {
+            //        isRegistrationSuccessful = db.InsertPerson(split, company.Id);
+            //    }
+            //}
 
-            db.getPersons(ref persons);
+            //db.getPersons(ref persons);
 
-            foreach (var personString in registration.Participants) {
-                var split = personString.Split(';');
-                var personRessource = FindPerson(split[0], split[1], split[2], company.Id);
-                isRegistrationSuccessful = db.InsertRegistration(registration.SchoolingId, personRessource.Id);
-            }
+            //foreach (var personString in registration.Participants) {
+            //    var split = personString.Split(';');
+            //    var personRessource = FindPerson(split[0], split[1], split[2], company.Id);
+            //    isRegistrationSuccessful = db.InsertRegistration(registration.SchoolingId, personRessource.Id);
+            //}
 
-            db.getRegistrations(ref registrations);
+            //db.getRegistrations(ref registrations);
+            //
+            //
+            //if (isRegistrationSuccessful) {
+            //    //mailMaker.sendMail();
+            //}
 
+            Console.WriteLine(registration.ToString());
 
-            if (isRegistrationSuccessful) {
-                //mailMaker.sendMail();
-            }
             return registration;
         }
 
