@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation,  ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,  ViewChildren, QueryList, Input } from '@angular/core';
 
 import {
 
@@ -34,6 +34,7 @@ import { HolidayAPI } from './HolidayAPI';
 import { SchoolingDto } from './SchoolingDto';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { Router, NavigationExtras } from '@angular/router';
 registerLocaleData(localeDe, 'de');
 
 @Component({
@@ -70,10 +71,10 @@ export class CalendarComponent implements OnInit {
   telefon: string = '';
   adresse: string = '';
 
+  detailId: Number;
 
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router:Router) { }
   ngAfterViewInit(): void {
  
     }
@@ -121,8 +122,7 @@ export class CalendarComponent implements OnInit {
    
     console.log(this.schoolings.length);
   }
-  onDateClick(): void {
-  }
+
 
   getHolidays(): void {
   
@@ -221,7 +221,15 @@ export class CalendarComponent implements OnInit {
    
   refresh: Subject<any> = new Subject();
 
- 
+  goToRegistration(): void {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "id": this.detailId
+      }
+    };
+    this.router.navigate(["/registration"], navigationExtras);
+  
+  }
  
   
 
@@ -230,6 +238,7 @@ export class CalendarComponent implements OnInit {
  
       let schooling = new SchoolingDto;
     let id = event.id;
+    this.detailId = Number(event.id);
     if (event.isHoliday) {
       this.hidden = true;
     }
@@ -359,6 +368,7 @@ export class CalendarComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
   private getDetail(url: string): Observable<SchoolingDto> {
     return this.http.get<SchoolingDto>(url);
 
@@ -469,8 +479,8 @@ export class CalendarComponent implements OnInit {
   }
 
 
-}
 
+}
 
 
 

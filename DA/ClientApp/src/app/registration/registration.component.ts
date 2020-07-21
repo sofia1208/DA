@@ -3,6 +3,8 @@ import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CustomEvent } from '../calendar/CustomEvent';
+import { CalendarComponent } from '../calendar/calendar.component';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -20,15 +22,22 @@ export class RegistrationComponent implements OnInit {
   telefon: string = '';
   adresse: string = ' ';
   detailTitle: string = 'moveIT@SQQ';
-  constructor(private http: HttpClient) { }
+  detailId: Number = 0;
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(p => {
+      this.detailId = p["id"];
+    })
+  }
 
   ngOnInit(): void {
     console.log('on init registration');
-    this.getEvent(21);
-    this.getEvent(21);
+
+    this.getEvent(this.detailId);
+   
   }
 
   fillDetails(schooling: SchoolingDto) {
+
     console.log('fill details');
     this.telefon = schooling.phone;
     this.convertToGermanTime(schooling);
