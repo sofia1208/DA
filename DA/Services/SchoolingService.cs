@@ -50,7 +50,7 @@ namespace Schulungskalender.Services {
             return converter.GetSchoolingDetailDTO(schooling, address, organizer, IsSchoolingFree(id));
         }
 
-        public RegistrationDTO Register(RegistrationDTO registration) {
+        public string Register(string registration) {
             //bool isRegistrationSuccessful = true;
 
             //if (FindAddress(registration) != null) {

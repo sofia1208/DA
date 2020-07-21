@@ -31,6 +31,7 @@
     <None Remove="ClientApp\src\app\calendar\Holiday.ts" />
     <None Remove="ClientApp\src\app\calendar\SchoolingGet.ts" />
     <None Remove="ClientApp\src\app\registration\Member.ts" />
+    <None Remove="ClientApp\src\app\registration\Registration.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,6 +80,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\calendar\CustomEvent.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\SchoolingGet.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\registration\Member.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\registration\Registration.ts" />
   </ItemGroup>
 
   <ItemGroup>

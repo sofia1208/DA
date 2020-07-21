@@ -7,6 +7,7 @@ import { CalendarComponent } from '../calendar/calendar.component';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from './Member';
 import { MatTable } from '@angular/material';
+import { Registration } from './Registration';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -120,12 +121,19 @@ export class RegistrationComponent implements OnInit {
    
   }
   submit(): void {
+    console.log("Submit registration");
+    this.addCompanyToSchooling(new Registration(1, "f", "sdf", "", "", 3, 3, "", ""))
+      .subscribe(x => console.log(x));
 
+  }
+  addCompanyToSchooling(reg: Registration ): Observable<Registration> {
+    return this.http.post<Registration>(`https://localhost:5001/schoolings/registration`, "hsdfl");
   }
   private getDetail(url: string): Observable<SchoolingDto> {
     return this.http.get<SchoolingDto>(url);
 
   }
+
   
 
 }
