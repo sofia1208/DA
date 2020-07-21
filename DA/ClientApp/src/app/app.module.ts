@@ -15,7 +15,7 @@ import { registerLocaleData } from '@angular/common';
 import localDe from '@angular/common/locales/de';
 import { CalendarComponent } from './calendar/calendar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { MatInputModule } from '@angular/material';
 import { LOCALE_ID } from '@angular/core';
 import { RegistrationComponent } from './registration/registration.component';
 registerLocaleData(localDe, 'de');
@@ -38,7 +38,7 @@ const routes: Routes = [
    HttpClientModule,
     FormsModule,
  
-
+    MatInputModule,
 
     RouterModule.forRoot(routes),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
