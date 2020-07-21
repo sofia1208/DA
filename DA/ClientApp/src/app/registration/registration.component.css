@@ -40,7 +40,8 @@ h1 {
 }
 
 .outerDiv {
-  margin: 35px;
+  margin: 50px;
+  margin-left: 70px;
 }
 
 .activeSchooling {
@@ -106,6 +107,7 @@ h1 {
   margin-left: 20px;
   font-size: 18px;
   color: #707070;
+
 }
 
 .col1 {
@@ -131,9 +133,10 @@ h1 {
   border-radius: 12px;
 }
 .firma {
-  margin-top: 13px;
-  margin-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   color: #707070;
+  font-size: 18px;
 }
 .input,
 .submit {
@@ -143,5 +146,11 @@ h1 {
   margin: 10px;
   border-radius: 12px;
   -webkit-appearance: none;
+}
+.name {
+  color: #FEAE5F;
+  justify-content: center;
+  justify-self: center;
+
 }
 

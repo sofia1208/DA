@@ -16,7 +16,6 @@ import localDe from '@angular/common/locales/de';
 import { CalendarComponent } from './calendar/calendar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { LOCALE_ID } from '@angular/core';
 import { RegistrationComponent } from './registration/registration.component';
 registerLocaleData(localDe, 'de');
@@ -38,7 +37,7 @@ const routes: Routes = [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
    HttpClientModule,
     FormsModule,
-
+ 
 
 
     RouterModule.forRoot(routes),

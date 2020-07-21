@@ -25,6 +25,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     console.log('on init registration');
     this.getEvent(21);
+    this.getEvent(21);
   }
 
   fillDetails(schooling: SchoolingDto) {
@@ -43,6 +44,9 @@ export class RegistrationComponent implements OnInit {
   convertToGermanTime(schooling: SchoolingDto) {
     let start = new Date(schooling.start);
     let end = new Date(schooling.end);
+    this.startTime = start.getHours().toString();
+    this.endTime = end.getHours().toString();
+
     if (start.getHours() < 10) {
       this.startTime = "0" + start.getHours();
     }
@@ -52,16 +56,19 @@ export class RegistrationComponent implements OnInit {
     if (start.getMinutes() < 10) {
       this.startTime = this.startTime + ":0" + start.getMinutes();
     }
+    else {
+      this.startTime = this.startTime + ":" + start.getMinutes();
+    }
     if (end.getMinutes() < 10) {
       this.endTime = this.endTime + ":0" + end.getMinutes();
+    }
+    else {
+      this.endTime = this.endTime + ":" + end.getMinutes();
     }
 
 
   }
-  private getDetail(url: string): Observable<SchoolingDto> {
-    return this.http.get<SchoolingDto>(url);
 
-  }
   getEvent(id: Number): void {
 
 
@@ -80,8 +87,12 @@ export class RegistrationComponent implements OnInit {
           , err => {
             console.log(`${err.message}`)
           })
-        ;
-    
+      ;
+    this.fillDetails(schooling);
+  }
+  private getDetail(url: string): Observable<SchoolingDto> {
+    return this.http.get<SchoolingDto>(url);
+
   }
 
 }
