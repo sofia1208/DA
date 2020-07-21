@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CustomEvent } from '../calendar/CustomEvent';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { ActivatedRoute } from '@angular/router';
+import { Member } from './Member';
+import { MatTable } from '@angular/material';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -17,18 +19,25 @@ export class RegistrationComponent implements OnInit {
   startTime: string;
   endTime: string;
   preis: string = '3'
-  organisator: string = '3'
+  organisator: string = ''
   kontaktperson: string = '';
   telefon: string = '';
   adresse: string = ' ';
   detailTitle: string = 'moveIT@SQQ';
   detailId: Number = 0;
+  firstname: string = "";
+  lastname: string="";
+  email: string="";
+  members: Member[] = [];
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
+  dataSource = this.members;
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
     })
   }
 
+  displayedColumns: string[] = ['firstname', 'lastname', 'email'];
   ngOnInit(): void {
     console.log('on init registration');
 
@@ -41,12 +50,13 @@ export class RegistrationComponent implements OnInit {
     console.log('fill details');
     this.telefon = schooling.phone;
     this.convertToGermanTime(schooling);
-    this.preis = schooling.price.toString() + " €";
+    this.preis = schooling.price + " €";
     this.organisator = schooling.organizer;
     this.kontaktperson = schooling.contactPerson;
 
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
+   
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
   
   }
@@ -99,9 +109,20 @@ export class RegistrationComponent implements OnInit {
       ;
     this.fillDetails(schooling);
   }
+  addMember(): void {
+   
+  
+    this.dataSource.push(new Member(this.firstname, this.lastname, this.email));
+    this.table.renderRows();
+    this.firstname = "";
+    this.lastname = "";
+    this.email = "";
+   
+  }
   private getDetail(url: string): Observable<SchoolingDto> {
     return this.http.get<SchoolingDto>(url);
 
   }
+  
 
 }

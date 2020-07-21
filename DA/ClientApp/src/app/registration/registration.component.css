@@ -147,10 +147,64 @@ h1 {
   border-radius: 12px;
   -webkit-appearance: none;
 }
-.name {
+.teilnehmer {
+  margin-top:21px;
+}
+.mat-form-field-empty.mat-form-field-label {
   color: #FEAE5F;
-  justify-content: center;
-  justify-self: center;
+  
+}
+.mat-form-field-underline {
+  background-color: green;
+}
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #FEAE5F !important;
+}
 
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #FEAE5F !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #FEAE5F !important;
+  
+}
+.mat-form-field--inline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+  .mat-form-field--inline .mat-form-field {
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+  }
+
+    .mat-form-field--inline .mat-form-field {
+      margin-right: 10px;
+    }
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: 0;
+
+}
+.table {
+  width: 100%;
+}
+.mat-header-row{
+    height: 60px;
+    width: 300px;
+}
+.btnSubmit {
+  border-radius: 12px;
+  color: #707070;
+  background-color: #D4D4D4;
+  padding: 5px;
 }
 

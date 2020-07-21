@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material';
 import { LOCALE_ID } from '@angular/core';
 import { RegistrationComponent } from './registration/registration.component';
+import { MatTableModule } from '@angular/material/table'
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -37,7 +38,7 @@ const routes: Routes = [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
    HttpClientModule,
     FormsModule,
- 
+    MatTableModule,
     MatInputModule,
 
     RouterModule.forRoot(routes),

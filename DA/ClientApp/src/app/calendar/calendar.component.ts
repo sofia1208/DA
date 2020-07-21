@@ -54,8 +54,8 @@ registerLocaleData(localeDe, 'de');
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
- @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
-
+  @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
+  @ViewChild(HTMLDivElement, { static: true }) detailView: HTMLDivElement;
   schoolings: SchoolingGet[] = [];
   events: CustomEvent[] = [];
   holidayApis: HolidayAPI[] = [];
@@ -96,8 +96,8 @@ export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Day;
   
   CalendarView = CalendarView;
-  @ViewChildren("detailView") detailView: QueryList<any>
-  //TO-DO scrollen
+ 
+
   viewDate: Date = new Date();
   detailTitle: string = '';
   hidden: boolean = true;
@@ -250,7 +250,6 @@ export class CalendarComponent implements OnInit {
           console.log(data);
 
           this.fillDetails(schooling);
-
 
         }
           , err => {
