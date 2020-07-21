@@ -14,7 +14,8 @@ namespace DA {
         MySqlConnection connection;
 
         public Database() {
-            connectionString = "Server=10.90.90.222;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
+            //connectionString = "Server=10.90.90.222;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
+            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True";
             connection = new MySqlConnection(connectionString);
             connection.Open();
         }
@@ -85,7 +86,7 @@ namespace DA {
             using (MySqlDataReader reader = getSchoolingsCmd.ExecuteReader()) {
                 while (reader.Read()) {
                     bool reservation = (reader.GetInt32(5) == 1) ? true : false;
-                    schooling = new SchoolingRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), AddressId = reader.GetInt32(2), Start = reader.GetDateTime(3), End = reader.GetDateTime(4), Reservation = reservation, ReservationDate = reader.GetDateTime(6), OrganizerId = reader.GetInt32(7), Places = reader.GetInt32(8), Price = reader.GetDouble(9) };
+                    schooling = new SchoolingRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), AddressId = reader.GetInt32(2), Start = reader.GetDateTime(3), End = reader.GetDateTime(4), Price = reader.GetDouble(5), Reservation = reservation, ReservationDate = reader.GetDateTime(7) , OrganizerId = reader.GetInt32(8), Places = reader.GetInt32(9) };
                     schoolings.Add(schooling);
                 }
             }
