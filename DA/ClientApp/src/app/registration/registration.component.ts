@@ -18,7 +18,7 @@ export class RegistrationComponent implements OnInit {
   endDate: Date;
   startTime: string;
   endTime: string;
-  preis: string = '3'
+  preis: string = ''
   organisator: string = ''
   kontaktperson: string = '';
   telefon: string = '';
@@ -118,6 +118,9 @@ export class RegistrationComponent implements OnInit {
     this.lastname = "";
     this.email = "";
    
+  }
+  submit(): void {
+
   }
   private getDetail(url: string): Observable<SchoolingDto> {
     return this.http.get<SchoolingDto>(url);
