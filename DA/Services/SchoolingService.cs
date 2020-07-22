@@ -80,10 +80,10 @@ namespace Schulungskalender.Services {
 
             db.getRegistrations(ref registrations);
 
-
             if (isRegistrationSuccessful) {
                 //mailMaker.sendMail();
             }
+            
             return registration;
         }
 
