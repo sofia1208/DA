@@ -35,7 +35,7 @@ namespace DA.Controllers {
         }
 
         [HttpPost("Registration")]
-        public string Register([FromBody] string registration) {
+        public RegistrationDTO Register([FromBody] RegistrationDTO registration) {
             return schoolingService.Register(registration);
         }
     }

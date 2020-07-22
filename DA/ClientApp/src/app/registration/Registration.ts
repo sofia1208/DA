@@ -1,27 +1,29 @@
 import { zip } from "rxjs";
+import { Member } from "./Member";
 
 export class Registration {
   schoolingId: Number;
-  name: string;
+  company: string;
   phone: string;
-  email: string;
+  companyEmail: string;
   street: string;
   streetNumber: Number;
   zipCode: Number;
   city: string;
   country: string;
-  participates: string[];
+  participants: Member[];
   
-  constructor(schoolingId: Number, name: string, phone: string, email: string, street: string, streetNumber: Number, zipCode: Number, city: string, country: string ) {
+  constructor(schoolingId: Number, company: string, phone: string, companyEmail: string, street: string, streetNumber: Number, zipCode: Number, city: string, country: string, participants: Member[] ) {
 
-    this.name = name;
+    this.company = company;
     this.schoolingId = schoolingId;
     this.phone = phone;
-    this.email = email;
+    this.companyEmail = companyEmail;
     this.street = street;
     this.streetNumber = streetNumber;
     this.zipCode = zipCode;
     this.city = city;
     this.country = country;
+    this.participants = participants;
   }
 }

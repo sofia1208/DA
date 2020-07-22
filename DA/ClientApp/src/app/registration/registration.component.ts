@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CustomEvent } from '../calendar/CustomEvent';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { ActivatedRoute } from '@angular/router';
@@ -30,6 +30,17 @@ export class RegistrationComponent implements OnInit {
   lastname: string="";
   email: string="";
   members: Member[] = [];
+
+
+  company: string= "";
+  companyPhone: string = "";
+  companyMail: string = "";
+  companyStreet: string = "";
+  companyStreetNumber: Number;
+  companyZipCode: Number;
+  companyCity: string = "";
+  companyCountry: string = "";
+
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   dataSource = this.members;
   constructor(private http: HttpClient, private route: ActivatedRoute) {
@@ -122,12 +133,16 @@ export class RegistrationComponent implements OnInit {
   }
   submit(): void {
     console.log("Submit registration");
-    this.addCompanyToSchooling(new Registration(1, "f", "sdf", "", "", 3, 3, "", ""))
+    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.members))
       .subscribe(x => console.log(x));
 
   }
-  addCompanyToSchooling(reg: Registration ): Observable<Registration> {
-    return this.http.post<Registration>(`https://localhost:5001/schoolings/registration`, "hsdfl");
+  addCompanyToSchooling(reg: Registration): Observable<Registration> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+
+    return this.http.post<Registration>(`https://localhost:5001/schoolings/registration`, reg, httpOptions);
   }
   private getDetail(url: string): Observable<SchoolingDto> {
     return this.http.get<SchoolingDto>(url);

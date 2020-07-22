@@ -50,28 +50,28 @@
         <div class="flex-container">
         </div>
         <mat-form-field class="flex-container">
-          <input matInput>
+          <input matInput [(ngModel)]="company">
         </mat-form-field>
         <mat-form-field class="flex-container">
-          <input matInput>
+          <input matInput [(ngModel)]="companyPhone">
         </mat-form-field>
         <mat-form-field class="flex-container">
-          <input matInput>
+          <input matInput [(ngModel)]="companyMail">
         </mat-form-field>
         <mat-form-field class="flex-container">
-          <input matInput>
+          <input matInput [(ngModel)]="companyStreet">
         </mat-form-field>
         <mat-form-field class="flex-container">
-          <input matInput>
+          <input matInput [(ngModel)]="companyStreetNumber">
         </mat-form-field>
         <mat-form-field class="flex-container">
-          <input matInput>
+          <input matInput [(ngModel)]="companyZipCode">
         </mat-form-field>
         <mat-form-field class="flex-container">
-          <input matInput>
+          <input matInput [(ngModel)]="companyCity">
         </mat-form-field>
         <mat-form-field class="flex-container">
-          <input matInput>
+          <input matInput [(ngModel)]="companyCountry">
         </mat-form-field>
 
 
@@ -79,10 +79,11 @@
       </div>
 
     </div>
+    <h3 class="firma">Teilnehmer</h3>
     <div class="row  ">
 
       <div class="column col1">
-        <div class="row innerRows teilnehmer">Teilnehmer</div>
+        <div class="row innerRows firma"></div>
       </div>
 
       <div>
@@ -105,9 +106,13 @@
 
     </div>
     <br />
-    <h1>Übersicht</h1>
+    <h3 class="firma">Übersicht</h3>
     <div class="row">
-      <div class="column">
+      <div class="column col1">
+        <div class="row innerRows firma"></div>
+      </div>
+
+      <div class="column col2">
         <table mat-table #mytable [dataSource]="dataSource" class="mat-elevation-z8 table">
 
           <ng-container matColumnDef="firstname">
