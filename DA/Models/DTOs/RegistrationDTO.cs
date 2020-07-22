@@ -1,4 +1,5 @@
-﻿using Schulungskalender.Models;
+﻿using DA.Models.DTOs;
+using Schulungskalender.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace DA.Models {
         public int ZipCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public List<string> Participants { get; set; }
+        public List<ParticipantDTO> Participants { get; set; }
 
 
     }

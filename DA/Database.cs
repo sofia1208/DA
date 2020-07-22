@@ -1,4 +1,5 @@
 ﻿using DA.Models;
+using DA.Models.DTOs;
 using DbLib;
 using MySql.Data.MySqlClient;
 using Schulungskalender.Models;
@@ -179,9 +180,9 @@ namespace DA {
 
         }
 
-        public bool InsertPerson(string[] split, int company_id) {
+        public bool InsertPerson(ParticipantDTO participantDTO, int company_id) {
             try {
-                string insertstatement = $"Insert into persons (firstname, lastname, email, company_id) Values ('{split[0]}', '{split[1]}', '{split[2]}', '{company_id}');";
+                string insertstatement = $"Insert into persons (firstname, lastname, email, company_id) Values ('{participantDTO.Firstname}', '{participantDTO.Lastname}', '{participantDTO.Email}', '{company_id}');";
                 var insertPersonCmd = new MySqlCommand(insertstatement, connection);
                 insertPersonCmd.ExecuteNonQuery();
             }

@@ -66,17 +66,15 @@ namespace Schulungskalender.Services {
             var company = FindCompany(registration, address.Id);
 
             foreach (var person in registration.Participants) {
-                var split = person.Split(';');
-                if (FindPerson(split[0], split[1], split[2], company.Id) == null) {
-                    isRegistrationSuccessful = db.InsertPerson(split, company.Id);
+                if (FindPerson(person.Firstname, person.Lastname, person.Email, company.Id) == null) {
+                    isRegistrationSuccessful = db.InsertPerson(person, company.Id);
                 }
             }
 
             db.getPersons(ref persons);
 
-            foreach (var personString in registration.Participants) {
-                var split = personString.Split(';');
-                var personRessource = FindPerson(split[0], split[1], split[2], company.Id);
+            foreach (var person in registration.Participants) {
+                var personRessource = FindPerson(person.Firstname, person.Lastname, person.Email, company.Id);
                 isRegistrationSuccessful = db.InsertRegistration(registration.SchoolingId, personRessource.Id);
             }
 

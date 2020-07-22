@@ -26,7 +26,12 @@ Content-Type: application/json
     "city": "kematen",
     "country": "Österreich",
     "participants": [
-        "Isabelle;Arthofer;isabelle.arthofer@gmail.com"
+        {
+            "Firstname": "Sofia",
+            "Lastname": "Schmidmair",
+            "Email": "sofia.schmidmair@gmail.com"
+        }
+        
     ]
 }
 ####
