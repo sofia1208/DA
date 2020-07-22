@@ -1,0 +1,32 @@
+GET http://localhost:5000/schoolings/summary HTTP/1.1
+####
+GET http://localhost:5000/schoolings/details/1 HTTP/1.1
+####
+GET http://localhost:5000/schoolings/details/3 HTTP/1.1
+####
+GET http://localhost:5000/schoolings/summary/grundlagen HTTP/1.1
+####
+GET http://localhost:5000/schoolings/summary/workshop HTTP/1.1
+####
+GET http://localhost:5000/schoolings/summary/kombimodell HTTP/1.1
+####
+GET http://localhost:5000/schoolings/summary/administrator HTTP/1.1
+####
+POST http://localhost:5000/schoolings/registration HTTP/1.1
+Content-Type: application/json
+
+{
+    "schoolingId": 1,
+    "company": "Test Company",
+    "phone": "123456",
+    "companyEmail": "test@mail.com",
+    "street": "See",
+    "streetNumber": 29,
+    "zipCode":4633,
+    "city": "kematen",
+    "country": "Österreich",
+    "participants": [
+        "Isabelle;Arthofer;isabelle.arthofer@gmail.com"
+    ]
+}
+####
