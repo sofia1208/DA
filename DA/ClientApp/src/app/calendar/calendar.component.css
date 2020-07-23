@@ -118,3 +118,26 @@ width: 25%
   background-color: #D4D4D4;
   padding: 5px;
 }
+@media print {
+ 
+  .printMe {
+    display: none !important;
+  }
+}
+
+app-print-layout{
+  display:none;
+}
+app-invoice{
+    display:none;
+}
+@media print {
+ 
+  app-invoice {
+    display: flex;
+  }
+}
+.btnPrint{
+  margin-left: 50px;
+
+}

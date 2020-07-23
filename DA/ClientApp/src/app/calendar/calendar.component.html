@@ -1,204 +1,208 @@
-<div class="outerDiv">
-  <h1 class="schulungh1">
-    Schulungen und Workshops
-  </h1>
-  <div class="row">
-    <div class="container">
-      <div class="row">
-        <div class="col rowPostition">
-          <h3 class="month" >{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3>
-        </div>
-        <div class="col rowPostition">
-          <div class="btn-group">
-            <div>
-              <div class="btn buttonGray "
-                   mwlCalendarPreviousView
-                   [view]="view"
-                   [(viewDate)]="viewDate"
-                   (viewDateChange)="closeOpenMonthViewDay()">
-                <
+<div class="printMe">
+
+
+  <div class="outerDiv">
+    <h1 class="schulungh1">
+      Schulungen und Workshops
+    </h1>
+    <div class="row">
+      <div class="container">
+        <div class="row">
+          <div class="col rowPostition">
+            <h3 class="month">{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3>
+          </div>
+          <div class="col rowPostition">
+            <div class="btn-group">
+              <div>
+                <div class="btn buttonGray "
+                     mwlCalendarPreviousView
+                     [view]="view"
+                     [(viewDate)]="viewDate"
+                     (viewDateChange)="closeOpenMonthViewDay()">
+                  <
+                </div>
+                <div class="btn buttonGray "
+                     mwlCalendarToday
+                     [(viewDate)]="viewDate">
+                  Heute
+                </div>
+                <div class="btn buttonGray"
+                     mwlCalendarNextView
+                     [view]="view"
+                     [(viewDate)]="viewDate"
+                     (viewDateChange)="closeOpenMonthViewDay()">
+                  >
+                </div>
+
               </div>
-              <div class="btn buttonGray "
-                   mwlCalendarToday
-                   [(viewDate)]="viewDate">
-                Heute
+            </div>
+          </div>
+
+          <div class="col rowPostition">
+            <div class="btn-group">
+              <div class="btn buttonGray"
+                   (click)="setView(CalendarView.Month)"
+                   [class.active]="view === CalendarView.Month">
+                Monat
               </div>
               <div class="btn buttonGray"
-                   mwlCalendarNextView
-                   [view]="view"
-                   [(viewDate)]="viewDate"
-                   (viewDateChange)="closeOpenMonthViewDay()">
-                >
+                   (click)="setView(CalendarView.Week)"
+                   [class.active]="view === CalendarView.Week">
+                Woche
               </div>
-
+              <div class="btn buttonGray"
+                   (click)="setView(CalendarView.Day)"
+                   [class.active]="view === CalendarView.Day">
+                Tag
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="col rowPostition">
+        <div>
+
+
+
+        </div>
+
+
+        <div class="col-md-4">
           <div class="btn-group">
-            <div class="btn buttonGray"
-                 (click)="setView(CalendarView.Month)"
-                 [class.active]="view === CalendarView.Month">
-              Monat
-            </div>
-            <div class="btn buttonGray"
-                 (click)="setView(CalendarView.Week)"
-                 [class.active]="view === CalendarView.Week">
-              Woche
-            </div>
-            <div class="btn buttonGray"
-                 (click)="setView(CalendarView.Day)"
-                 [class.active]="view === CalendarView.Day">
-              Tag
-            </div>
+
           </div>
+        </div>
+
+        <div class="col-md-4">
+
         </div>
       </div>
+      <br />
+
+    </div>
+    <ng-template #customCellTemplate let-day="day" let-locale="locale" let-days="days" let-dayEvents="dayEvents">
+      <div class="cal-cell-top">
+
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+      </div>
+
 
       <div>
+        <span *ngFor="let ev of day.events">
+
+          <span *ngIf="ev.isFree&&ev.hasMoreDays">
+            <p class="activeSchooling" style=" font-size:17px;">{{ ev.title }}</p>
+          </span>
+          <span *ngIf="!ev.isFree&&ev.hasMoreDays">
+            <p class="moreDays" style="font-size:17px;">{{ ev.title }}</p>
+          </span>
+          <span *ngIf="ev.isFree&&!ev.hasMoreDays&&!ev.isHoliday">
+            <p class="activeSchooling" style="margin: 6px;  font-size:17px;">{{ ev.title }}</p>
+          </span>
+          <span *ngIf="!ev.isFree&&!ev.hasMoreDays">
+            <p class="takenSchooling" style="margin: 6px;  font-size:17px;">{{ ev.title }}</p>
+          </span>
+          <span *ngIf="ev.isHoliday">
+            <p class="holiday" style="font-size:17px;">{{ ev.title }}</p>
+          </span>
 
 
-
+        </span>
       </div>
 
+    </ng-template>
 
-      <div class="col-md-4">
-        <div class="btn-group">
 
-        </div>
-      </div>
-
-      <div class="col-md-4">
-
-      </div>
-    </div>
-    <br />
-
-  </div>
-  <ng-template #customCellTemplate let-day="day" let-locale="locale" let-days="days" let-dayEvents="dayEvents">
-    <div class="cal-cell-top">
-
-      <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
-    </div>
 
     <div>
-      <span *ngFor="let ev of day.events">
-
-        <span *ngIf="ev.isFree&&ev.hasMoreDays">
-          <p class="activeSchooling" style=" font-size:17px;">{{ ev.title }}</p>
-        </span>
-        <span *ngIf="!ev.isFree&&ev.hasMoreDays">
-          <p class="moreDays" style="font-size:17px;">{{ ev.title }}</p>
-        </span>
-        <span *ngIf="ev.isFree&&!ev.hasMoreDays&&!ev.isHoliday">
-          <p class="activeSchooling" style="margin: 6px;  font-size:17px;">{{ ev.title }}</p>
-        </span>
-        <span *ngIf="!ev.isFree&&!ev.hasMoreDays">
-          <p class="takenSchooling" style="margin: 6px;  font-size:17px;">{{ ev.title }}</p>
-        </span>
-        <span *ngIf="ev.isHoliday">
-          <p class="holiday" style="font-size:17px;">{{ ev.title }}</p>
-        </span>
-
-
-      </span>
-    </div>
-
-  </ng-template>
-
-
-
-  <div>
-    <div style="margin:15px" class="container">
-      <div class="btn-group filterBtn">
-        <p class="filterBtn">Filter nach:</p>
-        <button class="categoryBtn" (click)="getGrundlagen()">Grundlagen</button>
-        <button class="categoryBtn" (click)="getWorkshop()">Workshop</button>
-        <button class="categoryBtn" (click)="getAdmin()">Administrator</button>
-        <button class="categoryBtn" (click)="getKombimodell()">Kombimodell</button>
+      <div style="margin:15px" class="container">
+        <div class="btn-group filterBtn">
+          <p class="filterBtn">Filter nach:</p>
+          <button class="categoryBtn" (click)="getGrundlagen()">Grundlagen</button>
+          <button class="categoryBtn" (click)="getWorkshop()">Workshop</button>
+          <button class="categoryBtn" (click)="getAdmin()">Administrator</button>
+          <button class="categoryBtn" (click)="getKombimodell()">Kombimodell</button>
+        </div>
+        <button class="btn buttonGray btnPrint" (click)="printPage()">Drucken</button>
       </div>
     </div>
-  </div>
-  <div [ngSwitch]="view">
-    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
+                               [viewDate]="viewDate"
+                               [events]="events"
+                               [refresh]="refresh"
+                               [activeDayIsOpen]="activeDayIsOpen"
+                               (dayClicked)="dayClicked($event.day)"
+                               (eventClicked)="handleEvent('Clicked', $event.event)"
+                               (eventTimesChanged)="eventTimesChanged($event)"
+                               [locale]="locale"
+                               [weekendDays]="weekendDays"
+                               [weekStartsOn]="weekStartsOn"
+                               [cellTemplate]="customCellTemplate">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
+                              [viewDate]="viewDate"
+                              [events]="events"
+                              [refresh]="refresh"
+                              (eventClicked)="handleEvent('Clicked', $event.event)"
+                              (eventTimesChanged)="eventTimesChanged($event)"
+                              [locale]="locale"
+                              [dayStartHour]="7"
+                              [dayEndHour]="21"
+                              [weekendDays]="weekendDays"
+                              [weekStartsOn]="weekStartsOn">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
                              [viewDate]="viewDate"
                              [events]="events"
                              [refresh]="refresh"
-                             [activeDayIsOpen]="activeDayIsOpen"
-                             (dayClicked)="dayClicked($event.day)"
+                             [dayStartHour]="7"
+                             [dayEndHour]="21"
                              (eventClicked)="handleEvent('Clicked', $event.event)"
                              (eventTimesChanged)="eventTimesChanged($event)"
-                             [locale]="locale"
-                             [weekendDays]="weekendDays"
-                             [weekStartsOn]="weekStartsOn"
-                             [cellTemplate]="customCellTemplate">
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
-                            [viewDate]="viewDate"
-                            [events]="events"
-                            [refresh]="refresh"
-                            (eventClicked)="handleEvent('Clicked', $event.event)"
-                            (eventTimesChanged)="eventTimesChanged($event)"
-                            [locale]="locale"
-                            [dayStartHour]="7"
-                            [dayEndHour]="21"
-                            [weekendDays]="weekendDays"
-                            [weekStartsOn]="weekStartsOn"
-                            >
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
-                           [viewDate]="viewDate"
-                           [events]="events"
-                           [refresh]="refresh"
-                           [dayStartHour]="7"
-                           [dayEndHour]="21"
-                           (eventClicked)="handleEvent('Clicked', $event.event)"
-                           (eventTimesChanged)="eventTimesChanged($event)"
-                           [locale]="locale">
-    </mwl-calendar-day-view>
-  </div>
-
-
-  <div *ngIf="!hidden" class="detailview">
-
-
-    <h1 #detailView class="schulungh1">{{detailTitle}}</h1>
-    <div class="row outerRow">
-      <div class="column col1">
-        <div class="row innerRows">Termin</div>
-        <div class="row innerRows">Uhrzeit</div>
-        <div class="row innerRows">Preis</div>
-        <div class="row innerRows">Organisator</div>
-        <div class="row innerRows">Kontaktperson</div>
-        <div class="row innerRows">Telefon</div>
-        <div class="row innerRows">Adresse</div>
-      </div>
-
-      <div class="column col2">
-        <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
-        <div class="row innerRows">{{startTime}} - {{endTime}}</div>
-        <div class="row innerRows">{{preis}}</div>
-        <div class="row innerRows">{{organisator}}</div>
-        <div class="row innerRows">{{kontaktperson}}</div>
-        <div class="row innerRows">{{telefon}}</div>
-        <div class="row innerRows">{{adresse}}</div>
-      </div>
-      <div class="column col1">
-
-
-        <button class="btnLogin" (click)="goToRegistration()">Anmelden</button>
-
-
-
-      </div>
-
+                             [locale]="locale">
+      </mwl-calendar-day-view>
     </div>
 
 
+    <div *ngIf="!hidden" class="detailview printMe">
 
+
+      <h1 #detailView class="schulungh1">{{detailTitle}}</h1>
+      <div class="row outerRow">
+        <div class="column col1">
+          <div class="row innerRows">Termin</div>
+          <div class="row innerRows">Uhrzeit</div>
+          <div class="row innerRows">Preis</div>
+          <div class="row innerRows">Organisator</div>
+          <div class="row innerRows">Kontaktperson</div>
+          <div class="row innerRows">Telefon</div>
+          <div class="row innerRows">Adresse</div>
+        </div>
+
+        <div class="column col2">
+          <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
+          <div class="row innerRows">{{startTime}} - {{endTime}}</div>
+          <div class="row innerRows">{{preis}}</div>
+          <div class="row innerRows">{{organisator}}</div>
+          <div class="row innerRows">{{kontaktperson}}</div>
+          <div class="row innerRows">{{telefon}}</div>
+          <div class="row innerRows">{{adresse}}</div>
+        </div>
+        <div class="column col1">
+
+
+          <button class="btnLogin" (click)="goToRegistration()">Anmelden</button>
+
+
+
+        </div>
+
+      </div>
+    </div>
+   
   </div>
-</div>
-
+  </div>
+  <app-invoice ></app-invoice>
+  <!--<app-print-layout [id]="detailId"></app-print-layout>-->
       
 

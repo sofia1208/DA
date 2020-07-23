@@ -19,10 +19,23 @@ import { MatInputModule } from '@angular/material';
 import { LOCALE_ID } from '@angular/core';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatTableModule } from '@angular/material/table'
+import { MatGridListModule } from '@angular/material'
+import { AgmCoreModule } from '@agm/core';
+import { PrintLayoutComponent } from './print-layout/print-layout.component';
+import { InvoiceComponent } from './invoice/invoice.component';
+
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
-  { path: 'registration', component: RegistrationComponent }];
+  { path: 'registration', component: RegistrationComponent },
+  {
+    path: 'print',
+    outlet: 'print',
+    component: PrintLayoutComponent,
+    children: [
+      { path: 'invoice', component: InvoiceComponent }
+    ]
+  }];
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +45,9 @@ const routes: Routes = [
     FetchDataComponent,
     CalendarComponent,
     RegistrationComponent,
-
+    PrintLayoutComponent,
+    InvoiceComponent,
+  
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,7 +55,12 @@ const routes: Routes = [
     FormsModule,
     MatTableModule,
     MatInputModule,
-
+    MatGridListModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAE1t4KEfa0sBR2N354rup1xE6LvDlXabE',
+   
+    }),
+ 
     RouterModule.forRoot(routes),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     BrowserAnimationsModule,

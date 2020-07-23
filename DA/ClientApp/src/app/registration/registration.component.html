@@ -27,67 +27,97 @@
         <div class="row innerRows">{{telefon}}</div>
         <div class="row innerRows">{{adresse}}</div>
       </div>
+      <div class="column">
+
+        <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
+          <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+        </agm-map>
+      </div>
 
 
     </div>
+
+
     <h3 class="firma">Firma</h3>
-
-    <div class="row outerRow">
-
-      <div class="column col1">
-        <div class="row innerRows">Name</div>
-        <div class="row innerRows">Telefonnummer</div>
-        <div class="row innerRows">E-Mail</div>
-        <div class="row innerRows">Straße</div>
-        <div class="row innerRows">Hausnummer</div>
-        <div class="row innerRows">Postleitzahl</div>
-        <div class="row innerRows">Stadt</div>
-        <div class="row innerRows">Land</div>
-
-      </div>
-
-      <div class="column col2">
-        <div class="flex-container">
+    <div class="containerInput">
+      <div class="row">
+        <div class="column col1">
+          <div class="row innerRows firma"></div>
         </div>
-        <mat-form-field class="flex-container">
-          <input matInput [(ngModel)]="company">
-        </mat-form-field>
-        <mat-form-field class="flex-container">
-          <input matInput [(ngModel)]="companyPhone">
-        </mat-form-field>
-        <mat-form-field class="flex-container">
-          <input matInput [(ngModel)]="companyMail">
-        </mat-form-field>
-        <mat-form-field class="flex-container">
-          <input matInput [(ngModel)]="companyStreet">
-        </mat-form-field>
-        <mat-form-field class="flex-container">
-          <input matInput [(ngModel)]="companyStreetNumber">
-        </mat-form-field>
-        <mat-form-field class="flex-container">
-          <input matInput [(ngModel)]="companyZipCode">
-        </mat-form-field>
-        <mat-form-field class="flex-container">
-          <input matInput [(ngModel)]="companyCity">
-        </mat-form-field>
-        <mat-form-field class="flex-container">
-          <input matInput [(ngModel)]="companyCountry">
-        </mat-form-field>
+        <div class="row">
 
+          <mat-form-field class="example-full-width">
 
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="company">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Telefonnummer</mat-label>
+            <input matInput [(ngModel)]="companyPhone">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>E-Mail</mat-label>
+            <input matInput [(ngModel)]="companyMail">
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Straße</mat-label>
+            <input matInput [(ngModel)]="companyStreet" >
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Hausnummer</mat-label>
+            <input matInput [(ngModel)]="companyStreetNumber">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Postleitzahl</mat-label>
+            <input matInput [(ngModel)]="companyZipCode">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Stadt</mat-label>
+            <input matInput [(ngModel)]="companyCity">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Land</mat-label>
+            <input matInput [(ngModel)]="companyCountry">
+          </mat-form-field>
+        </div>
 
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
     </div>
     <h3 class="firma">Teilnehmer</h3>
-    <div class="row  ">
+    <div>
 
       <div class="column col1">
-        <div class="row innerRows firma"></div>
+        <div class="firma"></div>
       </div>
 
-      <div>
-        <li class="mat-form-field--inline">
+      <div class="containerInput">
+        <div class="row">
+          <div class="column col1">
+            <div class="row innerRows firma"></div>
+          </div>
           <mat-form-field class="example-full-width">
             <mat-label>Vorname</mat-label>
             <input matInput [(ngModel)]="firstname" placeholder="Max">
@@ -101,7 +131,7 @@
             <input matInput [(ngModel)]="email" placeholder="mm">
           </mat-form-field>
           <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
-        </li>
+        </div>
       </div>
 
     </div>
@@ -113,7 +143,7 @@
       </div>
 
       <div class="column col2">
-        <table mat-table #mytable [dataSource]="dataSource" class="mat-elevation-z8 table">
+        <table mat-table #mytable [dataSource]="dataSource" class="table">
 
           <ng-container matColumnDef="firstname">
             <th mat-header-cell *matHeaderCellDef> Vorname </th>
@@ -139,10 +169,33 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+
       </div>
-      <button class="btnSubmit" (click)="submit()">Abschicken</button>
+
+
+
+
     </div>
+
+
+
+    <div class="row">
+      <div class="column col1">
+        <h3 class="firma checks">Stornobedingungen</h3>
+      </div>
+      <input type="checkbox" />
+      <p>Ja, ich habe die Stornobedingungen von moveIT <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen">Software</a> gelesen.</p>
+    </div>
+    
+    <div class="row">
+      <div class="column col1">
+        <h3 class="firma checks">Datenschutz</h3>
+      </div>
+      <input type="checkbox" />
+      <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutz</a> von moveIT Software gelesen.</p>
+      <button class="btnSubmit btnDown" (click)="submit()">Abschicken</button>
+    </div>
+
+    
   </div>
-
-
 

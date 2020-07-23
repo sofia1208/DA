@@ -35,6 +35,7 @@ import { SchoolingDto } from './SchoolingDto';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Router, NavigationExtras } from '@angular/router';
+import { Printing } from './Printing';
 registerLocaleData(localeDe, 'de');
 
 @Component({
@@ -374,6 +375,11 @@ export class CalendarComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+  printPage() {
+    const invoiceIds = ['101', '102'];
+    window.print();
+    //this.printService.printDoct('invoice', invoiceIds);
   }
 
   private getDetail(url: string): Observable<SchoolingDto> {
