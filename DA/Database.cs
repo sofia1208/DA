@@ -15,7 +15,7 @@ namespace DA {
         MySqlConnection connection;
 
         public Database() {
-            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=*********;persistsecurityinfo=True";
+            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True";
             connection = new MySqlConnection(connectionString);
             connection.Open();
         }
