@@ -15,13 +15,19 @@ namespace DA {
         MySqlConnection connection;
 
         public Database() {
-            //connectionString = "Server=10.90.90.222;Database=educationPlanner;Uid=ep;Pwd=eDpL2%0!;persistsecurityinfo=True";
             connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True";
             connection = new MySqlConnection(connectionString);
             connection.Open();
         }
 
-        public void getAllTables(ref List<AddressRessource> addresses, ref List<CompanyRessource> companies, ref List<SchoolingRessource> schoolings, ref List<OrganizerRessource> organizers, ref List<RegistrationRessource> registrations, ref List<PersonRessource> persons) {
+        public void getAllTables(
+                ref List<AddressRessource> addresses, 
+                ref List<CompanyRessource> companies, 
+                ref List<SchoolingRessource> schoolings, 
+                ref List<OrganizerRessource> organizers, 
+                ref List<RegistrationRessource> registrations, 
+                ref List<PersonRessource> persons)
+         {
             getAddresses(ref addresses);
             getCompanies(ref companies);
             getOrganizers(ref organizers);
@@ -31,13 +37,22 @@ namespace DA {
         }
 
         public void getAddresses(ref List<AddressRessource> addresses) {
+            addresses = new List<AddressRessource>();
+
             try {
                 var getAddressesCmd = new MySqlCommand("SELECT * FROM addresses", connection);
 
                 AddressRessource address;
                 using (MySqlDataReader reader = getAddressesCmd.ExecuteReader()) {
                     while (reader.Read()) {
-                        address = new AddressRessource() { Id = reader.GetInt32(0), Street = reader.GetString(1) ?? "", StreetNumber = reader.GetInt32(2), ZipCode = reader.GetInt32(3), City = reader.GetString(4), Country = reader.GetString(5) };
+                        address = new AddressRessource() {
+                            Id = reader.GetInt32(0), 
+                            Street = reader.GetString(1) ?? "", 
+                            StreetNumber = reader.GetInt32(2), 
+                            ZipCode = reader.GetInt32(3),
+                            City = reader.GetString(4), 
+                            Country = reader.GetString(5)
+                        };
                         addresses.Add(address);
                     }
                 }
@@ -48,6 +63,7 @@ namespace DA {
         }
 
         public void getCompanies(ref List<CompanyRessource> companies) {
+            companies = new List<CompanyRessource>();
 
             try {
                 var getCompaniesCmd = new MySqlCommand("SELECT * FROM companies", connection);
@@ -55,7 +71,13 @@ namespace DA {
                 CompanyRessource company;
                 using (MySqlDataReader reader = getCompaniesCmd.ExecuteReader()) {
                     while (reader.Read()) {
-                        company = new CompanyRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), Phone = reader.GetString(2), Email = reader.GetString(3), AddressId = reader.GetInt32(4) };
+                        company = new CompanyRessource() { 
+                            Id = reader.GetInt32(0), 
+                            Name = reader.GetString(1), 
+                            Phone = reader.GetString(2), 
+                            Email = reader.GetString(3), 
+                            AddressId = reader.GetInt32(4)
+                        };
                         companies.Add(company);
                     }
                 }
@@ -69,6 +91,7 @@ namespace DA {
         }
 
         public void getOrganizers(ref List<OrganizerRessource> organizers) {
+            organizers = new List<OrganizerRessource>();
 
             try {
                 var getOrganizersCmd = new MySqlCommand("SELECT * FROM organizers", connection);
@@ -76,7 +99,14 @@ namespace DA {
                 OrganizerRessource organizer;
                 using (MySqlDataReader reader = getOrganizersCmd.ExecuteReader()) {
                     while (reader.Read()) {
-                        organizer = new OrganizerRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), ContactPerson = reader.GetString(2), Email = reader.GetString(3), Website = reader.GetString(4), Phone = reader.GetString(5) };
+                        organizer = new OrganizerRessource() {
+                            Id = reader.GetInt32(0), 
+                            Name = reader.GetString(1), 
+                            ContactPerson = reader.GetString(2), 
+                            Email = reader.GetString(3), 
+                            Website = reader.GetString(4), 
+                            Phone = reader.GetString(5) 
+                        };
                         organizers.Add(organizer);
                     }
                 }
@@ -87,13 +117,21 @@ namespace DA {
         }
 
         public void getPersons(ref List<PersonRessource> persons) {
+            persons = new List<PersonRessource>();
+
             try {
                 var getPersonsCmd = new MySqlCommand("SELECT * FROM persons", connection);
 
                 PersonRessource person;
                 using (MySqlDataReader reader = getPersonsCmd.ExecuteReader()) {
                     while (reader.Read()) {
-                        person = new PersonRessource() { Id = reader.GetInt32(0), Firstname = reader.GetString(1), Lastname = reader.GetString(2), Email = reader.GetString(3), CompanyId = reader.GetInt32(4) };
+                        person = new PersonRessource() { 
+                            Id = reader.GetInt32(0), 
+                            Firstname = reader.GetString(1), 
+                            Lastname = reader.GetString(2), 
+                            Email = reader.GetString(3),
+                            CompanyId = reader.GetInt32(4) 
+                        };
                         persons.Add(person);
                     }
                 }
@@ -106,6 +144,8 @@ namespace DA {
         }
 
         public void getSchoolings(ref List<SchoolingRessource> schoolings) {
+            schoolings = new List<SchoolingRessource>();
+
             try {
                 var getSchoolingsCmd = new MySqlCommand("SELECT * FROM schoolings", connection);
 
@@ -113,7 +153,18 @@ namespace DA {
                 using (MySqlDataReader reader = getSchoolingsCmd.ExecuteReader()) {
                     while (reader.Read()) {
                         bool reservation = (reader.GetInt32(5) == 1) ? true : false;
-                        schooling = new SchoolingRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), AddressId = reader.GetInt32(2), Start = reader.GetDateTime(3), End = reader.GetDateTime(4), Price = reader.GetDouble(5), Reservation = reservation, ReservationDate = reader.GetDateTime(7), OrganizerId = reader.GetInt32(8), Places = reader.GetInt32(9) };
+                        schooling = new SchoolingRessource() {
+                            Id = reader.GetInt32(0), 
+                            Name = reader.GetString(1), 
+                            AddressId = reader.GetInt32(2), 
+                            Start = reader.GetDateTime(3), 
+                            End = reader.GetDateTime(4), 
+                            Price = reader.GetDouble(5), 
+                            Reservation = reservation, 
+                            ReservationDate = reader.GetDateTime(7), 
+                            OrganizerId = reader.GetInt32(8), 
+                            Places = reader.GetInt32(9) 
+                        };
                         schoolings.Add(schooling);
                     }
                 }
@@ -126,6 +177,7 @@ namespace DA {
         }
 
         public void getRegistrations(ref List<RegistrationRessource> registrations) {
+            registrations = new List<RegistrationRessource>();
 
             try {
                 registrations = new List<RegistrationRessource>();
@@ -150,7 +202,9 @@ namespace DA {
 
         public bool InsertAddress(RegistrationDTO registrationDTO) {
             try {
-                string insertstatement = "INSERT INTO addresses(street, street_number, city, zip_code, country) VALUES('" + registrationDTO.Street + "', '" + registrationDTO.StreetNumber + "', '" + registrationDTO.City + "', '" + registrationDTO.ZipCode + "', '" + registrationDTO.Country + "');";
+                string insertstatement = $"INSERT INTO addresses(street, street_number, city, zip_code, country)" +
+                                         $" VALUES('{registrationDTO.Street}', '{registrationDTO.StreetNumber}', '{registrationDTO.City}', '{registrationDTO.ZipCode}', '{registrationDTO.Country}');";
+
                 var insertAddressCmd = new MySqlCommand(insertstatement, connection);
                 insertAddressCmd.ExecuteNonQuery();
             }
@@ -165,11 +219,11 @@ namespace DA {
 
         public bool InsertCompany(RegistrationDTO registrationDTO, int address_id) {
             try {
-                string insertstatement = "INSERT INTO companies(name, email, phone, address_id) Values('" + registrationDTO.Company + "', '" + registrationDTO.CompanyEmail + "', '" + registrationDTO.Phone + "', '" + address_id + "');";
+                string insertstatement = $"INSERT INTO companies(name, email, phone, address_id)" +
+                                         $" VALUES('{registrationDTO.Company}', '{registrationDTO.CompanyEmail}', '{registrationDTO.Phone}', '{address_id}');";
+
                 var insertCompanyCmd = new MySqlCommand(insertstatement, connection);
-                Console.WriteLine("created Cmd");
                 insertCompanyCmd.ExecuteNonQuery();
-                Console.WriteLine("Company insert worked");
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -182,7 +236,9 @@ namespace DA {
 
         public bool InsertPerson(ParticipantDTO participantDTO, int company_id) {
             try {
-                string insertstatement = $"Insert into persons (firstname, lastname, email, company_id) Values ('{participantDTO.Firstname}', '{participantDTO.Lastname}', '{participantDTO.Email}', '{company_id}');";
+                string insertstatement = $"INSERT INTO persons (firstname, lastname, email, company_id)" +
+                                         $" VALUES ('{participantDTO.Firstname}', '{participantDTO.Lastname}', '{participantDTO.Email}', '{company_id}');";
+
                 var insertPersonCmd = new MySqlCommand(insertstatement, connection);
                 insertPersonCmd.ExecuteNonQuery();
             }
@@ -196,7 +252,9 @@ namespace DA {
 
         public bool InsertRegistration(int schooling_id, int person_id) {
             try {
-                string insertstatement = $"Insert into registrations (schooling_id, person_id) Values ('{schooling_id}', '{person_id}')";
+                string insertstatement = $"INSERT INTO registrations (schooling_id, person_id) " +
+                                         $"VALUES ('{schooling_id}', '{person_id}')";
+
                 var insertRegistrationCmd = new MySqlCommand(insertstatement, connection);
                 insertRegistrationCmd.ExecuteNonQuery();
             }
@@ -208,9 +266,5 @@ namespace DA {
 
             return true;
         }
-
-        //public CompanyRessource InsertCompanyRessource(RegistrationDTO registrationDTO) {
-        //    string insertStatement = $"Insert into companies (name, phone, email address) VALUES ({registrationDTO.Company}, {registrationDTO.Phone}, {registrationDTO.CompanyEmail}";
-        //}
     }
 }

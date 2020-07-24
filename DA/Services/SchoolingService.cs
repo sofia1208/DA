@@ -35,11 +35,25 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            return schoolings.Select(x => converter.GetSchoolingSummaryDTO(x, IsSchoolingFree(x.Id))).Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).ToList();
+            return schoolings.Select(x => {
+                var address = addresses.Find(y => y.Id == x.AddressId);
+                var organizer = organizers.Find(y => y.Id == x.OrganizerId);
+
+                return converter.GetSchoolingSummaryDTO(x, address, organizer, IsSchoolingFree(x.Id));
+
+            })
+                .Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).ToList();
         }
 
         public List<SchoolingSummaryDTO> Summary() {
-            return schoolings.Select(x => converter.GetSchoolingSummaryDTO(x, IsSchoolingFree(x.Id))).ToList();
+            return schoolings.Select(x => {
+                var address = addresses.Find(y => y.Id == x.AddressId);
+                var organizer = organizers.Find(y => y.Id == x.OrganizerId);
+
+                return converter.GetSchoolingSummaryDTO(x, address, organizer, IsSchoolingFree(x.Id));
+
+            })
+                .ToList();
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
@@ -83,7 +97,7 @@ namespace Schulungskalender.Services {
             if (isRegistrationSuccessful) {
                 //mailMaker.sendMail();
             }
-            
+
             return registration;
         }
 
