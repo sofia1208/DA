@@ -19,9 +19,9 @@ namespace DA.Controllers {
             this.schoolingService = schoolingService;
         }
 
-        [HttpGet("Summary/{type}")]
-        public List<SchoolingSummaryDTO> Summary(string type) {
-            return schoolingService.Summary(type);
+        [HttpGet("Summary/{filter}")]
+        public List<SchoolingSummaryDTO> Summary(string filter) {
+            return schoolingService.Summary(filter);
         }
 
         [HttpGet("Summary")]
