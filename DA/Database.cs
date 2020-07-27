@@ -1,6 +1,5 @@
 ﻿using DA.Models;
 using DA.Models.DTOs;
-using DbLib;
 using MySql.Data.MySqlClient;
 using Schulungskalender.Models;
 using System;

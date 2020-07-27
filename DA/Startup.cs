@@ -6,10 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Schulungskalender.Services;
-using DbLib;
 using Microsoft.Extensions.Options;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
+using DA.Services;
 
 namespace DA {
     public class Startup {
@@ -34,9 +34,8 @@ namespace DA {
             });
           
             services.AddScoped<SchoolingService>();
+            services.AddScoped<BackendService>();
 
-            string connectionString = Configuration.GetConnectionString("SchoolingContext");
-            services.AddDbContext<SchoolingContext>(options => options.UseMySql(connectionString));
 
 
             // In production, the Angular files will be served from this directory
