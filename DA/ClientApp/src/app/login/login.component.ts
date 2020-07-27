@@ -9,11 +9,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   username: string = ""; 
   constructor() { }
-  signin: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [Validators.required, Validators.min(3)])
-  });
+ 
+  hide = true;
   ngOnInit() {
   }
+  submit() {
 
+  }
 }

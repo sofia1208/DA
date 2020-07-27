@@ -19,7 +19,7 @@ import { MatInputModule } from '@angular/material';
 import { LOCALE_ID } from '@angular/core';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatTableModule } from '@angular/material/table'
-import { MatGridListModule } from '@angular/material'
+import { MatGridListModule, MatIcon } from '@angular/material'
 import { AgmCoreModule } from '@agm/core';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { InvoiceComponent } from './invoice/invoice.component';
@@ -58,6 +58,7 @@ const routes: Routes = [
     FormsModule,
     MatTableModule,
     MatInputModule,
+    MatIcon,
     MatGridListModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAE1t4KEfa0sBR2N354rup1xE6LvDlXabE',
