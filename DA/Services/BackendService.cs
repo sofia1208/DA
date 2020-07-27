@@ -29,7 +29,7 @@ namespace DA.Services {
             //checkCredentials
             return true;
         }
-        
+
 
         public List<BackendSummaryDTO> GetSchoolings() {
             return schoolings.Select(x => converter.getBackendSummaryDTO(x)).ToList();
@@ -41,27 +41,27 @@ namespace DA.Services {
 
 
         public BackendDetailDTO GetSchoolings(int id) {
-            //var schooling = schoolings.Where(x => x.Id == id);
-            //var address = FindAddress(schooling);
-            //var organizer = FindOrganizer(schooling);
-            //var participants = GetParticipants(id);
-            //return converter.getbackendDetaiDTO(schooling, address, organizer);
-            return null;
+            var schooling = schoolings.Find(x => x.Id == id);
+            var address = FindAddress(schooling);
+            var organizer = FindOrganizer(schooling);
+            var participants = GetParticipants(id);
+            var isFree = IsSchoolingFree(id);
+            return converter.getbackendDetaiDTO(schooling, address, organizer, participants, isFree);
         }
 
-       
 
-        public string EditSchooling(int id, BackendDetailDTO schooling) {
-            //var address = FindAddress(schooling);
-            //var organizer = FindOrganizer(schooling);
-            //return db.UpdateSchooling(schooling);
-            return "test successfull";
-        }
 
-        public string InsertSchooling(BackendDetailDTO schooling) {
-            return "test successfull";
-            //return db.InsertSchooling(schooling);
-        }
+        //public string EditSchooling(int id, BackendDetailDTO schooling) {
+        //    //var address = FindAddress(schooling);
+        //    //var organizer = FindOrganizer(schooling);
+        //    //return db.UpdateSchooling(schooling);
+        //    return "test successfull";
+        //}
+
+        //public string InsertSchooling(BackendDetailDTO schooling) {
+        //    return "test successfull";
+        //    //return db.InsertSchooling(schooling);
+        //}
 
         private void FillLists() {
             addresses = new List<AddressRessource>();
@@ -74,16 +74,27 @@ namespace DA.Services {
             db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
         }
 
-        private AddressRessource FindAddress(BackendDetailDTO registration) {
-            return addresses.Find(x => x.ZipCode == registration.ZipCode && x.Street == registration.Street && x.StreetNumber == registration.StreetNumber && x.City == registration.City && x.Country == registration.Country);
+        private bool IsSchoolingFree(int id) {
+            return (schoolings.Find(x => x.Id == id).Places - registrations.Where(x => x.SchoolingId == id).Count() > 0);
         }
 
-        private OrganizerRessource FindOrganizer(BackendDetailDTO registration) {
-            return organizers.Find(x => x.Email == registration.Email && x.Name == registration.Organizer && x.Phone == registration.Phone && x.ContactPerson == registration.ContactPerson);
+        private AddressRessource FindAddress(SchoolingRessource schooling) {
+            return addresses.Find(x => x.Id == schooling.AddressId);
         }
 
-        private ParticipantDTO GetParticipants(int id) {
-            throw new NotImplementedException();
+        private OrganizerRessource FindOrganizer(SchoolingRessource schooling) {
+            return organizers.Find(x => x.Id == schooling.OrganizerId);
+        }
+
+        private List<ParticipantDTO> GetParticipants(int id) {
+            return registrations.Where(x => x.SchoolingId == id)
+                .Select(x => x.PersonId)
+                .Distinct()
+                .Select(x => {
+                    var personRessource = persons.Find(y => y.Id == x);
+                    return new ParticipantDTO() { Firstname = personRessource.Firstname, Lastname = personRessource.Lastname, Email = personRessource.Email };
+                    })
+                .ToList();
         }
 
     }

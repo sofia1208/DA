@@ -36,16 +36,16 @@ namespace DA.Controllers {
             return backendService.GetSchoolings(id);
         }
 
-        [HttpPut("EditSchooling/{id}")]
-        public string EditSchooling(int id, [FromBody] BackendDetailDTO schooling) {
-            schooling.Id = id;
-            return backendService.EditSchooling(id, schooling);
-        }
+        //[HttpPut("EditSchooling/{id}")]
+        //public string EditSchooling(int id, [FromBody] BackendDetailDTO schooling) {
+        //    schooling.Id = id;
+        //    return backendService.EditSchooling(id, schooling);
+        //}
 
-        [HttpPost("InsertSchooling")]
-        public string InsertSchooling([FromBody] BackendDetailDTO schooling) {
-            return backendService.InsertSchooling(schooling);
-        }
+        //[HttpPost("InsertSchooling")]
+        //public string InsertSchooling([FromBody] BackendDetailDTO schooling) {
+        //    return backendService.InsertSchooling(schooling);
+        //}
 
     }
 }
