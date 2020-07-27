@@ -15,5 +15,6 @@ namespace Schulungskalender.Models {
         public int OrganizerId { get; set; }
         public int Places { get; set; }
         public double Price { get; set; }
+        public bool Display { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Schulungskalender.Services {
             mailMaker = new MailMaker();
             db = new Database();
 
-            fillLists();
+            FillLists();
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
@@ -79,13 +79,13 @@ namespace Schulungskalender.Services {
 
             if (FindAddress(registration) == null) {
                 isRegistrationSuccessful = db.InsertAddress(registration);
-                db.getAddresses(ref addresses);
+                db.GetAddresses(ref addresses);
             }
             var address = FindAddress(registration);
 
             if (FindCompany(registration, address.Id) == null) {
                 isRegistrationSuccessful = db.InsertCompany(registration, address.Id);
-                db.getCompanies(ref companies);
+                db.GetCompanies(ref companies);
             }
             var company = FindCompany(registration, address.Id);
 
@@ -95,14 +95,14 @@ namespace Schulungskalender.Services {
                 }
             }
 
-            db.getPersons(ref persons);
+            db.GetPersons(ref persons);
 
             foreach (var person in registration.Participants) {
                 var personRessource = FindPerson(person.Firstname, person.Lastname, person.Email, company.Id);
                 isRegistrationSuccessful = db.InsertRegistration(registration.SchoolingId, personRessource.Id);
             }
 
-            db.getRegistrations(ref registrations);
+            db.GetRegistrations(ref registrations);
 
             if (isRegistrationSuccessful) {
                 //mailMaker.sendMail();
@@ -111,7 +111,7 @@ namespace Schulungskalender.Services {
             return registration;
         }
 
-        private void fillLists() {
+        private void FillLists() {
             addresses = new List<AddressRessource>();
             companies = new List<CompanyRessource>();
             organizers = new List<OrganizerRessource>();
@@ -119,11 +119,11 @@ namespace Schulungskalender.Services {
             registrations = new List<RegistrationRessource>();
             schoolings = new List<SchoolingRessource>();
 
-            db.getAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
+            db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
         }
 
         private bool IsSchoolingFree(int id) {
-            return (schoolings.Find(x => x.Id == id).Places - registrations.Where(x => x.SchoolingId == id).Count() > 0) ? true : false;
+            return (schoolings.Find(x => x.Id == id).Places - registrations.Where(x => x.SchoolingId == id).Count() > 0);
         }
 
         private AddressRessource FindAddress(RegistrationDTO registration) {

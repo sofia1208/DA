@@ -3,11 +3,13 @@ using Schulungskalender.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace DA.Services {
     public class BackendService {
         private readonly Database db;
+        private readonly RessourceDtoConverter converter;
 
         private List<AddressRessource> addresses;
         private List<CompanyRessource> companies;
@@ -18,26 +20,35 @@ namespace DA.Services {
 
         public BackendService() {
             db = new Database();
+            converter = new RessourceDtoConverter();
 
-            fillLists();
+            FillLists();
         }
 
-        internal bool Login(string username, string password) {
+        internal bool Login(LoginUser user) {
             //checkCredentials
             return true;
         }
 
-        public void GetSchoolings() {
-
+        public List<BackendSummaryDTO> GetSchoolings() {
+            return schoolings.Select(x => converter.getBackendSummaryDTO(x)).ToList();
         }
 
+
         public BackendDetailDTO GetSchoolings(int id) {
+            //var schooling = schoolings.Where(x => x.Id == id);
+            //var address = FindAddress(schooling);
+            //var organizer = FindOrganizer(schooling);
+            //var participants = GetParticipants(id);
+            //return converter.getbackendDetaiDTO(schooling, address, organizer);
             return null;
         }
 
+       
+
         public string EditSchooling(int id, BackendDetailDTO schooling) {
-            var address = FindAddress(schooling);
-            var organizer = FindOrganizer(schooling);
+            //var address = FindAddress(schooling);
+            //var organizer = FindOrganizer(schooling);
             //return db.UpdateSchooling(schooling);
             return "test successfull";
         }
@@ -47,7 +58,7 @@ namespace DA.Services {
             //return db.InsertSchooling(schooling);
         }
 
-        private void fillLists() {
+        private void FillLists() {
             addresses = new List<AddressRessource>();
             companies = new List<CompanyRessource>();
             organizers = new List<OrganizerRessource>();
@@ -55,7 +66,7 @@ namespace DA.Services {
             registrations = new List<RegistrationRessource>();
             schoolings = new List<SchoolingRessource>();
 
-            db.getAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
+            db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
         }
 
         private AddressRessource FindAddress(BackendDetailDTO registration) {
@@ -64,6 +75,10 @@ namespace DA.Services {
 
         private OrganizerRessource FindOrganizer(BackendDetailDTO registration) {
             return organizers.Find(x => x.Email == registration.Email && x.Name == registration.Organizer && x.Phone == registration.Phone && x.ContactPerson == registration.ContactPerson);
+        }
+
+        private ParticipantDTO GetParticipants(int id) {
+            throw new NotImplementedException();
         }
 
     }
