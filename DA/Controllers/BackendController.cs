@@ -16,6 +16,11 @@ namespace DA.Controllers {
             this.backendService = schoolingService;
         }
 
+        [HttpGet("Login/{username}/{password}")]
+        public bool Login(string username, string password) {
+           return backendService.Login(username, password);
+        }
+
         [HttpGet("Schoolings")]
         public void Schoolings() {
             backendService.GetSchoolings();
@@ -28,7 +33,13 @@ namespace DA.Controllers {
 
         [HttpPut("EditSchooling/{id}")]
         public string EditSchooling(int id, [FromBody] BackendDetailDTO schooling) {
-            return backendService.EditSchooling(schooling);
+            schooling.Id = id;
+            return backendService.EditSchooling(id, schooling);
+        }
+
+        [HttpPost("InsertSchooling")]
+        public string InsertSchooling([FromBody] BackendDetailDTO schooling) {
+            return backendService.InsertSchooling(schooling);
         }
 
     }

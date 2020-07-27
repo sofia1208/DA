@@ -22,6 +22,11 @@ namespace DA.Services {
             fillLists();
         }
 
+        internal bool Login(string username, string password) {
+            //checkCredentials
+            return true;
+        }
+
         public void GetSchoolings() {
 
         }
@@ -30,8 +35,16 @@ namespace DA.Services {
             return null;
         }
 
-        public string EditSchooling(BackendDetailDTO schooling) {
+        public string EditSchooling(int id, BackendDetailDTO schooling) {
+            var address = FindAddress(schooling);
+            var organizer = FindOrganizer(schooling);
+            //return db.UpdateSchooling(schooling);
             return "test successfull";
+        }
+
+        public string InsertSchooling(BackendDetailDTO schooling) {
+            return "test successfull";
+            //return db.InsertSchooling(schooling);
         }
 
         private void fillLists() {
@@ -43,6 +56,14 @@ namespace DA.Services {
             schoolings = new List<SchoolingRessource>();
 
             db.getAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
+        }
+
+        private AddressRessource FindAddress(BackendDetailDTO registration) {
+            return addresses.Find(x => x.ZipCode == registration.ZipCode && x.Street == registration.Street && x.StreetNumber == registration.StreetNumber && x.City == registration.City && x.Country == registration.Country);
+        }
+
+        private OrganizerRessource FindOrganizer(BackendDetailDTO registration) {
+            return organizers.Find(x => x.Email == registration.Email && x.Name == registration.Organizer && x.Phone == registration.Phone && x.ContactPerson == registration.ContactPerson);
         }
 
     }
