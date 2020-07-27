@@ -15,6 +15,7 @@ export class BackendStartComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) { }
   
   ngOnInit() {
+  //  this.getSummary();
   }
   //GEt auf Summary (checkbox)
   //GET auf Detail/ID (neues)
@@ -33,6 +34,9 @@ export class BackendStartComponent implements OnInit {
 
 
 
+
+  }
+  newSchooling() {
 
   }
   displayedColumns: string[] = ['name', 'date', 'check', 'edit', 'delete'];

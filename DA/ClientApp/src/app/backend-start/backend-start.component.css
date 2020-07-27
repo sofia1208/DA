@@ -4,3 +4,6 @@ table{
 table tr:first-child td {
     border-top: 0;
   }
+.newSchooling{
+    border-radius: 12px;
+}
