@@ -16,14 +16,19 @@ namespace DA.Controllers {
             this.backendService = schoolingService;
         }
 
-        [HttpGet("Login/{username}/{password}")]
-        public bool Login(string username, string password) {
-           return backendService.Login(username, password);
+        [HttpPost("Login")]
+        public bool Login([FromBody] LoginUser user) {
+           return backendService.Login(user);
         }
 
-        [HttpGet("Schoolings")]
-        public void Schoolings() {
-            backendService.GetSchoolings();
+        [HttpGet("Summary")]
+        public List<BackendSummaryDTO> Schoolings() {
+            return backendService.GetSchoolings();
+        }
+
+        [HttpDelete("Summary/{id}")]
+        public bool DeleteSchooling(int id) {
+            return backendService.DeleteSchooling(id);
         }
 
         [HttpGet("Schoolings/{id}")]
