@@ -19,17 +19,20 @@ import { MatInputModule } from '@angular/material';
 import { LOCALE_ID } from '@angular/core';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatTableModule } from '@angular/material/table'
-import { MatGridListModule, MatIcon } from '@angular/material'
+import { MatGridListModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { AgmCoreModule } from '@agm/core';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { LoginComponent } from './login/login.component';
-
+import { BackendStartComponent } from './backend-start/backend-start.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'start', component: BackendStartComponent },
   {
     path: 'print',
     outlet: 'print',
@@ -50,6 +53,7 @@ const routes: Routes = [
     PrintLayoutComponent,
     InvoiceComponent,
     LoginComponent,
+    BackendStartComponent,
   
   ],
   imports: [
@@ -58,7 +62,8 @@ const routes: Routes = [
     FormsModule,
     MatTableModule,
     MatInputModule,
-    MatIcon,
+    MatIconModule,
+    MatCheckboxModule,
     MatGridListModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAE1t4KEfa0sBR2N354rup1xE6LvDlXabE',

@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\backend-start\SummaryDto.ts" />
     <None Remove="ClientApp\src\app\calendar\CustomDateFormatter.ts" />
     <None Remove="ClientApp\src\app\calendar\CustomEvent.ts" />
     <None Remove="ClientApp\src\app\calendar\Holiday.ts" />
@@ -74,6 +75,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\backend-start\SummaryDto.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\CustomDateFormatter.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\Holiday.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\CustomEvent.ts" />

@@ -15,10 +15,10 @@ mat-form-field{
     padding:10px;
     color: #A0A0A0;
 }
-button{
-    border-radius:12px;
-    width: 180px;
-    border-color: #A0A0A0;
+.btnSubmit {
+  border-radius: 12px;
+  width: 180px;
+  border-color: #A0A0A0;
 }
 body {
   background-color: #F3B947;
