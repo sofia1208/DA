@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule }from '@angular/common/http';
 import {Routes, RouterModule } from '@angular/router';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -23,11 +23,13 @@ import { MatGridListModule } from '@angular/material'
 import { AgmCoreModule } from '@agm/core';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { LoginComponent } from './login/login.component';
 
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'registration', component: RegistrationComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'print',
     outlet: 'print',
@@ -47,6 +49,7 @@ const routes: Routes = [
     RegistrationComponent,
     PrintLayoutComponent,
     InvoiceComponent,
+    LoginComponent,
   
   ],
   imports: [

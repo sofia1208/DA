@@ -7,7 +7,7 @@
     </h1>
     <div class="row">
       <div class="container">
-        <div class="row">
+        <div class="row rowData">
           <div class="col rowPostition">
             <h3 class="month">{{ viewDate | calendarDate:(view + 'ViewTitle'): locale }}</h3>
           </div>
@@ -87,6 +87,7 @@
 
 
       <div>
+
         <span *ngFor="let ev of day.events">
 
           <span *ngIf="ev.isFree&&ev.hasMoreDays">
@@ -110,13 +111,12 @@
       </div>
 
     </ng-template>
-
-
+   
 
     <div>
-      <div style="margin:15px" class="container">
+      <div  class="container">
         <div class="btn-group filterBtn">
-          <p class="filterBtn">Filter nach:</p>
+          <p class="filterBtn filterText">Filter nach:</p>
           <button class="categoryBtn" (click)="getGrundlagen()">Grundlagen</button>
           <button class="categoryBtn" (click)="getWorkshop()">Workshop</button>
           <button class="categoryBtn" (click)="getAdmin()">Administrator</button>
@@ -126,19 +126,42 @@
       </div>
     </div>
     <div [ngSwitch]="view">
-      <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
-                               [viewDate]="viewDate"
-                               [events]="events"
-                               [refresh]="refresh"
-                               [activeDayIsOpen]="activeDayIsOpen"
-                               (dayClicked)="dayClicked($event.day)"
-                               (eventClicked)="handleEvent('Clicked', $event.event)"
-                               (eventTimesChanged)="eventTimesChanged($event)"
-                               [locale]="locale"
-                               [weekendDays]="weekendDays"
-                               [weekStartsOn]="weekStartsOn"
-                               [cellTemplate]="customCellTemplate">
-      </mwl-calendar-month-view>
+      <div *ngIf="!mobile">
+        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
+                                 [viewDate]="viewDate"
+                                 [events]="events"
+                                 [refresh]="refresh"
+                                 [activeDayIsOpen]="activeDayIsOpen"
+                                 (dayClicked)="dayClicked($event.day)"
+                                 (eventClicked)="handleEvent('Clicked', $event.event)"
+                                 (eventTimesChanged)="eventTimesChanged($event)"
+                                 [locale]="locale"
+                                 [weekendDays]="weekendDays"
+                                 [weekStartsOn]="weekStartsOn"
+                                 [cellTemplate]="customCellTemplate">
+        </mwl-calendar-month-view>
+
+
+      </div>
+
+      <div *ngIf="mobile">
+        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
+                                 [viewDate]="viewDate"
+                                 [events]="events"
+                                 [refresh]="refresh"
+                                 [activeDayIsOpen]="activeDayIsOpen"
+                                 (dayClicked)="dayClicked($event.day)"
+                                 (eventClicked)="handleEvent('Clicked', $event.event)"
+                                 (eventTimesChanged)="eventTimesChanged($event)"
+                                 [locale]="locale"
+                                 [weekendDays]="weekendDays"
+                                 [weekStartsOn]="weekStartsOn">
+                                 
+        </mwl-calendar-month-view>
+
+
+      </div>
+
       <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
                               [viewDate]="viewDate"
                               [events]="events"
@@ -188,20 +211,16 @@
           <div class="row innerRows">{{telefon}}</div>
           <div class="row innerRows">{{adresse}}</div>
         </div>
-        <div class="column col1">
-
-
-          <button class="btnLogin" (click)="goToRegistration()">Anmelden</button>
-
-
-
-        </div>
+      
 
       </div>
+      <button (click)="goToRegistration()" class="btnLogin">Anmelden</button>
     </div>
-   
+
   </div>
   </div>
+<div #detailView></div>
+
   <app-invoice ></app-invoice>
   <!--<app-print-layout [id]="detailId"></app-print-layout>-->
       

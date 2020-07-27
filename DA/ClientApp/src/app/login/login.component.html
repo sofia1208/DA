@@ -1,0 +1,25 @@
+<body>
+  <div class="container" layout-align="center center">
+    <div class="innerContainer">
+      <h1 class="h1_schulung">
+        moveIT Schulungsverwaltung
+      </h1>
+      <mat-form-field>
+        <mat-label>Benutzername</mat-label>
+        <input matInput [(ngModel)]="username">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Passwort</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'">
+
+
+      </mat-form-field>
+      <button>Anmelden</button>
+    </div>
+
+  </div>
+
+
+
+
+</body>

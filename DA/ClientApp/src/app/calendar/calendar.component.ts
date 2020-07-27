@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation,  ViewChildren, QueryList, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,  ViewChildren, QueryList, Input, ElementRef } from '@angular/core';
 
 import {
 
@@ -56,11 +56,13 @@ registerLocaleData(localeDe, 'de');
 })
 export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
-  @ViewChild(HTMLDivElement, { static: true }) detailView: HTMLDivElement;
+  @ViewChild('detailView', { static: true }) private myScrollContainer: ElementRef;
   schoolings: SchoolingGet[] = [];
   events: CustomEvent[] = [];
   holidayApis: HolidayAPI[] = [];
   holidays: Holiday[] = [];
+
+  mobile: boolean = false;
 
   startDate: Date;
   endDate: Date;
@@ -86,7 +88,7 @@ export class CalendarComponent implements OnInit {
     this.getSummary();
     this.getHolidays();
     
-
+    this.checkSize();
   }
 
   
@@ -107,6 +109,19 @@ export class CalendarComponent implements OnInit {
     action: string;
     event: CalendarEvent;
   };
+  checkSize() {
+    let width = window.innerWidth;
+    if (width <= 768) {
+      this.mobile = true;
+      console.log('mobile device detected')
+    } else if (width > 768 && width <= 992) {
+      this.mobile = true;
+      console.log('tablet detected')
+    } else {
+      this.mobile = false;
+      console.log('desktop detected')
+    }
+  }
  
   getSummary(): void {
   
@@ -240,11 +255,12 @@ export class CalendarComponent implements OnInit {
       let schooling = new SchoolingDto;
     let id = event.id;
     this.detailId = Number(event.id);
-    if (event.isHoliday) {
+    if (event.isHoliday|| !event.isFree) {
       this.hidden = true;
     }
     else {
       this.hidden = false;
+      this.scrollToDetail();
       this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
         .subscribe(data => {
           schooling = data;
@@ -267,7 +283,6 @@ export class CalendarComponent implements OnInit {
 
    
   }
-
 
   activeDayIsOpen: boolean = false;
 
@@ -309,6 +324,9 @@ export class CalendarComponent implements OnInit {
       this.endTime = this.endTime + ":" + end.getMinutes();
     }
 
+  }
+  scrollToDetail() {
+    this.myScrollContainer.nativeElement.scrollIntoView();
   }
   dayClicked({ date, events }: { date: Date; events: CustomEvent[] }): void {
     // TO-DO: Bei mehreren Events an einem Tag?

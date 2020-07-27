@@ -16,7 +16,7 @@ export class InvoiceComponent implements OnInit {
   constructor(private http: HttpClient) { }
   @Input()
   events: GetSummaryForPrint[] = [];
-  schooling: SchoolingGet[] = [];
+  schooling: GetSummaryForPrint[] = [];
   schoolingDto: SchoolingDto;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   ngOnInit() {
@@ -30,42 +30,49 @@ export class InvoiceComponent implements OnInit {
 
     this.getSchoolings('https://localhost:5001/schoolings/summary')
       .subscribe(data => {
+        console.log(data);
+
         this.schooling = data;
-        this.schoolingsToEvents();
+        console.log(this.schooling);
+        this.schoolingToPrint();
 
       }
         , err => {
           console.log(`${err.message}`)
         });
-    this.schoolingsToEvents();
+    this.schoolingToPrint();
 
     console.log(this.events.length);
   }
-  private getSchoolings(url: string): Observable<SchoolingGet[]> {
-    return this.http.get<SchoolingGet[]>(url);
+  private getSchoolings(url: string): Observable<GetSummaryForPrint[]> {
+    return this.http.get<GetSummaryForPrint[]>(url);
 
   }
   
-  private schoolingsToEvents(): void {
-    
+  private schoolingToPrint(): void {
     for (var i = 0; i < this.schooling.length; i++) {
-      let start = new Date(this.schooling[i].start);
-      let end = new Date(this.schooling[i].end);
+
+      this.events.push(this.schooling[i]);
+      console.log(this.events);
+    }
+    //for (var i = 0; i < this.schooling.length; i++) {
+    //  let start = new Date(this.schooling[i].startDate);
+    //  let end = new Date(this.schooling[i].endDate);
       
-      
-    const schooling: GetSummaryForPrint = {
+    //   let schooling = new GetSummaryForPrint(this.schooling[i].name, this.schooling[i].)
+    //const schooling: GetSummaryForPrint = {
 
-      startDate: start,
-      endDate: end,
-      type: this.schooling[i].name,
-      city: this.schoolingDto.city,
-      organizer: this.schoolingDto.organizer,
-      price: this.schoolingDto.price
-    };
+    //  startDate: start,
+    //  endDate: end,
+    //  type: this.schooling[i].name,
+    //  city: this.schoolingDto[i].city,
+    //  organizer: this.schoolingDto[i].organizer,
+    //  price: this.schoolingDto[i].price
+    //};
 
 
-    this.events.push(schooling);
-    console.log(schooling);
+    //this.events.push(schooling);
+    //console.log(schooling);
 
 
     this.table.renderRows();
@@ -76,12 +83,5 @@ export class InvoiceComponent implements OnInit {
 
 
   }
-  bindToDTO() {
-   
-   
-  }
-  private getDetail(url: string): Observable<SchoolingDto> {
-    return this.http.get<SchoolingDto>(url);
+ 
 
-  }
-}

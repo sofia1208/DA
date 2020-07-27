@@ -1,0 +1,40 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    
+    
+    margin-top: 180px;
+}
+mat-form-field{
+    width: 180px;
+    padding: 10px;
+}
+.h1_schulung{
+  
+    background-color: #F3B947; 
+    padding:10px;
+    color: white;
+}
+button{
+    border-radius:12px;
+    width: 180px;
+    border-color: #A0A0A0;
+}
+body {
+  background-color: #F3B947;
+}
+.innerContainer {
+  width: 50%;
+  background-color: #F3B947;
+  display: flex;
+  padding: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+}
+.mat-body, .mat-body-1, .mat-typography {
+ 
+}

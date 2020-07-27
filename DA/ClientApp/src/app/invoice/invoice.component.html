@@ -2,13 +2,13 @@
 
   <ng-container matColumnDef="type">
     <th mat-header-cell *matHeaderCellDef> Typ </th>
-    <td mat-cell *matCellDef="let schooling"> {{schooling.title}} </td>
+    <td mat-cell *matCellDef="let schooling"> {{schooling.name}} </td>
   </ng-container>
 
 
   <ng-container matColumnDef="city">
     <th mat-header-cell *matHeaderCellDef> Ort </th>
-    <td mat-cell *matCellDef="let schooling"> {{schooling.address}} </td>
+    <td mat-cell *matCellDef="let schooling"> {{schooling.city}} </td>
   </ng-container>
 
 

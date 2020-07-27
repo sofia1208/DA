@@ -61,7 +61,8 @@ export class RegistrationComponent implements OnInit {
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
     })
-    this.getEvent(this.detailId); 
+    this.getEvent(this.detailId);
+    this.submit();
   }
 
   displayedColumns: string[] = ['firstname', 'lastname', 'email'];
@@ -138,12 +139,14 @@ export class RegistrationComponent implements OnInit {
 
   getEvent(id: Number): void {
     let schooling = new SchoolingDto;
+    
     this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
       
-        .subscribe(data => {
+      .subscribe(data => {
+     
           schooling = data;
           this.fillDetails(schooling);
-          this.submit();
+       
         }
           , err => {
             console.log(`${err.message}`)
@@ -151,6 +154,7 @@ export class RegistrationComponent implements OnInit {
       ;
     
     this.fillDetails(schooling);
+
   }
 
   addMember(): void {

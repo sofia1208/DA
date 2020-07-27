@@ -27,16 +27,16 @@
         <div class="row innerRows">{{telefon}}</div>
         <div class="row innerRows">{{adresse}}</div>
       </div>
-      <div class="column">
 
-        <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
-          <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
-        </agm-map>
-      </div>
 
 
     </div>
+    <div class="column">
 
+      <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
+        <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+      </agm-map>
+    </div>
 
     <h3 class="firma">Firma</h3>
     <div class="containerInput">
@@ -44,7 +44,7 @@
         <div class="column col1">
           <div class="row innerRows firma"></div>
         </div>
-        <div class="row">
+        <div class="row rowFields">
 
           <mat-form-field class="example-full-width">
 
@@ -63,11 +63,11 @@
           </mat-form-field>
         </div>
 
-        <div class="row">
+        <div class="row rowFields">
 
           <mat-form-field class="example-full-width">
             <mat-label>Straße</mat-label>
-            <input matInput [(ngModel)]="companyStreet" >
+            <input matInput [(ngModel)]="companyStreet">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
@@ -114,7 +114,7 @@
       </div>
 
       <div class="containerInput">
-        <div class="row">
+        <div class="row rowFields">
           <div class="column col1">
             <div class="row innerRows firma"></div>
           </div>
@@ -138,7 +138,7 @@
     <br />
     <h3 class="firma">Übersicht</h3>
     <div class="row">
-      <div class="column col1">
+      <div class="column col1 colEmpty">
         <div class="row innerRows firma"></div>
       </div>
 
@@ -186,7 +186,7 @@
       <input type="checkbox" />
       <p>Ja, ich habe die Stornobedingungen von moveIT <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen">Software</a> gelesen.</p>
     </div>
-    
+
     <div class="row">
       <div class="column col1">
         <h3 class="firma checks">Datenschutz</h3>
@@ -196,6 +196,6 @@
       <button class="btnSubmit btnDown" (click)="submit()">Abschicken</button>
     </div>
 
-    
+
   </div>
 
