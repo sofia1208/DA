@@ -7,3 +7,12 @@ table tr:first-child td {
 .newSchooling{
     border-radius: 12px;
 }
+h1 {
+  font-family: 'Open Sans', sans-serif;
+}
+.mat-table {
+  font-family: 'Open Sans', sans-serif;
+}
+.table th{
+    border-top: none;
+}

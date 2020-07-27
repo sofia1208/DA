@@ -127,6 +127,7 @@ export class CalendarComponent implements OnInit {
   
     this.getSchoolings('https://localhost:5001/schoolings/summary')
       .subscribe(data => {
+        console.log(data);
         this.schoolings = data;
         this.schoolingsToEvents();
        

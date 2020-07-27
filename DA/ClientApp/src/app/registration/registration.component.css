@@ -54,7 +54,9 @@ h1 {
   padding: 10px;
   margin: 10px;
 }
-
+.mat-typography {
+  font-family: 'Open Sans', sans-serif;
+}
 .takenSchooling {
   background-color: #F28C8C;
   border-radius: 2px;

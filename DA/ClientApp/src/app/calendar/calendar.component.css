@@ -118,8 +118,13 @@ width: 25%
   background-color: #D4D4D4;
   padding: 5px;
 }
+.mat-typography h1 {
+  font-family: 'Open Sans', sans-serif;
+}
+.mat-typography {
+  font-family: 'Open Sans', sans-serif;
+}
 @media print {
- 
   .printMe {
     display: none !important;
   }
