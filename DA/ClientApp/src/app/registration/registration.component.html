@@ -20,7 +20,7 @@
 
       <div class="column col2">
         <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
-        <div class="row innerRows">{{startTime}} - {{endTime}}</div>
+        <div class="row innerRows" >{{startTime}} - {{endTime}}</div>
         <div class="row innerRows">{{preis}}</div>
         <div class="row innerRows">{{organisator}}</div>
         <div class="row innerRows">{{kontaktperson}}</div>
@@ -40,31 +40,33 @@
 
     <h3 class="firma">Firma</h3>
     <div class="containerInput">
-      <div class="row">
+   
+        
+      <div class="row rowFields">
         <div class="column col1">
           <div class="row innerRows firma"></div>
         </div>
-        <div class="row rowFields">
+        <mat-form-field class="example-full-width">
 
-          <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="company">
+        </mat-form-field>
 
-            <mat-label>Name</mat-label>
-            <input matInput [(ngModel)]="company">
-          </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Telefonnummer</mat-label>
+          <input matInput [(ngModel)]="companyPhone">
+        </mat-form-field>
 
-          <mat-form-field class="example-full-width">
-            <mat-label>Telefonnummer</mat-label>
-            <input matInput [(ngModel)]="companyPhone">
-          </mat-form-field>
-
-          <mat-form-field class="example-full-width">
-            <mat-label>E-Mail</mat-label>
-            <input matInput [(ngModel)]="companyMail">
-          </mat-form-field>
-        </div>
+        <mat-form-field class="example-full-width">
+          <mat-label>E-Mail</mat-label>
+          <input matInput [(ngModel)]="companyMail">
+        </mat-form-field>
+      </div>
 
         <div class="row rowFields">
-
+          <div class="column col1">
+            <div class="row innerRows firma"></div>
+          </div>
           <mat-form-field class="example-full-width">
             <mat-label>Straße</mat-label>
             <input matInput [(ngModel)]="companyStreet">
@@ -91,19 +93,7 @@
           </mat-form-field>
         </div>
 
-      </div>
-
-
-
-
-
-
-
-
-
-
-
-
+      
 
     </div>
     <h3 class="firma">Teilnehmer</h3>

@@ -201,7 +201,7 @@ h1 {
 }
 .table {
   width: 500px;
-  
+  margin-bottom:50px
   
 }
 .mat-header-row{
@@ -239,7 +239,11 @@ input[type=checkbox]{
     margin-left: 215px;
 }
 .mat-typography p {
-    margin: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+.table thead th {
+    align-items:center;
 }
 @media (max-device-width: 768px) {
   .outerRow {

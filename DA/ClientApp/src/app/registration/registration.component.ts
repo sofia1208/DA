@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -14,7 +14,8 @@ import { Location } from './Location';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent implements OnInit {
   private geocoder: any;
@@ -22,8 +23,8 @@ export class RegistrationComponent implements OnInit {
   refresh: Subject<any> = new Subject();
   startDate: Date;
   endDate: Date;
-  startTime: string;
-  endTime: string;
+  startTime: string='';
+  endTime: string ='';
   preis: string = ''
   organisator: string = ''
   kontaktperson: string = '';
@@ -49,20 +50,20 @@ export class RegistrationComponent implements OnInit {
   lat: Number = 48.1505921;
   lon: Number = 14.0069141;
 
-  markerLat: Number = 48.1505921;
-  markerLng: Number= 14.0069141;
+  markerLat: Number ;
+  markerLng: Number;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
   dataSource = this.members;
-
+  
   schooling: SchoolingDto;
   constructor(private http: HttpClient, private route: ActivatedRoute, private apiloader: MapsAPILoader) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
     })
-    this.getEvent(this.detailId);
-    this.submit();
+   
+
   }
 
   displayedColumns: string[] = ['firstname', 'lastname', 'email'];
@@ -88,9 +89,12 @@ export class RegistrationComponent implements OnInit {
     this.lon = first.lon;
     this.markerLat = first.lat;
     this.markerLng = first.lon;
+    this.lat = first.lat;
+    this.lon = first.lon;
     console.log(first.lat + " " + first.lon);
   }
 
+ 
 
   fillDetails(schooling: SchoolingDto) {
    
@@ -106,7 +110,7 @@ export class RegistrationComponent implements OnInit {
    
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
 
-   // this.getAddress();
+     this.getAddress();
   
   }
   convertToGermanTime(schooling: SchoolingDto) {
@@ -137,24 +141,24 @@ export class RegistrationComponent implements OnInit {
 
   }
 
-  getEvent(id: Number): void {
-    let schooling = new SchoolingDto;
-    
-    this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
-      
-      .subscribe(data => {
-     
-          schooling = data;
-          this.fillDetails(schooling);
-       
-        }
-          , err => {
-            console.log(`${err.message}`)
-          })
-      ;
-    
-    this.fillDetails(schooling);
+  getEvent(id: Number) {
 
+    let promise = new Promise((resolve, reject) => {
+      
+      this.http.get(`https://localhost:5001/schoolings/details/${id}`)
+        .toPromise()
+        .then(
+          res => {
+            console.log(res);
+            this.schooling =JSON.parse( JSON.stringify(res));
+            this.fillDetails(this.schooling);
+            resolve();
+          }
+        );
+    });
+    return promise;
+  
+    
   }
 
   addMember(): void {
