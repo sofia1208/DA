@@ -241,9 +241,12 @@ input[type=checkbox]{
     margin-left: 215px;
 }
 .mat-typography p {
+    margin: 0;
   margin-left: 5px;
   margin-top: 5px;
+  
 }
+
 .table thead th {
     align-items:center;
 }

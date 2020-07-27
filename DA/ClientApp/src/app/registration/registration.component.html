@@ -20,7 +20,7 @@
 
       <div class="column col2">
         <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
-        <div class="row innerRows" >{{startTime}} - {{endTime}}</div>
+        <div class="row innerRows">{{startTime}} - {{endTime}}</div>
         <div class="row innerRows">{{preis}}</div>
         <div class="row innerRows">{{organisator}}</div>
         <div class="row innerRows">{{kontaktperson}}</div>
@@ -28,10 +28,15 @@
         <div class="row innerRows">{{adresse}}</div>
       </div>
 
+       <div *ngIf="!mobile" class="column">
 
+        <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
+          <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+        </agm-map>
+      </div>
 
     </div>
-    <div class="column">
+    <div *ngIf="mobile" class="column">
 
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
