@@ -32,7 +32,7 @@ namespace DA.Services {
 
 
         public List<BackendSummaryDTO> GetSchoolings() {
-            return schoolings.Select(x => converter.getBackendSummaryDTO(x)).ToList();
+            return schoolings.Select(x => converter.getBackendSummaryDTO(x)).OrderBy(x => x.Start).ToList();
         }
 
         public bool DeleteSchooling(int id) {
