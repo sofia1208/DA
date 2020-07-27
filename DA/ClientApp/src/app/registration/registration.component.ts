@@ -37,6 +37,7 @@ export class RegistrationComponent implements OnInit {
   email: string="";
   members: Member[] = [];
 
+  mobile: boolean = false;
 
   company: string= "";
   companyPhone: string = "";
@@ -69,8 +70,22 @@ export class RegistrationComponent implements OnInit {
   displayedColumns: string[] = ['firstname', 'lastname', 'email'];
   ngOnInit(): void {
     console.log('on init registration');
-      this.getEvent(this.detailId); 
+    this.getEvent(this.detailId);
+    this.checkSize();
     
+  }
+  checkSize() {
+    let width = window.innerWidth;
+    if (width <= 768) {
+      this.mobile = true;
+      console.log('mobile device detected')
+    } else if (width > 768 && width <= 992) {
+      this.mobile = true;
+      console.log('tablet detected')
+    } else {
+      this.mobile = false;
+      console.log('desktop detected')
+    }
   }
   getAddress() {
     console.log(this.adresse);
@@ -156,6 +171,7 @@ export class RegistrationComponent implements OnInit {
           }
         );
     });
+    this.fillDetails(this.schooling);
     return promise;
   
     

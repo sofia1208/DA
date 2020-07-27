@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { SummaryDto } from './SummaryDto';
+import { SchoolingDto } from '../calendar/SchoolingDto';
+import { MatTable } from '@angular/material';
 @Component({
   selector: 'app-backend-start',
   templateUrl: './backend-start.component.html',
   styleUrls: ['./backend-start.component.css']
 })
 export class BackendStartComponent implements OnInit {
-
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   schoolings: SummaryDto[] = [];
+  dataSource: SummaryDto[] = [];
   constructor(private http: HttpClient, private router: Router) { }
   
   ngOnInit() {
-  //  this.getSummary();
+   this.getSum();
   }
   //GEt auf Summary (checkbox)
   //GET auf Detail/ID (neues)
@@ -29,7 +32,10 @@ export class BackendStartComponent implements OnInit {
     
     this.getSummary(`https://localhost:5001/backend/summary`)
       .subscribe(data => {
+       
         this.schoolings = data;
+        console.log(this.schoolings);
+        this.fillTable();
       });
 
 
@@ -40,7 +46,28 @@ export class BackendStartComponent implements OnInit {
 
   }
   displayedColumns: string[] = ['name', 'date', 'check', 'edit', 'delete'];
-  fillTable() {
+ 
+
+  fillTable(): void {
+    for (var i = 0; i < this.schoolings.length; i++) {
+      this.dataSource.push(this.schoolings[i]);
+      this.table.renderRows();
+    }
+
+  }
+  deleteSchooling(id: number) {
+    console.log(id);
+    this.delete(`https://localhost:5001/backend/summary`, id)
+      .subscribe();
+
+  }
+  editSchooling(id: Number) {
+    console.log(id);
+  }
+  private delete(url:string, id: number): Observable<{}> {
+   
+    return this.http.delete(url);
+      
   }
   private getSummary(url: string): Observable<SummaryDto[]> {
     return this.http.get<SummaryDto[]>(url);
