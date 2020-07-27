@@ -20,13 +20,12 @@ namespace DA {
         }
 
         public void GetAllTables(
-                ref List<AddressRessource> addresses, 
-                ref List<CompanyRessource> companies, 
-                ref List<SchoolingRessource> schoolings, 
-                ref List<OrganizerRessource> organizers, 
-                ref List<RegistrationRessource> registrations, 
-                ref List<PersonRessource> persons)
-         {
+                ref List<AddressRessource> addresses,
+                ref List<CompanyRessource> companies,
+                ref List<SchoolingRessource> schoolings,
+                ref List<OrganizerRessource> organizers,
+                ref List<RegistrationRessource> registrations,
+                ref List<PersonRessource> persons) {
             GetAddresses(ref addresses);
             GetCompanies(ref companies);
             GetOrganizers(ref organizers);
@@ -34,6 +33,8 @@ namespace DA {
             GetSchoolings(ref schoolings);
             GetRegistrations(ref registrations);
         }
+
+
 
         public void GetAddresses(ref List<AddressRessource> addresses) {
             addresses = new List<AddressRessource>();
@@ -147,7 +148,6 @@ namespace DA {
                 SchoolingRessource schooling;
                 using MySqlDataReader reader = getSchoolingsCmd.ExecuteReader();
                 while (reader.Read()) {
-                    bool reservation = (reader.GetInt32(5) == 1);
                     schooling = new SchoolingRessource() {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
@@ -155,11 +155,9 @@ namespace DA {
                         Start = reader.GetDateTime(3),
                         End = reader.GetDateTime(4),
                         Price = reader.GetDouble(5),
-                        Reservation = reservation,
-                        ReservationDate = reader.GetDateTime(7),
-                        OrganizerId = reader.GetInt32(8),
-                        Places = reader.GetInt32(9),
-                        Display = reader.GetBoolean(10)
+                        OrganizerId = reader.GetInt32(6),
+                        Places = reader.GetInt32(7),
+                        Display = reader.GetBoolean(8)
                     };
                     schoolings.Add(schooling);
                 }
@@ -317,6 +315,20 @@ namespace DA {
 
                 var insertSchoolingCmd = new MySqlCommand(insertstatement, connection);
                 insertSchoolingCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        internal bool deleteSchooling(int id) {
+            try {
+                string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
+                var deleteschoolingCmd = new MySqlCommand(deleteStatement, connection);
+                deleteschoolingCmd.ExecuteNonQuery();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);

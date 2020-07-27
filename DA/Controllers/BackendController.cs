@@ -26,6 +26,11 @@ namespace DA.Controllers {
             return backendService.GetSchoolings();
         }
 
+        [HttpDelete("Summary/{id}")]
+        public bool DeleteSchooling(int id) {
+            return backendService.DeleteSchooling(id);
+        }
+
         [HttpGet("Schoolings/{id}")]
         public BackendDetailDTO Schoolings(int id) {
             return backendService.GetSchoolings(id);

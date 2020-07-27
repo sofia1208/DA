@@ -29,9 +29,14 @@ namespace DA.Services {
             //checkCredentials
             return true;
         }
+        
 
         public List<BackendSummaryDTO> GetSchoolings() {
             return schoolings.Select(x => converter.getBackendSummaryDTO(x)).ToList();
+        }
+
+        public bool DeleteSchooling(int id) {
+            return db.deleteSchooling(id);
         }
 
 
