@@ -27,12 +27,14 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { LoginComponent } from './login/login.component';
 import { BackendStartComponent } from './backend-start/backend-start.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { BackendDetailComponent } from './backend-detail/backend-detail.component';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'start', component: BackendStartComponent },
+  { path: 'detail', component: BackendDetailComponent },
   {
     path: 'print',
     outlet: 'print',
@@ -54,6 +56,7 @@ const routes: Routes = [
     InvoiceComponent,
     LoginComponent,
     BackendStartComponent,
+    BackendDetailComponent,
   
   ],
   imports: [

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SummaryDto } from './SummaryDto';
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { MatTable } from '@angular/material';
@@ -15,7 +15,8 @@ export class BackendStartComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   schoolings: SummaryDto[] = [];
   dataSource: SummaryDto[] = [];
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
   
   ngOnInit() {
    this.getSum();
@@ -56,13 +57,21 @@ export class BackendStartComponent implements OnInit {
 
   }
   deleteSchooling(id: number) {
+    //delete render rows bei subscribe
     console.log(id);
-    this.delete(`https://localhost:5001/backend/summary`, id)
+    this.delete(`https://localhost:5001/backend/summary/10`, 10)
       .subscribe();
-
+    this.table.renderRows();
   }
   editSchooling(id: Number) {
     console.log(id);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "id": id
+      }
+    };
+    this.router.navigate(["/detail"], navigationExtras);
+  
   }
   private delete(url:string, id: number): Observable<{}> {
    
