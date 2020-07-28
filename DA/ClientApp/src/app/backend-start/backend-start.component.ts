@@ -44,7 +44,8 @@ export class BackendStartComponent implements OnInit {
 
   }
   newSchooling() {
-
+    
+    this.router.navigate(["/detail"]);
   }
   displayedColumns: string[] = ['name', 'date', 'check', 'edit', 'delete'];
  

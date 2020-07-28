@@ -27,9 +27,20 @@ margin-top: 20px;
 .inputTime{
     height: 50px;
 }
-.column{
-    height: 50px;
+.column {
+  height: 300px;
+  margin-top: 15px;
+  place-content: space-evenly;
+}
+.columDetails {
+  height: 400px;
+  margin-top: 15px;
+  place-content: space-evenly;
 }
 .pColumn{
     margin-bottom: 40px;
+}
+.btnMap{
+    border-radius: 12px;
+
 }
