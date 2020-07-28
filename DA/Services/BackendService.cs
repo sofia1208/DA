@@ -53,6 +53,7 @@ namespace DA.Services {
             return converter.getbackendDetaiDTO(schooling, address, organizer, participants, isFree);
         }
 
+
         public bool InsertSchooling(BackendDetailDTO schooling) {
             var wasSuccessful = true;
             var address = FindAddress(schooling);
@@ -77,11 +78,33 @@ namespace DA.Services {
             return wasSuccessful;
         }
 
-        //public string EditSchooling(int id, BackendDetailDTO schooling) {
-        //    //var address = FindAddress(schooling);
-        //    //var organizer = FindOrganizer(schooling);
-        //    //return db.UpdateSchooling(schooling);
-        //    return "test successfull";
+        public bool EditSchooling(int id, BackendDetailDTO schooling) {
+            var wasSuccessful = true;
+            var address = FindAddress(schooling);
+            if (address == null) {
+                if (address == null)
+                    wasSuccessful = db.InsertAddress(schooling);
+                db.GetAddresses(ref addresses);
+                address = FindAddress(schooling);
+            }
+
+            var organizer = FindOrganizer(schooling);
+            if (organizer == null && wasSuccessful) {
+                wasSuccessful = db.InsertOrganizer(schooling);
+                db.GetOrganizers(ref organizers);
+                organizer = FindOrganizer(schooling);
+            }
+
+            if (wasSuccessful) {
+                wasSuccessful = db.UpdateSchooling(schooling, address.Id, organizer.Id);
+                db.GetSchoolings(ref schoolings);
+            }
+            return wasSuccessful;
+        }
+
+
+        //internal bool EditParticipants(DeleteDTO deleteDTO) {
+        //    return db.DeleteRegistration(deleteDTO.SchoolingId, deleteDTO.PersonId);
         //}
 
         private void FillLists() {

@@ -325,11 +325,12 @@ namespace DA {
 
         public bool UpdateSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
             try {
-                string insertstatement = $"UPDATE INTO schoolings(id, name, address_id, start, end, organizer_id, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Id}','{backendDetail.Name}', '{addressId}', '{backendDetail.Start}', '{backendDetail.End}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                string updateStatement = $"UPDATE schoolings " +
+                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start}', end='{backendDetail.End}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'"+
+                                         $"WHERE schooling_id={backendDetail.Id};";
 
-                var insertSchoolingCmd = new MySqlCommand(insertstatement, connection);
-                insertSchoolingCmd.ExecuteNonQuery();
+                var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
+                updateSchoolingCmd.ExecuteNonQuery();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -338,6 +339,23 @@ namespace DA {
 
             return true;
         }
+
+
+        //internal bool DeleteRegistration(int schoolingId, int participantId) {
+        //    try {
+        //        string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{schoolingId}' AND person_id = '{participantId}'";
+
+        //        var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
+        //        deleteRegistrationCmd.ExecuteNonQuery();
+        //    }
+        //    catch (Exception e) {
+        //        Console.WriteLine(e.Message);
+        //        return false;
+        //    }
+
+        //    return true;
+        //}
+
 
 
     }
