@@ -15,7 +15,13 @@ export class BackendDetailComponent implements OnInit {
   zipCode: string;
   city: string;
   country: string;
+  catName: string = "";
   backendDto: BackendDetailDto;
+  organizer: string[] = ["moveIT Software GmbH"];
+  contactPerson: string;
+  email: string;
+  website: string;
+  phone: string;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
@@ -29,7 +35,10 @@ export class BackendDetailComponent implements OnInit {
     "moveIT@ISS+Kombimodell"
   ];
   ngOnInit() {
-    this.getDetails();
+  
+      this.getDetails();
+    
+  
   }
   fillDetails() {
     this.street= this.backendDto.street;
@@ -37,6 +46,8 @@ export class BackendDetailComponent implements OnInit {
     this.zipCode = this.backendDto.zipCode.toString();
     this.city = this.backendDto.city;
     this.country = this.backendDto.country;
+    this.catName = this.backendDto.name;
+    
   }
   getDetails() {
     this.getDetail(`https://localhost:5001/backend/schoolings/${this.detailId}`)
@@ -50,6 +61,9 @@ export class BackendDetailComponent implements OnInit {
   }
   private getDetail(url: string): Observable<BackendDetailDto> {
     return this.http.get<BackendDetailDto>(url);
+
+  }
+  addSchooling() {
 
   }
 

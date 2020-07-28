@@ -2,15 +2,15 @@
   <mat-tab label="Details">
    
       <div class="displayRow">
-        <div class="column columnFields">
+        <div class="column columDetails columnFields">
           <p class="pColumn">Name</p>
           <p class="pColumn">Adresse</p>
-          <p class="pColumn">Kursort</p>
+         
           <p class="pColumn">Beginn-Datum und Uhrzeit</p>
           <p class="pColumn">End-Datum und Uhrzeit</p>
         </div>
         <div class="columnFields">
-          <mat-form-field class="fields" appearance="fill">
+          <mat-form-field class="fields" [(ngModel)]="catName" appearance="fill">
             <mat-label>Kategory auswählen</mat-label>
             <mat-select>
               <mat-option *ngFor="let s of category" [value]="s">
@@ -40,7 +40,7 @@
               <input matInput [(ngModel)]="country">
             </mat-form-field>
           </div>
-          <button class="fields">Auf Karte anzeigen</button>
+          <button class="fields btnMap">Auf Karte anzeigen</button>
           <div class="displayRow fields">
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>Datum auswählen</mat-label>
@@ -66,7 +66,49 @@
           </div>
         </div>
       </div>
+    <button disabled (click)="addSchooling()">Neue Schulung anlegen</button>
   </mat-tab>
-  <mat-tab label="Organisator"> Content 2 </mat-tab>
+
+
+
+  <mat-tab label="Organisator">
+    <div class="displayRow">
+      <div class="column columnFields">
+        <p class="pColumn">Organisator</p>
+        <p class="pColumn">Konataktperson</p>
+        <p class="pColumn">E-Mail Adresse</p>
+        <p class="pColumn">Website</p>
+        <p class="pColumn">Telfonnummer</p>
+      </div>
+      <div class="columnFields">
+       <mat-form-field  [(ngModel)]="catName" appearance="fill">
+          <mat-label>Organisator auswählen</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let s of organizer" [value]="s">
+              {{s}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+       
+          <mat-form-field>
+           
+            <input matInput [(ngModel)]="contactPerson">
+          </mat-form-field>
+          <mat-form-field>
+           
+            <input matInput [(ngModel)]="email">
+          </mat-form-field>
+          <mat-form-field>
+    
+            <input matInput [(ngModel)]="website">
+          </mat-form-field>
+          <mat-form-field>
+          
+            <input matInput [(ngModel)]="phone">
+          </mat-form-field>
+        
+      </div>
+    </div>
+  </mat-tab>
   <mat-tab label="Teilnehmer"> Content 3 </mat-tab>
 </mat-tab-group>
