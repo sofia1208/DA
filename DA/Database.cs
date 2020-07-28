@@ -102,7 +102,7 @@ namespace DA {
                         Name = reader.GetString(1),
                         ContactPerson = reader.GetString(2),
                         Email = reader.GetString(3),
-                        Website = reader.GetString(4),
+                        Website = reader.GetString(4) ?? "",
                         Phone = reader.GetString(5)
                     };
                     organizers.Add(organizer);
@@ -259,6 +259,20 @@ namespace DA {
             return true;
         }
 
+        internal bool deleteSchooling(int id) {
+            try {
+                string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
+                var deleteschoolingCmd = new MySqlCommand(deleteStatement, connection);
+                deleteschoolingCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
         public bool InsertAddress(BackendDetailDTO backendDetail) {
             try {
                 string insertstatement = $"INSERT INTO addresses(street, street_number, city, zip_code, country)" +
@@ -291,11 +305,12 @@ namespace DA {
 
             return true;
         }
+       
 
         public bool InsertSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
             try {
-                string insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, reservation, reservation_date, organizer_id, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start}', '{backendDetail.End}', '{backendDetail.Reservation}', '{backendDetail.ReservationDate}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                string insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, organizer_id, number_of_places, price)" +
+                                         $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start.ToString("yyyy-MM-dd HH:mm:ss")}', '{backendDetail.End.ToString("yyyy-MM-dd HH:mm:ss")}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
 
                 var insertSchoolingCmd = new MySqlCommand(insertstatement, connection);
                 insertSchoolingCmd.ExecuteNonQuery();
@@ -310,25 +325,11 @@ namespace DA {
 
         public bool UpdateSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
             try {
-                string insertstatement = $"UPDATE INTO schoolings(id, name, address_id, start, end, reservation, reservation_date, organizer_id, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Id}','{backendDetail.Name}', '{addressId}', '{backendDetail.Start}', '{backendDetail.End}', '{backendDetail.Reservation}', '{backendDetail.ReservationDate}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                string insertstatement = $"UPDATE INTO schoolings(id, name, address_id, start, end, organizer_id, number_of_places, price)" +
+                                         $" VALUES('{backendDetail.Id}','{backendDetail.Name}', '{addressId}', '{backendDetail.Start}', '{backendDetail.End}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
 
                 var insertSchoolingCmd = new MySqlCommand(insertstatement, connection);
                 insertSchoolingCmd.ExecuteNonQuery();
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message);
-                return false;
-            }
-
-            return true;
-        }
-
-        internal bool deleteSchooling(int id) {
-            try {
-                string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
-                var deleteschoolingCmd = new MySqlCommand(deleteStatement, connection);
-                deleteschoolingCmd.ExecuteNonQuery();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);

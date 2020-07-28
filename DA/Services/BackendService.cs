@@ -1,4 +1,5 @@
 ﻿using DA.Models.DTOs;
+using Org.BouncyCastle.Crypto.Prng;
 using Schulungskalender.Models;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,12 @@ namespace DA.Services {
         }
 
         public bool DeleteSchooling(int id) {
-            return db.deleteSchooling(id);
+            var wasSuccessful = db.deleteSchooling(id);
+            db.GetSchoolings(ref schoolings);
+            return wasSuccessful;
         }
 
+        
 
         public BackendDetailDTO GetSchoolings(int id) {
             var schooling = schoolings.Find(x => x.Id == id);
@@ -49,18 +53,34 @@ namespace DA.Services {
             return converter.getbackendDetaiDTO(schooling, address, organizer, participants, isFree);
         }
 
+        public bool InsertSchooling(BackendDetailDTO schooling) {
+            var wasSuccessful = true;
+            var address = FindAddress(schooling);
+            if(address == null) {
+                wasSuccessful = db.InsertAddress(schooling);
+                db.GetAddresses(ref addresses);
+                address = FindAddress(schooling);
+            }
 
+            var organizer = FindOrganizer(schooling);
+            if(organizer == null && wasSuccessful) {
+                wasSuccessful = db.InsertOrganizer(schooling);
+                db.GetOrganizers(ref organizers);
+                organizer = FindOrganizer(schooling);
+            }
+            
+            if (wasSuccessful) {
+                wasSuccessful = db.InsertSchooling(schooling, address.Id, organizer.Id);
+                db.GetSchoolings(ref schoolings);
+            }
+            return wasSuccessful;
+        }
 
         //public string EditSchooling(int id, BackendDetailDTO schooling) {
         //    //var address = FindAddress(schooling);
         //    //var organizer = FindOrganizer(schooling);
         //    //return db.UpdateSchooling(schooling);
         //    return "test successfull";
-        //}
-
-        //public string InsertSchooling(BackendDetailDTO schooling) {
-        //    return "test successfull";
-        //    //return db.InsertSchooling(schooling);
         //}
 
         private void FillLists() {
@@ -82,8 +102,16 @@ namespace DA.Services {
             return addresses.Find(x => x.Id == schooling.AddressId);
         }
 
+        private AddressRessource FindAddress(BackendDetailDTO schooling) {
+            return addresses.Find(x => x.Street == schooling.Street && x.StreetNumber == schooling.StreetNumber && x.ZipCode == schooling.ZipCode && x.City == schooling.City && x.Country == schooling.Country);
+        }
+
         private OrganizerRessource FindOrganizer(SchoolingRessource schooling) {
             return organizers.Find(x => x.Id == schooling.OrganizerId);
+        }
+
+        private OrganizerRessource FindOrganizer(BackendDetailDTO schooling) {
+            return organizers.Find(x => x.ContactPerson == schooling.ContactPerson && x.Email == schooling.Email && x.Name == schooling.Organizer && x.Phone == schooling.Phone);
         }
 
         private List<ParticipantDTO> GetParticipants(int id) {
