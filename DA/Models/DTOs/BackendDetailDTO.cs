@@ -20,8 +20,6 @@ namespace DA.Models.DTOs {
         public string Email { get; set; }
         public string website { get; set; }
         public string Phone { get; set; }
-        public bool Reservation { get; set; }
-        public DateTime ReservationDate { get; set; }
         public bool IsFree { get; set; }
         public List<ParticipantDTO> participants { get; set; }
         public int availablePlaces { get; set; }
