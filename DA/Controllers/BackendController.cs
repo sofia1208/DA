@@ -47,9 +47,15 @@ namespace DA.Controllers {
             return backendService.EditSchooling(id, schooling);
         }
 
-        [HttpDelete("Participant")]
-        public bool EditParticipants([FromBody] DeleteDTO deleteDTO) {
-            return backendService.EditParticipants(deleteDTO);
+        [HttpPut("Participants/{id}")]
+        public bool EditParticipants(int id, [FromBody] List<ParticipantDTO> participants) {
+            return true;
+            //return backendService.EditParticipants(id, participants);
+        }
+
+        [HttpGet("Organizers")]
+        public BackendDetailDTO Organizers(int id) {
+            return backendService.GetOrganizers(id);
         }
 
     }

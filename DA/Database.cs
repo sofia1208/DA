@@ -14,7 +14,7 @@ namespace DA {
         private readonly MySqlConnection connection;
 
         public Database() {
-            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True;convert zero datetime=True";
+            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True;";
             connection = new MySqlConnection(connectionString);
             connection.Open();
         }
@@ -112,6 +112,8 @@ namespace DA {
                 Console.WriteLine(e.Message);
             }
         }
+
+        
 
         public void GetPersons(ref List<PersonRessource> persons) {
             persons = new List<PersonRessource>();
@@ -355,6 +357,22 @@ namespace DA {
 
             return true;
         }
+
+        public bool RemoveAllForId(int id) {
+            try {
+                string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{id}'";
+
+                var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
+                deleteRegistrationCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
 
 
 
