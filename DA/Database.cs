@@ -14,7 +14,7 @@ namespace DA {
         private readonly MySqlConnection connection;
 
         public Database() {
-            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True";
+            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True;convert zero datetime=True";
             connection = new MySqlConnection(connectionString);
             connection.Open();
         }
@@ -326,7 +326,7 @@ namespace DA {
         public bool UpdateSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
             try {
                 string updateStatement = $"UPDATE schoolings " +
-                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start}', end='{backendDetail.End}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'"+
+                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start.ToString("yyyy-MM-dd HH:mm:ss")}', end='{backendDetail.End.ToString("yyyy-MM-dd HH:mm:ss")}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'"+
                                          $"WHERE schooling_id={backendDetail.Id};";
 
                 var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
