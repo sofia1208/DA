@@ -42,7 +42,7 @@ namespace DA.Services {
             return wasSuccessful;
         }
 
-        
+
 
         public BackendDetailDTO GetSchoolings(int id) {
             var schooling = schoolings.Find(x => x.Id == id);
@@ -57,20 +57,20 @@ namespace DA.Services {
         public bool InsertSchooling(BackendDetailDTO schooling) {
             var wasSuccessful = true;
             var address = FindAddress(schooling);
-            if(address == null) {
-            if(address == null) 
-                wasSuccessful = db.InsertAddress(schooling);
+            if (address == null) {
+                if (address == null)
+                    wasSuccessful = db.InsertAddress(schooling);
                 db.GetAddresses(ref addresses);
                 address = FindAddress(schooling);
             }
 
             var organizer = FindOrganizer(schooling);
-            if(organizer == null && wasSuccessful) {
+            if (organizer == null && wasSuccessful) {
                 wasSuccessful = db.InsertOrganizer(schooling);
                 db.GetOrganizers(ref organizers);
                 organizer = FindOrganizer(schooling);
             }
-            
+
             if (wasSuccessful) {
                 wasSuccessful = db.InsertSchooling(schooling, address.Id, organizer.Id);
                 db.GetSchoolings(ref schoolings);
@@ -103,10 +103,17 @@ namespace DA.Services {
         }
 
 
-        internal bool EditParticipants(DeleteDTO deleteDTO) {
-            var wasSuccesful = db.DeleteRegistration(deleteDTO.SchoolingId, deleteDTO.PersonId);
+        internal bool EditParticipants(int id, List<ParticipantDTO> participants) {
+            var wasSuccessful = db.RemoveAllForId(id);
+
+        //    participants.ForEach(x => {
+        //        if (wasSuccessful) {
+        //            db.InsertPerson
+        //        }
+        //            ? db.InsertRegistration(id, x.Id) 
+        //});
             db.GetRegistrations(ref registrations);
-            return wasSuccesful;
+            return wasSuccessful;
         }
 
         private void FillLists() {
@@ -147,7 +154,7 @@ namespace DA.Services {
                 .Select(x => {
                     var personRessource = persons.Find(y => y.Id == x);
                     return new ParticipantDTO() { Firstname = personRessource.Firstname, Lastname = personRessource.Lastname, Email = personRessource.Email };
-                    })
+                })
                 .ToList();
         }
 
