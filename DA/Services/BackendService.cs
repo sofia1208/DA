@@ -57,6 +57,7 @@ namespace DA.Services {
             var wasSuccessful = true;
             var address = FindAddress(schooling);
             if(address == null) {
+            if(address == null) 
                 wasSuccessful = db.InsertAddress(schooling);
                 db.GetAddresses(ref addresses);
                 address = FindAddress(schooling);

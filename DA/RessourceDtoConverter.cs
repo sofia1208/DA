@@ -20,12 +20,11 @@ namespace DA {
         }
 
         internal BackendSummaryDTO getBackendSummaryDTO(SchoolingRessource schooling) {
-            Console.WriteLine(schooling.Display);
             return new BackendSummaryDTO() { Id = schooling.Id, Name = schooling.Name, Start = schooling.Start, End = schooling.End, Display = schooling.Display };
         }
 
         internal BackendDetailDTO getbackendDetaiDTO(SchoolingRessource schooling, AddressRessource address, OrganizerRessource organizer, List<ParticipantDTO> participants, bool isFree) {
-            return new BackendDetailDTO() { Id = schooling.Id, Start = schooling.Start, End = schooling.End, Price = schooling.Price, ZipCode = address.ZipCode, City = address.City, Street = address.Street, StreetNumber = address.StreetNumber, Country = address.Country, Organizer = organizer.Name, ContactPerson = organizer.ContactPerson, Email = organizer.Email, Phone = organizer.Phone, IsFree = isFree, participants = participants, availablePlaces = schooling.Places };
+            return new BackendDetailDTO() { Id = schooling.Id, Name = schooling.Name, website = organizer.Website, Start = schooling.Start, End = schooling.End, Price = schooling.Price, ZipCode = address.ZipCode, City = address.City, Street = address.Street, StreetNumber = address.StreetNumber, Country = address.Country, Organizer = organizer.Name, ContactPerson = organizer.ContactPerson, Email = organizer.Email, Phone = organizer.Phone, IsFree = isFree, participants = participants, availablePlaces = schooling.Places };
         }
     }
 }
