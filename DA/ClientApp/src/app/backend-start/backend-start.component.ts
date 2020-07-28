@@ -21,7 +21,7 @@ export class BackendStartComponent implements OnInit {
   ngOnInit() {
    this.getSum();
   }
-  //GEt auf Summary (checkbox)
+
   //GET auf Detail/ID (neues)
   //DELETE Summary (id)
 
@@ -60,7 +60,7 @@ export class BackendStartComponent implements OnInit {
   deleteSchooling(id: number) {
     //delete render rows bei subscribe
     console.log(id);
-    this.delete(`https://localhost:5001/backend/summary/10`, 10)
+    this.delete(`https://localhost:5001/backend/summary/id`, id)
       .subscribe();
     this.table.renderRows();
   }

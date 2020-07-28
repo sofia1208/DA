@@ -28,7 +28,7 @@ margin-top: 20px;
     height: 50px;
 }
 .column {
-  height: 300px;
+  height: 500px;
   margin-top: 15px;
   place-content: space-evenly;
 }
@@ -37,10 +37,22 @@ margin-top: 20px;
   margin-top: 15px;
   place-content: space-evenly;
 }
-.pColumn{
-    margin-bottom: 40px;
+.pColumn {
+  margin-top: 25px;
+  margin-bottom: 30px;
 }
 .btnMap{
     border-radius: 12px;
 
+}
+table{
+    width: 90%;
+}
+.mat-tab-body-content{
+    overflow:hidden;
+}
+agm-map {
+  margin: 20px;
+  height: 300px;
+  width: 500px;
 }

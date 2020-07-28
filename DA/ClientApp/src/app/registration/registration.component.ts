@@ -180,7 +180,7 @@ export class RegistrationComponent implements OnInit {
   addMember(): void {
    
   
-    this.dataSource.push(new Member(this.firstname, this.lastname, this.email));
+    this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.email));
     this.table.renderRows();
     this.firstname = "";
     this.lastname = "";
