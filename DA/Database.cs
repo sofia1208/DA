@@ -259,7 +259,7 @@ namespace DA {
             return true;
         }
 
-        internal bool deleteSchooling(int id) {
+        public bool deleteSchooling(int id) {
             try {
                 string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
                 var deleteschoolingCmd = new MySqlCommand(deleteStatement, connection);
@@ -341,20 +341,20 @@ namespace DA {
         }
 
 
-        //internal bool DeleteRegistration(int schoolingId, int participantId) {
-        //    try {
-        //        string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{schoolingId}' AND person_id = '{participantId}'";
+        public bool DeleteRegistration(int schoolingId, int participantId) {
+            try {
+                string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{schoolingId}' AND person_id = '{participantId}'";
 
-        //        var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
-        //        deleteRegistrationCmd.ExecuteNonQuery();
-        //    }
-        //    catch (Exception e) {
-        //        Console.WriteLine(e.Message);
-        //        return false;
-        //    }
+                var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
+                deleteRegistrationCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
 
-        //    return true;
-        //}
+            return true;
+        }
 
 
 

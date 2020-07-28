@@ -103,9 +103,11 @@ namespace DA.Services {
         }
 
 
-        //internal bool EditParticipants(DeleteDTO deleteDTO) {
-        //    return db.DeleteRegistration(deleteDTO.SchoolingId, deleteDTO.PersonId);
-        //}
+        internal bool EditParticipants(DeleteDTO deleteDTO) {
+            var wasSuccesful = db.DeleteRegistration(deleteDTO.SchoolingId, deleteDTO.PersonId);
+            db.GetRegistrations(ref registrations);
+            return wasSuccesful;
+        }
 
         private void FillLists() {
             addresses = new List<AddressRessource>();
