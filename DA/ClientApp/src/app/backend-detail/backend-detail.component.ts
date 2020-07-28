@@ -89,7 +89,7 @@ export class BackendDetailComponent implements OnInit {
     this.email = this.backendDto.email;
     this.phone = this.backendDto.phone;
     this.website = this.backendDto.website;
-
+    this.price = this.backendDto.price;
 
     this.dataSource = this.backendDto.participants;
     this.sizeOfSchooling = this.backendDto.availablePlaces;
@@ -168,7 +168,7 @@ export class BackendDetailComponent implements OnInit {
 
   }
   addSchooling() {
-    this.addNewSchooling(new BackendDetailDto(0, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
+    this.addNewSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => console.log(x));
   }
@@ -178,7 +178,7 @@ export class BackendDetailComponent implements OnInit {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
 
-    return this.http.post<BackendDetailDto>(`https://localhost:5001/schoolings`, reg, httpOptions);
+    return this.http.post<BackendDetailDto>(`https://localhost:5001/backend/schoolings`, reg, httpOptions);
   }
 
   addMember() {

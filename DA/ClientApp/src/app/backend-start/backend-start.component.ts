@@ -59,6 +59,7 @@ export class BackendStartComponent implements OnInit {
   }
   deleteSchooling(id: number) {
     //delete render rows bei subscribe
+    //delete funkt nicht
     console.log(id);
     this.delete(`https://localhost:5001/backend/summary/id`, id)
       .subscribe();

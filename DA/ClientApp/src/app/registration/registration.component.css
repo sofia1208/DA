@@ -249,7 +249,12 @@ input[type=checkbox]{
 
 .table thead th {
     align-items:center;
+    border-top: 0px;
 }
+.table tr:first-child td {
+  border-top: 0;
+}
+
 @media (max-device-width: 768px) {
   .outerRow {
     margin: 0;
