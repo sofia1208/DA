@@ -15,7 +15,7 @@ import { registerLocaleData } from '@angular/common';
 import localDe from '@angular/common/locales/de';
 import { CalendarComponent } from './calendar/calendar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatNativeDateModule } from '@angular/material';
 import { LOCALE_ID } from '@angular/core';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatTableModule } from '@angular/material/table'
@@ -28,6 +28,9 @@ import { LoginComponent } from './login/login.component';
 import { BackendStartComponent } from './backend-start/backend-start.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BackendDetailComponent } from './backend-detail/backend-detail.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -68,6 +71,10 @@ const routes: Routes = [
     MatIconModule,
     MatCheckboxModule,
     MatGridListModule,
+    MatSelectModule,
+    MatTabsModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAE1t4KEfa0sBR2N354rup1xE6LvDlXabE',
    
