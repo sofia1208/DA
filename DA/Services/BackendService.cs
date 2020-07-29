@@ -37,10 +37,20 @@ namespace DA.Services {
             return schoolings.Select(x => converter.getBackendSummaryDTO(x)).OrderBy(x => x.Start).ToList();
         }
 
+        
+
         public bool DeleteSchooling(int id) {
             var wasSuccessful = db.deleteSchooling(id);
             db.GetSchoolings(ref schoolings);
             return wasSuccessful;
+        }
+
+        public bool UpdateDisplay(int id, bool isDisplayed) {
+            var schooling = schoolings.Find(x => x.Id == id);
+            db.UpdateSchooling(id, isDisplayed);
+            db.GetSchoolings(ref schoolings);
+
+            return true;
         }
 
 

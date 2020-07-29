@@ -31,6 +31,11 @@ namespace DA.Controllers {
             return backendService.DeleteSchooling(id);
         }
 
+        [HttpPut("UpdateDisplay/{id}")]
+        public bool UpdateDisplay(int id, [FromBody] bool isDisplayed) {
+            return backendService.UpdateDisplay(id, isDisplayed);
+        }
+
         [HttpGet("Schoolings/{id}")]
         public BackendDetailDTO Schoolings(int id) {
             return backendService.GetSchoolings(id);

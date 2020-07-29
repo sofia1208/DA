@@ -61,6 +61,8 @@ namespace DA {
             }
         }
 
+        
+
         public void GetCompanies(ref List<CompanyRessource> companies) {
             companies = new List<CompanyRessource>();
 
@@ -381,6 +383,23 @@ namespace DA {
 
                 var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
                 deleteRegistrationCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool UpdateSchooling(int id, bool isDisplayed) {
+            try {
+                string updateStatement = $"UPDATE schoolings " +
+                                         $"SET display={isDisplayed} " +
+                                         $"WHERE schooling_id={id};";
+
+                var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
+                updateSchoolingCmd.ExecuteNonQuery();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
