@@ -47,10 +47,10 @@ namespace DA.Controllers {
             return backendService.EditSchooling(id, schooling);
         }
 
-        [HttpDelete("Participant")]
-        public bool EditParticipants([FromBody] DeleteDTO deleteDTO) {
-            return backendService.EditParticipants(deleteDTO);
-        }
+        //[HttpGet("Organizers")]
+        //public BackendDetailDTO Organizers() {
+        //    return backendService.GetOrganizers();
+        //}
 
     }
 }

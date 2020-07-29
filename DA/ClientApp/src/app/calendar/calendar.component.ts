@@ -55,7 +55,7 @@ registerLocaleData(localeDe, 'de');
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild('modalContent', { static: false }) modalContent: TemplateRef<any>;
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
   @ViewChild('detailView', { static: true }) private myScrollContainer: ElementRef;
   schoolings: SchoolingGet[] = [];
   events: CustomEvent[] = [];

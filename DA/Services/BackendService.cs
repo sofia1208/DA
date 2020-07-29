@@ -1,4 +1,5 @@
 ﻿using DA.Models.DTOs;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Org.BouncyCastle.Crypto.Prng;
 using Schulungskalender.Models;
 using System;
@@ -42,7 +43,7 @@ namespace DA.Services {
             return wasSuccessful;
         }
 
-        
+
 
         public BackendDetailDTO GetSchoolings(int id) {
             var schooling = schoolings.Find(x => x.Id == id);
@@ -57,24 +58,35 @@ namespace DA.Services {
         public bool InsertSchooling(BackendDetailDTO schooling) {
             var wasSuccessful = true;
             var address = FindAddress(schooling);
-            if(address == null) {
-            if(address == null) 
+            if (address == null) {
                 wasSuccessful = db.InsertAddress(schooling);
                 db.GetAddresses(ref addresses);
                 address = FindAddress(schooling);
             }
 
             var organizer = FindOrganizer(schooling);
-            if(organizer == null && wasSuccessful) {
+            if (organizer == null && wasSuccessful) {
                 wasSuccessful = db.InsertOrganizer(schooling);
                 db.GetOrganizers(ref organizers);
                 organizer = FindOrganizer(schooling);
             }
-            
+
             if (wasSuccessful) {
+                schooling.participants.ForEach(x => wasSuccessful = (wasSuccessful && FindPerson(x) == null) ? db.InsertPerson(x) : false);
+                db.GetPersons(ref persons);
                 wasSuccessful = db.InsertSchooling(schooling, address.Id, organizer.Id);
                 db.GetSchoolings(ref schoolings);
+                var sRessource = FindSchooling(schooling);
+                schooling.participants.ForEach(x => {
+                    var person = FindPerson(x);
+                    if(!doesRegistrationExist(sRessource.Id, person.Id)) {
+                        wasSuccessful = db.InsertRegistration(sRessource.Id, person.Id);
+                    }
+                    
+                });
             }
+
+
             return wasSuccessful;
         }
 
@@ -100,13 +112,6 @@ namespace DA.Services {
                 db.GetSchoolings(ref schoolings);
             }
             return wasSuccessful;
-        }
-
-
-        internal bool EditParticipants(DeleteDTO deleteDTO) {
-            var wasSuccesful = db.DeleteRegistration(deleteDTO.SchoolingId, deleteDTO.PersonId);
-            db.GetRegistrations(ref registrations);
-            return wasSuccesful;
         }
 
         private void FillLists() {
@@ -140,6 +145,17 @@ namespace DA.Services {
             return organizers.Find(x => x.ContactPerson == schooling.ContactPerson && x.Email == schooling.Email && x.Name == schooling.Organizer && x.Phone == schooling.Phone);
         }
 
+        private PersonRessource FindPerson(ParticipantDTO participant) {
+            return persons.Find(x => x.Email == participant.Email && x.Firstname == participant.Firstname && x.Lastname == participant.Lastname);
+        }
+
+        private SchoolingRessource FindSchooling(BackendDetailDTO backendDetail) {
+            return schoolings.Find(x => x.End == backendDetail.End && x.Name == backendDetail.Name && x.Start == backendDetail.Start && x.Price == backendDetail.Price);
+        }
+        private bool doesRegistrationExist(int schoolingId, int personID) {
+            return registrations.Find(X => X.SchoolingId == schoolingId && X.PersonId == personID) != null;
+        }
+
         private List<ParticipantDTO> GetParticipants(int id) {
             return registrations.Where(x => x.SchoolingId == id)
                 .Select(x => x.PersonId)
@@ -147,7 +163,7 @@ namespace DA.Services {
                 .Select(x => {
                     var personRessource = persons.Find(y => y.Id == x);
                     return new ParticipantDTO() { Firstname = personRessource.Firstname, Lastname = personRessource.Lastname, Email = personRessource.Email };
-                    })
+                })
                 .ToList();
         }
 
