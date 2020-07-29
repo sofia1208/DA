@@ -79,10 +79,10 @@ namespace DA.Services {
                 var sRessource = FindSchooling(schooling);
                 schooling.participants.ForEach(x => {
                     var person = FindPerson(x);
-                    if(!doesRegistrationExist(sRessource.Id, person.Id)) {
+                    if (!doesRegistrationExist(sRessource.Id, person.Id)) {
                         wasSuccessful = db.InsertRegistration(sRessource.Id, person.Id);
                     }
-                    
+
                 });
             }
 
@@ -110,6 +110,22 @@ namespace DA.Services {
             if (wasSuccessful) {
                 wasSuccessful = db.UpdateSchooling(schooling, address.Id, organizer.Id);
                 db.GetSchoolings(ref schoolings);
+                var sRessource = FindSchooling(schooling);
+                db.RemoveAllForId(sRessource.Id);
+                db.GetRegistrations(ref registrations);
+                schooling.participants.ForEach(x => {
+                    if (wasSuccessful && FindPerson(x) == null) {
+                        wasSuccessful = db.InsertPerson(x);
+                    }
+                });
+                db.GetPersons(ref persons);
+                schooling.participants.ForEach(x => {
+                    var person = FindPerson(x);
+                    if (!doesRegistrationExist(sRessource.Id, person.Id)) {
+                        wasSuccessful = db.InsertRegistration(sRessource.Id, person.Id);
+                    }
+                });
+                db.GetRegistrations(ref registrations);
             }
             return wasSuccessful;
         }
