@@ -48,10 +48,10 @@ namespace DA {
                     address = new AddressRessource() {
                         Id = reader.GetInt32(0),
                         Street = reader.GetString(1) ?? "",
-                        StreetNumber = reader.GetInt32(2),
-                        ZipCode = reader.GetInt32(3),
-                        City = reader.GetString(4),
-                        Country = reader.GetString(5)
+                        StreetNumber = reader[2] as int? ?? 0,
+                        ZipCode = reader[3] as int? ?? 0,
+                        City = reader.GetString(4) ?? "",
+                        Country = reader.GetString(5) ?? ""
                     };
                     addresses.Add(address);
                 }
@@ -74,10 +74,10 @@ namespace DA {
                 while (reader.Read()) {
                     company = new CompanyRessource() {
                         Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        Phone = reader.GetString(2),
-                        Email = reader.GetString(3),
-                        AddressId = reader.GetInt32(4)
+                        Name = reader.GetString(1) ?? "",
+                        Phone = reader.GetString(2) ?? "",
+                        Email = reader.GetString(3) ?? "",
+                        AddressId = reader[4] as int? ?? 0,
                     };
                     companies.Add(company);
                 }
@@ -101,11 +101,11 @@ namespace DA {
                 while (reader.Read()) {
                     organizer = new OrganizerRessource() {
                         Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        ContactPerson = reader.GetString(2),
-                        Email = reader.GetString(3),
+                        Name = reader.GetString(1) ?? "",
+                        ContactPerson = reader.GetString(2) ?? "",
+                        Email = reader.GetString(3) ?? "",
                         Website = reader.GetString(4) ?? "",
-                        Phone = reader.GetString(5)
+                        Phone = reader.GetString(5) ?? ""
                     };
                     organizers.Add(organizer);
                 }
@@ -128,11 +128,10 @@ namespace DA {
                 while (reader.Read()) {
                     person = new PersonRessource() {
                         Id = reader.GetInt32(0),
-                        Firstname = reader.GetString(1),
-                        Lastname = reader.GetString(2),
-                        Email = reader.GetString(3),
-                        CompanyId = reader[4] as int? ?? default(int),
-                        //CompanyId = reader.GetInt32(4)
+                        Firstname = reader.GetString(1) ?? "",
+                        Lastname = reader.GetString(2) ?? "",
+                        Email = reader.GetString(3) ?? "",
+                        CompanyId = reader[4] as int? ?? 0,
                     };
                     persons.Add(person);
                 }
@@ -155,13 +154,13 @@ namespace DA {
                 while (reader.Read()) {
                     schooling = new SchoolingRessource() {
                         Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
+                        Name = reader.GetString(1) ?? "",
                         AddressId = reader.GetInt32(2),
                         Start = reader.GetDateTime(3),
                         End = reader.GetDateTime(4),
-                        Price = reader.GetDouble(5),
-                        OrganizerId = reader.GetInt32(6),
-                        Places = reader.GetInt32(7),
+                        Price = reader[5] as int? ?? 0,
+                        OrganizerId = reader[6] as int? ?? 0,
+                        Places = reader[7] as int? ?? 0,
                         Display = reader.GetBoolean(8)
                     };
                     schoolings.Add(schooling);
@@ -347,7 +346,7 @@ namespace DA {
         public bool UpdateSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
             try {
                 string updateStatement = $"UPDATE schoolings " +
-                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start.ToString("yyyy-MM-dd HH:mm:ss")}', end='{backendDetail.End.ToString("yyyy-MM-dd HH:mm:ss")}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'"+
+                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', end='{backendDetail.End:yyyy-MM-dd HH:mm:ss}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'"+
                                          $"WHERE schooling_id={backendDetail.Id};";
 
                 var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
