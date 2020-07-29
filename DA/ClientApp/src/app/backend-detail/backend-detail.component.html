@@ -128,8 +128,8 @@
   </mat-tab>
   <mat-tab label="Teilnehmer">
     <div style="margin-left:20px">
-     
-        <mat-label style="margin-right: 20px">Teilnehmer hinzufügen</mat-label>
+
+      <mat-label style="margin-right: 20px">Teilnehmer hinzufügen</mat-label>
       <mat-form-field class="example-full-width">
         <mat-label>Vorname</mat-label>
         <input matInput [(ngModel)]="firstname" placeholder="Max">
@@ -141,6 +141,14 @@
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
         <input matInput [(ngModel)]="mail" placeholder="mm">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Firma auswählen</mat-label>
+        <mat-select [(ngModel)]="companyName">
+          <mat-option *ngFor="let s of companys" [value]="s">
+            {{s}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
     </div>

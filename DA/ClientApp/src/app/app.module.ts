@@ -31,6 +31,8 @@ import { BackendDetailComponent } from './backend-detail/backend-detail.componen
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -60,6 +62,7 @@ const routes: Routes = [
     LoginComponent,
     BackendStartComponent,
     BackendDetailComponent,
+    DialogComponentComponent,
   
   ],
   imports: [
@@ -73,6 +76,7 @@ const routes: Routes = [
     MatGridListModule,
     MatSelectModule,
     MatTabsModule,
+    MatDialogModule,
     MatNativeDateModule,
     MatDatepickerModule,
     AgmCoreModule.forRoot({
@@ -87,6 +91,7 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
   providers: [{ provide: LOCALE_ID, useValue: "de" }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponentComponent]
 })
 export class AppModule { }

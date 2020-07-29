@@ -44,7 +44,7 @@
     </div>
 
     <div class="printMe">
-      <h3 class="firma">Firma</h3>
+      <h3 class="firma">Firma*</h3>
       <div class="containerInput">
 
 
@@ -54,17 +54,26 @@
           </div>
           <mat-form-field class="example-full-width">
 
-            <mat-label>Name</mat-label>
+            <mat-label>Firmenname</mat-label>
             <input matInput [(ngModel)]="company">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Ansprechperson Vorname</mat-label>
+            <input matInput [(ngModel)]="companyContactPersonVn">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
-            <mat-label>Telefonnummer</mat-label>
+            <mat-label>Ansprechperson Nachname</mat-label>
+            <input matInput [(ngModel)]="companyContactPersonLn">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Ansprechperson Telefonnummer</mat-label>
             <input matInput [(ngModel)]="companyPhone">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
-            <mat-label>E-Mail</mat-label>
+            <mat-label>Ansprechperson E-Mail</mat-label>
             <input matInput [(ngModel)]="companyMail">
           </mat-form-field>
         </div>
@@ -190,7 +199,7 @@
         <h3 class="firma checks">Datenschutz</h3>
       </div>
       <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />
-      <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutz</a> von moveIT Software gelesen.</p>
+      <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutzbedinungen</a> von moveIT Software gelesen.</p>
       <button class="btnSubmit btnDown" (click)="printRegistration()">Schulung ausdrucken</button>
       <button class="btnSubmit btnDown" [disabled]="!buttonActive" (click)="submit()">Abschicken</button>
     </div>

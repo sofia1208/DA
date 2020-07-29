@@ -33,7 +33,8 @@ export class BackendDetailComponent implements OnInit {
   sizeOfSchooling: Number;
   organizerName: string;
   price: Number;
-
+  companyName: string;
+  companys: string[] = [];
   firstname: string="";
   lastname: string="";
   mail: string = "";
@@ -201,7 +202,7 @@ export class BackendDetailComponent implements OnInit {
 
   addMember() {
     console.log(this.firstname);
-    this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.mail));
+    this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.mail, this.companyName));
     this.table.renderRows();
     this.firstname = "";
     this.lastname = "";

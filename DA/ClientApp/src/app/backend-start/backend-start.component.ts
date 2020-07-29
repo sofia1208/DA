@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 import { SummaryDto } from './SummaryDto';
@@ -86,8 +86,10 @@ export class BackendStartComponent implements OnInit {
   
   }
   checkBox(id: Number) {
-    let item = this.dataSource.find(x => x.id == id);
-     //PUT request mit id
+    let index = this.dataSource.find(x => x.id == id);
+    let display = index.display;
+    this.changeDisplay(`https://localhost:5001/backend/updatedisplay/${id}`, !display)
+      .subscribe(x=> console.log(x));
     
 
   }
@@ -98,6 +100,13 @@ export class BackendStartComponent implements OnInit {
   }
   private getSummary(url: string): Observable<SummaryDto[]> {
     return this.http.get<SummaryDto[]>(url);
+
+  }
+  private changeDisplay(url: string, value: boolean): Observable<string> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    return this.http.put<string>(url, value, httpOptions);
 
   }
  
