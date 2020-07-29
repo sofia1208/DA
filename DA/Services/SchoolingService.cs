@@ -35,7 +35,7 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            if (type.Equals("isfree")) {
+            if (type.ToLower().Equals("isfree")) {
                 return schoolings.Select(x => {
                     var address = addresses.Find(y => y.Id == x.AddressId);
                     var organizer = organizers.Find(y => y.Id == x.OrganizerId);
