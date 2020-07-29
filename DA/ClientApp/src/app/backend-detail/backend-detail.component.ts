@@ -174,6 +174,7 @@ export class BackendDetailComponent implements OnInit {
     this.addNewSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => {
+        console.log(x);
         this.router.navigate(["/start"]);
       });
 

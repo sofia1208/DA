@@ -37,7 +37,7 @@ import localeDe from '@angular/common/locales/de';
 import { Router, NavigationExtras } from '@angular/router';
 import { Printing } from './Printing';
 import { GetSummaryForPrint } from '../invoice/GetSummaryForPrint';
-import { get } from 'http';
+
 import { MatTable } from '@angular/material';
 registerLocaleData(localeDe, 'de');
 
