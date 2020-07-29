@@ -276,7 +276,17 @@ export class CalendarComponent implements OnInit {
   
   }
  
-  
+  goToRegistrationList(id: Number, title: string): void {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "id": id,
+        "title": title
+      }
+    };
+    this.router.navigate(["/registration"], navigationExtras);
+
+  }
+
 
   clickOnEvent(event: CustomEvent): void {
  
@@ -416,10 +426,11 @@ export class CalendarComponent implements OnInit {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
   setListView() {
-   
+    this.hidden = true;
     this.calendar = false;
   }
   setView(view: CalendarView) {
+    this.hidden = true;
     this.calendar = true;
     this.view = view;
   }

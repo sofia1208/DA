@@ -56,8 +56,12 @@ export class RegistrationComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
   dataSource = this.members;
+  buttonActive: boolean = false;
   
   schooling: SchoolingDto;
+
+  checkDatenschutz: boolean;
+  checkStrono: boolean;
   constructor(private http: HttpClient, private route: ActivatedRoute, private apiloader: MapsAPILoader) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
@@ -74,6 +78,23 @@ export class RegistrationComponent implements OnInit {
     this.getEvent(this.detailId);
     this.checkSize();
     
+  }
+  changeStorno() {
+ 
+    this.checkButton();
+  }
+  changeData() {
+ 
+    this.checkButton();
+  }
+  checkButton() {
+    if (this.checkDatenschutz && this.checkStrono) {
+      console.log("true");
+      this.buttonActive = true;
+    }
+    else {
+      this.buttonActive = false;
+    }
   }
   printRegistration() {
     window.print();

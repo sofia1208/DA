@@ -82,6 +82,7 @@ export class BackendDetailComponent implements OnInit {
     this.city = this.backendDto.city;
     this.country = this.backendDto.country;
     this.catName = this.backendDto.name;
+  
     this.startDate = this.backendDto.start;
     this.endDate = this.backendDto.end;
     let sT = new Date(this.backendDto.start);
@@ -154,7 +155,7 @@ export class BackendDetailComponent implements OnInit {
         this.toCoordinate();
       }
       );
-
+    this.toCoordinate();
   }
   toCoordinate(): void {
     let first = this.locations[0];
@@ -162,8 +163,7 @@ export class BackendDetailComponent implements OnInit {
     this.lon = first.lon;
     this.markerLat = first.lat;
     this.markerLng = first.lon;
-    this.lat = first.lat;
-    this.lon = first.lon;
+ 
     console.log(first.lat + " " + first.lon);
   }
   private getCoordinates(url: string): Observable<Location[]> {
@@ -171,6 +171,7 @@ export class BackendDetailComponent implements OnInit {
 
   }
   addSchooling() {
+    console.log(this.startDate);
     this.addNewSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => {

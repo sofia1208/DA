@@ -181,7 +181,7 @@
       <div class="column col1">
         <h3 class="firma checks">Stornobedingungen</h3>
       </div>
-      <input type="checkbox" />
+      <input type="checkbox" (change)="changeStorno()"  [(ngModel)]="checkStrono"/>
       <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen"> Stornobedingungen </a> von moveIT Software gelesen.</p>
     </div>
 
@@ -189,10 +189,10 @@
       <div class="column col1">
         <h3 class="firma checks">Datenschutz</h3>
       </div>
-      <input type="checkbox" />
+      <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />
       <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutz</a> von moveIT Software gelesen.</p>
       <button class="btnSubmit btnDown" (click)="printRegistration()">Schulung ausdrucken</button>
-      <button class="btnSubmit btnDown" (click)="submit()">Abschicken</button>
+      <button class="btnSubmit btnDown" [disabled]="!buttonActive" (click)="submit()">Abschicken</button>
     </div>
 
 

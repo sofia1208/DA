@@ -136,7 +136,7 @@
 
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef> Typ </th>
-          <td mat-cell *matCellDef="let schooling"> {{schooling.name}} </td>
+          <td mat-cell *matCellDef="let schooling"  (click) = "goToRegistrationList(schooling.id, schooling.name)" > {{schooling.name}} </td>
         </ng-container>
 
 
