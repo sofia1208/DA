@@ -41,7 +41,9 @@ namespace DA.Services {
 
         public bool DeleteSchooling(int id) {
             var wasSuccessful = db.deleteSchooling(id);
+            db.RemoveAllForId(id);
             db.GetSchoolings(ref schoolings);
+            db.GetRegistrations(ref registrations);
             return wasSuccessful;
         }
 
@@ -64,6 +66,7 @@ namespace DA.Services {
             return converter.getbackendDetaiDTO(schooling, address, organizer, participants, isFree);
         }
 
+       
 
         public bool InsertSchooling(BackendDetailDTO schooling) {
             var wasSuccessful = true;
@@ -138,6 +141,10 @@ namespace DA.Services {
                 db.GetRegistrations(ref registrations);
             }
             return wasSuccessful;
+        }
+
+        internal List<OrganizerDTO> GetOrganizers() {
+            return organizers.Select(x => new OrganizerDTO() { Id = x.Id, Name = x.Name, ContactPerson = x.ContactPerson, Email = x.Email, Website = x.Website, Phone = x.Phone }).ToList();
         }
 
         private void FillLists() {

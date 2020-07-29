@@ -52,10 +52,10 @@ namespace DA.Controllers {
             return backendService.EditSchooling(id, schooling);
         }
 
-        //[HttpGet("Organizers")]
-        //public BackendDetailDTO Organizers() {
-        //    return backendService.GetOrganizers();
-        //}
+        [HttpGet("Organizers")]
+        public List<OrganizerDTO> Organizers() {
+            return backendService.GetOrganizers();
+        }
 
     }
 }
