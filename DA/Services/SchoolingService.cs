@@ -52,7 +52,7 @@ namespace Schulungskalender.Services {
                 return converter.GetSchoolingSummaryDTO(x, address, organizer, IsSchoolingFree(x.Id));
 
             })
-                .Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).ToList();
+                .Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).OrderBy(x => x.Start).ToList();
         }
 
         public List<SchoolingSummaryDTO> Summary() {
