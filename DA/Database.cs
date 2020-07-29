@@ -14,7 +14,7 @@ namespace DA {
         private readonly MySqlConnection connection;
 
         public Database() {
-            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True;";
+            connectionString = "server=wp338.webpack.hosteurope.de;database=db12449415-dpl2020;Uid=db12449415-dpl;Pwd=IsaSof%20;persistsecurityinfo=True;convert zero datetime=True;";
             connection = new MySqlConnection(connectionString);
             connection.Open();
         }
@@ -129,7 +129,8 @@ namespace DA {
                         Firstname = reader.GetString(1),
                         Lastname = reader.GetString(2),
                         Email = reader.GetString(3),
-                        CompanyId = reader.GetInt32(4)
+                        CompanyId = reader[4] as int? ?? default(int),
+                        //CompanyId = reader.GetInt32(4)
                     };
                     persons.Add(person);
                 }
@@ -244,9 +245,25 @@ namespace DA {
             return true;
         }
 
+        public bool InsertPerson(ParticipantDTO participantDTO) {
+            try {
+                string insertstatement = $"INSERT INTO persons (firstname, lastname, email)" +
+                                         $" VALUES ('{participantDTO.Firstname}', '{participantDTO.Lastname}', '{participantDTO.Email}');";
+
+                var insertPersonCmd = new MySqlCommand(insertstatement, connection);
+                insertPersonCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
         public bool InsertRegistration(int schooling_id, int person_id) {
             try {
-                string insertstatement = $"UPDATE INTO registrations (schooling_id, person_id) " +
+                string insertstatement = $"INSERT INTO registrations (schooling_id, person_id) " +
                                          $"VALUES ('{schooling_id}', '{person_id}')";
 
                 var insertRegistrationCmd = new MySqlCommand(insertstatement, connection);
