@@ -36,6 +36,9 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Router, NavigationExtras } from '@angular/router';
 import { Printing } from './Printing';
+import { GetSummaryForPrint } from '../invoice/GetSummaryForPrint';
+import { get } from 'http';
+import { MatTable } from '@angular/material';
 registerLocaleData(localeDe, 'de');
 
 @Component({
@@ -56,11 +59,14 @@ registerLocaleData(localeDe, 'de');
 })
 export class CalendarComponent implements OnInit {
  // @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  @ViewChild('mytable', { static: true })private table: MatTable<any>;
   @ViewChild('detailView', { static: true }) private myScrollContainer: ElementRef;
   schoolings: SchoolingGet[] = [];
   events: CustomEvent[] = [];
   holidayApis: HolidayAPI[] = [];
   holidays: Holiday[] = [];
+ 
+  summaryList: GetSummaryForPrint[] = [];
 
   mobile: boolean = false;
 
@@ -74,9 +80,11 @@ export class CalendarComponent implements OnInit {
   telefon: string = '';
   adresse: string = '';
 
+  schoolingList: GetSummaryForPrint[] = [];
+  calendar: boolean=true;
   detailId: Number;
 
-
+  displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
   constructor(private http: HttpClient,private router:Router) { }
   ngAfterViewInit(): void {
  
@@ -87,7 +95,7 @@ export class CalendarComponent implements OnInit {
     console.log('ngOnInit');
     this.getSummary();
     this.getHolidays();
-    
+    this.getListSummary();
     this.checkSize();
   }
 
@@ -407,8 +415,12 @@ export class CalendarComponent implements OnInit {
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
-
+  setListView() {
+   
+    this.calendar = false;
+  }
   setView(view: CalendarView) {
+    this.calendar = true;
     this.view = view;
   }
 
@@ -528,6 +540,39 @@ export class CalendarComponent implements OnInit {
       this.refresh.next();
           
     }
+  }
+
+  getListSummary(): void {
+
+    this.getSchool('https://localhost:5001/schoolings/summary')
+      .subscribe(data => {
+    
+
+        this.schoolingList = data;
+       
+        this.schoolingToPrint();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        });
+   // this.schoolingToPrint();
+
+  }
+  private getSchool(url: string): Observable<GetSummaryForPrint[]> {
+    return this.http.get<GetSummaryForPrint[]>(url);
+
+  }
+
+  private schoolingToPrint(): void {
+    for (var i = 0; i < this.schoolingList.length; i++) {
+
+      this.summaryList.push(this.schoolingList[i]);
+     
+    }
+
+    this.table.renderRows();
+
   }
 
 
