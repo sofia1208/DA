@@ -47,7 +47,7 @@ export class BackendDetailComponent implements OnInit {
   markerLng: Number;
   locations: Location[] = [];
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
-  @ViewChild('addSchooling', { static: true }) private btnSchooling: ElementRef;
+  @ViewChild('btnSchooling', { static: true }) private btnSchooling: ElementRef;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(p => {
      
@@ -67,6 +67,7 @@ export class BackendDetailComponent implements OnInit {
   ];
   members: Member[]=[];
   dataSource = this.members;
+  emails: string[] = [];
   ngOnInit() {
   
     if (this.detailId > 0) {
@@ -75,7 +76,32 @@ export class BackendDetailComponent implements OnInit {
     
   
   }
+  saveAndNew() {
+    this.addSchooling(false);
 
+  }
+  copyAllMail() {
+    this.emails = this.dataSource.map(x => x.email);
+    console.log(this.emails);
+    let val: string;
+    for (var i = 0; i < this.emails.length; i++) {
+      val = val + this.emails[i] + "; "
+    }
+    
+      let selBox = document.createElement('textarea');
+      selBox.style.position = 'fixed';
+      selBox.style.left = '0';
+      selBox.style.top = '0';
+      selBox.style.opacity = '0';
+      selBox.value = val;
+      document.body.appendChild(selBox);
+      selBox.focus();
+      selBox.select();
+      document.execCommand('copy');
+      document.body.removeChild(selBox);
+    
+
+  }
   fillDetails() {
     this.street= this.backendDto.street;
     this.streetNumber = this.backendDto.streetNumber.toString();
@@ -171,13 +197,17 @@ export class BackendDetailComponent implements OnInit {
     return this.http.get<Location[]>(url);
 
   }
-  addSchooling() {
+  addSchooling(goBack: boolean) {
+   
     console.log(this.startDate);
     this.addNewSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => {
         console.log(x);
-        this.router.navigate(["/start"]);
+        if (goBack) {
+          this.router.navigate(["/start"]);
+        }
+      
       });
 
    
