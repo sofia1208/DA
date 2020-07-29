@@ -179,6 +179,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <button (click)="addSchooling()">Schulung anlegen</button>
+    <button #addSchooling (click)="addSchooling()">Schulung anlegen</button>
   </mat-tab>
 </mat-tab-group>

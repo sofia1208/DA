@@ -62,6 +62,7 @@ export class RegistrationComponent implements OnInit {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
+      this.detailTitle = p["title"];
     })
    
 
@@ -73,6 +74,9 @@ export class RegistrationComponent implements OnInit {
     this.getEvent(this.detailId);
     this.checkSize();
     
+  }
+  printRegistration() {
+    window.print();
   }
   checkSize() {
     let width = window.innerWidth;
@@ -114,6 +118,7 @@ export class RegistrationComponent implements OnInit {
   fillDetails(schooling: SchoolingDto) {
    
     console.log('fill details');
+ 
     this.telefon = schooling.phone;
     this.convertToGermanTime(schooling);
     this.preis = schooling.price + " €";

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 import { SummaryDto } from './SummaryDto';
 import { SchoolingDto } from '../calendar/SchoolingDto';
-import { MatTable } from '@angular/material';
+import { MatTable, MatCheckbox } from '@angular/material';
 @Component({
   selector: 'app-backend-start',
   templateUrl: './backend-start.component.html',
@@ -53,17 +53,27 @@ export class BackendStartComponent implements OnInit {
   fillTable(): void {
     for (var i = 0; i < this.schoolings.length; i++) {
       this.dataSource.push(this.schoolings[i]);
+      
       this.table.renderRows();
     }
 
   }
   deleteSchooling(id: number) {
-    //delete render rows bei subscribe
-    //delete funkt nicht
-    console.log(id);
-    this.delete(`https://localhost:5001/backend/summary/id`, id)
-      .subscribe();
+
+    let item = this.dataSource.find(x => x.id == id);
+    const index: number = this.dataSource.indexOf(item);
+    if (index !== -1) {
+      this.dataSource.splice(index, 1);
+    }
     this.table.renderRows();
+  
+    this.delete(`https://localhost:5001/backend/summary/${id}`, id)
+      .subscribe(data => {
+        console.log(data); 
+     
+      }
+      );
+   
   }
   editSchooling(id: Number) {
     console.log(id);

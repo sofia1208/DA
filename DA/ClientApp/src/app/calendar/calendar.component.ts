@@ -140,7 +140,26 @@ export class CalendarComponent implements OnInit {
     console.log(this.schoolings.length);
   }
 
+  getAvailable(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/isfree')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
 
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+
+
+    console.log(this.schoolings.length);
+
+  }
   getHolidays(): void {
   
     let now = new Date().getFullYear();
@@ -241,7 +260,8 @@ export class CalendarComponent implements OnInit {
   goToRegistration(): void {
     let navigationExtras: NavigationExtras = {
       queryParams: {
-        "id": this.detailId
+        "id": this.detailId,
+        "title": this.detailTitle
       }
     };
     this.router.navigate(["/registration"], navigationExtras);
@@ -396,7 +416,7 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
   printPage() {
-    const invoiceIds = ['101', '102'];
+   
     window.print();
     //this.printService.printDoct('invoice', invoiceIds);
   }

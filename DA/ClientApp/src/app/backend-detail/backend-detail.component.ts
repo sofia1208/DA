@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -46,7 +46,8 @@ export class BackendDetailComponent implements OnInit {
   markerLng: Number;
   locations: Location[] = [];
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  @ViewChild('addSchooling', { static: true }) private btnSchooling: ElementRef;
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.queryParams.subscribe(p => {
      
       this.detailId = p["id"];
@@ -67,7 +68,9 @@ export class BackendDetailComponent implements OnInit {
   dataSource = this.members;
   ngOnInit() {
   
-     //this.getDetails();
+    if (this.detailId > 0) {
+      this.btnSchooling.nativeElement.innerHTML = "Schulung speichern";
+    }
     
   
   }
@@ -171,14 +174,25 @@ export class BackendDetailComponent implements OnInit {
     this.addNewSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => console.log(x));
+
+    this.router.navigate(["/start"]);
   }
  
-  addNewSchooling(reg: BackendDetailDto ): Observable<BackendDetailDto> {
+  addNewSchooling(reg: BackendDetailDto): Observable<BackendDetailDto> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
+    if (this.detailId > 0) {
+      console.log(this.detailId);
+      return this.http.put<BackendDetailDto>(`https://localhost:5001/backend/schoolings/${this.detailId}`, reg, httpOptions);
+       
+    }
+    else {
+     
 
-    return this.http.post<BackendDetailDto>(`https://localhost:5001/backend/schoolings`, reg, httpOptions);
+      return this.http.post<BackendDetailDto>(`https://localhost:5001/backend/schoolings`, reg, httpOptions);
+    }
+  
   }
 
   addMember() {

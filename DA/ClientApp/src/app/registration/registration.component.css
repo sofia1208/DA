@@ -259,11 +259,15 @@ input[type=checkbox]{
   .outerRow {
     margin: 0;
   }
-
+  
   .outerDiv {
     margin: 0px;
   }
-
+  .mat-typography p {
+    margin: 0;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
   .row {
     display: flex;
     flex-wrap: initial;
@@ -312,5 +316,29 @@ input[type=checkbox]{
   .checks{
       display:none;
   }
+}
+@media print {
+  .printMe {
+    display: none !important;
+  }
+}
+
+app-print-layout {
+  display: none;
+}
+
+app-invoice {
+  display: none;
+}
+
+@media print {
+
+  app-invoice {
+    display: flex;
+  }
+}
+
+.btnPrint {
+  margin-left: 50px;
 }
 
