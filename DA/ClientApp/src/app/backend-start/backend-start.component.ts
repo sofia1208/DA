@@ -85,6 +85,12 @@ export class BackendStartComponent implements OnInit {
     this.router.navigate(["/detail"], navigationExtras);
   
   }
+  checkBox(id: Number) {
+    let item = this.dataSource.find(x => x.id == id);
+     //PUT request mit id
+    
+
+  }
   private delete(url:string, id: number): Observable<{}> {
    
     return this.http.delete(url);
