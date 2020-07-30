@@ -74,10 +74,11 @@ namespace DA {
                 while (reader.Read()) {
                     company = new CompanyRessource() {
                         Id = reader.GetInt32(0),
-                        Name = reader.GetString(1) ?? "",
-                        Phone = reader.GetString(2) ?? "",
-                        Email = reader.GetString(3) ?? "",
+                        Name = reader[1] as string ?? "",
+                        ContactPerson = reader[2] as string ?? "",
+                        Email = reader[3] as string ?? "",
                         AddressId = reader[4] as int? ?? 0,
+                        Phone = reader[5] as string ?? "",
                     };
                     companies.Add(company);
                 }
@@ -89,6 +90,8 @@ namespace DA {
 
 
         }
+
+        
 
         public void GetOrganizers(ref List<OrganizerRessource> organizers) {
             organizers = new List<OrganizerRessource>();
@@ -104,8 +107,8 @@ namespace DA {
                         Name = reader.GetString(1) ?? "",
                         ContactPerson = reader.GetString(2) ?? "",
                         Email = reader.GetString(3) ?? "",
-                        Website = reader.GetString(4) ?? "",
-                        Phone = reader.GetString(5) ?? ""
+                        Website = reader[4] as string ?? "",
+                        Phone = reader[5] as string ?? ""
                     };
                     organizers.Add(organizer);
                 }
@@ -230,6 +233,22 @@ namespace DA {
 
         }
 
+        public bool InsertCompany(ParticipantDTO person) {
+            try {
+                string insertstatement = $"INSERT INTO companies(name, contact_person, email)" +
+                                         $" VALUES('{person.CompanyName}', '{person.ContactPerson}', '{person.CompanyEmail}');";
+
+                var insertCompanyCmd = new MySqlCommand(insertstatement, connection);
+                insertCompanyCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
         public bool InsertPerson(ParticipantDTO participantDTO, int company_id) {
             try {
                 string insertstatement = $"INSERT INTO persons (firstname, lastname, email, company_id)" +
@@ -246,10 +265,10 @@ namespace DA {
             return true;
         }
 
-        public bool InsertPerson(ParticipantDTO participantDTO) {
+        public bool InsertPerson(ParticipantDTO participantDTO, CompanyRessource company) {
             try {
-                string insertstatement = $"INSERT INTO persons (firstname, lastname, email)" +
-                                         $" VALUES ('{participantDTO.Firstname}', '{participantDTO.Lastname}', '{participantDTO.Email}');";
+                string insertstatement = $"INSERT INTO persons (firstname, lastname, email, company_id)" +
+                                         $" VALUES ('{participantDTO.Firstname}', '{participantDTO.Lastname}', '{participantDTO.Email}', '{company.Id}');";
 
                 var insertPersonCmd = new MySqlCommand(insertstatement, connection);
                 insertPersonCmd.ExecuteNonQuery();
@@ -330,7 +349,7 @@ namespace DA {
         public bool InsertSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
             try {
                 string insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, organizer_id, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start.ToString("yyyy-MM-dd HH:mm:ss")}', '{backendDetail.End.ToString("yyyy-MM-dd HH:mm:ss")}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                                         $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
 
                 var insertSchoolingCmd = new MySqlCommand(insertstatement, connection);
                 insertSchoolingCmd.ExecuteNonQuery();

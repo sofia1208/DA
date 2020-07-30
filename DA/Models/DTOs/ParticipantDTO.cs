@@ -9,5 +9,8 @@ namespace DA.Models.DTOs {
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
+        public string CompanyName { get; set; }
+        public string ContactPerson { get; set; }
+        public string CompanyEmail { get; set; }
     }
 }
