@@ -61,7 +61,7 @@ namespace DA {
             }
         }
 
-        
+
 
         public void GetCompanies(ref List<CompanyRessource> companies) {
             companies = new List<CompanyRessource>();
@@ -91,7 +91,7 @@ namespace DA {
 
         }
 
-        
+
 
         public void GetOrganizers(ref List<OrganizerRessource> organizers) {
             organizers = new List<OrganizerRessource>();
@@ -118,7 +118,7 @@ namespace DA {
             }
         }
 
-        
+
 
         public void GetPersons(ref List<PersonRessource> persons) {
             persons = new List<PersonRessource>();
@@ -312,6 +312,8 @@ namespace DA {
             return true;
         }
 
+
+
         public bool InsertAddress(BackendDetailDTO backendDetail) {
             try {
                 string insertstatement = $"INSERT INTO addresses(street, street_number, city, zip_code, country)" +
@@ -344,12 +346,30 @@ namespace DA {
 
             return true;
         }
-       
+
 
         public bool InsertSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
             try {
-                string insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, organizer_id, number_of_places, price)" +
+                string insertstatement = "";
+                if (addressId == 0) {
+                    if (organizerId == 0) {
+                         insertstatement = $"INSERT INTO schoolings(name, start, end, number_of_places, price)" +
+                                         $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                    }
+                    else {
+                         insertstatement = $"INSERT INTO schoolings(name, start, end, organizer_id, number_of_places, price)" +
+                                         $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                    }
+                }
+                else {
+                    if(organizerId == 0) {
+                        insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, number_of_places, price)" +
+                                        $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                    }
+                    insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, organizer_id, number_of_places, price)" +
                                          $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                }
+
 
                 var insertSchoolingCmd = new MySqlCommand(insertstatement, connection);
                 insertSchoolingCmd.ExecuteNonQuery();
@@ -362,10 +382,11 @@ namespace DA {
             return true;
         }
 
+
         public bool UpdateSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
             try {
                 string updateStatement = $"UPDATE schoolings " +
-                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', end='{backendDetail.End:yyyy-MM-dd HH:mm:ss}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'"+
+                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', end='{backendDetail.End:yyyy-MM-dd HH:mm:ss}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'" +
                                          $"WHERE schooling_id={backendDetail.Id};";
 
                 var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
