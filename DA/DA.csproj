@@ -35,7 +35,6 @@
     <None Remove="ClientApp\src\app\calendar\SchoolingGet.ts" />
     <None Remove="ClientApp\src\app\invoice\GetSummaryForPrint.ts" />
     <None Remove="ClientApp\src\app\login\LoginUser.ts" />
-    <None Remove="ClientApp\src\app\registration\DialogZustimmungen.ts" />
     <None Remove="ClientApp\src\app\registration\Location.ts" />
     <None Remove="ClientApp\src\app\registration\Member.ts" />
     <None Remove="ClientApp\src\app\registration\Registration.ts" />
@@ -87,7 +86,6 @@
     <TypeScriptCompile Include="ClientApp\src\app\calendar\SchoolingGet.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\invoice\GetSummaryForPrint.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\LoginUser.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\registration\DialogZustimmungen.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\registration\Location.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\registration\Member.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\registration\Registration.ts" />

@@ -87,7 +87,7 @@ export class CalendarComponent implements OnInit {
   displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
   constructor(private http: HttpClient,private router:Router) { }
   ngAfterViewInit(): void {
- 
+      
     }
  
   
@@ -97,6 +97,9 @@ export class CalendarComponent implements OnInit {
     this.getHolidays();
     this.getListSummary();
     this.checkSize();
+  }
+  ngOnChanges() {
+    console.log("hello");
   }
 
   
@@ -130,7 +133,7 @@ export class CalendarComponent implements OnInit {
       console.log('desktop detected')
     }
   }
- 
+
   getSummary(): void {
   
     this.getSchoolings('https://localhost:5001/schoolings/summary')
@@ -313,14 +316,30 @@ export class CalendarComponent implements OnInit {
           })
         ;
     }
+ 
+  }
+
+  clickOnList(id: Number): void {
+
+
+    let schooling = new SchoolingDto;
+  
+      this.hidden = false;
+      this.scrollToDetail();
+      this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
+        .subscribe(data => {
+          schooling = data;
+          console.log(data);
+
+          this.fillDetails(schooling);
+
+        }
+          , err => {
+            console.log(`${err.message}`)
+          })
+        ;
     
-   
 
-    
-   
-
-
-   
   }
 
   activeDayIsOpen: boolean = false;
@@ -374,27 +393,7 @@ export class CalendarComponent implements OnInit {
     this.clickOnEvent(event);
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-          isFree: true,
-          isHoliday: false,
-
-          hasMoreDays: false,
-        };
-      }
-      return iEvent;
-    });
-   
-  }
+  
 
   handleEvent(action: string, event: CustomEvent): void {
     console.log(event.id);
@@ -402,25 +401,6 @@ export class CalendarComponent implements OnInit {
     this.clickOnEvent(event);
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-        isFree: true,
-        isHoliday: false,
-        hasMoreDays: false,
-      },
-    ];
-  }
 
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
@@ -463,11 +443,13 @@ export class CalendarComponent implements OnInit {
       let start = new Date(this.schoolings[i].start);
       let end = new Date(this.schoolings[i].end);
       let moreDays = false;
-  
+      let outofMonth = false;
       if (start.getDay() != end.getDay()) {
         moreDays = true;
       }
-
+      if (start.getMonth() != this.viewDate.getMonth() || end.getMonth() != this.viewDate.getMonth() ) {
+        outofMonth = true;
+      }
       console.log(this.schoolings)
       const schooling: CustomEvent = {
         isFree: true,
@@ -478,7 +460,8 @@ export class CalendarComponent implements OnInit {
         allDay: false,
         isHoliday: false,
         hasMoreDays: moreDays,
-      
+
+        outOfMonth: outofMonth
 
       };
      
@@ -535,6 +518,13 @@ export class CalendarComponent implements OnInit {
 
   private createHolidayEvents(): void {
     for (var i = 0; i < this.holidays.length; i++) {
+      let date = this.holidays[i].date;
+      let outofMonth = false;
+      if (date.getMonth() != this.viewDate.getMonth()) {
+       
+        outofMonth = true;
+      }
+      console.log(this.viewDate.getMonth() + " " + date.getMonth());
       const holiday: CustomEvent = {
         isFree: true,
         start: startOfDay(this.holidays[i].date),
@@ -544,7 +534,7 @@ export class CalendarComponent implements OnInit {
         allDay: true,
         isHoliday: true,
         hasMoreDays: false,
-
+        outOfMonth: outofMonth
 
       };
       this.events.push(holiday);

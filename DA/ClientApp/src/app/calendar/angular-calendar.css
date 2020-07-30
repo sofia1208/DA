@@ -487,3 +487,8 @@
 .cal-tooltip-inner {
   color: #fff;
   background-color: #000; }
+
+.cal-month-view .cal-day-cell.cal-in-month.cal-has-events{
+    display:flex;
+}
+

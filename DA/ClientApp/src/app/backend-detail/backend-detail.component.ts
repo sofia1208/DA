@@ -83,10 +83,11 @@ export class BackendDetailComponent implements OnInit {
   copyAllMail() {
     this.emails = this.dataSource.map(x => x.email);
     console.log(this.emails);
-    let val: string;
+    let val: string="";
     for (var i = 0; i < this.emails.length; i++) {
       val = val + this.emails[i] + "; "
     }
+
     
       let selBox = document.createElement('textarea');
       selBox.style.position = 'fixed';
@@ -237,6 +238,9 @@ export class BackendDetailComponent implements OnInit {
     this.firstname = "";
     this.lastname = "";
     this.mail = "";
+  }
+  printParticipants() {
+    window.print();
   }
   deleteMember(id: number) {
     console.log(this.dataSource.length);

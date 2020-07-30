@@ -127,32 +127,35 @@
     </div>
   </mat-tab>
   <mat-tab label="Teilnehmer">
-    <div style="margin-left:20px">
+    <div class="printMe">
+      <div style="margin-left:20px">
 
-      <mat-label class="btnMap" style="margin-right: 20px">Teilnehmer hinzufügen</mat-label>
-      <mat-form-field class="example-full-width">
-        <mat-label>Vorname</mat-label>
-        <input matInput [(ngModel)]="firstname" placeholder="Max">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Nachname</mat-label>
-        <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="mail" placeholder="mm">
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Firma auswählen</mat-label>
-        <mat-select [(ngModel)]="companyName">
-          <mat-option *ngFor="let s of companys" [value]="s">
-            {{s}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
+        <mat-label class="btnMap" style="margin-right: 20px">Teilnehmer hinzufügen</mat-label>
+        <mat-form-field class="example-full-width">
+          <mat-label>Vorname</mat-label>
+          <input matInput [(ngModel)]="firstname" placeholder="Max">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Nachname</mat-label>
+          <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="mail" placeholder="mm">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Firma auswählen</mat-label>
+          <mat-select [(ngModel)]="companyName">
+            <mat-option *ngFor="let s of companys" [value]="s">
+              {{s}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
+      </div>
     </div>
-
+   
+ 
     <table mat-table #mytable [dataSource]="dataSource" class="table">
 
       <ng-container matColumnDef="firstname">
@@ -187,9 +190,11 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-   
-    <div class="row">
-      <button  class="btnMap" (click)="copyAllMail()">E-Mail Adressen kopieren</button>
+
+  
+    <div class="row printMe">
+      <button class="btnMap" (click)="printParticipants()">Teilnehmer ausdrucken</button>
+      <button class="btnMap" (click)="copyAllMail()">E-Mail Adressen kopieren</button>
       <button #btnSchooling class="btnMap" (click)="addSchooling(true)">Schulung anlegen</button>
       <button class="btnMap" (click)="saveAndNew()">Speichern und neu</button>
     </div>
