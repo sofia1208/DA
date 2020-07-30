@@ -76,6 +76,7 @@
           <input type="number" matInput [(ngModel)]="price">
         </mat-form-field>
       </div>
+     
     </div>
     <div>
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
@@ -90,12 +91,13 @@
   <mat-tab label="Organisator">
     <div class="displayRow">
       <div class="column columnFields">
-        <p class="pColumn">Organisator</p>
-        <p class="pColumn">Konataktperson</p>
-        <p class="pColumn">E-Mail Adresse</p>
-        <p class="pColumn">Website</p>
-        <p class="pColumn">Telfonnummer</p>
+        <p class="pColumn2">Organisator</p>
+        <p class="pColumn2">Konataktperson</p>
+        <p class="pColumn2">E-Mail Adresse</p>
+        <p class="pColumn2">Website</p>
+        <p class="pColumn2">Telfonnummer</p>
       </div>
+
       <div class="columnFields">
         <mat-form-field appearance="fill">
           <mat-label>Organisator auswählen</mat-label>
@@ -124,6 +126,11 @@
         </mat-form-field>
 
       </div>
+      <div class="column" style="margin: 10px">
+        <button class="btnMap" (click)="addOrganizer()" mat-fab >
+          <mat-icon>library_add</mat-icon>
+          </button>
+      </div>
     </div>
   </mat-tab>
   <mat-tab label="Teilnehmer">
@@ -151,7 +158,13 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
+       
+          <button  class="btnMap" (click)="addCompany()" mat-fab>
+            Firma hinzufügen
+
+          </button>
+        
+        <button class="btnSubmit btnMap" style="margin-left:100px" (click)="addMember()">Hinzufügen</button>
       </div>
     </div>
    
@@ -192,7 +205,7 @@
     </table>
 
   
-    <div class="row printMe">
+    <div class="btnGroup printMe">
       <button class="btnMap" (click)="printParticipants()">Teilnehmer ausdrucken</button>
       <button class="btnMap" (click)="copyAllMail()">E-Mail Adressen kopieren</button>
       <button #btnSchooling class="btnMap" (click)="addSchooling(true)">Schulung anlegen</button>

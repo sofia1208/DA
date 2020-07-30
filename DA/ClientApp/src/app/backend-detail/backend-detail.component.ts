@@ -5,8 +5,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BackendDetailDto } from './BackendDetailDto';
 
 import { Member } from '../registration/Member';
-import { MatTable } from '@angular/material';
+import { MatTable, MatDialog } from '@angular/material';
 import { Location } from '../registration/Location';
+import { DialogOrganizerComponent } from '../dialog-organizer/dialog-organizer.component';
+import { DialogCompanyComponent } from '../dialog-company/dialog-company.component';
+import { CompanyMember } from './CompanyMember';
 @Component({
   selector: 'app-backend-detail',
   templateUrl: './backend-detail.component.html',
@@ -38,8 +41,10 @@ export class BackendDetailComponent implements OnInit {
   firstname: string="";
   lastname: string="";
   mail: string = "";
+  companyContactPerson: string = "";
+  companyMail: string = "";
 
-
+  newOrganizer: string = "";
   lat: Number = 48.1505921;
   lon: Number = 14.0069141;
 
@@ -48,7 +53,7 @@ export class BackendDetailComponent implements OnInit {
   locations: Location[] = [];
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   @ViewChild('btnSchooling', { static: true }) private btnSchooling: ElementRef;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
       this.detailId = p["id"];
@@ -65,7 +70,7 @@ export class BackendDetailComponent implements OnInit {
     "moveIT@ISS+Administrator",
     "moveIT@ISS+Kombimodell"
   ];
-  members: Member[]=[];
+  members: CompanyMember[]=[];
   dataSource = this.members;
   emails: string[] = [];
   ngOnInit() {
@@ -77,7 +82,54 @@ export class BackendDetailComponent implements OnInit {
   
   }
   saveAndNew() {
-    this.addSchooling(false);
+    if (this.detailId > 0) {
+      this.editSchooling();
+    }
+    else {
+      this.addSchooling();
+    }
+    this.detailId = 0;
+   
+
+  }
+  addOrganizer() {
+   
+      const dialogRef = this.dialog.open(DialogOrganizerComponent, {
+        width: '400px',
+        data: { org: this.newOrganizer }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.newOrganizer = result;
+       
+        this.organizer.push(this.newOrganizer);
+        this.organizerName = this.newOrganizer;
+      });
+   
+   
+  }
+  addCompany() {
+    this.companyName = "";
+    const dialogRef = this.dialog.open(DialogCompanyComponent, {
+      width: '400px',
+      data: {
+        name: this.companyName,
+        contactperson: this.companyContactPerson,
+        mail: this.companyMail
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.companyName = result.name;
+      this.companyContactPerson = result.contactperson;
+      this.companyMail = result.mail;
+
+      this.companys.push(this.companyName);
+     
+    });
+  //POST company
 
   }
   copyAllMail() {
@@ -198,42 +250,54 @@ export class BackendDetailComponent implements OnInit {
     return this.http.get<Location[]>(url);
 
   }
-  addSchooling(goBack: boolean) {
+  addSchooling() {
    
     console.log(this.startDate);
-    this.addNewSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
+    this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => {
         console.log(x);
-        if (goBack) {
+       
           this.router.navigate(["/start"]);
-        }
+        
       
       });
 
    
   }
- 
-  addNewSchooling(reg: BackendDetailDto): Observable<BackendDetailDto> {
+  editSchooling() {
+   
+    this.putSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
+      this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+      .subscribe(x => {
+        console.log(x);
+
+        this.router.navigate(["/start"]);
+
+
+      });
+
+
+  }
+  postSchooling(reg: BackendDetailDto): Observable<BackendDetailDto> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
-    if (this.detailId > 0) {
-      console.log(this.detailId);
+    return this.http.post<BackendDetailDto>(`https://localhost:5001/backend/schoolings`, reg, httpOptions);
+  }
+  putSchooling(reg: BackendDetailDto): Observable<BackendDetailDto> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    
+    
       return this.http.put<BackendDetailDto>(`https://localhost:5001/backend/schoolings/${this.detailId}`, reg, httpOptions);
-       
-    }
-    else {
-     
-
-      return this.http.post<BackendDetailDto>(`https://localhost:5001/backend/schoolings`, reg, httpOptions);
-    }
-  
+ 
   }
 
   addMember() {
     console.log(this.firstname);
-    this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.mail, this.companyName));
+    this.dataSource.push(new CompanyMember(this.dataSource.length + 1, this.firstname, this.lastname, this.mail, this.companyName, this.companyContactPerson, this.companyMail));
     this.table.renderRows();
     this.firstname = "";
     this.lastname = "";
@@ -244,7 +308,7 @@ export class BackendDetailComponent implements OnInit {
   }
   deleteMember(id: number) {
     console.log(this.dataSource.length);
-
+     //Löschen richtig machen mit index
     this.dataSource = this.dataSource.splice(id, 1);
     console.log(this.dataSource.length);
     this.table.renderRows();
