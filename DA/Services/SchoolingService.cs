@@ -35,6 +35,11 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
+            schoolings.ForEach(x => {
+                if (x.Start < DateTime.Now) {
+                    UpdateDisplay(x.Id, false);
+                }
+            });
             if (type.ToLower().Equals("isfree")) {
                 return schoolings.Select(x => {
                     var address = addresses.Find(y => y.Id == x.AddressId);
@@ -56,6 +61,11 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary() {
+            schoolings.ForEach(x => {
+                if (x.Start < DateTime.Now) {
+                    UpdateDisplay(x.Id, false);
+                }
+            });
             return schoolings.Select(x => {
                 var address = addresses.Find(y => y.Id == x.AddressId);
                 var organizer = organizers.Find(y => y.Id == x.OrganizerId);
@@ -137,6 +147,14 @@ namespace Schulungskalender.Services {
 
         private PersonRessource FindPerson(string firstname, string lastname, string email, int company_id) {
             return persons.Find(x => x.Firstname == firstname && x.Lastname == lastname && x.Email == email && x.CompanyId == company_id);
+        }
+
+        public bool UpdateDisplay(int id, bool isDisplayed) {
+            var schooling = schoolings.Find(x => x.Id == id);
+            db.UpdateSchooling(id, isDisplayed);
+            db.GetSchoolings(ref schoolings);
+
+            return true;
         }
     }
 }

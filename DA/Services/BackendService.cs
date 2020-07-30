@@ -38,7 +38,12 @@ namespace DA.Services {
 
 
         public List<BackendSummaryDTO> GetSchoolings() {
-            return schoolings.Select(x => converter.getBackendSummaryDTO(x)).OrderBy(x => x.Start).ToList();
+            schoolings.ForEach(x => {
+                if (x.Start < DateTime.Now) {
+                    UpdateDisplay(x.Id, false);
+                }
+            });
+            return schoolings.Where(x => x.Display == true).Select(x => converter.getBackendSummaryDTO(x)).OrderBy(x => x.Start).ToList();
         }
 
 
