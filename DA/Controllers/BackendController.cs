@@ -57,5 +57,10 @@ namespace DA.Controllers {
             return backendService.GetOrganizers();
         }
 
+        [HttpGet("Companies")]
+        public List<string> Companies() {
+            return backendService.GetCompanies();
+        }
+
     }
 }

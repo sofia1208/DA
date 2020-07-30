@@ -64,7 +64,7 @@ namespace DA.Services {
             return true;
         }
 
-
+        
 
         public BackendDetailDTO GetSchoolings(int id) {
             var schooling = schoolings.Find(x => x.Id == id);
@@ -174,6 +174,10 @@ namespace DA.Services {
             return organizers.Select(x => new OrganizerDTO() { Id = x.Id, Name = x.Name, ContactPerson = x.ContactPerson, Email = x.Email, Website = x.Website, Phone = x.Phone }).ToList();
         }
 
+        internal List<string> GetCompanies() {
+            return companies.Select(x => x.Name).ToList();
+        }
+
         private void FillLists() {
             addresses = new List<AddressRessource>();
             companies = new List<CompanyRessource>();
@@ -202,7 +206,7 @@ namespace DA.Services {
         }
 
         private OrganizerRessource FindOrganizer(BackendDetailDTO schooling) {
-            return organizers.Find(x => x.ContactPerson == schooling.ContactPerson && x.Email == schooling.Email && x.Name == schooling.Organizer && x.Phone == schooling.Phone);
+            return organizers.Find(x => x.ContactPerson == schooling.ContactPerson && x.Email == schooling.Email && x.Name == schooling.Organizer);
         }
 
         private PersonRessource FindPerson(ParticipantDTO participant) {
