@@ -30,8 +30,10 @@ namespace DA.Services {
         }
 
         internal bool Login(LoginUser user) {
-            //checkCredentials
-            return true;
+            if(user.username.Equals("Schulung") && user.password.Equals("moveIT%99")) {
+                return true;
+            }
+            return false;
         }
 
 
