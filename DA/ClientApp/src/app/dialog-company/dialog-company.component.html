@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>
+  Neue Firma anlegen
+</h1>
+<div mat-dialog-content>
+  <div>
+    <mat-form-field>
+      <mat-label>Firmenname</mat-label>
+      <input matInput [(ngModel)]="data.name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ansprechperson</mat-label>
+      <input matInput [(ngModel)]="data.contactperson">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>E-Mail</mat-label>
+      <input matInput [(ngModel)]="data.mail">
+    </mat-form-field>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Abbrechen</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
+
+

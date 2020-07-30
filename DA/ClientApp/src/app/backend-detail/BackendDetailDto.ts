@@ -1,4 +1,5 @@
 import { Member } from "../registration/Member";
+import { CompanyMember } from "./CompanyMember";
 
 export class BackendDetailDto {
   id: Number;
@@ -17,7 +18,7 @@ export class BackendDetailDto {
   website: string;
   phone: string;
   isFree: boolean;
-  participants: Member[];
+  participants: CompanyMember[];
   availablePlaces: Number;
 
   constructor(id: Number,    name: string,    start: Date,    end: Date,    price: Number,    zipCode: Number,    city: string,    street: string,    streetNumber: Number,    country: string,    organizer: string,
@@ -26,7 +27,7 @@ export class BackendDetailDto {
     website: string,
     phone: string,
     isFree: boolean,
-    participants: Member[],
+    participants: CompanyMember[],
     availablePlaces: Number) {
 
     this.id =id;
