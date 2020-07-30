@@ -218,7 +218,7 @@ namespace DA.Services {
         }
 
         private CompanyRessource FindCompany(ParticipantDTO participant) {
-            return companies.Find(x => x.ContactPerson == participant.ContactPerson && x.Name == participant.CompanyName && x.Email == participant.CompanyEmail);
+            return companies.Find(x => x.Name == participant.CompanyName);
         }
 
         private bool doesRegistrationExist(int schoolingId, int personID) {

@@ -119,8 +119,7 @@ namespace Schulungskalender.Services {
 
             if (isRegistrationSuccessful) {
                 var schooling = schoolings.Find(x => x.Id == registration.SchoolingId);
-                var participants = GetParticipants(registration.SchoolingId);
-                mailMaker.sendMail("isabelle.arthofer@gmail.com", "ISI" /*registration.ContactPerson*/, schooling.Name, schooling.Start, participants);
+                mailMaker.sendMail("isabelle.arthofer@gmail.com"/*company.Email*/, company.ContactPerson, schooling.Name, schooling.Start, registration.Participants);
             }
 
             return registration;
