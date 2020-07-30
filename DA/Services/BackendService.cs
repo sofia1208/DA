@@ -1,12 +1,9 @@
 ﻿using DA.Models.DTOs;
-using Microsoft.AspNetCore.Server.IIS.Core;
-using Org.BouncyCastle.Crypto.Prng;
+using Org.BouncyCastle.Asn1.Icao;
 using Schulungskalender.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace DA.Services {
     public class BackendService {
@@ -30,7 +27,7 @@ namespace DA.Services {
         }
 
         internal bool Login(LoginUser user) {
-            if(user.username.Equals("Schulung") && user.password.Equals("moveIT%99")) {
+            if (user.username.Equals("Schulung") && user.password.Equals("moveIT%99")) {
                 return true;
             }
             return false;
@@ -64,7 +61,7 @@ namespace DA.Services {
             return true;
         }
 
-        
+
 
         public BackendDetailDTO GetSchoolings(int id) {
             var schooling = schoolings.Find(x => x.Id == id);
@@ -79,33 +76,42 @@ namespace DA.Services {
 
         public bool InsertSchooling(BackendDetailDTO schooling) {
             var wasSuccessful = true;
-            var address = FindAddress(schooling);
-            if (address == null) {
-                wasSuccessful = db.InsertAddress(schooling);
-                db.GetAddresses(ref addresses);
+            AddressRessource address = null;
+            if (schooling.Street != null && schooling.City != null && schooling.Country != null) {
                 address = FindAddress(schooling);
+                if (address == null) {
+                    wasSuccessful = db.InsertAddress(schooling);
+                    db.GetAddresses(ref addresses);
+                    address = FindAddress(schooling);
+                }
             }
 
-            var organizer = FindOrganizer(schooling);
-            if (organizer == null && wasSuccessful) {
-                wasSuccessful = db.InsertOrganizer(schooling);
-                db.GetOrganizers(ref organizers);
+            OrganizerRessource organizer = null;
+            if(schooling.Organizer != null) {
                 organizer = FindOrganizer(schooling);
+                if (organizer == null && wasSuccessful) {
+                    wasSuccessful = db.InsertOrganizer(schooling);
+                    db.GetOrganizers(ref organizers);
+                    organizer = FindOrganizer(schooling);
+                }
             }
+            
 
             if (wasSuccessful) {
                 schooling.participants.ForEach(x => {
-                    wasSuccessful = (FindCompany(x) == null) ? db.InsertCompany(x) : false;
+                    if(FindCompany(x) == null) {
+                        wasSuccessful = db.InsertCompany(x);
+                    }
                     db.GetCompanies(ref companies);
                     var company = FindCompany(x);
-                    if (wasSuccessful) {
-                        wasSuccessful = (FindPerson(x) == null) ? db.InsertPerson(x, company) : false;
+                    if (wasSuccessful && FindPerson(x) == null) {
+                        wasSuccessful = db.InsertPerson(x, company) ;
                     }
-                    
                 });
                 db.GetPersons(ref persons);
 
-                wasSuccessful = db.InsertSchooling(schooling, address.Id, organizer.Id);
+                wasSuccessful = db.InsertSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null)? 0 : organizer.Id);
+
                 db.GetSchoolings(ref schoolings);
 
                 var sRessource = FindSchooling(schooling);
@@ -124,41 +130,47 @@ namespace DA.Services {
 
         public bool EditSchooling(int id, BackendDetailDTO schooling) {
             var wasSuccessful = true;
-            var address = FindAddress(schooling);
-            if (address == null) {
-                if (address == null)
-                    wasSuccessful = db.InsertAddress(schooling);
-                db.GetAddresses(ref addresses);
+            AddressRessource address = null;
+            if (schooling.Street != null && schooling.City != null && schooling.Country != null) {
                 address = FindAddress(schooling);
+                if (address == null) {
+                    wasSuccessful = db.InsertAddress(schooling);
+                    db.GetAddresses(ref addresses);
+                    address = FindAddress(schooling);
+                }
             }
 
-            var organizer = FindOrganizer(schooling);
-            if (organizer == null && wasSuccessful) {
-                wasSuccessful = db.InsertOrganizer(schooling);
-                db.GetOrganizers(ref organizers);
+            OrganizerRessource organizer = null;
+            if (schooling.Organizer != null) {
                 organizer = FindOrganizer(schooling);
+                if (organizer == null && wasSuccessful) {
+                    wasSuccessful = db.InsertOrganizer(schooling);
+                    db.GetOrganizers(ref organizers);
+                    organizer = FindOrganizer(schooling);
+                }
             }
 
             if (wasSuccessful) {
                 schooling.participants.ForEach(x => {
-                    if (wasSuccessful && FindCompany(x) == null) {
+                    if (FindCompany(x) == null) {
                         wasSuccessful = db.InsertCompany(x);
                     }
                     db.GetCompanies(ref companies);
                     var company = FindCompany(x);
-                    if (wasSuccessful) {
-                        wasSuccessful = (FindPerson(x) == null) ? db.InsertPerson(x, company) : false;
+                    if (wasSuccessful && FindPerson(x) == null) {
+                        wasSuccessful = db.InsertPerson(x, company);
                     }
                 });
                 db.GetPersons(ref persons);
 
-                wasSuccessful = db.UpdateSchooling(schooling, address.Id, organizer.Id);
+                wasSuccessful = db.UpdateSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
+
                 db.GetSchoolings(ref schoolings);
 
                 var sRessource = FindSchooling(schooling);
                 db.RemoveAllForId(sRessource.Id);
                 db.GetRegistrations(ref registrations);
-                
+
                 schooling.participants.ForEach(x => {
                     var person = FindPerson(x);
                     if (!doesRegistrationExist(sRessource.Id, person.Id)) {
@@ -206,7 +218,7 @@ namespace DA.Services {
         }
 
         private OrganizerRessource FindOrganizer(BackendDetailDTO schooling) {
-            return organizers.Find(x => x.ContactPerson == schooling.ContactPerson && x.Email == schooling.Email && x.Name == schooling.Organizer);
+            return organizers.Find(x => x.Name == schooling.Organizer);
         }
 
         private PersonRessource FindPerson(ParticipantDTO participant) {
