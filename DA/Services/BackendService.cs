@@ -91,7 +91,10 @@ namespace DA.Services {
                     wasSuccessful = (FindCompany(x) == null) ? db.InsertCompany(x) : false;
                     db.GetCompanies(ref companies);
                     var company = FindCompany(x);
-                    wasSuccessful = (wasSuccessful && FindPerson(x) == null) ? db.InsertPerson(x, company) : false;
+                    if (wasSuccessful) {
+                        wasSuccessful = (FindPerson(x) == null) ? db.InsertPerson(x, company) : false;
+                    }
+                    
                 });
                 db.GetPersons(ref persons);
 
@@ -113,44 +116,51 @@ namespace DA.Services {
         }
 
         public bool EditSchooling(int id, BackendDetailDTO schooling) {
-            //var wasSuccessful = true;
-            //var address = FindAddress(schooling);
-            //if (address == null) {
-            //    if (address == null)
-            //        wasSuccessful = db.InsertAddress(schooling);
-            //    db.GetAddresses(ref addresses);
-            //    address = FindAddress(schooling);
-            //}
+            var wasSuccessful = true;
+            var address = FindAddress(schooling);
+            if (address == null) {
+                if (address == null)
+                    wasSuccessful = db.InsertAddress(schooling);
+                db.GetAddresses(ref addresses);
+                address = FindAddress(schooling);
+            }
 
-            //var organizer = FindOrganizer(schooling);
-            //if (organizer == null && wasSuccessful) {
-            //    wasSuccessful = db.InsertOrganizer(schooling);
-            //    db.GetOrganizers(ref organizers);
-            //    organizer = FindOrganizer(schooling);
-            //}
+            var organizer = FindOrganizer(schooling);
+            if (organizer == null && wasSuccessful) {
+                wasSuccessful = db.InsertOrganizer(schooling);
+                db.GetOrganizers(ref organizers);
+                organizer = FindOrganizer(schooling);
+            }
 
-            //if (wasSuccessful) {
-            //    wasSuccessful = db.UpdateSchooling(schooling, address.Id, organizer.Id);
-            //    db.GetSchoolings(ref schoolings);
-            //    var sRessource = FindSchooling(schooling);
-            //    db.RemoveAllForId(sRessource.Id);
-            //    db.GetRegistrations(ref registrations);
-            //    schooling.participants.ForEach(x => {
-            //        if (wasSuccessful && FindPerson(x) == null) {
-            //            wasSuccessful = db.InsertPerson(x);
-            //        }
-            //    });
-            //    db.GetPersons(ref persons);
-            //    schooling.participants.ForEach(x => {
-            //        var person = FindPerson(x);
-            //        if (!doesRegistrationExist(sRessource.Id, person.Id)) {
-            //            wasSuccessful = db.InsertRegistration(sRessource.Id, person.Id);
-            //        }
-            //    });
-            //    db.GetRegistrations(ref registrations);
-            //}
-            //return wasSuccessful;
-            return true;
+            if (wasSuccessful) {
+                schooling.participants.ForEach(x => {
+                    if (wasSuccessful && FindCompany(x) == null) {
+                        wasSuccessful = db.InsertCompany(x);
+                    }
+                    db.GetCompanies(ref companies);
+                    var company = FindCompany(x);
+                    if (wasSuccessful) {
+                        wasSuccessful = (FindPerson(x) == null) ? db.InsertPerson(x, company) : false;
+                    }
+                });
+                db.GetPersons(ref persons);
+
+                wasSuccessful = db.UpdateSchooling(schooling, address.Id, organizer.Id);
+                db.GetSchoolings(ref schoolings);
+
+                var sRessource = FindSchooling(schooling);
+                db.RemoveAllForId(sRessource.Id);
+                db.GetRegistrations(ref registrations);
+                
+                schooling.participants.ForEach(x => {
+                    var person = FindPerson(x);
+                    if (!doesRegistrationExist(sRessource.Id, person.Id)) {
+                        wasSuccessful = db.InsertRegistration(sRessource.Id, person.Id);
+                    }
+                });
+                db.GetRegistrations(ref registrations);
+            }
+            return wasSuccessful;
         }
 
         internal List<OrganizerDTO> GetOrganizers() {
