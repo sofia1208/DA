@@ -10,6 +10,7 @@ import { Location } from '../registration/Location';
 import { DialogOrganizerComponent } from '../dialog-organizer/dialog-organizer.component';
 import { DialogCompanyComponent } from '../dialog-company/dialog-company.component';
 import { CompanyMember } from './CompanyMember';
+import { Organizer } from './Organizer';
 @Component({
   selector: 'app-backend-detail',
   templateUrl: './backend-detail.component.html',
@@ -24,7 +25,7 @@ export class BackendDetailComponent implements OnInit {
   country: string;
   catName: string = "";
   backendDto: BackendDetailDto;
-  organizer: string[] = ["moveIT Software GmbH"];
+  organizer: Organizer[] = [];
   contactPerson: string;
   email: string;
   website: string;
@@ -34,7 +35,7 @@ export class BackendDetailComponent implements OnInit {
   startTime: string;
   endTime: string;
   sizeOfSchooling: Number;
-  organizerName: string;
+  organizerName: Organizer;
   price: Number;
   companyName: string;
   companys: string[] = [];
@@ -78,19 +79,44 @@ export class BackendDetailComponent implements OnInit {
     if (this.detailId > 0) {
       this.btnSchooling.nativeElement.innerHTML = "Schulung speichern";
     }
-    
+    this.fillComboboxes();
   
   }
   saveAndNew() {
     if (this.detailId > 0) {
+      console.log("Schulung geändert");
       this.editSchooling();
     }
     else {
+      console.log("Schulung anlegt");
       this.addSchooling();
     }
     this.detailId = 0;
    
 
+  }
+  fillComboboxes() {
+    this.getCompanys(`https://localhost:5001/backend/companys`)
+      .subscribe(x => {
+        console.log(x);
+        this.companys = x;
+      })
+    this.getOrganizer(`https://localhost:5001/backend/organizers`)
+      .subscribe(x => {
+        console.log(x);
+        this.organizer = x;
+        
+        //DISTINCT
+      })
+    
+  }
+  changeOrganizer() {
+    console.log("changing");
+    let shownO = this.organizer.find(x => x.name === this.organizerName.name);
+    this.contactPerson = shownO.contactPerson;
+    this.phone = shownO.phone;
+    this.website = shownO.website;
+    this.email = shownO.email;
   }
   addOrganizer() {
    
@@ -102,9 +128,9 @@ export class BackendDetailComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.newOrganizer = result;
-       
-        this.organizer.push(this.newOrganizer);
-        this.organizerName = this.newOrganizer;
+
+        this.organizer.push(new Organizer(this.organizer.length,this.newOrganizer,"","","",""));
+        this.organizerName.name = this.newOrganizer;
       });
    
    
@@ -129,7 +155,7 @@ export class BackendDetailComponent implements OnInit {
       this.companys.push(this.companyName);
      
     });
-  //POST company
+ 
 
   }
   copyAllMail() {
@@ -169,7 +195,7 @@ export class BackendDetailComponent implements OnInit {
     let eT = new Date(this.backendDto.end);
     this.convertToGermanTime(sT, eT);
     this.contactPerson = this.backendDto.contactPerson;
-    this.organizerName = this.backendDto.organizer;
+    this.organizerName.name = this.backendDto.organizer;
     this.email = this.backendDto.email;
     this.phone = this.backendDto.phone;
     this.website = this.backendDto.website;
@@ -251,24 +277,30 @@ export class BackendDetailComponent implements OnInit {
 
   }
   addSchooling() {
-   
-    console.log(this.startDate);
-    this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode) , this.city, this.street, Number(this.streetNumber),
-      this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
-      .subscribe(x => {
-        console.log(x);
-       
+    if (this.detailId>0) {
+      this.editSchooling();
+    }
+    else {
+     
+      this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
+        this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+        .subscribe(x => {
+          console.log(x);
+
           this.router.navigate(["/start"]);
-        
-      
-      });
+
+
+        });
+    }
+  
+    
 
    
   }
   editSchooling() {
    
     this.putSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
-      this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+      this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => {
         console.log(x);
 
@@ -283,6 +315,7 @@ export class BackendDetailComponent implements OnInit {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
+    console.log("post");
     return this.http.post<BackendDetailDto>(`https://localhost:5001/backend/schoolings`, reg, httpOptions);
   }
   putSchooling(reg: BackendDetailDto): Observable<BackendDetailDto> {
@@ -290,9 +323,16 @@ export class BackendDetailComponent implements OnInit {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
     
-    
+    console.log("put");
       return this.http.put<BackendDetailDto>(`https://localhost:5001/backend/schoolings/${this.detailId}`, reg, httpOptions);
  
+  }
+  getCompanys(url:string): Observable<string[]> {
+     return this.http.get<string[]>(url);
+
+  }
+  getOrganizer(url:string): Observable<Organizer[]> {
+    return this.http.get<Organizer[]>(url);
   }
 
   addMember() {
