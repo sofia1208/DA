@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using System.Text;
 using System.Net;
 using System.Diagnostics;
+using DA.Models.DTOs;
 
 namespace Schulungskalender.Services {
     public class SchoolingService {
@@ -40,6 +41,7 @@ namespace Schulungskalender.Services {
                     UpdateDisplay(x.Id, false);
                 }
             });
+
             if (type.ToLower().Equals("isfree")) {
                 return schoolings.Select(x => {
                     var address = addresses.Find(y => y.Id == x.AddressId);
@@ -77,7 +79,7 @@ namespace Schulungskalender.Services {
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
-            //mailMaker.sendMail();
+            
             var schooling = schoolings.Find(x => x.Id == id);
             var address = addresses.Find(x => x.Id == schooling.AddressId);
             var organizer = organizers.Find(x => x.Id == schooling.OrganizerId);
@@ -116,7 +118,9 @@ namespace Schulungskalender.Services {
             db.GetRegistrations(ref registrations);
 
             if (isRegistrationSuccessful) {
-                //mailMaker.sendMail();
+                var schooling = schoolings.Find(x => x.Id == registration.SchoolingId);
+                var participants = GetParticipants(registration.SchoolingId);
+                mailMaker.sendMail("isabelle.arthofer@gmail.com", "ISI" /*registration.ContactPerson*/, schooling.Name, schooling.Start, participants);
             }
 
             return registration;
@@ -155,6 +159,18 @@ namespace Schulungskalender.Services {
             db.GetSchoolings(ref schoolings);
 
             return true;
+        }
+
+        private List<ParticipantDTO> GetParticipants(int id) {
+            return registrations.Where(x => x.SchoolingId == id)
+                .Select(x => x.PersonId)
+                .Distinct()
+                .Select(x => {
+                    var personRessource = persons.Find(y => y.Id == x);
+                    var company = companies.Find(y => y.Id == personRessource.CompanyId);
+                    return new ParticipantDTO() { Id = personRessource.Id, Firstname = personRessource.Firstname, Lastname = personRessource.Lastname, Email = personRessource.Email, CompanyName = company.Name, CompanyEmail = company.Email, ContactPerson = company.ContactPerson };
+                })
+                .ToList();
         }
     }
 }
