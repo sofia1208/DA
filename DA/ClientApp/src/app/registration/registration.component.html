@@ -29,7 +29,7 @@
       </div>
 
        <div *ngIf="!mobile" class="column">
-
+       
         <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
           <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
         </agm-map>
@@ -43,30 +43,40 @@
       </agm-map>
     </div>
 
-    <h3 class="firma">Firma</h3>
-    <div class="containerInput">
-   
-        
-      <div class="row rowFields">
-        <div class="column col1">
-          <div class="row innerRows firma"></div>
+    <div class="printMe">
+      <h3 class="firma">Firma*</h3>
+      <div class="containerInput">
+
+
+        <div class="row rowFields">
+          <div class="column col1">
+            <div class="row innerRows firma"></div>
+          </div>
+          <mat-form-field class="example-full-width">
+
+            <mat-label>Firmenname</mat-label>
+            <input matInput [(ngModel)]="company">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Ansprechperson Vorname</mat-label>
+            <input matInput [(ngModel)]="companyContactPersonVn">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Ansprechperson Nachname</mat-label>
+            <input matInput [(ngModel)]="companyContactPersonLn">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Ansprechperson Telefonnummer</mat-label>
+            <input matInput [(ngModel)]="companyPhone">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Ansprechperson E-Mail</mat-label>
+            <input matInput [(ngModel)]="companyMail">
+          </mat-form-field>
         </div>
-        <mat-form-field class="example-full-width">
-
-          <mat-label>Name</mat-label>
-          <input matInput [(ngModel)]="company">
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-          <mat-label>Telefonnummer</mat-label>
-          <input matInput [(ngModel)]="companyPhone">
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-          <mat-label>E-Mail</mat-label>
-          <input matInput [(ngModel)]="companyMail">
-        </mat-form-field>
-      </div>
 
         <div class="row rowFields">
           <div class="column col1">
@@ -98,38 +108,40 @@
           </mat-form-field>
         </div>
 
-      
 
-    </div>
-    <h3 class="firma">Teilnehmer</h3>
-    <div>
 
-      <div class="column col1">
-        <div class="firma"></div>
       </div>
+      <h3 class="firma">Teilnehmer</h3>
+      <div>
 
-      <div class="containerInput">
-        <div class="row rowFields">
-          <div class="column col1">
-            <div class="row innerRows firma"></div>
-          </div>
-          <mat-form-field class="example-full-width">
-            <mat-label>Vorname</mat-label>
-            <input matInput [(ngModel)]="firstname" placeholder="Max">
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Nachname</mat-label>
-            <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Email</mat-label>
-            <input matInput [(ngModel)]="email" placeholder="mm">
-          </mat-form-field>
-          <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
+        <div class="column col1">
+          <div class="firma"></div>
         </div>
-      </div>
 
+        <div class="containerInput">
+          <div class="row rowFields">
+            <div class="column col1">
+              <div class="row innerRows firma"></div>
+            </div>
+            <mat-form-field class="example-full-width">
+              <mat-label>Vorname</mat-label>
+              <input matInput [(ngModel)]="firstname" placeholder="Max">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Nachname</mat-label>
+              <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input matInput [(ngModel)]="email" placeholder="mm">
+            </mat-form-field>
+            <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
+          </div>
+        </div>
+
+      </div>
     </div>
+   
     <br />
     <h3 class="firma">Übersicht</h3>
     <div class="row">
@@ -174,21 +186,22 @@
 
 
 
-    <div class="row">
+    <div class="row printMe">
       <div class="column col1">
         <h3 class="firma checks">Stornobedingungen</h3>
       </div>
-      <input type="checkbox" />
-      <p>Ja, ich habe die Stornobedingungen von moveIT <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen">Software</a> gelesen.</p>
+      <input type="checkbox" (change)="changeStorno()"  [(ngModel)]="checkStrono"/>
+      <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen"> Stornobedingungen </a> von moveIT Software gelesen.</p>
     </div>
 
-    <div class="row">
+    <div class="row printMe">
       <div class="column col1">
         <h3 class="firma checks">Datenschutz</h3>
       </div>
-      <input type="checkbox" />
-      <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutz</a> von moveIT Software gelesen.</p>
-      <button class="btnSubmit btnDown" (click)="submit()">Abschicken</button>
+      <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />
+      <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutzbedinungen</a> von moveIT Software gelesen.</p>
+      <button class="btnSubmit btnDown" (click)="printRegistration()">Schulung ausdrucken</button>
+      <button class="btnSubmit btnDown" [disabled]="!buttonActive" (click)="submit()">Abschicken</button>
     </div>
 
 

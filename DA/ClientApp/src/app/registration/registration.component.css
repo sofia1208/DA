@@ -249,16 +249,25 @@ input[type=checkbox]{
 
 .table thead th {
     align-items:center;
+    border-top: 0px;
 }
+.table tr:first-child td {
+  border-top: 0;
+}
+
 @media (max-device-width: 768px) {
   .outerRow {
     margin: 0;
   }
-
+  
   .outerDiv {
     margin: 0px;
   }
-
+  .mat-typography p {
+    margin: 0;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
   .row {
     display: flex;
     flex-wrap: initial;
@@ -307,5 +316,29 @@ input[type=checkbox]{
   .checks{
       display:none;
   }
+}
+@media print {
+  .printMe {
+    display: none !important;
+  }
+}
+
+app-print-layout {
+  display: none;
+}
+
+app-invoice {
+  display: none;
+}
+
+@media print {
+
+  app-invoice {
+    display: flex;
+  }
+}
+
+.btnPrint {
+  margin-left: 50px;
 }
 

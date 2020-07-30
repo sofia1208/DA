@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 import { SummaryDto } from './SummaryDto';
 import { SchoolingDto } from '../calendar/SchoolingDto';
-import { MatTable } from '@angular/material';
+import { MatTable, MatCheckbox } from '@angular/material';
 @Component({
   selector: 'app-backend-start',
   templateUrl: './backend-start.component.html',
@@ -21,7 +21,7 @@ export class BackendStartComponent implements OnInit {
   ngOnInit() {
    this.getSum();
   }
-  //GEt auf Summary (checkbox)
+
   //GET auf Detail/ID (neues)
   //DELETE Summary (id)
 
@@ -53,16 +53,27 @@ export class BackendStartComponent implements OnInit {
   fillTable(): void {
     for (var i = 0; i < this.schoolings.length; i++) {
       this.dataSource.push(this.schoolings[i]);
+      
       this.table.renderRows();
     }
 
   }
   deleteSchooling(id: number) {
-    //delete render rows bei subscribe
-    console.log(id);
-    this.delete(`https://localhost:5001/backend/summary/10`, 10)
-      .subscribe();
+
+    let item = this.dataSource.find(x => x.id == id);
+    const index: number = this.dataSource.indexOf(item);
+    if (index !== -1) {
+      this.dataSource.splice(index, 1);
+    }
     this.table.renderRows();
+  
+    this.delete(`https://localhost:5001/backend/summary/${id}`, id)
+      .subscribe(data => {
+        console.log(data); 
+     
+      }
+      );
+   
   }
   editSchooling(id: Number) {
     console.log(id);
@@ -74,6 +85,14 @@ export class BackendStartComponent implements OnInit {
     this.router.navigate(["/detail"], navigationExtras);
   
   }
+  checkBox(id: Number) {
+    let index = this.dataSource.find(x => x.id == id);
+    let display = index.display;
+    this.changeDisplay(`https://localhost:5001/backend/updatedisplay/${id}`, !display)
+      .subscribe(x=> console.log(x));
+    
+
+  }
   private delete(url:string, id: number): Observable<{}> {
    
     return this.http.delete(url);
@@ -81,6 +100,13 @@ export class BackendStartComponent implements OnInit {
   }
   private getSummary(url: string): Observable<SummaryDto[]> {
     return this.http.get<SummaryDto[]>(url);
+
+  }
+  private changeDisplay(url: string, value: boolean): Observable<string> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    return this.http.put<string>(url, value, httpOptions);
 
   }
  

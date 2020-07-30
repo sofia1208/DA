@@ -36,6 +36,9 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Router, NavigationExtras } from '@angular/router';
 import { Printing } from './Printing';
+import { GetSummaryForPrint } from '../invoice/GetSummaryForPrint';
+
+import { MatTable } from '@angular/material';
 registerLocaleData(localeDe, 'de');
 
 @Component({
@@ -55,12 +58,15 @@ registerLocaleData(localeDe, 'de');
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+ // @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  @ViewChild('mytable', { static: true })private table: MatTable<any>;
   @ViewChild('detailView', { static: true }) private myScrollContainer: ElementRef;
   schoolings: SchoolingGet[] = [];
   events: CustomEvent[] = [];
   holidayApis: HolidayAPI[] = [];
   holidays: Holiday[] = [];
+ 
+  summaryList: GetSummaryForPrint[] = [];
 
   mobile: boolean = false;
 
@@ -74,12 +80,14 @@ export class CalendarComponent implements OnInit {
   telefon: string = '';
   adresse: string = '';
 
+  schoolingList: GetSummaryForPrint[] = [];
+  calendar: boolean=true;
   detailId: Number;
 
-
+  displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
   constructor(private http: HttpClient,private router:Router) { }
   ngAfterViewInit(): void {
- 
+      
     }
  
   
@@ -87,8 +95,11 @@ export class CalendarComponent implements OnInit {
     console.log('ngOnInit');
     this.getSummary();
     this.getHolidays();
-    
+    this.getListSummary();
     this.checkSize();
+  }
+  ngOnChanges() {
+    console.log("hello");
   }
 
   
@@ -122,7 +133,7 @@ export class CalendarComponent implements OnInit {
       console.log('desktop detected')
     }
   }
- 
+
   getSummary(): void {
   
     this.getSchoolings('https://localhost:5001/schoolings/summary')
@@ -140,7 +151,26 @@ export class CalendarComponent implements OnInit {
     console.log(this.schoolings.length);
   }
 
+  getAvailable(): void {
+    this.schoolings = [];
+    this.events = [];
+    this.getSchoolings('https://localhost:5001/schoolings/summary/isfree')
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
 
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
+
+
+
+    console.log(this.schoolings.length);
+
+  }
   getHolidays(): void {
   
     let now = new Date().getFullYear();
@@ -241,14 +271,25 @@ export class CalendarComponent implements OnInit {
   goToRegistration(): void {
     let navigationExtras: NavigationExtras = {
       queryParams: {
-        "id": this.detailId
+        "id": this.detailId,
+        "title": this.detailTitle
       }
     };
     this.router.navigate(["/registration"], navigationExtras);
   
   }
  
-  
+  goToRegistrationList(id: Number, title: string): void {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "id": id,
+        "title": title
+      }
+    };
+    this.router.navigate(["/registration"], navigationExtras);
+
+  }
+
 
   clickOnEvent(event: CustomEvent): void {
  
@@ -275,14 +316,30 @@ export class CalendarComponent implements OnInit {
           })
         ;
     }
+ 
+  }
+
+  clickOnList(id: Number): void {
+
+
+    let schooling = new SchoolingDto;
+  
+      this.hidden = false;
+      this.scrollToDetail();
+      this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
+        .subscribe(data => {
+          schooling = data;
+          console.log(data);
+
+          this.fillDetails(schooling);
+
+        }
+          , err => {
+            console.log(`${err.message}`)
+          })
+        ;
     
-   
 
-    
-   
-
-
-   
   }
 
   activeDayIsOpen: boolean = false;
@@ -336,27 +393,7 @@ export class CalendarComponent implements OnInit {
     this.clickOnEvent(event);
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-          isFree: true,
-          isHoliday: false,
-
-          hasMoreDays: false,
-        };
-      }
-      return iEvent;
-    });
-   
-  }
+  
 
   handleEvent(action: string, event: CustomEvent): void {
     console.log(event.id);
@@ -364,31 +401,17 @@ export class CalendarComponent implements OnInit {
     this.clickOnEvent(event);
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-        isFree: true,
-        isHoliday: false,
-        hasMoreDays: false,
-      },
-    ];
-  }
 
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
-
+  setListView() {
+    this.hidden = true;
+    this.calendar = false;
+  }
   setView(view: CalendarView) {
+    this.hidden = true;
+    this.calendar = true;
     this.view = view;
   }
 
@@ -396,7 +419,7 @@ export class CalendarComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
   printPage() {
-    const invoiceIds = ['101', '102'];
+   
     window.print();
     //this.printService.printDoct('invoice', invoiceIds);
   }
@@ -420,11 +443,13 @@ export class CalendarComponent implements OnInit {
       let start = new Date(this.schoolings[i].start);
       let end = new Date(this.schoolings[i].end);
       let moreDays = false;
-  
+      let outofMonth = false;
       if (start.getDay() != end.getDay()) {
         moreDays = true;
       }
-
+      if (start.getMonth() != this.viewDate.getMonth() || end.getMonth() != this.viewDate.getMonth() ) {
+        outofMonth = true;
+      }
       console.log(this.schoolings)
       const schooling: CustomEvent = {
         isFree: true,
@@ -435,7 +460,8 @@ export class CalendarComponent implements OnInit {
         allDay: false,
         isHoliday: false,
         hasMoreDays: moreDays,
-      
+
+        outOfMonth: outofMonth
 
       };
      
@@ -492,6 +518,13 @@ export class CalendarComponent implements OnInit {
 
   private createHolidayEvents(): void {
     for (var i = 0; i < this.holidays.length; i++) {
+      let date = this.holidays[i].date;
+      let outofMonth = false;
+      if (date.getMonth() != this.viewDate.getMonth()) {
+       
+        outofMonth = true;
+      }
+      console.log(this.viewDate.getMonth() + " " + date.getMonth());
       const holiday: CustomEvent = {
         isFree: true,
         start: startOfDay(this.holidays[i].date),
@@ -501,13 +534,46 @@ export class CalendarComponent implements OnInit {
         allDay: true,
         isHoliday: true,
         hasMoreDays: false,
-
+        outOfMonth: outofMonth
 
       };
       this.events.push(holiday);
       this.refresh.next();
           
     }
+  }
+
+  getListSummary(): void {
+
+    this.getSchool('https://localhost:5001/schoolings/summary')
+      .subscribe(data => {
+    
+
+        this.schoolingList = data;
+       
+        this.schoolingToPrint();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        });
+   // this.schoolingToPrint();
+
+  }
+  private getSchool(url: string): Observable<GetSummaryForPrint[]> {
+    return this.http.get<GetSummaryForPrint[]>(url);
+
+  }
+
+  private schoolingToPrint(): void {
+    for (var i = 0; i < this.schoolingList.length; i++) {
+
+      this.summaryList.push(this.schoolingList[i]);
+     
+    }
+
+    this.table.renderRows();
+
   }
 
 

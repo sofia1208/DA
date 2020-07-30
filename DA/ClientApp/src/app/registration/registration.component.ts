@@ -6,10 +6,11 @@ import { CustomEvent } from '../calendar/CustomEvent';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from './Member';
-import { MatTable } from '@angular/material';
+import { MatTable, MatDialog, MatDialogConfig } from '@angular/material';
 import { Registration } from './Registration';
 import { AgmMap, MouseEvent, MapsAPILoader } from '@agm/core';
 import { Location } from './Location';
+import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 
 @Component({
   selector: 'app-registration',
@@ -43,10 +44,12 @@ export class RegistrationComponent implements OnInit {
   companyPhone: string = "";
   companyMail: string = "";
   companyStreet: string = "";
-  companyStreetNumber: Number;
-  companyZipCode: Number;
+  companyStreetNumber: Number =0;
+  companyZipCode: Number=0;
   companyCity: string = "";
   companyCountry: string = "";
+  companyContactPersonVn: string = "";
+  companyContactPersonLn: string = "";
   locations: Location[]= [];
   lat: Number = 48.1505921;
   lon: Number = 14.0069141;
@@ -56,12 +59,17 @@ export class RegistrationComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
   dataSource = this.members;
+  buttonActive: boolean = false;
   
   schooling: SchoolingDto;
-  constructor(private http: HttpClient, private route: ActivatedRoute, private apiloader: MapsAPILoader) {
+
+  checkDatenschutz: boolean;
+  checkStrono: boolean;
+  constructor(private http: HttpClient, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
+      this.detailTitle = p["title"];
     })
    
 
@@ -73,6 +81,46 @@ export class RegistrationComponent implements OnInit {
     this.getEvent(this.detailId);
     this.checkSize();
     
+  }
+  changeStorno() {
+    this.openDialog("Stornobedinugen");
+    this.checkButton();
+  }
+  changeData() {
+    this.openDialog("Datenschutz");
+    this.checkButton();
+  }
+  checkButton() {
+    
+    if (this.checkDatenschutz && this.checkStrono && this.company!=="" && this.companyCity!=="" &&
+      this.companyContactPersonLn!=="" &&
+      this.companyContactPersonVn!=="" && 
+      this.companyCountry!=="" && 
+      this.companyMail!=="" && 
+      this.companyPhone!=="" && 
+      this.companyStreet!=="" && 
+      this.companyStreetNumber!=0 &&
+      this.companyZipCode !== 0
+    ) {
+
+      console.log("true");
+      this.buttonActive = true;
+    }
+    else {
+      this.buttonActive = false;
+    }
+  }
+  openDialog(name: string): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      name: name
+    };
+    dialogConfig.autoFocus = true;
+
+    this.dialog.open(DialogComponentComponent, dialogConfig);
+  }
+  printRegistration() {
+    window.print();
   }
   checkSize() {
     let width = window.innerWidth;
@@ -114,6 +162,7 @@ export class RegistrationComponent implements OnInit {
   fillDetails(schooling: SchoolingDto) {
    
     console.log('fill details');
+ 
     this.telefon = schooling.phone;
     this.convertToGermanTime(schooling);
     this.preis = schooling.price + " €";
@@ -180,7 +229,7 @@ export class RegistrationComponent implements OnInit {
   addMember(): void {
    
   
-    this.dataSource.push(new Member(this.firstname, this.lastname, this.email));
+    this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.email, this.company));
     this.table.renderRows();
     this.firstname = "";
     this.lastname = "";

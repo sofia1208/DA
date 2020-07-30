@@ -50,6 +50,7 @@ h1 {
   color: #707070;
   padding: 10px;
   margin: 10px;
+  flex-shrink: 1
 }
 .takenSchooling {
   background-color: #F28C8C;

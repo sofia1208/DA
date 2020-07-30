@@ -1,72 +1,88 @@
 <mat-tab-group>
   <mat-tab label="Details">
-   
-      <div class="displayRow">
-        <div class="column columDetails columnFields">
-          <p class="pColumn">Name</p>
-          <p class="pColumn">Adresse</p>
-         
-          <p class="pColumn">Beginn-Datum und Uhrzeit</p>
-          <p class="pColumn">End-Datum und Uhrzeit</p>
-        </div>
-        <div class="columnFields">
-          <mat-form-field class="fields" [(ngModel)]="catName" appearance="fill">
-            <mat-label>Kategory auswählen</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let s of category" [value]="s">
-                {{s}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div class="displayRow fields">
-            <mat-form-field>
-              <mat-label>Straße</mat-label>
-              <input matInput [(ngModel)]="street">
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Hausnummer</mat-label>
-              <input matInput [(ngModel)]="streetNumber">
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Postleitzahl</mat-label>
-              <input matInput [(ngModel)]="zipCode">
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Stadt</mat-label>
-              <input matInput [(ngModel)]="city">
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Land</mat-label>
-              <input matInput [(ngModel)]="country">
-            </mat-form-field>
-          </div>
-          <button class="fields btnMap">Auf Karte anzeigen</button>
-          <div class="displayRow fields">
-            <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Datum auswählen</mat-label>
-              <input matInput [matDatepicker]="picker">
-              <mat-datepicker-toggle matSuffix [for]="picker">
-                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-              </mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <input class="inputTime" type="time">
-          </div>
 
-          <div class="displayRow fields">
-            <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Datum auswählen</mat-label>
-              <input matInput [matDatepicker]="endPicker">
-              <mat-datepicker-toggle matSuffix [for]="endPicker">
-                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-              </mat-datepicker-toggle>
-              <mat-datepicker #endPicker></mat-datepicker>
-            </mat-form-field>
-            <input class="inputTime" type="time">
-          </div>
-        </div>
+    <div class="displayRow">
+      <div class="column columDetails columnFields">
+        <p class="pColumn">Name</p>
+        <p class="pColumn">Adresse</p>
+
+        <p class="pColumn">Beginn-Datum und Uhrzeit</p>
+        <p class="pColumn">End-Datum und Uhrzeit</p>
+        <p class="pColumn">Anzahl der Schulungsplätze</p>
+        <p class="pColumn">Preis</p>
       </div>
-    <button disabled (click)="addSchooling()">Neue Schulung anlegen</button>
+      <div class="columnFields">
+        <mat-form-field class="fields" appearance="fill">
+          <mat-label>Kategorie auswählen</mat-label>
+          <mat-select [(value)]="catName">
+            <mat-option *ngFor="let s of category" [value]="s">
+              {{s}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="displayRow fields">
+          <mat-form-field>
+            <mat-label>Straße</mat-label>
+            <input matInput [(ngModel)]="street">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Hausnummer</mat-label>
+            <input matInput [(ngModel)]="streetNumber">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Postleitzahl</mat-label>
+            <input matInput [(ngModel)]="zipCode">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Stadt</mat-label>
+            <input matInput [(ngModel)]="city">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Land</mat-label>
+            <input matInput [(ngModel)]="country">
+          </mat-form-field>
+          <button (click)="showOnMap()" class="fields btnMap">Auf Karte anzeigen</button>
+        </div>
+
+        <div class="displayRow fields">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Datum auswählen</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <input [(ngModel)]="startTime" class="inputTime" type="time">
+        </div>
+
+        <div class="displayRow fields">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Datum auswählen</mat-label>
+            <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endPicker">
+              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+          <input [(ngModel)]="endTime" class="inputTime" type="time">
+        </div>
+        <mat-form-field class="displayRow fields">
+
+          <input type="number" matInput [(ngModel)]="sizeOfSchooling">
+        </mat-form-field>
+        <mat-form-field class="displayRow fields">
+
+          <input type="number" matInput [(ngModel)]="price">
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
+        <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+      </agm-map>
+    </div>
+
   </mat-tab>
 
 
@@ -81,34 +97,108 @@
         <p class="pColumn">Telfonnummer</p>
       </div>
       <div class="columnFields">
-       <mat-form-field  [(ngModel)]="catName" appearance="fill">
+        <mat-form-field appearance="fill">
           <mat-label>Organisator auswählen</mat-label>
-          <mat-select>
+          <mat-select [(ngModel)]="organizerName">
             <mat-option *ngFor="let s of organizer" [value]="s">
               {{s}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-       
-          <mat-form-field>
-           
-            <input matInput [(ngModel)]="contactPerson">
-          </mat-form-field>
-          <mat-form-field>
-           
-            <input matInput [(ngModel)]="email">
-          </mat-form-field>
-          <mat-form-field>
-    
-            <input matInput [(ngModel)]="website">
-          </mat-form-field>
-          <mat-form-field>
-          
-            <input matInput [(ngModel)]="phone">
-          </mat-form-field>
-        
+
+        <mat-form-field>
+
+          <input matInput [(ngModel)]="contactPerson">
+        </mat-form-field>
+        <mat-form-field>
+
+          <input matInput [(ngModel)]="email">
+        </mat-form-field>
+        <mat-form-field>
+
+          <input matInput [(ngModel)]="website">
+        </mat-form-field>
+        <mat-form-field>
+
+          <input matInput [(ngModel)]="phone">
+        </mat-form-field>
+
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Teilnehmer"> Content 3 </mat-tab>
+  <mat-tab label="Teilnehmer">
+    <div class="printMe">
+      <div style="margin-left:20px">
+
+        <mat-label class="btnMap" style="margin-right: 20px">Teilnehmer hinzufügen</mat-label>
+        <mat-form-field class="example-full-width">
+          <mat-label>Vorname</mat-label>
+          <input matInput [(ngModel)]="firstname" placeholder="Max">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Nachname</mat-label>
+          <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="mail" placeholder="mm">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Firma auswählen</mat-label>
+          <mat-select [(ngModel)]="companyName">
+            <mat-option *ngFor="let s of companys" [value]="s">
+              {{s}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
+      </div>
+    </div>
+   
+ 
+    <table mat-table #mytable [dataSource]="dataSource" class="table">
+
+      <ng-container matColumnDef="firstname">
+        <th mat-header-cell *matHeaderCellDef> Vorname </th>
+        <td mat-cell *matCellDef="let member"> {{member.firstname}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="lastname">
+        <th mat-header-cell *matHeaderCellDef> Nachname </th>
+        <td mat-cell *matCellDef="let member"> {{member.lastname}}  </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> E-Mail </th>
+        <td mat-cell *matCellDef="let member"> {{member.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Löschen </th>
+        <td mat-cell *matCellDef="let member">
+          <button (click)="deleteMember(member.id)" mat-fab color="#A0A0A0">
+            <mat-icon>delete</mat-icon>
+          </button>
+      </ng-container>
+      
+
+
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  
+    <div class="row printMe">
+      <button class="btnMap" (click)="printParticipants()">Teilnehmer ausdrucken</button>
+      <button class="btnMap" (click)="copyAllMail()">E-Mail Adressen kopieren</button>
+      <button #btnSchooling class="btnMap" (click)="addSchooling(true)">Schulung anlegen</button>
+      <button class="btnMap" (click)="saveAndNew()">Speichern und neu</button>
+    </div>
+    
+  </mat-tab>
+ 
 </mat-tab-group>
