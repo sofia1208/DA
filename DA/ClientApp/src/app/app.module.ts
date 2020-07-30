@@ -96,6 +96,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [{ provide: LOCALE_ID, useValue: "de" }],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent]
+  entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent] 
 })
 export class AppModule { }
