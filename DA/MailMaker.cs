@@ -42,16 +42,14 @@ namespace DA {
 
         private string GetEmailString(string ContactPerson, string NameOfSchooling, DateTime start, List<ParticipantDTO> participants) {
             string text = File.ReadAllText("email.html");
-            text.Replace("ContactPerson", ContactPerson);
-            text.Replace("NameOfSchooling", NameOfSchooling);
-            text.Replace("StartDateAndEndDate", start.ToString("yyyy-MM-dd"));
+            text = text.Replace("ContactPerson", ContactPerson);
+            text = text.Replace("NameOfSchooling", NameOfSchooling);
+            text = text.Replace("StartDateAndEndDate", start.ToString("yyyy-MM-dd"));
             string participantsText = "";
-            participants.ForEach(x => participantsText += x.Firstname + x.Lastname + " ");
+            participants.ForEach(x => participantsText += x.Firstname + " " + x.Lastname + ", ");
+            text = text.Replace("ParticipantNames", participantsText.Substring(0, text.Length-1));
             Console.WriteLine(text);
-            return text.Replace("ParticipantNames", participantsText);
-            
-
-
+            return text;
         }
     }
 }
