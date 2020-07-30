@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace DA.Services {
     public class BackendService {
         private readonly Database db;
+        private readonly MailMaker mailMaker;
         private readonly RessourceDtoConverter converter;
 
         private List<AddressRessource> addresses;
@@ -22,14 +23,17 @@ namespace DA.Services {
 
         public BackendService() {
             db = new Database();
+            mailMaker = new MailMaker();
             converter = new RessourceDtoConverter();
 
             FillLists();
         }
 
         internal bool Login(LoginUser user) {
-            //checkCredentials
-            return true;
+            if(user.username.Equals("Schulung") && user.password.Equals("moveIT%99")) {
+                return true;
+            }
+            return false;
         }
 
 
@@ -37,7 +41,7 @@ namespace DA.Services {
             return schoolings.Select(x => converter.getBackendSummaryDTO(x)).OrderBy(x => x.Start).ToList();
         }
 
-        
+
 
         public bool DeleteSchooling(int id) {
             var wasSuccessful = db.deleteSchooling(id);
@@ -66,7 +70,7 @@ namespace DA.Services {
             return converter.getbackendDetaiDTO(schooling, address, organizer, participants, isFree);
         }
 
-       
+
 
         public bool InsertSchooling(BackendDetailDTO schooling) {
             var wasSuccessful = true;
@@ -85,11 +89,22 @@ namespace DA.Services {
             }
 
             if (wasSuccessful) {
-                schooling.participants.ForEach(x => wasSuccessful = (wasSuccessful && FindPerson(x) == null) ? db.InsertPerson(x) : false);
+                schooling.participants.ForEach(x => {
+                    wasSuccessful = (FindCompany(x) == null) ? db.InsertCompany(x) : false;
+                    db.GetCompanies(ref companies);
+                    var company = FindCompany(x);
+                    if (wasSuccessful) {
+                        wasSuccessful = (FindPerson(x) == null) ? db.InsertPerson(x, company) : false;
+                    }
+                    
+                });
                 db.GetPersons(ref persons);
+
                 wasSuccessful = db.InsertSchooling(schooling, address.Id, organizer.Id);
                 db.GetSchoolings(ref schoolings);
+
                 var sRessource = FindSchooling(schooling);
+
                 schooling.participants.ForEach(x => {
                     var person = FindPerson(x);
                     if (!doesRegistrationExist(sRessource.Id, person.Id)) {
@@ -98,7 +113,6 @@ namespace DA.Services {
 
                 });
             }
-
 
             return wasSuccessful;
         }
@@ -121,17 +135,25 @@ namespace DA.Services {
             }
 
             if (wasSuccessful) {
-                wasSuccessful = db.UpdateSchooling(schooling, address.Id, organizer.Id);
-                db.GetSchoolings(ref schoolings);
-                var sRessource = FindSchooling(schooling);
-                db.RemoveAllForId(sRessource.Id);
-                db.GetRegistrations(ref registrations);
                 schooling.participants.ForEach(x => {
-                    if (wasSuccessful && FindPerson(x) == null) {
-                        wasSuccessful = db.InsertPerson(x);
+                    if (wasSuccessful && FindCompany(x) == null) {
+                        wasSuccessful = db.InsertCompany(x);
+                    }
+                    db.GetCompanies(ref companies);
+                    var company = FindCompany(x);
+                    if (wasSuccessful) {
+                        wasSuccessful = (FindPerson(x) == null) ? db.InsertPerson(x, company) : false;
                     }
                 });
                 db.GetPersons(ref persons);
+
+                wasSuccessful = db.UpdateSchooling(schooling, address.Id, organizer.Id);
+                db.GetSchoolings(ref schoolings);
+
+                var sRessource = FindSchooling(schooling);
+                db.RemoveAllForId(sRessource.Id);
+                db.GetRegistrations(ref registrations);
+                
                 schooling.participants.ForEach(x => {
                     var person = FindPerson(x);
                     if (!doesRegistrationExist(sRessource.Id, person.Id)) {
@@ -185,6 +207,11 @@ namespace DA.Services {
         private SchoolingRessource FindSchooling(BackendDetailDTO backendDetail) {
             return schoolings.Find(x => x.End == backendDetail.End && x.Name == backendDetail.Name && x.Start == backendDetail.Start && x.Price == backendDetail.Price);
         }
+
+        private CompanyRessource FindCompany(ParticipantDTO participant) {
+            return companies.Find(x => x.ContactPerson == participant.ContactPerson && x.Name == participant.CompanyName && x.Email == participant.CompanyEmail);
+        }
+
         private bool doesRegistrationExist(int schoolingId, int personID) {
             return registrations.Find(X => X.SchoolingId == schoolingId && X.PersonId == personID) != null;
         }
@@ -195,7 +222,8 @@ namespace DA.Services {
                 .Distinct()
                 .Select(x => {
                     var personRessource = persons.Find(y => y.Id == x);
-                    return new ParticipantDTO() { Firstname = personRessource.Firstname, Lastname = personRessource.Lastname, Email = personRessource.Email };
+                    var company = companies.Find(y => y.Id == personRessource.CompanyId);
+                    return new ParticipantDTO() { Id = personRessource.Id, Firstname = personRessource.Firstname, Lastname = personRessource.Lastname, Email = personRessource.Email, CompanyName = company.Name, CompanyEmail = company.Email, ContactPerson = company.ContactPerson };
                 })
                 .ToList();
         }

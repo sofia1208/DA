@@ -67,6 +67,7 @@ namespace Schulungskalender.Services {
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
+            //mailMaker.sendMail();
             var schooling = schoolings.Find(x => x.Id == id);
             var address = addresses.Find(x => x.Id == schooling.AddressId);
             var organizer = organizers.Find(x => x.Id == schooling.OrganizerId);
