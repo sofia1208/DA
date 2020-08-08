@@ -35,6 +35,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DialogOrganizerComponent } from './dialog-organizer/dialog-organizer.component';
 import { DialogCompanyComponent } from './dialog-company/dialog-company.component';
+import { RegistrationSuccessComponent } from './registration-success/registration-success.component';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'start', component: BackendStartComponent },
   { path: 'detail', component: BackendDetailComponent },
+  { path: 'checkout', component: RegistrationSuccessComponent },
   {
     path: 'print',
     outlet: 'print',
@@ -67,6 +69,7 @@ const routes: Routes = [
     DialogComponentComponent,
     DialogOrganizerComponent,
     DialogCompanyComponent,
+    RegistrationSuccessComponent,
   
   ],
   imports: [

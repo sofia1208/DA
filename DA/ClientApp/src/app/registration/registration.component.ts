@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CustomEvent } from '../calendar/CustomEvent';
 import { CalendarComponent } from '../calendar/calendar.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from './Member';
 import { MatTable, MatDialog, MatDialogConfig } from '@angular/material';
 import { Registration } from './Registration';
@@ -65,7 +65,7 @@ export class RegistrationComponent implements OnInit {
 
   checkDatenschutz: boolean;
   checkStrono: boolean;
-  constructor(private http: HttpClient, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
+  constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
@@ -240,7 +240,7 @@ export class RegistrationComponent implements OnInit {
     console.log("Submit registration");
     this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.members))
       .subscribe(x => console.log(x));
-
+    this.router.navigate(["/checkout"]);
   }
   addCompanyToSchooling(reg: Registration): Observable<Registration> {
     const httpOptions = {
