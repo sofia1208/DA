@@ -35,7 +35,7 @@ export class BackendDetailComponent implements OnInit {
   startTime: string;
   endTime: string;
   sizeOfSchooling: Number;
-  organizerName: Organizer;
+  organizerName: Organizer ;
   price: Number;
   companyName: string;
   companys: string[] = [];
@@ -45,6 +45,7 @@ export class BackendDetailComponent implements OnInit {
   companyContactPerson: string = "";
   companyMail: string = "";
 
+  organizerDto: Organizer
   newOrganizer: string = "";
   lat: Number = 48.1505921;
   lon: Number = 14.0069141;
@@ -59,6 +60,7 @@ export class BackendDetailComponent implements OnInit {
      
       this.detailId = p["id"];
       console.log(this.detailId);
+      this.fillComboboxes();
       this.getDetails();
 
      
@@ -79,24 +81,28 @@ export class BackendDetailComponent implements OnInit {
     if (this.detailId > 0) {
       this.btnSchooling.nativeElement.innerHTML = "Schulung speichern";
     }
-    this.fillComboboxes();
+   
   
   }
   saveAndNew() {
     if (this.detailId > 0) {
       console.log("Schulung geändert");
-      this.editSchooling();
+      this.editSchooling(false);
     }
     else {
       console.log("Schulung anlegt");
-      this.addSchooling();
+      this.addSchooling(false);
     }
+    if (this.detailId > 0) {
+      this.btnSchooling.nativeElement.innerHTML = "Schulung anlegen";
+    }
+    this.dataSource = [];
     this.detailId = 0;
    
 
   }
   fillComboboxes() {
-    this.getCompanys(`https://localhost:5001/backend/companys`)
+    this.getCompanys(`https://localhost:5001/backend/companies`)
       .subscribe(x => {
         console.log(x);
         this.companys = x;
@@ -105,7 +111,7 @@ export class BackendDetailComponent implements OnInit {
       .subscribe(x => {
         console.log(x);
         this.organizer = x;
-        
+         
         //DISTINCT
       })
     
@@ -182,6 +188,7 @@ export class BackendDetailComponent implements OnInit {
 
   }
   fillDetails() {
+    this.organizerName = new Organizer(0, "", "", "", "", "");
     this.street= this.backendDto.street;
     this.streetNumber = this.backendDto.streetNumber.toString();
     this.zipCode = this.backendDto.zipCode.toString();
@@ -214,6 +221,7 @@ export class BackendDetailComponent implements OnInit {
         this.fillDetails();
 
       })
+
   }
   private getDetail(url: string): Observable<BackendDetailDto> {
     return this.http.get<BackendDetailDto>(url);
@@ -276,9 +284,9 @@ export class BackendDetailComponent implements OnInit {
     return this.http.get<Location[]>(url);
 
   }
-  addSchooling() {
+  addSchooling(goBack: boolean) {
     if (this.detailId>0) {
-      this.editSchooling();
+      this.editSchooling(true);
     }
     else {
      
@@ -286,8 +294,10 @@ export class BackendDetailComponent implements OnInit {
         this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
         .subscribe(x => {
           console.log(x);
-
-          this.router.navigate(["/start"]);
+          if (goBack) {
+            this.router.navigate(["/start"]);
+          }
+        
 
 
         });
@@ -297,14 +307,15 @@ export class BackendDetailComponent implements OnInit {
 
    
   }
-  editSchooling() {
+  editSchooling(goBack:boolean) {
    
     this.putSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => {
         console.log(x);
-
-        this.router.navigate(["/start"]);
+        if (goBack) {
+          this.router.navigate(["/start"]);
+        }
 
 
       });

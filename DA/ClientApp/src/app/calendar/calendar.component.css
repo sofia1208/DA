@@ -24,7 +24,21 @@ h1 {
     background-color: #F8F4F4;
     color: #FEAE5F;
   }
+  .buttonGray:active {
+    background-color: #F8F4F4;
+    color: #FEAE5F;
+  }
+.categoryBtn:active {
+  background-color: #F8F4F4;
+  color: #FEAE5F;
+}
+.active {
+  background-color: #F8F4F4;
+}
 
+.nonActive {
+  background-color: #D4D4D4;
+}
   .buttonGray.click {
     background-color: white;
     color: #FEAE5F;

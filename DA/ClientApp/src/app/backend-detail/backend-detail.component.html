@@ -101,7 +101,7 @@
       <div class="columnFields">
         <mat-form-field appearance="fill">
           <mat-label>Organisator auswählen</mat-label>
-          <mat-select (selectionChange)="changeOrganizer()" [(ngModel)]="organizerName">
+          <mat-select (selectionChange)="changeOrganizer()" [(ngModel)]="organizerName.name">
             <mat-option *ngFor="let s of organizer" [value]="s">
               {{s.name}}
             </mat-option>
@@ -208,8 +208,8 @@
     <div class="btnGroup printMe">
       <button class="btnMap" (click)="printParticipants()">Teilnehmer ausdrucken</button>
       <button class="btnMap" (click)="copyAllMail()">E-Mail Adressen kopieren</button>
-      <button #btnSchooling class="btnMap" (click)="addSchooling()">Schulung anlegen</button>
-      <button class="btnMap" (click)="saveAndNew()">Speichern und neu</button>
+      <button #btnSchooling class="btnMap" (click)="addSchooling(true)">Schulung anlegen</button>
+      <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
     </div>
 
 

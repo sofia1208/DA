@@ -84,6 +84,14 @@ export class CalendarComponent implements OnInit {
   calendar: boolean=true;
   detailId: Number;
 
+  activeWorkshop: boolean = false;
+  activeAvailable: boolean = false;
+  activeKombi: boolean = false;
+  activeGrundlagen: boolean = false;
+  activeAdmin: boolean = false;
+
+
+
   displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
   constructor(private http: HttpClient,private router:Router) { }
   ngAfterViewInit(): void {
@@ -120,6 +128,7 @@ export class CalendarComponent implements OnInit {
     action: string;
     event: CalendarEvent;
   };
+
   checkSize() {
     let width = window.innerWidth;
     if (width <= 768) {
@@ -133,7 +142,14 @@ export class CalendarComponent implements OnInit {
       console.log('desktop detected')
     }
   }
-
+  setButtonRight() {
+    this.activeWorkshop= false;
+    this.activeAvailable= false;
+    this.activeKombi = false;
+    this.activeGrundlagen = false;
+    this.activeAdmin = false;
+    this.getSummary();
+  }
   getSummary(): void {
   
     this.getSchoolings('https://localhost:5001/schoolings/summary')
@@ -152,23 +168,30 @@ export class CalendarComponent implements OnInit {
   }
 
   getAvailable(): void {
-    this.schoolings = [];
-    this.events = [];
-    this.getSchoolings('https://localhost:5001/schoolings/summary/isfree')
-      .subscribe(data => {
-        this.schoolings = data;
-        this.schoolingsToEvents();
+    if (!this.activeAvailable) {
+      this.activeAvailable = true;
+      this.schoolings = [];
+      this.events = [];
+      this.getSchoolings('https://localhost:5001/schoolings/summary/isfree')
+        .subscribe(data => {
+          this.schoolings = data;
+          this.schoolingsToEvents();
 
-      }
-        , err => {
-          console.log(`${err.message}`)
-        })
-      ;
-    this.schoolingsToEvents();
+        }
+          , err => {
+            console.log(`${err.message}`)
+          })
+        ;
+      this.schoolingsToEvents();
 
 
 
-    console.log(this.schoolings.length);
+      console.log(this.schoolings.length);
+    }
+    else {
+      this.
+    }
+   
 
   }
   getHolidays(): void {
@@ -211,6 +234,7 @@ export class CalendarComponent implements OnInit {
 
   }
   getWorkshop(): void {
+    this.activeWorkshop = true;
     this.schoolings = [];
     this.events = [];
     this.getSchoolings('https://localhost:5001/schoolings/summary/workshop')
