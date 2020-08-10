@@ -206,10 +206,6 @@ export class CalendarComponent implements OnInit {
         this.holidaysToEvents();
    
       });
-
-  
-  
-  
   }
 
 
@@ -347,7 +343,7 @@ export class CalendarComponent implements OnInit {
   clickOnEvent(event: CustomEvent): void {
  
  
-      let schooling = new SchoolingDto;
+    let schooling = new SchoolingDto;
     let id = event.id;
     this.detailId = Number(event.id);
     if (event.isHoliday|| !event.isFree) {
@@ -475,7 +471,7 @@ export class CalendarComponent implements OnInit {
   printPage() {
    
     window.print();
-    //this.printService.printDoct('invoice', invoiceIds);
+
   }
 
   private getDetail(url: string): Observable<SchoolingDto> {
@@ -492,18 +488,12 @@ export class CalendarComponent implements OnInit {
 
   }
   private schoolingsToEvents(): void {
-    var ret: CustomEvent[] = [] ;
+
     for (var i = 0; i < this.schoolings.length; i++) {
       let start = new Date(this.schoolings[i].start);
       let end = new Date(this.schoolings[i].end);
       let moreDays = false;
-      let outofMonth = false;
-      if (start.getDay() != end.getDay()) {
-        moreDays = true;
-      }
-      if (start.getMonth() != this.viewDate.getMonth() || end.getMonth() != this.viewDate.getMonth() ) {
-        outofMonth = true;
-      }
+ 
       console.log(this.schoolings)
       const schooling: CustomEvent = {
         isFree: true,
@@ -515,7 +505,7 @@ export class CalendarComponent implements OnInit {
         isHoliday: false,
         hasMoreDays: moreDays,
 
-        outOfMonth: outofMonth
+        outOfMonth: false
 
       };
      
@@ -532,14 +522,14 @@ export class CalendarComponent implements OnInit {
     //let holi = JSON.parse(this.holidays.toString());
 
     let jsonObject = JSON.parse(JSON.stringify(this.holidayApis));
+
     let holidays = jsonObject.holidays;
-    console.log(holidays);
     this.convertToGerman(holidays);
     this.createHolidayEvents();
 
   }
   private convertToGerman(hol: string []): void {
-  
+    
 
     this.http.get('assets/holidayGermanNames.csv', { responseType: 'text' })
       .subscribe(
@@ -569,15 +559,17 @@ export class CalendarComponent implements OnInit {
 
     
   }
+  
 
   private createHolidayEvents(): void {
+    this.holidays = this.holidays.filter(
+      (thing, i, arr) => arr.findIndex(t => t.name === thing.name) === i
+    );
+   
     for (var i = 0; i < this.holidays.length; i++) {
       let date = this.holidays[i].date;
       let outofMonth = false;
-      if (date.getMonth() != this.viewDate.getMonth()) {
-       
-        outofMonth = true;
-      }
+      
       console.log(this.viewDate.getMonth() + " " + date.getMonth());
       const holiday: CustomEvent = {
         isFree: true,
@@ -595,6 +587,7 @@ export class CalendarComponent implements OnInit {
       this.refresh.next();
           
     }
+    
   }
 
   getListSummary(): void {
@@ -605,13 +598,13 @@ export class CalendarComponent implements OnInit {
 
         this.schoolingList = data;
        
-        this.schoolingToPrint();
+        this.addSchoolingToList();
 
       }
         , err => {
           console.log(`${err.message}`)
         });
-   // this.schoolingToPrint();
+
 
   }
   private getSchool(url: string): Observable<GetSummaryForPrint[]> {
@@ -619,7 +612,7 @@ export class CalendarComponent implements OnInit {
 
   }
 
-  private schoolingToPrint(): void {
+  private addSchoolingToList(): void {
     for (var i = 0; i < this.schoolingList.length; i++) {
 
       this.summaryList.push(this.schoolingList[i]);

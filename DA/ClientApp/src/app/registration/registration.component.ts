@@ -71,7 +71,8 @@ export class RegistrationComponent implements OnInit {
       this.detailId = p["id"];
       this.detailTitle = p["title"];
     })
-   
+    this.checkSize();
+    console.log(this.mobile);
 
   }
 
@@ -79,7 +80,7 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     console.log('on init registration');
     this.getEvent(this.detailId);
-    this.checkSize();
+ 
     
   }
   changeStorno() {

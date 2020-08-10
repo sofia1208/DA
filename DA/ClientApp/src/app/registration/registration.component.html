@@ -37,7 +37,7 @@
       </div>
 
     </div>
-    <div *ngIf="mobile" class="column">
+    <div *ngIf="mobile">
 
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
@@ -95,7 +95,7 @@
           </mat-form-field>
         </div>
 
-        <h3 class="firma">Ansprechperson</h3>
+        <h3 class="firma">Ansprechperson*</h3>
         
         <div class="row rowFields">
           <div class="column col1">
@@ -145,7 +145,7 @@
               <mat-label>Email</mat-label>
               <input matInput [(ngModel)]="email" placeholder="mm">
             </mat-form-field>
-            <button class="btnSubmit" (click)="addMember()">Hinzufügen</button>
+            <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()">Hinzufügen</button>
           </div>
         </div>
 
@@ -197,7 +197,7 @@
 
 
     <div class="row printMe">
-      <div class="column col1">
+      <div class="column col1 checks">
         <h3 class="firma checks">Stornobedingungen</h3>
       </div>
       <input type="checkbox" (change)="changeStorno()" [(ngModel)]="checkStrono" />
@@ -205,7 +205,7 @@
     </div>
 
     <div class="row printMe">
-      <div class="column col1">
+      <div class="column col1 checks">
         <h3 class="firma checks">Datenschutz</h3>
       </div>
       <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />

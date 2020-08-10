@@ -4,13 +4,17 @@
       <h1 class="h1_schulung">
         moveIT Schulungsverwaltung
       </h1>
+      <div *ngIf="loginFail">
+        <p style="background-color: #f5cbc4; padding: 10px; border-radius: 10px;">Benutzername oder Passwort ist nicht korrekt</p>
+
+      </div>
       <mat-form-field>
         <mat-label>Benutzername</mat-label>
         <input matInput [(ngModel)]="username">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Passwort</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password">
+        <input  matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>

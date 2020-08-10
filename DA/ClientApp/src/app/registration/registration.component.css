@@ -256,6 +256,9 @@ input[type=checkbox]{
 }
 
 @media (max-device-width: 768px) {
+   .filterBtn{
+       display: block;
+   }
   .outerRow {
     margin: 0;
   }
@@ -316,6 +319,7 @@ input[type=checkbox]{
   .checks{
       display:none;
   }
+ 
 }
 @media print {
   .printMe {
@@ -342,3 +346,7 @@ app-invoice {
   margin-left: 50px;
 }
 
+
+.mat-typography p{
+    margin: 0;
+}

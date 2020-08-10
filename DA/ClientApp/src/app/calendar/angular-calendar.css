@@ -156,9 +156,10 @@
     background-color: #b94a48;
     color: #fff; }
   .cal-month-view .cal-event {
-    background-color: #1e90ff;
+    background-color: #8CEE88;
     border-color: #d1e8ff;
-    color: #fff; }
+    color: #fff;
+  }
   .cal-month-view .cal-day-cell.cal-weekend .cal-day-number {
     color: #8b0000; }
   .cal-month-view .cal-day-cell.cal-today {
@@ -492,3 +493,6 @@
     display:flex;
 }
 
+.cal-month-view .cal-event{
+
+}

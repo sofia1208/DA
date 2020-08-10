@@ -35,7 +35,7 @@ export class BackendDetailComponent implements OnInit {
   startTime: string;
   endTime: string;
   sizeOfSchooling: Number;
-  organizerName: Organizer ;
+  organizerName: string ;
   price: Number;
   companyName: string;
   companys: string[] = [];
@@ -118,7 +118,7 @@ export class BackendDetailComponent implements OnInit {
   }
   changeOrganizer() {
     console.log("changing");
-    let shownO = this.organizer.find(x => x.name === this.organizerName.name);
+    let shownO = this.organizer.find(x => x.name === this.organizerName);
     this.contactPerson = shownO.contactPerson;
     this.phone = shownO.phone;
     this.website = shownO.website;
@@ -188,7 +188,7 @@ export class BackendDetailComponent implements OnInit {
 
   }
   fillDetails() {
-    this.organizerName = new Organizer(0, "", "", "", "", "");
+    this.organizerName = this.backendDto.organizer;
     this.street= this.backendDto.street;
     this.streetNumber = this.backendDto.streetNumber.toString();
     this.zipCode = this.backendDto.zipCode.toString();
@@ -202,7 +202,7 @@ export class BackendDetailComponent implements OnInit {
     let eT = new Date(this.backendDto.end);
     this.convertToGermanTime(sT, eT);
     this.contactPerson = this.backendDto.contactPerson;
-    this.organizerName.name = this.backendDto.organizer;
+    this.organizerName = this.backendDto.organizer;
     this.email = this.backendDto.email;
     this.phone = this.backendDto.phone;
     this.website = this.backendDto.website;
@@ -291,7 +291,7 @@ export class BackendDetailComponent implements OnInit {
     else {
      
       this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
-        this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+        this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
         .subscribe(x => {
           console.log(x);
           if (goBack) {
@@ -310,7 +310,7 @@ export class BackendDetailComponent implements OnInit {
   editSchooling(goBack:boolean) {
    
     this.putSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
-      this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+      this.country, this.organizerName, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => {
         console.log(x);
         if (goBack) {

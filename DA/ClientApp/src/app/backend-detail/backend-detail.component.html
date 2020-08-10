@@ -76,7 +76,7 @@
           <input type="number" matInput [(ngModel)]="price">
         </mat-form-field>
       </div>
-     
+
     </div>
     <div>
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
@@ -84,6 +84,10 @@
       </agm-map>
     </div>
 
+    <div class="btnGroup printMe">
+      <button #btnSchooling class="btnMap" (click)="addSchooling(true)">Schulung anlegen</button>
+      <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
+    </div>
   </mat-tab>
 
 
@@ -127,10 +131,14 @@
 
       </div>
       <div class="column" style="margin: 10px">
-        <button class="btnMap" (click)="addOrganizer()" mat-fab >
+        <button class="btnMap" data-toggle="tooltip" title="Organisator hinzufügen" (click)="addOrganizer()" mat-fab>
           <mat-icon>library_add</mat-icon>
-          </button>
+        </button>
       </div>
+    </div>
+    <div class="btnGroup printMe">
+      <button #btnSchooling class="btnMap" (click)="addSchooling(true)">Schulung anlegen</button>
+      <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
     </div>
   </mat-tab>
   <mat-tab label="Teilnehmer">

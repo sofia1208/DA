@@ -164,6 +164,7 @@ app-invoice{
   .outerRow {
     margin: 0;
   }
+
   .outerDiv{
       margin: 0px;
   }
@@ -180,6 +181,9 @@ app-invoice{
     }
     .col2{
         width: 60%;
+    }
+    .filterBtn{
+        display: flow-root;
     }
   .container {
     width: 100%;
@@ -206,6 +210,24 @@ app-invoice{
 .table tr:hover {
   background-color: #F8F4F4;
   cursor: pointer;
+}
+.legend{
+   
+display:flex;
+flex-direction: row;
+margin: 10px;
+justify-content: flex-end;
+}
+.legendInner {
+margin-right: 15px;
+}
+.btnLegend{
+    border-radius: 12px;
+    width: 30px;
+    height: 30px;
+}
+.ctnTop{
+   width: 100%;
 }
 
 

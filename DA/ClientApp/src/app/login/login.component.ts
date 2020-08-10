@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoginUser } from './LoginUser';
+import { MatButton, MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -13,25 +14,34 @@ import { LoginUser } from './LoginUser';
 export class LoginComponent implements OnInit {
   username: string = "";
   password: string = "";
-  isCorrect: string = "false";
+  isCorrect: boolean = false;
+  loginFail :boolean= false;
   constructor(private http: HttpClient, private router: Router) { }
- 
+
   hide = true;
   ngOnInit() {
   }
   submit() {
-    console.log(this.username + " " + this.password);
+ 
     let user = new LoginUser(this.username, this.password);
     this.postUser(user)
       .subscribe(data => {
-        this.isCorrect = data;
-        console.log(this.isCorrect);
+        if (data === "true") {
+          this.isCorrect = true;
+        }
+       
+        
+     
         if (this.isCorrect) {
           this.router.navigate(["/start"]);
         }
+        else {
+          this.password = "";
+          this.loginFail = true;
+        }
       });
    
-   
+  
 
 
   }
