@@ -44,8 +44,13 @@ export class BackendStartComponent implements OnInit {
 
   }
   newSchooling() {
-    
-    this.router.navigate(["/detail"]);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "id": 0
+      }
+    };
+    this.router.navigate(["/detail"], navigationExtras
+    );
   }
   displayedColumns: string[] = ['name', 'date', 'check', 'edit', 'delete'];
  

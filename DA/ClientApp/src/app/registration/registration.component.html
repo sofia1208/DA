@@ -1,9 +1,9 @@
 <div class="outerDiv">
-  <h1 class="schulungh1">
+  <h1 class="schulungh1 printMe">
     Anmeldung
   </h1>
   <h3 #detailView class="detailTitle">{{detailTitle}}</h3>
-  <button class="btnSubmit btnDown" (click)="printRegistration()">Schulung ausdrucken</button>
+  <button class="btnSubmit btnDown printMe" (click)="printRegistration()">Schulung ausdrucken</button>
   <div class="detailview">
 
 
@@ -153,7 +153,8 @@
     </div>
 
     <br />
-    <h3 class="firma">Übersicht</h3>
+
+    <h3 class="firma">Teilnehmerübersicht</h3>
     <div class="row">
       <div class="column col1 colEmpty">
         <div class="row innerRows firma"></div>

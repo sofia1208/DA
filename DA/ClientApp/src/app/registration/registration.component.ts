@@ -153,8 +153,7 @@ export class RegistrationComponent implements OnInit {
     this.lon = first.lon;
     this.markerLat = first.lat;
     this.markerLng = first.lon;
-    this.lat = first.lat;
-    this.lon = first.lon;
+
     console.log(first.lat + " " + first.lon);
   }
 
