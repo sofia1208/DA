@@ -54,7 +54,9 @@ export class BackendDetailComponent implements OnInit {
   markerLng: Number;
   locations: Location[] = [];
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
-  @ViewChild('btnSchooling', { static: true }) private btnSchooling: ElementRef;
+  @ViewChild('btnSchooling1', { static: true }) private btnSchooling1: ElementRef;
+  @ViewChild('btnSchooling2', { static: true }) private btnSchooling2: ElementRef;
+  @ViewChild('btnSchooling3', { static: true }) private btnSchooling3: ElementRef;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
@@ -65,7 +67,9 @@ export class BackendDetailComponent implements OnInit {
         
         this.getDetails();
      
-          this.btnSchooling.nativeElement.innerHTML = "Schulung speichern";
+        this.btnSchooling1.nativeElement.innerHTML = "Schulung speichern";
+        this.btnSchooling2.nativeElement.innerHTML = "Schulung speichern";
+        this.btnSchooling3.nativeElement.innerHTML = "Schulung speichern";
      
       }
 
@@ -100,9 +104,12 @@ export class BackendDetailComponent implements OnInit {
       this.addSchooling(false);
     }
     if (this.detailId > 0) {
-      this.btnSchooling.nativeElement.innerHTML = "Schulung anlegen";
+      this.btnSchooling1.nativeElement.innerHTML = "Schulung anlegen";
+      this.btnSchooling2.nativeElement.innerHTML = "Schulung anlegen";
+      this.btnSchooling3.nativeElement.innerHTML = "Schulung anlegen";
     }
     this.dataSource = [];
+    this.table.renderRows();
     this.detailId = 0;
    
 
