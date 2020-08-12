@@ -51,7 +51,9 @@ const routes: Routes = [
     children: [
       { path: 'invoice', component: InvoiceComponent }
     ]
-  }];
+  },
+  { path: '', redirectTo: '/calendar', pathMatch: 'full' }
+];
 @NgModule({
   declarations: [
     AppComponent,

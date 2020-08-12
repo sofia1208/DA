@@ -26,15 +26,14 @@ export class LoginComponent implements OnInit {
     let user = new LoginUser(this.username, this.password);
     this.postUser(user)
       .subscribe(data => {
-        if (data === "true") {
+    
+        if (data.toString()==="true") {
+         
           this.isCorrect = true;
-        }
-       
-        
-     
-        if (this.isCorrect) {
           this.router.navigate(["/start"]);
         }
+       
+       
         else {
           this.password = "";
           this.loginFail = true;
