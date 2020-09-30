@@ -84,11 +84,11 @@ export class RegistrationComponent implements OnInit {
     
   }
   changeStorno() {
-    this.openDialog("Stornobedinugen");
+    this.openDialog("Stornobedingungen");
     this.checkButton();
   }
   changeData() {
-    this.openDialog("Datenschutz");
+    this.openDialog("Datenschutzbestimmungen");
     this.checkButton();
   }
   checkButton() {
