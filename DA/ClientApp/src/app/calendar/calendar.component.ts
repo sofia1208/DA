@@ -38,7 +38,8 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Printing } from './Printing';
 import { GetSummaryForPrint } from '../invoice/GetSummaryForPrint';
 
-import { MatTable } from '@angular/material';
+import { MatTable, MatDialogConfig, MatDialog } from '@angular/material';
+import { DialogMoreEventsComponent } from '../dialog-more-events/dialog-more-events.component';
 registerLocaleData(localeDe, 'de');
 
 @Component({
@@ -93,7 +94,8 @@ export class CalendarComponent implements OnInit {
 
 
   displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
-  constructor(private http: HttpClient,private router:Router) { }
+    selectedId: Number;
+  constructor(private http: HttpClient, private router: Router, public dialog: MatDialog) { }
   ngAfterViewInit(): void {
       
     }
@@ -438,12 +440,39 @@ export class CalendarComponent implements OnInit {
   }
   dayClicked({ date, events }: { date: Date; events: CustomEvent[] }): void {
     // TO-DO: Bei mehreren Events an einem Tag?
-    this.detailTitle = events[0].title;
-    let event = events[0];
-    this.clickOnEvent(event);
+    if (events.length > 1) {
+      this.handleMoreThanOneEvent(events);
+     
+    }
+    else {
+      this.detailTitle = events[0].title;
+      let event = events[0];
+      this.clickOnEvent(event);
+    }
+
   }
 
+  handleMoreThanOneEvent(events: CustomEvent[]) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      events: events
+    };
+    dialogConfig.autoFocus = true;
+
+     const dialogRef = this.dialog.open(DialogMoreEventsComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+   
+       this.selectedId= result.data;
+      this.detailTitle = events.filter(x => x.id == this.selectedId)[0].title;
+      let event = events.filter(x => x.id == this.selectedId)[0];
+      this.clickOnEvent(event);
+
+
+    });
   
+  }
+
 
   handleEvent(action: string, event: CustomEvent): void {
     console.log(event.id);

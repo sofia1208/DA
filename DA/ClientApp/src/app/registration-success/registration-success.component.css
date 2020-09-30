@@ -1,5 +1,12 @@
 .container {
  text-align:center;
  vertical-align:central;
- margin-top: 50px;
+
+}
+button{
+    border-radius: 10px;
+}
+.upper {
+  height: 50px;
+  background-color: #F3B947;
 }

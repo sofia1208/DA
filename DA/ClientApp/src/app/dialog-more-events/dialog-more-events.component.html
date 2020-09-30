@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>
+  Schulung auswählen
+</h1>
+<div mat-dialog-content>
+  <div>
+    <ul style="list-style-type:none;" >
+      <li *ngFor="let event of events" (click)="onClicked(event)">{{event.title}}</li>
+      </ul>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Abbrechen</button>
+
+</div>

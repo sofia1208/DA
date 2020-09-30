@@ -24,10 +24,11 @@ h1 {
     color: #FEAE5F;
   }
 
-  .buttonGray.click {
-    background-color: white;
-    color: #FEAE5F;
-  }
+
+.buttonGray.click {
+  background-color: white;
+  color: #FEAE5F;
+}
 
 .month {
   color: #707070;
@@ -98,7 +99,7 @@ h1 {
 }
 
 .mat-typography p {
-  margin: auto;
+  margin: 5px;
 }
 
 .holiday {
@@ -240,12 +241,7 @@ input[type=checkbox]{
 .btnDown{
     
 }
-.mat-typography p {
-    margin: 0;
-  margin-left: 5px;
-  margin-top: 5px;
-  
-}
+
 
 .table thead th {
     align-items:center;
@@ -348,5 +344,5 @@ app-invoice {
 
 
 .mat-typography p{
-    margin: 0;
+    margin: 5px;
 }

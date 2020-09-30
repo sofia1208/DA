@@ -90,6 +90,10 @@ margin: auto
     background-color: #D4D4D4;
     color: #707070;
   }
+  .categoryBtn:focus {
+    background-color: #D4D4D4;
+    color: #707070;
+  }
 
 .detailview{
     margin-top: 40px;

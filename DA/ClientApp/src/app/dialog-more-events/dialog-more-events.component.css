@@ -1,0 +1,14 @@
+li{
+    margin: 15px;
+    padding: 5px;
+
+}
+ul{
+    padding: 0px;
+}
+button{
+    border-radius: 10px;
+}
+li:hover {
+  background-color: lightgray;
+}
