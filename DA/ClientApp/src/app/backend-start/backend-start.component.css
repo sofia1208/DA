@@ -4,8 +4,12 @@ table{
 table tr:first-child td {
     border-top: 0;
   }
-.newSchooling{
-    border-radius: 12px;
+.newSchooling {
+  border-radius: 12px;
+  background-color:#feae5f;
+  border:none;
+  outline:none;
+  padding: 5px;
 }
 h1 {
   font-family: 'Open Sans', sans-serif;
@@ -16,4 +20,11 @@ h1 {
 .table th{
     border-top: none;
 }
-
+td.mat-cell{
+    padding:15px;
+    font-size: 15px;
+}
+.mat-icon {
+  vertical-align: bottom;
+  margin-right: 6px;
+}

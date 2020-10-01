@@ -65,7 +65,7 @@ table{
 agm-map {
   margin: 20px;
   height: 300px;
-  width: 500px;
+  width: 100%;
 }
 .btnGroup {
   margin-top: 50px;

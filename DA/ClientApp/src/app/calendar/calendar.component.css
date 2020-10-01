@@ -11,7 +11,9 @@ h1 {
 }
 .container {
   width: 100%;
-  margin:15px;
+  margin: 15px;
+  margin-left: 0px;
+  padding-left: 0;
 }
 
 .buttonGray {
@@ -82,19 +84,22 @@ margin: auto
   font-size: 15px;
 }
   .categoryBtn:hover {
-    background-color: #D4D4D4;
-    color: #707070;
+    background-color: #e29850;
+   
   }
 
   .categoryBtn:active {
-    background-color: #D4D4D4;
-    color: #707070;
+    background-color: #e29850;
+
   }
   .categoryBtn:focus {
-    background-color: #D4D4D4;
-    color: #707070;
+    border: none;
+    outline: none;
   }
-
+.mat-button-toggle-button:focus {
+  outline: none;
+  border:none;
+}
 .detailview{
     margin-top: 40px;
     
@@ -228,8 +233,8 @@ margin-right: 15px;
 .btnLegend {
   border-radius: 12px;
   border: none;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 }
 .ctnTop{
    width: 100%;
@@ -251,5 +256,11 @@ p {
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
+}
+.mat-dialog-container{
+    width:400px;
+}
+.mat-icon {
+  vertical-align: bottom;
 }
 

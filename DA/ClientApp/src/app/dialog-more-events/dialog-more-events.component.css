@@ -12,3 +12,9 @@ button{
 li:hover {
   background-color: lightgray;
 }
+.mat-dialog-container {
+  width: 400px;
+}
+h1 {
+  color: #feae5f;
+}

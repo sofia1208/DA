@@ -128,14 +128,18 @@
       <div>
         <div class="container">
           <div class="btn-group filterBtn">
-            <p class="filterBtn filterText">Filter nach:</p>
+            <!--<p class="filterBtn filterText">Filter nach:</p>-->
+            <button class="categoryBtn" (click)="getSummary()">Alle anzeigen</button>
             <button class="categoryBtn" (click)="getGrundlagen()">Grundlagen</button>
             <button class="categoryBtn" (click)="getWorkshop()">Workshop</button>
             <button class="categoryBtn" (click)="getAdmin()">Administrator</button>
             <button class="categoryBtn" (click)="getKombimodell()">Kombimodell</button>
             <button class="categoryBtn" (click)="getAvailable()">Verfügbarkeit</button>
           </div>
-          <button class="btn buttonGray btnPrint" (click)="printPage()">Drucken</button>
+          <button class="btn buttonGray btnPrint" (click)="printPage()">
+            <mat-icon>print</mat-icon>
+            Drucken
+          </button>
         </div>
       </div>
       <div *ngIf="!calendar">
@@ -181,7 +185,7 @@
           </div>
           <div class="legend legendInner">
             <button class="btnLegend" style="background-color:#F28C8C"></button>
-            <p style="margin-left: 6px;"> Nicht mehr verfügbar</p>
+            <p style="margin-left: 6px;"> Belegt</p>
           </div>
           <div class="legend legendInner">
             <button class="btnLegend" style="background-color:#DEEFF5"></button>

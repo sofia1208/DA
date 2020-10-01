@@ -1,5 +1,7 @@
-<h1 >Übersicht der derzeitigen Schulungen</h1>
-<button class="newSchooling" (click)="newSchooling()">Neue Schulung</button>
+<h1 style="color:#feae5f">Übersicht der derzeitigen Schulungen</h1>
+<button class="newSchooling" (click)="newSchooling()"><mat-icon>
+  library_add
+</mat-icon>Neue Schulung</button>
 
 <table mat-table #mytable [dataSource]="dataSource" class="table">
 
@@ -25,7 +27,7 @@
   <ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef> Editieren </th>
     <td mat-cell *matCellDef="let schooling">
-      <button (click)="editSchooling(schooling.id)" mat-fab color="#A0A0A0">
+      <button (click)="editSchooling(schooling.id)" >
         <mat-icon>edit</mat-icon>
       </button>
     </td>
@@ -33,7 +35,7 @@
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef> Löschen </th>
     <td mat-cell *matCellDef="let schooling">
-      <button (click)="deleteSchooling(schooling.id)" mat-fab color="#A0A0A0">
+      <button (click)="deleteSchooling(schooling.id)">
         <mat-icon>delete</mat-icon>
       </button>
 </ng-container>
