@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <body>
   <div class="printMe">
@@ -101,21 +101,21 @@
 
             <span *ngIf="ev.isFree&&ev.hasMoreDays">
               <div style="display:flex">
-                <p class="activeSchooling" style=" font-size:1.0vw ; word-break: break-all">{{ ev.title }}</p>
+                <p class="activeSchooling" style=" font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
               </div>
 
             </span>
             <span *ngIf="!ev.isFree&&ev.hasMoreDays">
-              <p class="moreDays" style="font-size:1.0vw ; word-break: break-all">{{ ev.title }}</p>
+              <p class="moreDays" style="font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
             </span>
             <span *ngIf="ev.isFree&&!ev.hasMoreDays&&!ev.isHoliday">
-              <p class="activeSchooling" style="margin: 6px;  font-size:1.0vw ; word-break: break-all">{{ ev.title }}</p>
+              <p class="activeSchooling" style="margin: 6px;  font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
             </span>
             <span *ngIf="!ev.isFree&&!ev.hasMoreDays">
-              <p class="takenSchooling" style="margin: 6px;  font-size:1.0vw ; word-break: break-all">{{ ev.title }}</p>
+              <p class="takenSchooling" style="margin: 6px;  font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
             </span>
             <span *ngIf="ev.isHoliday">
-              <p class="holiday" style="font-size:1.0vw ; word-break: break-all">{{ ev.title }}</p>
+              <p class="holiday" style="font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
             </span>
            
 
