@@ -50,12 +50,16 @@ margin-top: 20px;
   margin-top: 25px;
 
 }
-.btnMap{
-    border-radius: 12px;
-    margin: 20px;
-    padding: 5px;
-
+.btnMap {
+  border-radius: 12px;
+  margin: 20px;
+  padding: 7px;
+  background-color: #feae5f;
+  border: none;
 }
+  .btnMap:hover {
+   background-color: #e29850;
+  }
 table{
     width: 90%;
 }

@@ -57,6 +57,7 @@ export class BackendDetailComponent implements OnInit {
   @ViewChild('btnSchooling1', { static: true }) private btnSchooling1: ElementRef;
   @ViewChild('btnSchooling2', { static: true }) private btnSchooling2: ElementRef;
   @ViewChild('btnSchooling3', { static: true }) private btnSchooling3: ElementRef;
+    readyToPost: boolean=false;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
@@ -302,23 +303,32 @@ export class BackendDetailComponent implements OnInit {
     return this.http.get<Location[]>(url);
 
   }
+  checkInputs() {
+    if (this.catName != "" && this.startDate != null, this.endDate != null, this.price != null, Number(this.zipCode) != null, this.city != null, this.street != null, Number(this.streetNumber) != null,
+      this.country != null, this.organizerName.name != null, this.sizeOfSchooling != null) {
+      this.readyToPost = true;
+    }
+  }
   addSchooling(goBack: boolean) {
     if (this.detailId>0) {
       this.editSchooling(true);
     }
     else {
+      this.checkInputs();
+      if (this.readyToPost) {
+        this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
+          this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+          .subscribe(x => {
+            console.log(x);
+            if (goBack) {
+              this.router.navigate(["/start"]);
+            }
+
+
+
+          });
+      }
      
-      this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
-        this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
-        .subscribe(x => {
-          console.log(x);
-          if (goBack) {
-            this.router.navigate(["/start"]);
-          }
-        
-
-
-        });
     }
   
     
