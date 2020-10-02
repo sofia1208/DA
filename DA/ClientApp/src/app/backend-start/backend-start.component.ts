@@ -15,6 +15,7 @@ export class BackendStartComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   schoolings: SummaryDto[] = [];
   dataSource: SummaryDto[] = [];
+  selection: string;
   constructor(private http: HttpClient, private router: Router) {
   }
   
@@ -62,6 +63,13 @@ export class BackendStartComponent implements OnInit {
       this.table.renderRows();
     }
 
+  }
+  tableKeydown(event: KeyboardEvent) {
+    if (event.ctrlKey) {
+      console.log("Hallo");
+      console.log(event.key);
+    }
+    console.log("no");
   }
   deleteSchooling(id: number) {
 

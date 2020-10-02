@@ -32,19 +32,14 @@
 
 
     </div>
-    <button (click)="planRoute()">Route planen</button>
-    <div *ngIf="!mobile" class="column">
-
+   
+    <div class="printMe">
+      <button class="btnSubmit" style="margin-bottom: 10px;" (click)="planRoute()">Route planen</button>
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
       </agm-map>
     </div>
-    <div *ngIf="mobile">
 
-      <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
-        <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
-      </agm-map>
-    </div>
 
     <div class="printMe">
       <h3 class="firma">Firma*</h3>

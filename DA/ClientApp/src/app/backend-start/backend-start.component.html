@@ -3,7 +3,7 @@
   library_add
 </mat-icon>Neue Schulung</button>
 
-<table mat-table #mytable [dataSource]="dataSource" class="table">
+<table mat-table #mytable [dataSource]="dataSource" (keypress)="tableKeydown($event)" class="table">
 
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -43,5 +43,5 @@
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click) ="tableKeydown($event)"  ></tr>
 </table>

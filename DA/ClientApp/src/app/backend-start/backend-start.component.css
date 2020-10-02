@@ -11,6 +11,9 @@ table tr:first-child td {
   outline:none;
   padding: 5px;
 }
+tr:hover {
+  background-color: lightgray;
+}
 h1 {
   font-family: 'Open Sans', sans-serif;
 }

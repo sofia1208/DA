@@ -218,6 +218,12 @@ h1 {
   padding: 5px;
   height: 30px;
 }
+  .btnSubmit:hover {
+    background-color: #e29850;
+  }
+  .btnSubmit:disabled{
+      background-color: lightgray;
+  }
 agm-map {
   height: 300px;
   width: 100%;
