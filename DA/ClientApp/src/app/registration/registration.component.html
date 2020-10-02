@@ -29,13 +29,15 @@
         <div class="row innerRows">{{adresse}}</div>
       </div>
 
-      <div *ngIf="!mobile" class="column">
 
-        <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
-          <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
-        </agm-map>
-      </div>
 
+    </div>
+    <button (click)="planRoute()">Route planen</button>
+    <div *ngIf="!mobile" class="column">
+
+      <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
+        <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+      </agm-map>
     </div>
     <div *ngIf="mobile">
 
@@ -96,7 +98,7 @@
         </div>
 
         <h3 class="firma">Ansprechperson*</h3>
-        
+
         <div class="row rowFields">
           <div class="column col1">
             <div class="row innerRows firma"></div>
@@ -126,7 +128,7 @@
       <h3 class="firma">Teilnehmer</h3>
       <div>
 
-       
+
 
         <div class="containerInput">
           <div class="row rowFields">

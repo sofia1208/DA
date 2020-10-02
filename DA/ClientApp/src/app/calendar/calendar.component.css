@@ -264,3 +264,8 @@ p {
   vertical-align: bottom;
 }
 
+.mat-typography p{
+    margin: 0;
+    margin-left: 10px;
+}
+

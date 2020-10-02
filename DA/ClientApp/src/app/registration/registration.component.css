@@ -214,13 +214,13 @@ h1 {
 .btnSubmit {
   border-radius: 12px;
   color: #707070;
-  background-color: #D4D4D4;
+  background-color: #feae5f;
   padding: 5px;
   height: 30px;
 }
 agm-map {
   height: 300px;
-  width: 500px;
+  width: 100%;
 }
 .mat-form-field{
     margin: 10px;

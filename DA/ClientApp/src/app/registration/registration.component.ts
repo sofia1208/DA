@@ -44,8 +44,8 @@ export class RegistrationComponent implements OnInit {
   companyPhone: string = "";
   companyMail: string = "";
   companyStreet: string = "";
-  companyStreetNumber: Number =0;
-  companyZipCode: Number=0;
+  companyStreetNumber: string ="";
+  companyZipCode: string="";
   companyCity: string = "";
   companyCountry: string = "";
   companyContactPersonVn: string = "";
@@ -100,8 +100,8 @@ export class RegistrationComponent implements OnInit {
       this.companyMail!=="" && 
       this.companyPhone!=="" && 
       this.companyStreet!=="" && 
-      this.companyStreetNumber!=0 &&
-      this.companyZipCode !== 0
+      this.companyStreetNumber!="" &&
+      this.companyZipCode !== ""
     ) {
 
       console.log("true");
@@ -110,6 +110,10 @@ export class RegistrationComponent implements OnInit {
     else {
       this.buttonActive = false;
     }
+  }
+  planRoute() {
+    var ad = this.adresse.split(",")[0];
+    document.location.href = `https://www.google.at/maps/dir//${ad}`;
   }
   openDialog(name: string): void {
     const dialogConfig = new MatDialogConfig();
