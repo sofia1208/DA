@@ -44,6 +44,9 @@ export class LoginComponent implements OnInit {
 
 
   }
+  isLoggedIn() {
+    return this.isCorrect;
+  }
   postUser(reg: LoginUser): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })

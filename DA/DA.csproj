@@ -22,6 +22,8 @@
 
 
   <ItemGroup>
+    <Compile Remove="ClientApp\src\app\login\AuthService.cs" />
+    <Compile Remove="ClientApp\src\app\login\Class.cs" />
     <Compile Remove="ClientApp\src\LanguageClass.cs" />
   </ItemGroup>
 

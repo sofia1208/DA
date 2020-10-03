@@ -37,12 +37,13 @@ import { DialogOrganizerComponent } from './dialog-organizer/dialog-organizer.co
 import { DialogCompanyComponent } from './dialog-company/dialog-company.component';
 import { RegistrationSuccessComponent } from './registration-success/registration-success.component';
 import { DialogMoreEventsComponent } from './dialog-more-events/dialog-more-events.component';
+import { AuthGuard } from './login/AuthGuard';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'start', component: BackendStartComponent },
+  { path: 'start', component: BackendStartComponent , canActivate: [AuthGuard]},
   { path: 'detail', component: BackendDetailComponent },
   { path: 'checkout', component: RegistrationSuccessComponent },
   {
@@ -101,7 +102,7 @@ const routes: Routes = [
    // MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
   exports: [RouterModule],
-  providers: [{ provide: LOCALE_ID, useValue: "de" }],
+  providers: [{ provide: LOCALE_ID, useValue: "de" }, AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent, DialogMoreEventsComponent] 
 })
