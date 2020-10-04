@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule }from '@angular/common/http';
 import {Routes, RouterModule } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -95,13 +95,13 @@ const routes: Routes = [
       apiKey: 'AIzaSyAE1t4KEfa0sBR2N354rup1xE6LvDlXabE',
    
     }),
- 
+    ReactiveFormsModule,
     RouterModule.forRoot(routes),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     BrowserAnimationsModule,
    // MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
-  exports: [RouterModule],
+  exports: [RouterModule, FormsModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: "de" }, AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent, DialogMoreEventsComponent] 

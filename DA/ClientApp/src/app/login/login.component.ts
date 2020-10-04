@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoginUser } from './LoginUser';
 import { MatButton, MatInput } from '@angular/material';
+import { AuthenticationService } from './AuthService';
+import { first } from 'rxjs/internal/operators/first';
 
 @Component({
   selector: 'app-login',
@@ -12,33 +14,73 @@ import { MatButton, MatInput } from '@angular/material';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: string = "";
-  password: string = "";
-  isCorrect: boolean = false;
-  loginFail :boolean= false;
-  constructor(private http: HttpClient, private router: Router) { }
+  loginForm: FormGroup;
+  loading = false;
+  submitted = false;
+  returnUrl: string;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+ 
+  ) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   hide = true;
   ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
+
+
+  get f() { return this.loginForm.controls; }
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    this.authenticationService.login(this.f.username.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+        
+          this.loading = false;
+        });
+  }
+
   submit() {
  
-    let user = new LoginUser(this.username, this.password);
-    this.postUser(user)
-      .subscribe(data => {
+    //let user = new LoginUser(this.user, this.password);
+    //this.postUser(user)
+    //  .subscribe(data => {
     
-        if (data.toString()==="true") {
+    //    if (data.toString()==="true") {
          
-          this.isCorrect = true;
-          this.router.navigate(["/start"]);
-        }
+    //      this.isCorrect = true;
+    //      this.router.navigate(["/start"]);
+    //    }
        
        
-        else {
-          this.password = "";
-          this.loginFail = true;
-        }
-      });
+    //    else {
+    //      this.password = "";
+    //      this.loginFail = true;
+    //    }
+    //  });
    
   
 
