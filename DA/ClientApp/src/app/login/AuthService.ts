@@ -33,24 +33,15 @@ export class AuthenticationService {
         tap(
           data => {
             console.log("AuthService" + data);
-            this.isLoggedIn = data;
+            this.loggedIn = data;
             return data;
           }
         )
       );
       
-    //.pipe(map(user => {
 
-    //    if (user && user.token) {
-        
-    //     localStorage.setItem('currentUser', JSON.stringify(user));
-    //      this.currentUserSubject.next(user);
-    //    }
-
-    //    return user;
-    //  }));
   }
-  isLoggedIn() {
+  isLogginIn() {
     return this.loggedIn;
   }
 
