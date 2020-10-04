@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
 
@@ -55,7 +56,12 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
+          console.log("login" + data);
+          //console.log(this.returnUrl);
+          if (data) {
+            this.router.navigate(['/start']);
+          }
+         
         },
         error => {
         
@@ -86,19 +92,19 @@ export class LoginComponent implements OnInit {
 
 
   }
-  isLoggedIn() {
-    return this.isCorrect;
-  }
-  postUser(reg: LoginUser): Observable<string> {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    }
+  //isLoggedIn() {
+  //  return this.isCorrect;
+  //}
+  //postUser(reg: LoginUser): Observable<string> {
+  //  const httpOptions = {
+  //    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  //  }
 
-    return this.http.post<string>(`https://localhost:5001/backend/login`, reg, httpOptions);
-  }
+  //  return this.http.post<string>(`https://localhost:5001/backend/login`, reg, httpOptions);
+  //}
 
-  private getLogin(url: string): Observable<string> {
-    return this.http.get<string>(url);
+  //private getLogin(url: string): Observable<string> {
+  //  return this.http.get<string>(url);
 
-  }
+  //}
 }

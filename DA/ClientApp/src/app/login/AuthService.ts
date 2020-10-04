@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 
 import { LoginUser } from './LoginUser';
@@ -10,6 +10,7 @@ import { LoginUser } from './LoginUser';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<LoginUser>;
   public currentUser: Observable<LoginUser>;
+  loggedIn: boolean = false;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<LoginUser>(JSON.parse(localStorage.getItem('currentUser')));
@@ -21,17 +22,36 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(`/users/authenticate`, { username, password })
-      .pipe(map(user => {
-        // login successful if there's a jwt token in the response
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
 
-        return user;
-      }));
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+
+
+    return this.http.post<any>(`https://localhost:5001/backend/login`, { username, password }, httpOptions)
+      .pipe(
+        tap(
+          data => {
+            console.log("AuthService" + data);
+            this.isLoggedIn = data;
+            return data;
+          }
+        )
+      );
+      
+    //.pipe(map(user => {
+
+    //    if (user && user.token) {
+        
+    //     localStorage.setItem('currentUser', JSON.stringify(user));
+    //      this.currentUserSubject.next(user);
+    //    }
+
+    //    return user;
+    //  }));
+  }
+  isLoggedIn() {
+    return this.loggedIn;
   }
 
   logout() {
