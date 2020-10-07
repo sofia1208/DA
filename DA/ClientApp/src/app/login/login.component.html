@@ -6,12 +6,12 @@
         moveIT Schulungsverwaltung
       </h1>
 
-      <div *ngIf="loginFail">
+
+
+
+      <div *ngIf="loading">
         <p style="background-color: #f5cbc4; padding: 10px; border-radius: 10px;">Benutzername oder Passwort ist nicht korrekt</p>
-
       </div>
-
-
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -23,31 +23,24 @@
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+
           <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
             <div *ngIf="f.password.errors.required">Passwort ist erforderlich</div>
           </div>
+
         </div>
+
+
         <div class="form-group">
-        
-          <button class="btnSubmit" >Anmelden</button>
+          <button class="btnSubmit">Anmelden</button>
+
+
         </div>
       </form>
 
 
-      <!--<mat-form-field>
-    <mat-label>Benutzername</mat-label>
-    <input matInput [(ngModel)]="username">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Passwort</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
 
-  </mat-form-field>-->
-    
 
     </div>
 

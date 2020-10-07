@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginUser } from './LoginUser';
 import { MatButton, MatInput } from '@angular/material';
@@ -15,10 +15,11 @@ import { first } from 'rxjs/internal/operators/first';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  loading = false;
+  loading:boolean= false;
   submitted = false;
   returnUrl: string;
 
+  refresh: Subject<any> = new Subject();
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -48,10 +49,11 @@ export class LoginComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
+      console.log("Invalid");
       return;
     }
 
-    this.loading = true;
+
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
@@ -61,6 +63,11 @@ export class LoginComponent implements OnInit {
           if (data) {
             this.router.navigate(['/start']);
           }
+          else {
+            this.loading = true;
+         
+            
+          }
          
         },
         error => {
@@ -69,42 +76,5 @@ export class LoginComponent implements OnInit {
         });
   }
 
-  submit() {
  
-    //let user = new LoginUser(this.user, this.password);
-    //this.postUser(user)
-    //  .subscribe(data => {
-    
-    //    if (data.toString()==="true") {
-         
-    //      this.isCorrect = true;
-    //      this.router.navigate(["/start"]);
-    //    }
-       
-       
-    //    else {
-    //      this.password = "";
-    //      this.loginFail = true;
-    //    }
-    //  });
-   
-  
-
-
-  }
-  //isLoggedIn() {
-  //  return this.isCorrect;
-  //}
-  //postUser(reg: LoginUser): Observable<string> {
-  //  const httpOptions = {
-  //    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  //  }
-
-  //  return this.http.post<string>(`https://localhost:5001/backend/login`, reg, httpOptions);
-  //}
-
-  //private getLogin(url: string): Observable<string> {
-  //  return this.http.get<string>(url);
-
-  //}
 }

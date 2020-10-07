@@ -17,9 +17,14 @@ mat-form-field{
 }
 .btnSubmit {
   border-radius: 12px;
-  width: 180px;
-  border-color: #A0A0A0;
+  width: 100%;
+  border-color: #dcdcdc;
+  background-color: #dcdcdc;
+  padding: 5px;
 }
+  .btnSubmit:hover {
+    background-color: #c5c1c1;
+  }
 body {
   background-color: #F3B947;
 }

@@ -40,7 +40,7 @@ namespace DA.Services {
                     UpdateDisplay(x.Id, false);
                 }
             });
-            return schoolings.Where(x => x.Display == true).Select(x => converter.getBackendSummaryDTO(x)).OrderBy(x => x.Start).ToList();
+            return schoolings.Select(x => converter.getBackendSummaryDTO(x)).OrderBy(x => x.Start).ToList();
         }
 
 
