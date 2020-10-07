@@ -537,9 +537,11 @@ export class CalendarComponent implements OnInit {
         outOfMonth: false
 
       };
+      var today = new Date();
+      if ((schooling.end > today)) {
+        this.events.push(schooling);
+      }
      
-      
-      this.events.push(schooling);
       this.refresh.next();
       
       
