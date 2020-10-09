@@ -53,10 +53,15 @@ export class BackendStartComponent implements OnInit {
 
   }
   deleteSch() {
-    for (var i = Math.min(this.startIndex, this.endIndex); i < Math.max(this.startIndex, this.endIndex); i++) {
+    for (var i = Math.min(this.startIndex, this.endIndex); i <= Math.max(this.startIndex, this.endIndex); i++) {
       
       this.deleteSchooling(this.dataSource[i].id);  
     }
+    this.dataSource.forEach(x => x.highlight = false); 
+    this.markieren = "Markieren";
+    this.hiddenDeleted = true;
+    this.startIndex = -1;
+    this.endIndex = -1;
    
   }
   newSchooling() {
@@ -69,7 +74,16 @@ export class BackendStartComponent implements OnInit {
     );
   }
   markSchooling() {
-    this.highlight = true;
+    
+    this.highlight = !this.highlight;
+    if (this.highlight == false) {
+      this.dataSource.forEach(x => x.highlight = false);
+      this.markieren = "Markieren";
+      this.hiddenDeleted = true;
+      this.startIndex = -1;
+      this.endIndex = -1;
+    }
+
   }
   getRow(row) {
     console.log(row);
@@ -81,9 +95,17 @@ export class BackendStartComponent implements OnInit {
         console.log(this.startIndex);
       }
       else {
+     
+      
+
+
         this.endIndex = this.dataSource.indexOf(this.schoolings.filter(x => x.id == row.id)[0]);
         this.markieren = "Markierung aufheben";
         this.hiddenDeleted = false;
+        for (var i = Math.min(this.startIndex, this.endIndex); i <= Math.max(this.startIndex, this.endIndex); i++) {
+          var y = this.dataSource.filter(x => x.id == this.dataSource[i].id)[0];
+          y.highlight = true;
+        }
       }
  
     }
