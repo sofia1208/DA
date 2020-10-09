@@ -3,6 +3,18 @@
   library_add
 </mat-icon>Neue Schulung</button>
 
+<button class="newSchooling" (click)="markSchooling()">
+  <mat-icon>
+    library_add
+  </mat-icon>{{markieren}}
+</button>
+
+<button class="newSchooling" [hidden]="hiddenDeleted" (click)="deleteSch()">
+  <mat-icon>
+   delete
+  </mat-icon>Löschen
+</button>
+
 <table mat-table #mytable [dataSource]="dataSource" (keypress)="tableKeydown($event)" class="table">
 
   <ng-container matColumnDef="name">
@@ -43,5 +55,5 @@
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click) ="tableKeydown($event)"  ></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click) ="getRow(row)"  class="row.id"></tr>
 </table>

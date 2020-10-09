@@ -11,8 +11,17 @@ table tr:first-child td {
   outline:none;
   padding: 5px;
 }
+.true{
+    background-color:red;
+}
+.false{
+    background-color: green;
+}
 tr:hover {
   background-color: lightgray;
+}
+.33{
+    background-color: red;
 }
 h1 {
   font-family: 'Open Sans', sans-serif;

@@ -16,6 +16,11 @@ export class BackendStartComponent implements OnInit {
   schoolings: SummaryDto[] = [];
   dataSource: SummaryDto[] = [];
   selection: string;
+  startIndex: number=-1;
+  endIndex: number=-1;
+  highlight: boolean = false;
+  markieren: string = "Markieren";
+  hiddenDeleted: boolean = true;
   constructor(private http: HttpClient, private router: Router) {
   }
   
@@ -37,12 +42,22 @@ export class BackendStartComponent implements OnInit {
        
         this.schoolings = data;
         console.log(this.schoolings);
+        for (var i = 0; i < this.schoolings.length; i++) {
+          this.schoolings[i].highlight = false;
+        }
         this.fillTable();
       });
 
 
 
 
+  }
+  deleteSch() {
+    for (var i = Math.min(this.startIndex, this.endIndex); i < Math.max(this.startIndex, this.endIndex); i++) {
+      
+      this.deleteSchooling(this.dataSource[i].id);  
+    }
+   
   }
   newSchooling() {
     let navigationExtras: NavigationExtras = {
@@ -52,6 +67,27 @@ export class BackendStartComponent implements OnInit {
     };
     this.router.navigate(["/detail"], navigationExtras
     );
+  }
+  markSchooling() {
+    this.highlight = true;
+  }
+  getRow(row) {
+    console.log(row);
+    if (this.highlight) {
+      if (this.startIndex == -1) {
+        var y = this.dataSource.filter(x => x.id == row.id)[0];
+        y.highlight = true;
+        this.startIndex = this.dataSource.indexOf(this.schoolings.filter(x => x.id == row.id)[0]);
+        console.log(this.startIndex);
+      }
+      else {
+        this.endIndex = this.dataSource.indexOf(this.schoolings.filter(x => x.id == row.id)[0]);
+        this.markieren = "Markierung aufheben";
+        this.hiddenDeleted = false;
+      }
+ 
+    }
+
   }
   displayedColumns: string[] = ['name', 'date', 'check', 'edit', 'delete'];
  
@@ -71,7 +107,7 @@ export class BackendStartComponent implements OnInit {
     }
     console.log("no");
   }
-  deleteSchooling(id: number) {
+  deleteSchooling(id: Number) {
 
     let item = this.dataSource.find(x => x.id == id);
     const index: number = this.dataSource.indexOf(item);
@@ -106,7 +142,7 @@ export class BackendStartComponent implements OnInit {
     
 
   }
-  private delete(url:string, id: number): Observable<{}> {
+  private delete(url:string, id: Number): Observable<{}> {
    
     return this.http.delete(url);
       
