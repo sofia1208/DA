@@ -19,7 +19,7 @@
       <div class="columnFields">
         <mat-form-field class="fields" appearance="fill">
           <mat-label>Kategorie auswählen</mat-label>
-          <mat-select [(value)]="catName">
+          <mat-select [(ngModel)]="catName">
             <mat-option *ngFor="let s of category" [value]="s">
               {{s}}
             </mat-option>
@@ -28,23 +28,23 @@
         <div class="displayRow fields">
           <mat-form-field>
             <mat-label>Straße</mat-label>
-            <input matInput [(ngModel)]="street">
+            <input matInput (change)="checkInputs()" [(ngModel)]="street" >
           </mat-form-field>
           <mat-form-field>
             <mat-label>Hausnummer</mat-label>
-            <input matInput [(ngModel)]="streetNumber">
+            <input matInput (change)="checkInputs()" [(ngModel)]="streetNumber">
           </mat-form-field>
           <mat-form-field>
             <mat-label>Postleitzahl</mat-label>
-            <input matInput [(ngModel)]="zipCode">
+            <input matInput (change)="checkInputs()" [(ngModel)]="zipCode">
           </mat-form-field>
           <mat-form-field>
             <mat-label>Stadt</mat-label>
-            <input matInput [(ngModel)]="city">
+            <input matInput (change)="checkInputs()" [(ngModel)]="city">
           </mat-form-field>
           <mat-form-field>
             <mat-label>Land</mat-label>
-            <input matInput [(ngModel)]="country">
+            <input matInput (change)="checkInputs()" [(ngModel)]="country">
           </mat-form-field>
           <button (click)="showOnMap()" class="fields btnMap">Auf Karte anzeigen</button>
         </div>
@@ -52,33 +52,33 @@
         <div class="displayRow fields">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Datum auswählen</mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="startDate">
+            <input matInput [matDatepicker]="picker" (change)="checkInputs()" [(ngModel)]="startDate">
             <mat-datepicker-toggle matSuffix [for]="picker">
               <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
             </mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-          <input [(ngModel)]="startTime" class="inputTime" type="time">
+          <input [(ngModel)]="startTime" class="inputTime" (change)="checkInputs()" type="time">
         </div>
 
         <div class="displayRow fields">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Datum auswählen</mat-label>
-            <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
+            <input matInput [matDatepicker]="endPicker" (change)="checkInputs()" [(ngModel)]="endDate">
             <mat-datepicker-toggle matSuffix [for]="endPicker">
               <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
             </mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
           </mat-form-field>
-          <input [(ngModel)]="endTime" class="inputTime" type="time">
+          <input [(ngModel)]="endTime" class="inputTime" (change)="checkInputs()" type="time">
         </div>
         <mat-form-field class="displayRow fields">
 
-          <input type="number" matInput [(ngModel)]="sizeOfSchooling">
+          <input type="number" (change)="checkInputs()" matInput [(ngModel)]="sizeOfSchooling">
         </mat-form-field>
         <mat-form-field class="displayRow fields">
 
-          <input type="number" matInput [(ngModel)]="price">
+          <input type="number" (change)="checkInputs()" matInput [(ngModel)]="price">
         </mat-form-field>
       </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="btnGroup printMe">
-      <button #btnSchooling1 class="btnMap" disabled="!readyToPost" (click)="addSchooling(true)">{{addOrEdit}}</button>
+      <button #btnSchooling1 class="btnMap" [disabled]="!readyToPost" (click)="addSchooling(true)">{{addOrEdit}}</button>
       <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
     </div>
   </mat-tab>
@@ -142,7 +142,7 @@
       </div>
     </div>
     <div class="btnGroup printMe">
-      <button #btnSchooling2 class="btnMap" (click)="addSchooling(true)">{{addOrEdit}}</button>
+      <button #btnSchooling2 class="btnMap"  [disabled]="!readyToPost" (click)="addSchooling(true)">{{addOrEdit}}</button>
       <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
     </div>
   </mat-tab>
@@ -202,7 +202,7 @@
     <div class="btnGroup printMe">
       <button class="btnMap" (click)="printParticipants()">Teilnehmer ausdrucken</button>
       <button class="btnMap" (click)="copyAllMail()">E-Mail Adressen kopieren</button>
-      <button #btnSchooling3 class="btnMap" (click)="addSchooling(true)">{{addOrEdit}}</button>
+      <button #btnSchooling3 class="btnMap"  [disabled]="!readyToPost" (click)="addSchooling(true)">{{addOrEdit}}</button>
       <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
     </div>
 
