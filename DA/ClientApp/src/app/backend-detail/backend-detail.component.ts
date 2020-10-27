@@ -46,7 +46,7 @@ export class BackendDetailComponent implements OnInit {
   mail: string = "";
   companyContactPerson: string = "";
   companyMail: string = "";
-
+  sDate: Date;
   organizerDto: Organizer
   newOrganizer: string = "";
   lat: Number = 48.1505921;
@@ -72,7 +72,7 @@ export class BackendDetailComponent implements OnInit {
         this.addOrEdit = "Schulung speichern";
         this.readyToPost = true;
       }
-
+      this.sDate = new Date();
   
 
      
@@ -97,8 +97,9 @@ export class BackendDetailComponent implements OnInit {
   
   }
   goBack() {
-    //TO_DO get Info if anything changed
+  
     if (this.saved) {
+      console.log("everything saved");
       this.router.navigate(["/start"]);
     }
     else {
@@ -112,13 +113,12 @@ export class BackendDetailComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         this.saved = result.saved;
+       
         if (this.saved) {
           this.addSchooling(true);
           
         }
-        else {
-          this.router.navigate(["/start"]);
-        }
+       
       });
     }
   }
@@ -150,13 +150,14 @@ export class BackendDetailComponent implements OnInit {
       .subscribe(x => {
         console.log(x);
         this.organizer = x;
-         
-        //DISTINCT
+        const distinctArray = this.organizer.filter((n, i) => this.organizer.indexOf(n) === i);
+        console.log(distinctArray);
       })
     
   }
   changeOrganizer() {
     console.log("changing");
+    this.checkInputs();
     console.log(this.organizerName);
     let shownO = this.organizer.find(x => x.name === this.organizerName.name);
     this.contactPerson = shownO.contactPerson;
@@ -174,9 +175,15 @@ export class BackendDetailComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.newOrganizer = result;
+        if (result != null) {
+          if (this.newOrganizer != "") {
+            console.log(this.newOrganizer);
+            this.organizer.push(new Organizer(this.organizer.length, this.newOrganizer, "", "", "", ""));
+            this.organizerName.name = this.newOrganizer;
+          }
+        }
+       
 
-        this.organizer.push(new Organizer(this.organizer.length,this.newOrganizer,"","","",""));
-        this.organizerName.name = this.newOrganizer;
       });
    
    
@@ -218,16 +225,19 @@ export class BackendDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.firstname = result.firstname;
-      this.lastname= result.lastname;
-      this.mail= result.mail;
-      this.companyName= result.companyName;
-      //this.companyName = result.name;
-      //this.companyContactPerson = result.contactperson;
-      //this.companyMail = result.mail;
+      if (result != null) {
+        this.firstname = result.firstname;
+        this.lastname = result.lastname;
+        this.mail = result.mail;
+        this.companyName = result.companyName;
+        //this.companyName = result.name;
+        //this.companyContactPerson = result.contactperson;
+        //this.companyMail = result.mail;
 
-      this.companys.push(this.companyName);
-      this.addMember();
+        this.companys.push(this.companyName);
+        this.addMember();
+      }
+    
 
     });
 
@@ -366,6 +376,7 @@ export class BackendDetailComponent implements OnInit {
   }
   checkInputs() {
     console.log("checks");
+    this.saved = false;
     if (this.catName != "" && this.startDate != null, this.endDate != null, this.price != null, Number(this.zipCode) != null, this.city != null, this.street != null, Number(this.streetNumber) != null,
       this.country != null,  this.sizeOfSchooling != null) {
       this.readyToPost = true;

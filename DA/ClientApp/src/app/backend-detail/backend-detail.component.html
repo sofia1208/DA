@@ -1,6 +1,6 @@
 <div style="display:flex; flex-direction: row">
-  <button (click)="goBack()"><mat-icon>chevron_left</mat-icon></button>
-  <h1 style="margin-left: 10px;">Schulung</h1>
+  <button mat-raised-button style="background-color: white; border: none" (click)="goBack()"   data-toggle="tooltip" title="Zurück zur Übersicht" ><mat-icon>chevron_left</mat-icon></button>
+  <h1 style="margin: 20px;">Schulung</h1>
 </div>
 
 <mat-tab-group>
@@ -19,7 +19,7 @@
       <div class="columnFields">
         <mat-form-field class="fields" appearance="fill">
           <mat-label>Kategorie auswählen</mat-label>
-          <mat-select [(ngModel)]="catName">
+          <mat-select [(ngModel)]="catName" (selectionChange)="checkInputs()">
             <mat-option *ngFor="let s of category" [value]="s">
               {{s}}
             </mat-option>
@@ -50,12 +50,12 @@
         </div>
 
         <div class="displayRow fields">
+   
+
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Datum auswählen</mat-label>
             <input matInput [matDatepicker]="picker" (change)="checkInputs()" [(ngModel)]="startDate">
-            <mat-datepicker-toggle matSuffix [for]="picker">
-              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-            </mat-datepicker-toggle>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           <input [(ngModel)]="startTime" class="inputTime" (change)="checkInputs()" type="time">
@@ -64,10 +64,8 @@
         <div class="displayRow fields">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Datum auswählen</mat-label>
-            <input matInput [matDatepicker]="endPicker" (change)="checkInputs()" [(ngModel)]="endDate">
-            <mat-datepicker-toggle matSuffix [for]="endPicker">
-              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-            </mat-datepicker-toggle>
+            <input matInput [matDatepicker]="endPicker" (change)="checkInputs()" [(ngModel)]="endDate" [min]="startDate" >
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
           </mat-form-field>
           <input [(ngModel)]="endTime" class="inputTime" (change)="checkInputs()" type="time">
@@ -78,7 +76,7 @@
         </mat-form-field>
         <mat-form-field class="displayRow fields">
 
-          <input type="number" (change)="checkInputs()" matInput [(ngModel)]="price">
+          <input type="number" min="0"  (change)="checkInputs()" matInput [(ngModel)]="price">
         </mat-form-field>
       </div>
 
@@ -91,7 +89,7 @@
 
     <div class="btnGroup printMe">
       <button #btnSchooling1 class="btnMap" [disabled]="!readyToPost" (click)="addSchooling(true)">{{addOrEdit}}</button>
-      <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
+      <button class="btnMap" (click)="saveAndNew()" [disabled]="!readyToPost">Speichern und kopieren</button>
     </div>
   </mat-tab>
 
@@ -137,13 +135,13 @@
       </div>
       <div class="column" style="margin: 10px">
         <button class="btnMap" data-toggle="tooltip" title="Organisator hinzufügen" (click)="addOrganizer()" mat-fab>
-          <mat-icon>library_add</mat-icon>
+         Organisator hinzufügen
         </button>
       </div>
     </div>
     <div class="btnGroup printMe">
       <button #btnSchooling2 class="btnMap"  [disabled]="!readyToPost" (click)="addSchooling(true)">{{addOrEdit}}</button>
-      <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
+      <button class="btnMap" (click)="saveAndNew()" [disabled]="!readyToPost">Speichern und kopieren</button>
     </div>
   </mat-tab>
   <mat-tab label="Teilnehmer">
@@ -185,7 +183,7 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef> Löschen </th>
         <td mat-cell *matCellDef="let member">
-          <button (click)="deleteMember(member.id)" mat-fab color="#A0A0A0">
+          <button style="background-color: white; border: none;" (click)="deleteMember(member.id)" mat-fab color="#A0A0A0">
             <mat-icon>delete</mat-icon>
           </button>
       </ng-container>
@@ -203,7 +201,7 @@
       <button class="btnMap" (click)="printParticipants()">Teilnehmer ausdrucken</button>
       <button class="btnMap" (click)="copyAllMail()">E-Mail Adressen kopieren</button>
       <button #btnSchooling3 class="btnMap"  [disabled]="!readyToPost" (click)="addSchooling(true)">{{addOrEdit}}</button>
-      <button class="btnMap" (click)="saveAndNew()">Speichern und kopieren</button>
+      <button class="btnMap" (click)="saveAndNew()" [disabled]="!readyToPost">Speichern und kopieren</button>
     </div>
 
 
