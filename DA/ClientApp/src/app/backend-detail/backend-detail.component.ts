@@ -12,6 +12,7 @@ import { DialogCompanyComponent } from '../dialog-company/dialog-company.compone
 import { CompanyMember } from './CompanyMember';
 import { Organizer } from './Organizer';
 import { DialogAddPartComponent } from '../dialog-add-part/dialog-add-part.component';
+import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
 @Component({
   selector: 'app-backend-detail',
   templateUrl: './backend-detail.component.html',
@@ -53,6 +54,7 @@ export class BackendDetailComponent implements OnInit {
 
   markerLat: Number;
   markerLng: Number;
+  saved: boolean=true;
   locations: Location[] = [];
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   @ViewChild('btnSchooling1', { static: true }) private btnSchooling1: ElementRef;
@@ -95,6 +97,31 @@ export class BackendDetailComponent implements OnInit {
    
    
   
+  }
+  goBack() {
+    if (this.saved) {
+      this.router.navigate(["/start"]);
+    }
+    else {
+      this.companyName = "";
+      const dialogRef = this.dialog.open(DialogSavingComponent, {
+        width: '400px',
+        data: {
+          saved: this.saved
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.saved = result.saved;
+        if (this.saved) {
+
+          this.router.navigate(["/start"]);
+        }
+        else {
+          this.router.navigate(["/start"]);
+        }
+      });
+    }
   }
   saveAndNew() {
     if (this.detailId > 0) {
