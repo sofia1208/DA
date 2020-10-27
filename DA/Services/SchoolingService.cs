@@ -63,12 +63,7 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary() {
-            schoolings.ForEach(x => {
-                if (x.Start < DateTime.Now) {
-                    UpdateDisplay(x.Id, false);
-                }
-            });
-            return schoolings.Select(x => {
+            var scho = schoolings.Select(x => {
                 var address = addresses.Find(y => y.Id == x.AddressId);
                 var organizer = organizers.Find(y => y.Id == x.OrganizerId);
 
@@ -76,6 +71,7 @@ namespace Schulungskalender.Services {
 
             })
                 .ToList();
+            return scho;
         }
 
         public SchoolingDetailDTO GetDetails(int id) {
