@@ -10,7 +10,11 @@ table tr:first-child td {
   border:none;
   outline:none;
   padding: 5px;
+  margin: 10px;
 }
+  .newSchooling:hover {
+    background-color: #c3884d;
+  }
 .true {
   background-color: #feae5f;
 }

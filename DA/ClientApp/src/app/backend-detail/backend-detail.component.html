@@ -150,34 +150,15 @@
     <div class="printMe">
       <div style="margin-left:20px">
 
-        <mat-label class="btnMap" style="margin-right: 20px">Teilnehmer hinzufügen</mat-label>
-        <mat-form-field class="example-full-width">
-          <mat-label>Vorname</mat-label>
-          <input matInput [(ngModel)]="firstname" placeholder="Max">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <mat-label>Nachname</mat-label>
-          <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <mat-label>Email</mat-label>
-          <input matInput [(ngModel)]="mail" placeholder="mm">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Firma auswählen</mat-label>
-          <mat-select [(ngModel)]="companyName">
-            <mat-option *ngFor="let s of companys" [value]="s">
-              {{s}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
        
-          <button  class="btnMap" (click)="addCompany()" mat-fab>
-            Firma hinzufügen
+        <button class="btnMap" (click)="addPart()" mat-fab>
+          Teilnehmer hinzufügen
 
-          </button>
-        
-        <button class="btnSubmit btnMap" style="margin-left:100px" (click)="addMember()">Hinzufügen</button>
+        </button>
+
+
+
+   
       </div>
     </div>
    

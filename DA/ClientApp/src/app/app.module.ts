@@ -38,6 +38,7 @@ import { DialogCompanyComponent } from './dialog-company/dialog-company.componen
 import { RegistrationSuccessComponent } from './registration-success/registration-success.component';
 import { DialogMoreEventsComponent } from './dialog-more-events/dialog-more-events.component';
 import { AuthGuard } from './login/AuthGuard';
+import { DialogAddPartComponent } from './dialog-add-part/dialog-add-part.component';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -76,6 +77,7 @@ const routes: Routes = [
     DialogCompanyComponent,
     RegistrationSuccessComponent,
     DialogMoreEventsComponent,
+    DialogAddPartComponent,
   
   ],
   imports: [
@@ -105,6 +107,7 @@ const routes: Routes = [
   exports: [RouterModule, FormsModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: "de" }, AuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent, DialogMoreEventsComponent] 
+  entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent, DialogMoreEventsComponent, DialogAddPartComponent
+  ] 
 })
 export class AppModule { }

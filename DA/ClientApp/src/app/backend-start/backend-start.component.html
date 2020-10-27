@@ -1,19 +1,25 @@
-<h1 style="color:#feae5f">Übersicht der derzeitigen Schulungen</h1>
-<button class="newSchooling" (click)="newSchooling()"><mat-icon>
-  library_add
-</mat-icon>Neue Schulung</button>
+<h1 style="color:#feae5f; margin: 10px; text-align:center; margin-top: 30px;">Übersicht der derzeitigen Schulungen</h1>
+<div style="text-align: center">
+  <button class="newSchooling" (click)="newSchooling()">
+    <mat-icon>
+      library_add
+    </mat-icon>Neue Schulung
+  </button>
 
-<button class="newSchooling" (click)="markSchooling()">
-  <mat-icon>
-    library_add
-  </mat-icon>{{markieren}}
-</button>
+  <button class="newSchooling" (click)="markSchooling()" >
+    <mat-icon>
+      library_add
+    </mat-icon>{{markieren}}
+  </button>
 
-<button class="newSchooling" [hidden]="hiddenDeleted" (click)="deleteSch()">
-  <mat-icon>
-   delete
-  </mat-icon>Löschen
-</button>
+  <button class="newSchooling" [hidden]="hiddenDeleted" (click)="deleteSch()">
+    <mat-icon>
+      delete
+    </mat-icon>Löschen
+  </button>
+</div>
+
+
 
 <table mat-table #mytable [dataSource]="dataSource" (keypress)="tableKeydown($event)" class="table">
 

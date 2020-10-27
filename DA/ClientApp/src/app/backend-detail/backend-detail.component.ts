@@ -11,6 +11,7 @@ import { DialogOrganizerComponent } from '../dialog-organizer/dialog-organizer.c
 import { DialogCompanyComponent } from '../dialog-company/dialog-company.component';
 import { CompanyMember } from './CompanyMember';
 import { Organizer } from './Organizer';
+import { DialogAddPartComponent } from '../dialog-add-part/dialog-add-part.component';
 @Component({
   selector: 'app-backend-detail',
   templateUrl: './backend-detail.component.html',
@@ -156,27 +157,55 @@ export class BackendDetailComponent implements OnInit {
    
    
   }
-  addCompany() {
+  //addCompany() {
+  //  this.companyName = "";
+  //  const dialogRef = this.dialog.open(DialogCompanyComponent, {
+  //    width: '400px',
+  //    data: {
+  //      name: this.companyName,
+  //      contactperson: this.companyContactPerson,
+  //      mail: this.companyMail
+  //    }
+  //  });
+
+  //  dialogRef.afterClosed().subscribe(result => {
+  //    console.log(result);
+  //    this.companyName = result.name;
+  //    this.companyContactPerson = result.contactperson;
+  //    this.companyMail = result.mail;
+
+  //    this.companys.push(this.companyName);
+     
+  //  });
+ 
+
+  //}
+  addPart() {
     this.companyName = "";
-    const dialogRef = this.dialog.open(DialogCompanyComponent, {
+    const dialogRef = this.dialog.open(DialogAddPartComponent, {
       width: '400px',
       data: {
-        name: this.companyName,
-        contactperson: this.companyContactPerson,
-        mail: this.companyMail
+        companys: this.companys,
+        firstname: this.firstname,
+        lastname: this.lastname,
+        mail: this.mail,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.companyName = result.name;
-      this.companyContactPerson = result.contactperson;
-      this.companyMail = result.mail;
+      this.firstname = result.firstname;
+      this.lastname= result.lastname;
+      this.mail= result.mail;
+      this.companyName= result.companyName;
+      //this.companyName = result.name;
+      //this.companyContactPerson = result.contactperson;
+      //this.companyMail = result.mail;
 
       this.companys.push(this.companyName);
-     
+      this.addMember();
+
     });
- 
 
   }
   copyAllMail() {
