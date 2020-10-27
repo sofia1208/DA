@@ -60,7 +60,8 @@ export class BackendDetailComponent implements OnInit {
   @ViewChild('btnSchooling1', { static: true }) private btnSchooling1: ElementRef;
   @ViewChild('btnSchooling2', { static: true }) private btnSchooling2: ElementRef;
   @ViewChild('btnSchooling3', { static: true }) private btnSchooling3: ElementRef;
-    readyToPost: boolean=false;
+  readyToPost: boolean = false;
+  addOrEdit: string = "Schulung anlegen";
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
@@ -68,12 +69,12 @@ export class BackendDetailComponent implements OnInit {
       console.log(this.detailId);
       this.fillComboboxes();
       if (this.detailId > 0) {
-        
+        this.addOrEdit = "Schulung speichern";
         this.getDetails();
      
-        this.btnSchooling1.nativeElement.innerHTML = "Schulung speichern";
-        this.btnSchooling2.nativeElement.innerHTML = "Schulung speichern";
-        this.btnSchooling3.nativeElement.innerHTML = "Schulung speichern";
+        //this.btnSchooling1.nativeElement.innerHTML = "Schulung speichern";
+        //this.btnSchooling2.nativeElement.innerHTML = "Schulung speichern";
+        //this.btnSchooling3.nativeElement.innerHTML = "Schulung speichern";
      
       }
 
@@ -99,6 +100,7 @@ export class BackendDetailComponent implements OnInit {
   
   }
   goBack() {
+    //TO_DO get Info if anything changed
     if (this.saved) {
       this.router.navigate(["/start"]);
     }
@@ -114,8 +116,8 @@ export class BackendDetailComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         this.saved = result.saved;
         if (this.saved) {
-
-          this.router.navigate(["/start"]);
+          this.addSchooling(true);
+          
         }
         else {
           this.router.navigate(["/start"]);
