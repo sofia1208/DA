@@ -11,5 +11,15 @@ namespace Schulungskalender.Models {
         public int ZipCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+
+        public override string ToString() {
+            if(StreetNumber == 0 || Street == null) {
+                if(ZipCode == 0) {
+                    return City;
+                }
+                return ZipCode + " " + City;
+            }
+            return Street + " " + StreetNumber + ", " + ZipCode + " " + City;
+        }
     }
 }

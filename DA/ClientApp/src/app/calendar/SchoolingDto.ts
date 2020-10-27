@@ -1,6 +1,6 @@
 export class SchoolingDto {
   id: number;
- 
+
   start: string;
   end: string;
   zipCode: number;

@@ -14,21 +14,21 @@ namespace DA {
         public SchoolingSummaryDTO GetSchoolingSummaryDTO(SchoolingRessource schooling, AddressRessource address, OrganizerRessource organizer, bool isFree) {
             if (address == null) {
                 if (organizer == null) {
-                    return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start, End = schooling.End, Price = schooling.Price };
+                    return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start.ToString("yyyy-MM-ddThh:mm:ss"), End = schooling.End.ToString("yyyy-MM-ddThh:mm:ss"), Price = schooling.Price };
 
                 }
                 else {
-                    return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start, End = schooling.End, Organizer = organizer.Name, Price = schooling.Price };
+                    return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start.ToString("yyyy-MM-ddThh:mm:ss"), End = schooling.End.ToString("yyyy-MM-ddThh:mm:ss"), Organizer = organizer.Name, Price = schooling.Price };
 
                 }
             }
             else {
                 if (organizer == null) {
-                    return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start, End = schooling.End, Price = schooling.Price };
+                    return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start.ToString("yyyy-MM-ddThh:mm:ss"), End = schooling.End.ToString("yyyy-MM-ddThh:mm:ss"), Price = schooling.Price };
 
                 }
                 else {
-                    return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start, End = schooling.End, Organizer = organizer.Name, City = address.City, Price = schooling.Price };
+                    return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start.ToString("yyyy-MM-ddThh:mm:ss"), End = schooling.End.ToString("yyyy-MM-ddThh:mm:ss"), Organizer = organizer.Name, Address = address.ToString(), Price = schooling.Price };
                 }
             }
         }
