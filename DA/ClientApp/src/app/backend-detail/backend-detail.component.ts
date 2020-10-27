@@ -112,11 +112,17 @@ export class BackendDetailComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.saved = result.saved;
+        if (result != null) {
+          this.saved = result.saved;
+        }
+        
        
         if (this.saved) {
           this.addSchooling(true);
-          
+
+        }
+        else {
+          this.router.navigate(["/start"]);
         }
        
       });
