@@ -122,13 +122,7 @@ export class BackendStartComponent implements OnInit {
     }
 
   }
-  tableKeydown(event: KeyboardEvent) {
-    if (event.ctrlKey) {
-      console.log("Hallo");
-      console.log(event.key);
-    }
-    console.log("no");
-  }
+
   deleteSchooling(id: Number) {
 
     let item = this.dataSource.find(x => x.id == id);
@@ -157,10 +151,16 @@ export class BackendStartComponent implements OnInit {
   
   }
   checkBox(id: Number) {
+    console.log(id);
     let index = this.dataSource.find(x => x.id == id);
     let display = index.display;
     this.changeDisplay(`https://localhost:5001/backend/updatedisplay/${id}`, !display)
-      .subscribe(x=> console.log(x));
+      .subscribe(x => {
+        console.log(x);
+        this.dataSource.find(x => x.id == id).display = !display;
+        console.log(index);
+
+      });
     
 
   }

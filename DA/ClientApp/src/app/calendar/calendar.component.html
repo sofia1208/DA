@@ -101,7 +101,7 @@
 
             <span *ngIf="ev.isFree&&ev.hasMoreDays">
               <div style="display:flex">
-                <p class="activeSchooling" style=" font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
+                <p class="activeSchooling" data-toggle="tooltip" title="Für Schulung anmelden" style=" font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
               </div>
 
             </span>
@@ -285,7 +285,7 @@
 
 
         </div>
-        <button (click)="goToRegistration()" class="btnLogin">Anmelden</button>
+        <button (click)="goToRegistration()" style="float: right; margin-bottom:30px; margin-right: 30px;" class="categoryBtn" >Anmelden</button>
       </div>
 
     </div>
