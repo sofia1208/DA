@@ -11,6 +11,7 @@ import { Registration } from './Registration';
 import { AgmMap, MouseEvent, MapsAPILoader } from '@agm/core';
 import { Location } from './Location';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
+import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
 
 @Component({
   selector: 'app-registration',
@@ -86,7 +87,36 @@ export class RegistrationComponent implements OnInit {
 
     
   }
- 
+  editSchooling(id: number) {
+    let member = this.members.find(x => x.id == id);
+    const dialogRef = this.dialog.open(DialogEditComponent, {
+      width: '50%',
+      data: {
+        firstname: member.firstname,
+        lastname: member.lastname,
+        email: member.email
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result != null) {
+        
+        member.firstname = result.firstname;
+        member.lastname = result.lastname;
+        member.email = result.email;
+        this.table.renderRows();
+      }
+      
+
+
+    });
+    this.table.renderRows();
+
+  }
+  deleteSchooling(id: number) {
+
+  }
   changeStorno() {
     this.openDialog("Stornobedingungen");
     this.checkButton();

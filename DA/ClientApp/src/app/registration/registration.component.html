@@ -181,7 +181,7 @@
           <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef>  </th>
             <td mat-cell *matCellDef="let member">
-              <button style="background-color: white; border:none"  data-toggle="tooltip" title="Editieren"  (click)="editSchooling(schooling.id)">
+              <button style="background-color: white; border:none"  data-toggle="tooltip" title="Editieren"  (click)="editSchooling(member.id)">
                 <mat-icon>edit</mat-icon>
               </button>
             </td>
@@ -191,7 +191,7 @@
           <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef>  </th>
             <td mat-cell *matCellDef="let member">
-              <button style="background-color: white; border:none"  data-toggle="tooltip" title="Teilnehmer löschen"  (click)="deleteSchooling(schooling.id)">
+              <button style="background-color: white; border:none"  data-toggle="tooltip" title="Teilnehmer löschen"  (click)="deleteSchooling(member.id)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
