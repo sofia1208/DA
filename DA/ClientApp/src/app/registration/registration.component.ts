@@ -6,13 +6,14 @@ import { CustomEvent } from '../calendar/CustomEvent';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from './Member';
-import { MatTable, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatTable, MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
 import { Registration } from './Registration';
 import { AgmMap, MouseEvent, MapsAPILoader } from '@agm/core';
 import { Location } from './Location';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
 import { DialogDeleteMemberComponent } from '../dialog-delete-member/dialog-delete-member.component';
+import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
 
 @Component({
   selector: 'app-registration',
@@ -38,7 +39,7 @@ export class RegistrationComponent implements OnInit {
   firstname: string = "";
   lastname: string="";
   email: string="";
-  members: Member[] = [];
+
 
   mobile: boolean = false;
 
@@ -60,7 +61,7 @@ export class RegistrationComponent implements OnInit {
   markerLng: Number;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
-  dataSource = this.members;
+  dataSource: Member[] = [];
   buttonActive: boolean = false;
   available: number;
   schooling: SchoolingDto;
@@ -70,6 +71,7 @@ export class RegistrationComponent implements OnInit {
   onePart: boolean = true;
   dynamicRow: string = "150px";
   dynamicHeight: number = 150;
+  saved: boolean=true;
   constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
@@ -102,11 +104,11 @@ export class RegistrationComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result != null) {
-        this.table.renderRows();
+    
         member.firstname = result.firstname;
         member.lastname = result.lastname;
         member.email = result.email;
-        this.table.renderRows();
+       
       }
       
 
@@ -128,13 +130,44 @@ export class RegistrationComponent implements OnInit {
       console.log('The dialog was closed');
       if (result != null) {
         this.dataSource = this.dataSource.filter(item => item.id != id);
-        this.table.renderRows();
+       
       }
 
 
 
     });
 
+  }
+  goBack() {
+    if (this.saved) {
+      console.log("everything saved");
+      this.router.navigate(["/calendar"]);
+    }
+    else {
+     
+      const dialogRef = this.dialog.open(DialogSavingComponent, {
+        width: '400px',
+        data: {
+          saved: this.saved
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.saved = result.saved;
+        }
+
+
+        if (this.saved) {
+         // this.addSchooling(true);
+
+        }
+        else {
+          this.router.navigate(["/calendar"]);
+        }
+
+      });
+    }
   }
   changeStorno() {
     this.openDialog("Stornobedingungen");
@@ -145,7 +178,7 @@ export class RegistrationComponent implements OnInit {
     this.checkButton();
   }
   checkButton() {
-    
+    this.saved = false;
     if (this.checkDatenschutz && this.checkStrono && this.company!=="" && this.companyCity!=="" &&
       this.companyContactPersonLn!=="" &&
       this.companyContactPersonVn!=="" && 
@@ -284,7 +317,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   addMember(): void {
-   
+       
   
     this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.email, this.company));
     this.table.renderRows();
