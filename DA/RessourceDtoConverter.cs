@@ -33,21 +33,21 @@ namespace DA {
             }
         }
 
-        public SchoolingDetailDTO GetSchoolingDetailDTO(SchoolingRessource schooling, AddressRessource address, OrganizerRessource organizer, bool isFree) {
+        public SchoolingDetailDTO GetSchoolingDetailDTO(SchoolingRessource schooling, AddressRessource address, OrganizerRessource organizer, bool isFree, int freePlaces) {
             if (address == null) {
                 if (organizer == null) {
-                    return new SchoolingDetailDTO() { Id = schooling.Id, End = schooling.End, Start = schooling.Start, Price = schooling.Price, IsFree = isFree };
+                    return new SchoolingDetailDTO() { Id = schooling.Id, End = schooling.End, Start = schooling.Start, Price = schooling.Price, IsFree = isFree, FreePlaces = freePlaces };
                 }
                 else {
-                    return new SchoolingDetailDTO() { Id = schooling.Id, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, ContactPerson = organizer.ContactPerson, IsFree = isFree };
+                    return new SchoolingDetailDTO() { Id = schooling.Id, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, ContactPerson = organizer.ContactPerson, IsFree = isFree, FreePlaces = freePlaces };
                 }
             }
             else {
                 if (organizer == null) {
-                    return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, IsFree = isFree };
+                    return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, IsFree = isFree, FreePlaces = freePlaces };
                 }
                 else {
-                    return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, ContactPerson = organizer.ContactPerson, IsFree = isFree };
+                    return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, ContactPerson = organizer.ContactPerson, IsFree = isFree, FreePlaces = freePlaces };
                 }
             }
         }
