@@ -12,6 +12,7 @@ import { AgmMap, MouseEvent, MapsAPILoader } from '@agm/core';
 import { Location } from './Location';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
+import { DialogDeleteMemberComponent } from '../dialog-delete-member/dialog-delete-member.component';
 
 @Component({
   selector: 'app-registration',
@@ -61,7 +62,7 @@ export class RegistrationComponent implements OnInit {
 
   dataSource = this.members;
   buttonActive: boolean = false;
-  
+  available: number;
   schooling: SchoolingDto;
 
   checkDatenschutz: boolean;
@@ -88,7 +89,7 @@ export class RegistrationComponent implements OnInit {
     
   }
   editSchooling(id: number) {
-    let member = this.members.find(x => x.id == id);
+    let member = this.dataSource.find(x => x.id == id);
     const dialogRef = this.dialog.open(DialogEditComponent, {
       width: '50%',
       data: {
@@ -101,7 +102,7 @@ export class RegistrationComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result != null) {
-        
+        this.table.renderRows();
         member.firstname = result.firstname;
         member.lastname = result.lastname;
         member.email = result.email;
@@ -111,10 +112,28 @@ export class RegistrationComponent implements OnInit {
 
 
     });
-    this.table.renderRows();
+    
 
   }
   deleteSchooling(id: number) {
+    let member = this.dataSource.find(x => x.id == id);
+    const dialogRef = this.dialog.open(DialogDeleteMemberComponent, {
+      width: '40%',
+      data: {
+       name: member.firstname + " " + member.lastname
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result != null) {
+        this.dataSource = this.dataSource.filter(item => item.id != id);
+        this.table.renderRows();
+      }
+
+
+
+    });
 
   }
   changeStorno() {
@@ -211,7 +230,7 @@ export class RegistrationComponent implements OnInit {
     this.endDate = new Date(schooling.end);
    
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
-
+    
      this.getAddress();
   
   }

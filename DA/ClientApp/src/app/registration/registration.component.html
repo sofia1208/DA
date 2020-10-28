@@ -139,8 +139,8 @@
           <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <mat-label>Email</mat-label>
-          <input matInput [(ngModel)]="email" placeholder="mm">
+          <mat-label>E-Mail</mat-label>
+          <input matInput [(ngModel)]="email" placeholder="max@mustermann.com">
         </mat-form-field>
         <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()">Hinzufügen</button>
 
@@ -155,6 +155,7 @@
     <mat-grid-list cols="5" rowHeight="{{dynamicRow}}">
       <mat-grid-tile colspan="1">
         <h3 class="firma">Teilnehmerübersicht</h3>
+        
       </mat-grid-tile>
       <mat-grid-tile colspan="4">
         <table mat-table #mytable [dataSource]="dataSource" class="table">
