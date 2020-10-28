@@ -525,7 +525,7 @@ export class CalendarComponent implements OnInit {
  
       console.log(this.schoolings)
       const schooling: CustomEvent = {
-        isFree: true,
+        isFree: this.schoolings[i].isFree,
         start: start,
         end: end,
         title: this.schoolings[i].name,

@@ -331,7 +331,7 @@ export class RegistrationComponent implements OnInit {
   }
   submit(): void {
     console.log("Submit registration");
-    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.members))
+    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.dataSource, this.companyContactPersonVn + " " +this.companyContactPersonLn))
       .subscribe(x => console.log(x));
     this.router.navigate(["/checkout"]);
   }
