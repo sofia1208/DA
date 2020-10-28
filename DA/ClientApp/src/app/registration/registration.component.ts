@@ -65,6 +65,7 @@ export class RegistrationComponent implements OnInit {
 
   checkDatenschutz: boolean;
   checkStrono: boolean;
+  onePart: boolean = true;
   constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
@@ -80,9 +81,10 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     console.log('on init registration');
     this.getEvent(this.detailId);
- 
+
     
   }
+ 
   changeStorno() {
     this.openDialog("Stornobedingungen");
     this.checkButton();
@@ -238,6 +240,7 @@ export class RegistrationComponent implements OnInit {
     this.firstname = "";
     this.lastname = "";
     this.email = "";
+    this.onePart = false;
    
   }
   submit(): void {

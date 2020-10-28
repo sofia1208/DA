@@ -273,3 +273,12 @@ p {
     margin-left: 10px;
 }
 
+.mat-typography p {
+  margin: 5px;
+}
+
+.mat-figure {
+  justify-content: left;
+  margin-left: 20px;
+}
+

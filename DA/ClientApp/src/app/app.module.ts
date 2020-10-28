@@ -40,6 +40,7 @@ import { DialogMoreEventsComponent } from './dialog-more-events/dialog-more-even
 import { AuthGuard } from './login/AuthGuard';
 import { DialogAddPartComponent } from './dialog-add-part/dialog-add-part.component';
 import { DialogSavingComponent } from './dialog-saving/dialog-saving.component';
+
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -104,6 +105,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     BrowserAnimationsModule,
+    MatGridListModule,
+ 
+    
    // MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
   exports: [RouterModule, FormsModule, ReactiveFormsModule],
