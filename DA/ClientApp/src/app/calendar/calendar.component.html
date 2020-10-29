@@ -59,8 +59,9 @@
                      [class.active]="view === CalendarView.Day">
                   Tag
                 </div>
-                <div class="btn buttonGray"
-                     (click)="setListView()">
+                <div class="btn buttonGray {{listactive}}"
+                  (click)="setView(CalendarView.Day)"
+                  [class.active]="view === CalendarView.List">
 
                   Liste
                 </div>
@@ -167,7 +168,7 @@
 
           <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef> Preis </th>
-            <td mat-cell *matCellDef="let schooling"> {{schooling.price}} </td>
+            <td mat-cell *matCellDef="let schooling"> {{schooling.price}} € </td>
           </ng-container>
           <ng-container matColumnDef="organisation">
             <th mat-header-cell *matHeaderCellDef> Organisator </th>
@@ -179,27 +180,30 @@
 
 
       </div>
-      <div class="legend">
-        
-        <div style=" display:flex; flex-direction:row;">
-          <div class="legend legendInner">
-            <button class="btnLegend" style="background-color:#8CEE88; margin-top: 8px;"></button>
-            <p style="margin-left: 6px;"> Verfügbar</p>
-          </div>
-          <div class="legend legendInner">
-            <button class="btnLegend" style="background-color:#F28C8C; margin-top: 8px;"></button>
-            <p style="margin-left: 6px;"> Belegt</p>
-          </div>
-          <div class="legend legendInner">
-            <button class="btnLegend" style="background-color:#DEEFF5; margin-top: 8px;"></button>
-            <p style="margin-left: 6px; "> Feiertag</p>
+     
+      <div *ngIf="calendar" [ngSwitch]="view">
+
+        <div class="legend">
+
+          <div style=" display:flex; flex-direction:row;">
+            <div class="legend legendInner">
+              <button class="btnLegend" style="background-color:#8CEE88; margin-top: 8px;"></button>
+              <p style="margin-left: 6px;"> Verfügbar</p>
+            </div>
+            <div class="legend legendInner">
+              <button class="btnLegend" style="background-color:#F28C8C; margin-top: 8px;"></button>
+              <p style="margin-left: 6px;"> Belegt</p>
+            </div>
+            <div class="legend legendInner">
+              <button class="btnLegend" style="background-color:#DEEFF5; margin-top: 8px;"></button>
+              <p style="margin-left: 6px; "> Feiertag</p>
+            </div>
+
           </div>
 
+
         </div>
-       
-       
-      </div>
-      <div *ngIf="calendar" [ngSwitch]="view">
+
         <div *ngIf="!mobile">
           <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
                                    [viewDate]="viewDate"

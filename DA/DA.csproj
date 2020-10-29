@@ -35,6 +35,7 @@
     <None Remove="ClientApp\src\app\calendar\CustomDateFormatter.ts" />
     <None Remove="ClientApp\src\app\calendar\CustomEvent.ts" />
     <None Remove="ClientApp\src\app\calendar\Holiday.ts" />
+    <None Remove="ClientApp\src\app\calendar\MyCalendarView.ts" />
     <None Remove="ClientApp\src\app\calendar\Printing.ts" />
     <None Remove="ClientApp\src\app\calendar\SchoolingGet.ts" />
     <None Remove="ClientApp\src\app\invoice\GetSummaryForPrint.ts" />
@@ -88,6 +89,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\calendar\CustomDateFormatter.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\Holiday.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\CustomEvent.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\calendar\MyCalendarView.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\Printing.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\calendar\SchoolingGet.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\invoice\GetSummaryForPrint.ts" />

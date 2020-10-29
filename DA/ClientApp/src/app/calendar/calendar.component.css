@@ -290,4 +290,7 @@ p {
 .cal-out-month .holiday {
   opacity: 0.3;
 }
+.activeList {
+  background-color: #e29850;
+}
 
