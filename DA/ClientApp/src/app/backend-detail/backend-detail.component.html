@@ -58,7 +58,7 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-          <input [(ngModel)]="startTime" class="inputTime" (change)="checkInputs()" type="time">
+          <input [(ngModel)]="startTime" class="inputTime" (change)="changeTime(true)" type="time">
         </div>
 
         <div class="displayRow fields">
@@ -68,7 +68,7 @@
             <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
           </mat-form-field>
-          <input [(ngModel)]="endTime" class="inputTime" (change)="checkInputs()" type="time">
+          <input [(ngModel)]="endTime" class="inputTime" (change)="changeTime(false)" type="time">
         </div>
         <mat-form-field class="displayRow fields">
 

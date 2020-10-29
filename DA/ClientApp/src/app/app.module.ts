@@ -42,7 +42,7 @@ import { DialogAddPartComponent } from './dialog-add-part/dialog-add-part.compon
 import { DialogSavingComponent } from './dialog-saving/dialog-saving.component';
 import { DialogEditComponent } from './dialog-edit/dialog-edit.component';
 import { DialogDeleteMemberComponent } from './dialog-delete-member/dialog-delete-member.component';
-
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -115,7 +115,7 @@ const routes: Routes = [
    // MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
   exports: [RouterModule, FormsModule, ReactiveFormsModule],
-  providers: [{ provide: LOCALE_ID, useValue: "de" }, AuthGuard],
+  providers: [{ provide: LOCALE_ID, useValue: "de" }, { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }, AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent, DialogMoreEventsComponent, DialogAddPartComponent, DialogSavingComponent, DialogEditComponent, DialogDeleteMemberComponent
   ] 

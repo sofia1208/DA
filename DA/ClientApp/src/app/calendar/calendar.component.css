@@ -284,4 +284,10 @@ p {
 .cal-out-month .activeSchooling{
   opacity: 0.3;
 }
+.cal-out-month .takenSchooling {
+  opacity: 0.3;
+}
+.cal-out-month .holiday {
+  opacity: 0.3;
+}
 

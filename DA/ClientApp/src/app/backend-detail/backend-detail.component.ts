@@ -32,8 +32,8 @@ export class BackendDetailComponent implements OnInit {
   email: string;
   website: string;
   phone: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date = new Date();
+  endDate: Date= new Date();
   startTime: string;
   endTime: string;
   sizeOfSchooling: Number;
@@ -272,7 +272,7 @@ export class BackendDetailComponent implements OnInit {
 
   }
   fillDetails() {
-
+    console.log(this.backendDto);
     this.street= this.backendDto.street;
     this.streetNumber = this.backendDto.streetNumber.toString();
     this.zipCode = this.backendDto.zipCode.toString();
@@ -288,9 +288,22 @@ export class BackendDetailComponent implements OnInit {
     this.catName = this.category.filter(x => x.includes(cat))[0];
     console.log(this.catName);
    
-  
-    this.startDate = this.backendDto.start;
-    this.endDate = this.backendDto.end;
+    var xx = this.backendDto.start.toString().split("-");
+    var day = xx[2].split("T");
+    var hours = day[1].split(":");
+
+    var xxE = this.backendDto.end.toString().split("-");
+    var dayE = xxE[2].split("T");
+    var hoursE = dayE[1].split(":")
+
+    this.startDate = new Date();
+    this.startDate.setFullYear(+xx[0], +xx[1] - 1, +day[0]);
+    this.startDate.setHours(+hours[0], +hours[1]);
+
+    this.endDate = new Date();
+    this.endDate.setFullYear(+xxE[0], +xxE[1] - 1, +dayE[0]);
+    this.endDate.setHours(+hoursE[0], +hoursE[1]);
+
     let sT = new Date(this.backendDto.start);
     let eT = new Date(this.backendDto.end);
     this.convertToGermanTime(sT, eT);
@@ -395,6 +408,8 @@ export class BackendDetailComponent implements OnInit {
     else {
       this.checkInputs();
       if (this.readyToPost) {
+        this.startDate.setHours(this.startDate.getHours() + 1);
+        this.endDate.setHours(this.endDate.getHours() + 1);
         this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
           this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
           .subscribe(x => {
@@ -414,8 +429,11 @@ export class BackendDetailComponent implements OnInit {
 
    
   }
-  editSchooling(goBack:boolean) {
-   
+  editSchooling(goBack: boolean) {
+ 
+    this.startDate.setHours(this.startDate.getHours() + 1);
+    this.endDate.setHours(this.endDate.getHours() + 1);
+
     this.putSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
       .subscribe(x => {
@@ -428,6 +446,16 @@ export class BackendDetailComponent implements OnInit {
       });
 
 
+  }
+  changeTime(typ: boolean) {
+    console.log(typ);
+    if (typ) {
+      this.startDate.setHours(+this.startTime.split(":")[0], +this.startTime.split(":")[1]);
+
+    }
+    else {
+      this.endDate.setHours(+this.endTime.split(":")[0], +this.endTime.split(":")[1]);
+    }
   }
   postSchooling(reg: BackendDetailDto): Observable<BackendDetailDto> {
     const httpOptions = {
