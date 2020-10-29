@@ -348,7 +348,9 @@ export class CalendarComponent implements OnInit {
     let schooling = new SchoolingDto;
     let id = event.id;
     this.detailId = Number(event.id);
-    if (event.isHoliday|| !event.isFree) {
+
+
+    if (event.isHoliday || !event.isFree) {
       this.hidden = true;
     }
     else {
@@ -548,6 +550,11 @@ export class CalendarComponent implements OnInit {
     }
  
   
+  }
+  checkIfItsOutOfMonth(event) {
+    console.log(event);
+    return true;
+
   }
   private holidaysToEvents(): void {
     //let holi = JSON.parse(this.holidays.toString());

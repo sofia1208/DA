@@ -281,4 +281,7 @@ p {
   justify-content: left;
   margin-left: 20px;
 }
+.cal-out-month .activeSchooling{
+  opacity: 0.3;
+}
 

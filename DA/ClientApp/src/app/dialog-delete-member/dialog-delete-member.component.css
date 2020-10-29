@@ -1,0 +1,17 @@
+.inputs {
+  margin-right: 30px;
+}
+
+button {
+  border-radius: 10px;
+  padding: 7px;
+  margin-left: 20px;
+}
+
+  button:hover {
+    background-color: darkgray;
+  }
+
+.mat-dialog-actions {
+  float: right;
+}

@@ -100,22 +100,25 @@
           <span *ngFor="let ev of day.events">
 
             <span *ngIf="ev.isFree&&ev.hasMoreDays">
+              <div *ngIf="checkIfItsOutOfMonth(ev)">
+               seas
+              </div>
               <div style="display:flex">
-                <p class="activeSchooling" data-toggle="tooltip" title="Für Schulung anmelden" style=" font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
+                <p class="activeSchooling" data-toggle="tooltip" title="Für Schulung anmelden" style=" font-size:1.0vw ; word-break: break-word; margin: 0px;   border-right: none;">{{ ev.title }}</p>
               </div>
 
             </span>
             <span *ngIf="!ev.isFree&&ev.hasMoreDays">
-              <p class="moreDays" style="font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
+              <p class="moreDays" style="font-size:1.0vw ; word-break: break-word; margin: 0px;">{{ ev.title }}</p>
             </span>
             <span *ngIf="ev.isFree&&!ev.hasMoreDays&&!ev.isHoliday">
-              <p class="activeSchooling" style="margin: 6px;  font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
+              <p class="activeSchooling" style="margin: 6px;  font-size:1.0vw ; word-break: break-word; margin: 0px;">{{ ev.title }}</p>
             </span>
             <span *ngIf="!ev.isFree&&!ev.hasMoreDays">
-              <p class="takenSchooling" style="margin: 6px;  font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
+              <p class="takenSchooling" style="margin: 6px;  font-size:1.0vw ; word-break: break-word; margin: 0px;">{{ ev.title }}</p>
             </span>
             <span *ngIf="ev.isHoliday">
-              <p class="holiday" style="font-size:1.0vw ; word-break: break-word">{{ ev.title }}</p>
+              <p class="holiday" style="font-size:1.0vw ; word-break: break-word; margin: 0px;">{{ ev.title }}</p>
             </span>
            
 
@@ -180,16 +183,16 @@
         
         <div style=" display:flex; flex-direction:row;">
           <div class="legend legendInner">
-            <button class="btnLegend" style="background-color:#8CEE88"></button>
+            <button class="btnLegend" style="background-color:#8CEE88; margin-top: 8px;"></button>
             <p style="margin-left: 6px;"> Verfügbar</p>
           </div>
           <div class="legend legendInner">
-            <button class="btnLegend" style="background-color:#F28C8C"></button>
+            <button class="btnLegend" style="background-color:#F28C8C; margin-top: 8px;"></button>
             <p style="margin-left: 6px;"> Belegt</p>
           </div>
           <div class="legend legendInner">
-            <button class="btnLegend" style="background-color:#DEEFF5"></button>
-            <p style="margin-left: 6px;"> Feiertag</p>
+            <button class="btnLegend" style="background-color:#DEEFF5; margin-top: 8px;"></button>
+            <p style="margin-left: 6px; "> Feiertag</p>
           </div>
 
         </div>
