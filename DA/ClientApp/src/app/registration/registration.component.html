@@ -130,7 +130,12 @@
   <div class="printMe" style="margin-bottom: 50px;">
     <mat-grid-list cols="5" rowHeight="100px">
       <mat-grid-tile colspan="1">
-        <h3 class="firma">Teilnehmer</h3>
+        <div style="display:flex; flex-direction: column">
+          <h3 class="firma">Teilnehmer</h3>
+          <p style="color: #707070;" *ngIf="freePlaces >1">noch {{freePlaces}} freie Plätze</p>
+          <p  style="color: #707070;" *ngIf="freePlaces == 1">noch {{freePlaces}} freier Platz</p>
+        </div>
+    
       </mat-grid-tile>
       <mat-grid-tile colspan="4">
 
@@ -146,7 +151,7 @@
           <mat-label>E-Mail</mat-label>
           <input matInput [(ngModel)]="email" placeholder="max@mustermann.com">
         </mat-form-field>
-        <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()">Hinzufügen</button>
+        <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()" [disabled]="disableAdding">Hinzufügen</button>
 
       </mat-grid-tile>
 

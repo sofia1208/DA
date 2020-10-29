@@ -39,7 +39,7 @@ export class RegistrationComponent implements OnInit {
   firstname: string = "";
   lastname: string="";
   email: string="";
-
+  freePlaces: number;
 
   mobile: boolean = false;
 
@@ -71,7 +71,10 @@ export class RegistrationComponent implements OnInit {
   onePart: boolean = true;
   dynamicRow: string = "150px";
   dynamicHeight: number = 150;
-  saved: boolean=true;
+  saved: boolean = true;
+  disableAdding: boolean = false;
+  openData: boolean = false;
+  openStorno: boolean = false;
   constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
@@ -130,7 +133,9 @@ export class RegistrationComponent implements OnInit {
       console.log('The dialog was closed');
       if (result != null) {
         this.dataSource = this.dataSource.filter(item => item.id != id);
-       
+        this.freePlaces++;
+        if (this.freePlaces > 0) this.disableAdding = false;
+
       }
 
 
@@ -170,11 +175,19 @@ export class RegistrationComponent implements OnInit {
     }
   }
   changeStorno() {
-    this.openDialog("Stornobedingungen");
+    console.log(this.openStorno);
+    if (!this.openStorno) {
+      this.openDialog("Stornobedingungen");
+    }
+    this.openStorno = !this.openStorno;
     this.checkButton();
   }
   changeData() {
-    this.openDialog("Datenschutzbestimmungen");
+    if (!this.openData) {
+      this.openDialog("Datenschutzbestimmungen");
+      
+    }
+    this.openData = !this.openData;
     this.checkButton();
   }
   checkButton() {
@@ -251,7 +264,7 @@ export class RegistrationComponent implements OnInit {
 
   fillDetails(schooling: SchoolingDto) {
    
-    console.log('fill details');
+    console.log(schooling);
  
     this.telefon = schooling.phone;
     this.convertToGermanTime(schooling);
@@ -261,9 +274,10 @@ export class RegistrationComponent implements OnInit {
 
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
-   
-    this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
+    this.freePlaces = schooling.freePlaces;
     
+    this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
+   
      this.getAddress();
   
   }
@@ -327,6 +341,10 @@ export class RegistrationComponent implements OnInit {
     this.onePart = false;
     this.dynamicHeight = this.dynamicHeight + 50;
     this.dynamicRow = this.dynamicHeight + "px";
+    this.freePlaces--;
+    if (this.freePlaces == 0) {
+      this.disableAdding = true;
+    }
    
   }
   submit(): void {
@@ -345,10 +363,7 @@ export class RegistrationComponent implements OnInit {
 
   
   
-  private getDetail(url: string): Observable<SchoolingDto> {
-    return this.http.get<SchoolingDto>(url);
 
-  }
   private getCoordinates(url: string): Observable<Location[]> {
     return this.http.get<Location[]>(url);
 
