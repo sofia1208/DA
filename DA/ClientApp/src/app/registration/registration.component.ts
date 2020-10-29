@@ -6,11 +6,14 @@ import { CustomEvent } from '../calendar/CustomEvent';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from './Member';
-import { MatTable, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatTable, MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
 import { Registration } from './Registration';
 import { AgmMap, MouseEvent, MapsAPILoader } from '@agm/core';
 import { Location } from './Location';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
+import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
+import { DialogDeleteMemberComponent } from '../dialog-delete-member/dialog-delete-member.component';
+import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
 
 @Component({
   selector: 'app-registration',
@@ -36,7 +39,7 @@ export class RegistrationComponent implements OnInit {
   firstname: string = "";
   lastname: string="";
   email: string="";
-  members: Member[] = [];
+  freePlaces: number;
 
   mobile: boolean = false;
 
@@ -58,13 +61,20 @@ export class RegistrationComponent implements OnInit {
   markerLng: Number;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
-  dataSource = this.members;
+  dataSource: Member[] = [];
   buttonActive: boolean = false;
-  
+  available: number;
   schooling: SchoolingDto;
 
   checkDatenschutz: boolean;
   checkStrono: boolean;
+  onePart: boolean = true;
+  dynamicRow: string = "150px";
+  dynamicHeight: number = 150;
+  saved: boolean = true;
+  disableAdding: boolean = false;
+  openData: boolean = false;
+  openStorno: boolean = false;
   constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
@@ -76,23 +86,112 @@ export class RegistrationComponent implements OnInit {
 
   }
 
-  displayedColumns: string[] = ['firstname', 'lastname', 'email'];
+  displayedColumns: string[] = ['firstname', 'lastname', 'email', 'edit', 'delete'];
   ngOnInit(): void {
     console.log('on init registration');
     this.getEvent(this.detailId);
- 
+
     
   }
+  editSchooling(id: number) {
+    let member = this.dataSource.find(x => x.id == id);
+    const dialogRef = this.dialog.open(DialogEditComponent, {
+      width: '50%',
+      data: {
+        firstname: member.firstname,
+        lastname: member.lastname,
+        email: member.email
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result != null) {
+    
+        member.firstname = result.firstname;
+        member.lastname = result.lastname;
+        member.email = result.email;
+       
+      }
+      
+
+
+    });
+    
+
+  }
+  deleteSchooling(id: number) {
+    let member = this.dataSource.find(x => x.id == id);
+    const dialogRef = this.dialog.open(DialogDeleteMemberComponent, {
+      width: '40%',
+      data: {
+       name: member.firstname + " " + member.lastname
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result != null) {
+        this.dataSource = this.dataSource.filter(item => item.id != id);
+        this.freePlaces++;
+        if (this.freePlaces > 0) this.disableAdding = false;
+
+      }
+
+
+
+    });
+
+  }
+  goBack() {
+    if (this.saved) {
+      console.log("everything saved");
+      this.router.navigate(["/calendar"]);
+    }
+    else {
+     
+      const dialogRef = this.dialog.open(DialogSavingComponent, {
+        width: '400px',
+        data: {
+          saved: this.saved
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.saved = result.saved;
+        }
+
+
+        if (this.saved) {
+         // this.addSchooling(true);
+
+        }
+        else {
+          this.router.navigate(["/calendar"]);
+        }
+
+      });
+    }
+  }
   changeStorno() {
-    this.openDialog("Stornobedingungen");
+    console.log(this.openStorno);
+    if (!this.openStorno) {
+      this.openDialog("Stornobedingungen");
+    }
+    this.openStorno = !this.openStorno;
     this.checkButton();
   }
   changeData() {
-    this.openDialog("Datenschutzbestimmungen");
+    if (!this.openData) {
+      this.openDialog("Datenschutzbestimmungen");
+      
+    }
+    this.openData = !this.openData;
     this.checkButton();
   }
   checkButton() {
-    
+    this.saved = false;
     if (this.checkDatenschutz && this.checkStrono && this.company!=="" && this.companyCity!=="" &&
       this.companyContactPersonLn!=="" &&
       this.companyContactPersonVn!=="" && 
@@ -165,7 +264,7 @@ export class RegistrationComponent implements OnInit {
 
   fillDetails(schooling: SchoolingDto) {
    
-    console.log('fill details');
+    console.log(schooling);
  
     this.telefon = schooling.phone;
     this.convertToGermanTime(schooling);
@@ -175,9 +274,10 @@ export class RegistrationComponent implements OnInit {
 
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
-   
+    this.freePlaces = schooling.freePlaces;
+    
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
-
+   
      this.getAddress();
   
   }
@@ -231,18 +331,25 @@ export class RegistrationComponent implements OnInit {
   }
 
   addMember(): void {
-   
+       
   
     this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.email, this.company));
     this.table.renderRows();
     this.firstname = "";
     this.lastname = "";
     this.email = "";
+    this.onePart = false;
+    this.dynamicHeight = this.dynamicHeight + 50;
+    this.dynamicRow = this.dynamicHeight + "px";
+    this.freePlaces--;
+    if (this.freePlaces == 0) {
+      this.disableAdding = true;
+    }
    
   }
   submit(): void {
     console.log("Submit registration");
-    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.members))
+    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.dataSource, this.companyContactPersonVn + " " +this.companyContactPersonLn))
       .subscribe(x => console.log(x));
     this.router.navigate(["/checkout"]);
   }
@@ -256,10 +363,7 @@ export class RegistrationComponent implements OnInit {
 
   
   
-  private getDetail(url: string): Observable<SchoolingDto> {
-    return this.http.get<SchoolingDto>(url);
 
-  }
   private getCoordinates(url: string): Observable<Location[]> {
     return this.http.get<Location[]>(url);
 

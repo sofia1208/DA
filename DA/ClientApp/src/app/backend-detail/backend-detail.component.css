@@ -78,3 +78,6 @@ agm-map {
   flex-direction: row;
   text-align: center;
 }
+td.mat-cell{
+    vertical-align:middle;
+}

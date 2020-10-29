@@ -9,6 +9,16 @@ h1 {
 
 }
 
+.mat-figure {
+  justify-content: left;
+  margin-left: 20px;
+}
+
+.mat-grid-tile {
+  justify-content: left;
+  margin-left: 20px;
+}
+
 .container {
   width: 100%;
 }
@@ -203,7 +213,7 @@ h1 {
 
 }
 .table {
-  width: 500px;
+  width: 85%;
   margin-bottom:50px
   
 }
@@ -351,4 +361,26 @@ app-invoice {
 
 .mat-typography p{
     margin: 5px;
+}
+mat-grid-tile {
+  
+}
+::ng-deep.mat-figure {
+  justify-content: left !important;
+}
+.m-f {
+  justify-content: left !important;
+}
+table {
+  width: 100%
+}
+
+  table tr:first-child td {
+    border-top: 0;
+  }
+.table th {
+  border-top: 0;
+}
+.table thead th{
+    text-align: center;
 }

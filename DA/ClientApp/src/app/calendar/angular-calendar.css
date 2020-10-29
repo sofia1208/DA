@@ -163,7 +163,8 @@
   .cal-month-view .cal-day-cell.cal-weekend .cal-day-number {
     color: #8b0000; }
   .cal-month-view .cal-day-cell.cal-today {
-    background-color: #e8fde7; }
+    background-color: #feae5f6e;
+  }
   .cal-month-view .cal-day-cell.cal-drag-over {
     background-color: #e0e0e0 !important; }
   .cal-month-view .cal-open-day-events {
@@ -493,6 +494,4 @@
     display:flex;
 }
 
-.cal-month-view .cal-event{
 
-}

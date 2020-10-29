@@ -40,8 +40,10 @@ import { GetSummaryForPrint } from '../invoice/GetSummaryForPrint';
 
 import { MatTable, MatDialogConfig, MatDialog } from '@angular/material';
 import { DialogMoreEventsComponent } from '../dialog-more-events/dialog-more-events.component';
-registerLocaleData(localeDe, 'de');
 
+ 
+registerLocaleData(localeDe, 'de');
+enum MyCalendarView {List, Month, Week, Day}
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -90,7 +92,7 @@ export class CalendarComponent implements OnInit {
   activeKombi: boolean = false;
   activeGrundlagen: boolean = false;
   activeAdmin: boolean = false;
-
+  listactive: string="seas";
 
 
   displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
@@ -117,9 +119,10 @@ export class CalendarComponent implements OnInit {
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
 
   weekendDays: number[] = [DAYS_OF_WEEK.SATURDAY, DAYS_OF_WEEK.SUNDAY];
-  view: CalendarView = CalendarView.Day;
-  
   CalendarView = CalendarView;
+  view: CalendarView = CalendarView.Month;
+  
+
  
 
   viewDate: Date = new Date();
@@ -348,7 +351,9 @@ export class CalendarComponent implements OnInit {
     let schooling = new SchoolingDto;
     let id = event.id;
     this.detailId = Number(event.id);
-    if (event.isHoliday|| !event.isFree) {
+
+
+    if (event.isHoliday || !event.isFree) {
       this.hidden = true;
     }
     else {
@@ -485,10 +490,14 @@ export class CalendarComponent implements OnInit {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
   setListView() {
+    this.view = CalendarView.Day;
+    this.listactive = "activeList";
     this.hidden = true;
     this.calendar = false;
+    
   }
   setView(view: CalendarView) {
+    this.listactive = "";
     this.hidden = true;
     this.calendar = true;
     this.view = view;
@@ -525,7 +534,7 @@ export class CalendarComponent implements OnInit {
  
       console.log(this.schoolings)
       const schooling: CustomEvent = {
-        isFree: true,
+        isFree: this.schoolings[i].isFree,
         start: start,
         end: end,
         title: this.schoolings[i].name,
@@ -548,6 +557,11 @@ export class CalendarComponent implements OnInit {
     }
  
   
+  }
+  checkIfItsOutOfMonth(event) {
+    console.log(event);
+    return true;
+
   }
   private holidaysToEvents(): void {
     //let holi = JSON.parse(this.holidays.toString());

@@ -12,8 +12,10 @@ export class Registration {
   city: string;
   country: string;
   participants: Member[];
+  contactPerson: string;
+ 
   
-  constructor(schoolingId: Number, company: string, phone: string, companyEmail: string, street: string, streetNumber: Number, zipCode: Number, city: string, country: string, participants: Member[] ) {
+  constructor(schoolingId: Number, company: string, phone: string, companyEmail: string, street: string, streetNumber: Number, zipCode: Number, city: string, country: string, participants: Member[], contactPerson:string ) {
 
     this.company = company;
     this.schoolingId = schoolingId;
@@ -25,5 +27,7 @@ export class Registration {
     this.city = city;
     this.country = country;
     this.participants = participants;
+    this.contactPerson = contactPerson;
+  
   }
 }

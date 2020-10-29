@@ -62,6 +62,9 @@ h1 {
   margin: 10px;
   flex-shrink: 1
 }
+.activeSchooling:hover{
+    cursor: pointer;
+}
 .takenSchooling {
   background-color: #F28C8C;
   border-radius: 2px;
@@ -124,6 +127,7 @@ margin: auto
   margin-left: 70px;
   font-size: 20px;
   color: #707070;
+  margin-bottom: 0px;
 }
 .col1{
 width: 25%
@@ -267,5 +271,26 @@ p {
 .mat-typography p{
     margin: 0;
     margin-left: 10px;
+}
+
+.mat-typography p {
+  margin: 5px;
+}
+
+.mat-figure {
+  justify-content: left;
+  margin-left: 20px;
+}
+.cal-out-month .activeSchooling{
+  opacity: 0.3;
+}
+.cal-out-month .takenSchooling {
+  opacity: 0.3;
+}
+.cal-out-month .holiday {
+  opacity: 0.3;
+}
+.activeList {
+  background-color: #e29850;
 }
 

@@ -1,7 +1,11 @@
 <div class="outerDiv">
-  <h1 class="schulungh1 printMe">
-    Anmeldung
-  </h1>
+  <div style="display: flex; flex-direction: row">
+    <button mat-raised-button style="background-color: white; border: none; margin-bottom: 10px;" (click)="goBack()" data-toggle="tooltip" title="Zurück zur Übersicht"><mat-icon>chevron_left</mat-icon></button>
+    <h1 class="schulungh1 printMe">
+      Anmeldung
+    </h1>
+  </div>
+ 
   <h3 #detailView class="detailTitle">{{detailTitle}}</h3>
   <button class="btnSubmit printMe" (click)="printRegistration()">Schulung ausdrucken</button>
   <div class="detailview">
@@ -32,132 +36,137 @@
 
 
     </div>
-   
+
     <div class="printMe">
       <button class="btnSubmit" style="margin-bottom: 10px;" (click)="planRoute()">Route planen</button>
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
       </agm-map>
     </div>
+  </div>
+  <div class="printMe">
+    <mat-grid-list cols="5" rowHeight="100px">
+      <mat-grid-tile colspan="1">
+        <h3 class="firma">Firma*</h3>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4">
+        <mat-form-field class="example-full-width">
 
+          <mat-label>Firmenname</mat-label>
+          <input matInput [(ngModel)]="company"  (change)="checkButton()">
+        </mat-form-field>
 
-    <div class="printMe">
-      <h3 class="firma">Firma*</h3>
-      <div class="containerInput">
+      </mat-grid-tile>
 
+      <mat-grid-tile colspan="1">
 
-        <div class="row rowFields">
-          <div class="column col1">
-            <div class="row innerRows firma"></div>
-          </div>
-          <mat-form-field class="example-full-width">
-
-            <mat-label>Firmenname</mat-label>
-            <input matInput [(ngModel)]="company">
-          </mat-form-field>
-
-
-        </div>
-
-
-
-
-        <div class="row rowFields">
-          <div class="column col1">
-            <div class="row innerRows firma"></div>
-          </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4">
+        <div style="display: flex; flex-direction: row; flex-flow: wrap;">
           <mat-form-field class="example-full-width">
             <mat-label>Straße</mat-label>
-            <input matInput [(ngModel)]="companyStreet">
+            <input matInput [(ngModel)]="companyStreet"  (change)="checkButton()">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Hausnummer</mat-label>
-            <input matInput [(ngModel)]="companyStreetNumber">
+            <input matInput [(ngModel)]="companyStreetNumber"  (change)="checkButton()">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Postleitzahl</mat-label>
-            <input matInput [(ngModel)]="companyZipCode">
+            <input matInput [(ngModel)]="companyZipCode"  (change)="checkButton()">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Stadt</mat-label>
-            <input matInput [(ngModel)]="companyCity">
+            <input matInput [(ngModel)]="companyCity"  (change)="checkButton()">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Land</mat-label>
-            <input matInput [(ngModel)]="companyCountry">
+            <input matInput [(ngModel)]="companyCountry"  (change)="checkButton()">
           </mat-form-field>
         </div>
 
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+
+  <div class="printMe" style="margin-bottom: 50px; margin-top: 50px;">
+    <mat-grid-list cols="5" rowHeight="100px">
+      <mat-grid-tile colspan="1">
         <h3 class="firma">Ansprechperson*</h3>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4">
 
-        <div class="row rowFields">
-          <div class="column col1">
-            <div class="row innerRows firma"></div>
-          </div>
-          <mat-form-field class="example-full-width">
-            <mat-label>Anrede</mat-label>
-            <input matInput [(ngModel)]="companyContactPersonVn">
-          </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Anrede</mat-label>
+          <input matInput [(ngModel)]="companyContactPersonVn" (change)="checkButton()">
+        </mat-form-field>
 
-          <mat-form-field class="example-full-width">
-            <mat-label>Name</mat-label>
-            <input matInput [(ngModel)]="companyContactPersonLn">
-          </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="companyContactPersonLn"  (change)="checkButton()">
+        </mat-form-field>
 
-          <mat-form-field class="example-full-width">
-            <mat-label>Telefonnummer</mat-label>
-            <input matInput [(ngModel)]="companyPhone">
-          </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Telefonnummer</mat-label>
+          <input matInput [(ngModel)]="companyPhone"  (change)="checkButton()">
+        </mat-form-field>
 
-          <mat-form-field class="example-full-width">
-            <mat-label>E-Mail</mat-label>
-            <input matInput [(ngModel)]="companyMail">
-          </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>E-Mail</mat-label>
+          <input matInput [(ngModel)]="companyMail"  (change)="checkButton()">
+        </mat-form-field>
+
+      </mat-grid-tile>
+
+
+    </mat-grid-list>
+  </div>
+
+  <div class="printMe" style="margin-bottom: 50px;">
+    <mat-grid-list cols="5" rowHeight="100px">
+      <mat-grid-tile colspan="1">
+        <div style="display:flex; flex-direction: column">
+          <h3 class="firma">Teilnehmer</h3>
+          <p style="color: #707070;" *ngIf="freePlaces >1">noch {{freePlaces}} freie Plätze</p>
+          <p  style="color: #707070;" *ngIf="freePlaces == 1">noch {{freePlaces}} freier Platz</p>
         </div>
+    
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4">
 
-      </div>
-      <h3 class="firma">Teilnehmer</h3>
-      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Vorname</mat-label>
+          <input matInput [(ngModel)]="firstname" placeholder="Max">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Nachname</mat-label>
+          <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>E-Mail</mat-label>
+          <input matInput [(ngModel)]="email" placeholder="max@mustermann.com">
+        </mat-form-field>
+        <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()" [disabled]="disableAdding">Hinzufügen</button>
+
+      </mat-grid-tile>
 
 
+    </mat-grid-list>
+  </div>
 
-        <div class="containerInput">
-          <div class="row rowFields">
-            <div class="column col1">
-              <div class="row innerRows firma"></div>
-            </div>
-            <mat-form-field class="example-full-width">
-              <mat-label>Vorname</mat-label>
-              <input matInput [(ngModel)]="firstname" placeholder="Max">
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Nachname</mat-label>
-              <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Email</mat-label>
-              <input matInput [(ngModel)]="email" placeholder="mm">
-            </mat-form-field>
-            <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()">Hinzufügen</button>
-          </div>
-        </div>
 
-      </div>
-    </div>
+  <div class="printMe" style="margin-bottom: 50px" [hidden]="onePart">
+    <mat-grid-list cols="5" rowHeight="{{dynamicRow}}">
+      <mat-grid-tile colspan="1">
+        <h3 class="firma">Teilnehmerübersicht</h3>
 
-    <br />
-
-    <h3 class="firma">Teilnehmerübersicht</h3>
-    <div class="row">
-      <div class="column col1 colEmpty">
-        <div class="row innerRows firma"></div>
-      </div>
-
-      <div class="column col2">
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4">
         <table mat-table #mytable [dataSource]="dataSource" class="table">
 
           <ng-container matColumnDef="firstname">
@@ -179,39 +188,190 @@
 
 
 
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef>  </th>
+            <td mat-cell *matCellDef="let member">
+              <button style="background-color: white; border:none" data-toggle="tooltip" title="Editieren" (click)="editSchooling(member.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef>  </th>
+            <td mat-cell *matCellDef="let member">
+              <button style="background-color: white; border:none" data-toggle="tooltip" title="Teilnehmer löschen" (click)="deleteSchooling(member.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-      </div>
+
+      </mat-grid-tile>
 
 
-
-
-    </div>
-
-
-
-    <div class="row printMe">
-      <div class="column col1 checks">
-        <h3 class="firma checks">Stornobedingungen</h3>
-      </div>
-      <input type="checkbox" (change)="changeStorno()" [(ngModel)]="checkStrono" />
-      <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen"> Stornobedingungen </a> von moveIT Software gelesen.</p>
-    </div>
-
-    <div class="row printMe">
-      <div class="column col1 checks">
-        <h3 class="firma checks">Datenschutz</h3>
-      </div>
-      <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />
-      <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutzbedinungen</a> von moveIT Software gelesen.</p>
-
-      <button class="btnSubmit btnDown" [disabled]="!buttonActive" (click)="submit()">Abschicken</button>
-    </div>
-
-
+    </mat-grid-list>
   </div>
+
+
+
+  <!--<div class="printMe">-->
+  <!--<h3 class="firma">Firma*</h3>
+  <div class="containerInput">-->
+  <!--<div class="row rowFields">
+    <div class="column col1">
+      <div class="row innerRows firma"></div>
+    </div>
+    <mat-form-field class="example-full-width">
+
+      <mat-label>Firmenname</mat-label>
+      <input matInput [(ngModel)]="company">
+    </mat-form-field>
+
+
+  </div>-->
+  <!--<div class="row rowFields">
+    <div class="column col1">
+      <div class="row innerRows firma"></div>
+    </div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Straße</mat-label>
+      <input matInput [(ngModel)]="companyStreet">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Hausnummer</mat-label>
+      <input matInput [(ngModel)]="companyStreetNumber">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Postleitzahl</mat-label>
+      <input matInput [(ngModel)]="companyZipCode">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Stadt</mat-label>
+      <input matInput [(ngModel)]="companyCity">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Land</mat-label>
+      <input matInput [(ngModel)]="companyCountry">
+    </mat-form-field>
+  </div>-->
+  <!--<h3 class="firma">Ansprechperson*</h3>-->
+  <!--<div class="row rowFields">
+  <div class="column col1">
+    <div class="row innerRows firma"></div>
+  </div>-->
+  <!--<mat-form-field class="example-full-width">
+      <mat-label>Anrede</mat-label>
+      <input matInput [(ngModel)]="companyContactPersonVn">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="companyContactPersonLn">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Telefonnummer</mat-label>
+      <input matInput [(ngModel)]="companyPhone">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>E-Mail</mat-label>
+      <input matInput [(ngModel)]="companyMail">
+    </mat-form-field>
+  </div>-->
+  <!--</div>-->
+  <!--<h3 class="firma">Teilnehmer</h3>
+  <div>-->
+  <!--<div class="containerInput">
+    <div class="row rowFields">
+      <div class="column col1">
+        <div class="row innerRows firma"></div>
+      </div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Vorname</mat-label>
+        <input matInput [(ngModel)]="firstname" placeholder="Max">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Nachname</mat-label>
+        <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="email" placeholder="mm">
+      </mat-form-field>
+      <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()">Hinzufügen</button>
+    </div>
+  </div>-->
+  <!--<br />
+
+  <h3 class="firma">Teilnehmerübersicht</h3>
+  <div class="row">
+    <div class="column col1 colEmpty">
+      <div class="row innerRows firma"></div>
+    </div>
+
+    <div class="column col2">
+      <table mat-table #mytable [dataSource]="dataSource" class="table">
+
+        <ng-container matColumnDef="firstname">
+          <th mat-header-cell *matHeaderCellDef> Vorname </th>
+          <td mat-cell *matCellDef="let member"> {{member.firstname}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="lastname">
+          <th mat-header-cell *matHeaderCellDef> Nachname </th>
+          <td mat-cell *matCellDef="let member"> {{member.lastname}}  </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> E-Mail </th>
+          <td mat-cell *matCellDef="let member"> {{member.email}} </td>
+        </ng-container>
+
+
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </div>
+  </div>-->
+
+
+
+  <div class="row printMe">
+    <div class="column col1 checks">
+      <h3 class="firma checks">Stornobedingungen</h3>
+    </div>
+    <input type="checkbox" (change)="changeStorno()" [(ngModel)]="checkStrono" />
+    <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen"> Stornobedingungen </a> von moveIT Software gelesen.</p>
+  </div>
+
+  <div class="row printMe">
+    <div class="column col1 checks">
+      <h3 class="firma checks">Datenschutz</h3>
+    </div>
+    <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />
+    <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutzbedinungen</a> von moveIT Software gelesen.</p>
+
+    <button class="btnSubmit btnDown" [disabled]="!buttonActive" (click)="submit()">Abschicken</button>
+  </div>
+
+
+</div>
 

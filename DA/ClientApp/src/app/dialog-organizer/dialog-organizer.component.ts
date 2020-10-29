@@ -13,7 +13,7 @@ export class DialogOrganizerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data) { }
 
     ngOnInit(): void {
-        throw new Error("Method not implemented.");
+      
     }
 
   onNoClick(): void {
