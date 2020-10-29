@@ -80,8 +80,9 @@ namespace Schulungskalender.Services {
             var address = addresses.Find(x => x.Id == schooling.AddressId);
             var organizer = organizers.Find(x => x.Id == schooling.OrganizerId);
 
-            return converter.GetSchoolingDetailDTO(schooling, address, organizer, IsSchoolingFree(id));
+            return converter.GetSchoolingDetailDTO(schooling, address, organizer, IsSchoolingFree(id), getFreePlaces(id));
         }
+
 
         public RegistrationDTO Register(RegistrationDTO registration) {
             bool isRegistrationSuccessful = true;
@@ -134,6 +135,10 @@ namespace Schulungskalender.Services {
 
         private bool IsSchoolingFree(int id) {
             return (schoolings.Find(x => x.Id == id).Places - registrations.Where(x => x.SchoolingId == id).Count() > 0);
+        }
+
+        private int getFreePlaces(int id) {
+           return schoolings.Find(x => x.Id == id).Places - registrations.Where(x => x.SchoolingId == id).Count();
         }
 
         private AddressRessource FindAddress(RegistrationDTO registration) {
