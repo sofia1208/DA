@@ -226,7 +226,7 @@ namespace DA.Services {
         }
 
         private SchoolingRessource FindSchooling(BackendDetailDTO backendDetail) {
-            return schoolings.Find(x => x.End == backendDetail.End && x.Name == backendDetail.Name && x.Start == backendDetail.Start && x.Price == backendDetail.Price);
+            return schoolings.Find(x => x.End == backendDetail.End && x.Name == backendDetail.Name && x.Start.Day == backendDetail.Start.Day && x.Start.Month == backendDetail.Start.Month && x.Price == backendDetail.Price);
         }
 
         private CompanyRessource FindCompany(ParticipantDTO participant) {
