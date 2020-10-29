@@ -490,7 +490,7 @@ export class CalendarComponent implements OnInit {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
   setListView() {
-    this.view = CalendarView.Day;
+    this.view = null;
     this.listactive = "activeList";
     this.hidden = true;
     this.calendar = false;

@@ -60,8 +60,8 @@
                   Tag
                 </div>
                 <div class="btn buttonGray {{listactive}}"
-                  (click)="setView(CalendarView.Day)"
-                  [class.active]="view === CalendarView.List">
+                  (click)="setListView()"
+                  [class.active]="view === null">
 
                   Liste
                 </div>
