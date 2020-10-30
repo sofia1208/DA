@@ -148,32 +148,34 @@
       </div>
       <div *ngIf="!calendar">
         <table mat-table #mytable [dataSource]="summaryList" class="table">
-
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef> Typ </th>
-            <td mat-cell *matCellDef="let schooling" (click)="clickOnList(schooling.id,schooling.name)"> {{schooling.name}} </td>
-          </ng-container>
-
-
-          <ng-container matColumnDef="city">
-            <th mat-header-cell *matHeaderCellDef> Ort </th>
-            <td mat-cell *matCellDef="let schooling"> {{schooling.city}} </td>
-          </ng-container>
+          <tr>
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> Typ </th>
+              <td mat-cell *matCellDef="let schooling" (click)="clickOnList(schooling.id,schooling.name)"> {{schooling.name}} </td>
+            </ng-container>
 
 
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef> Datum </th>
-            <td mat-cell *matCellDef="let schooling"> {{schooling.start | date:'d.M.yy'}} - {{schooling.end | date:'d.M.yy'}} </td>
-          </ng-container>
+            <ng-container matColumnDef="city">
+              <th mat-header-cell *matHeaderCellDef> Ort </th>
+              <td mat-cell *matCellDef="let schooling" (click)="clickOnList(schooling.id,schooling.name)"> {{schooling.address | address}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> Preis </th>
-            <td mat-cell *matCellDef="let schooling"> {{schooling.price}} € </td>
-          </ng-container>
-          <ng-container matColumnDef="organisation">
-            <th mat-header-cell *matHeaderCellDef> Organisator </th>
-            <td mat-cell *matCellDef="let schooling"> {{schooling.organizer}} </td>
-          </ng-container>
+
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Datum </th>
+              <td mat-cell *matCellDef="let schooling" (click)="clickOnList(schooling.id,schooling.name)"> {{schooling.start | date:'d.M.yy'}} - {{schooling.end | date:'d.M.yy'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef> Preis </th>
+              <td mat-cell *matCellDef="let schooling" (click)="clickOnList(schooling.id,schooling.name)"> {{schooling.price}} € </td>
+            </ng-container>
+            <ng-container matColumnDef="organisation">
+              <th mat-header-cell *matHeaderCellDef> Organisator </th>
+              <td mat-cell *matCellDef="let schooling" (click)="clickOnList(schooling.id,schooling.name)"> {{schooling.organizer}} </td>
+            </ng-container>
+          </tr>
+        
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>

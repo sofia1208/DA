@@ -494,6 +494,7 @@ export class CalendarComponent implements OnInit {
     this.listactive = "activeList";
     this.hidden = true;
     this.calendar = false;
+    console.log(this.view);
     
   }
   setView(view: CalendarView) {

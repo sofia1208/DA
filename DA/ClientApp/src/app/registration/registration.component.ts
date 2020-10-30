@@ -14,7 +14,7 @@ import { DialogComponentComponent } from '../dialog-component/dialog-component.c
 import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
 import { DialogDeleteMemberComponent } from '../dialog-delete-member/dialog-delete-member.component';
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
-
+import { Validators, FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -85,6 +85,8 @@ export class RegistrationComponent implements OnInit {
     console.log(this.mobile);
 
   }
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  emailFormControl2 = new FormControl('', [Validators.required, Validators.email]);
 
   displayedColumns: string[] = ['firstname', 'lastname', 'email', 'edit', 'delete'];
   ngOnInit(): void {

@@ -118,7 +118,8 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>E-Mail</mat-label>
-          <input matInput [(ngModel)]="companyMail"  (change)="checkButton()">
+          <input matInput [(ngModel)]="companyMail" [formControl]="emailFormControl" (change)="checkButton()">
+          <mat-error *ngIf="emailFormControl.invalid">E-Mail Adress ist nicht gültig</mat-error>
         </mat-form-field>
 
       </mat-grid-tile>
@@ -149,7 +150,8 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>E-Mail</mat-label>
-          <input matInput [(ngModel)]="email" placeholder="max@mustermann.com">
+          <input matInput [(ngModel)]="email"  [formControl]="emailFormControl2" placeholder="max@mustermann.com">
+          <mat-error *ngIf="emailFormControl2.invalid">E-Mail Adress ist nicht gültig</mat-error>
         </mat-form-field>
         <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()" [disabled]="disableAdding">Hinzufügen</button>
 
