@@ -73,7 +73,7 @@ export class RegistrationComponent implements OnInit {
   dynamicRow: string = "150px";
   dynamicHeight: number = 150;
   saved: boolean = true;
-  disableAdding: boolean = false;
+  disableAdding: boolean = true;
   openData: boolean = false;
   openStorno: boolean = false;
   searchForAddress: string;
@@ -101,7 +101,13 @@ export class RegistrationComponent implements OnInit {
 
     
   }
- 
+
+  checkMemberInput() {
+    if (this.firstname != "" && this.lastname != "" && this.emailFormControl2.valid) this.disableAdding = false;
+    else {
+      this.disableAdding = true;
+    }
+  }
 
   public handleAddressChange(address: any) {
     this.searchForAddress = address.formatted_addred

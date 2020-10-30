@@ -58,17 +58,17 @@
 
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="1">
+      <!--<mat-grid-tile colspan="1">
         <h3 class="firma"> </h3>
       </mat-grid-tile>
       <mat-grid-tile colspan="4">
         <mat-form-field class="example-full-width">
 
           <mat-label>Adresse suchen</mat-label>
-          <input ngx-google-places-autocomplete  (onAddressChange)="handleAddressChange($event)" />
+          <input matInput (onAddressChange)="handleAddressChange($event)" />
         </mat-form-field>
 
-      </mat-grid-tile>
+      </mat-grid-tile>-->
 
       <mat-grid-tile colspan="1">
 
@@ -154,15 +154,15 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>Vorname</mat-label>
-          <input matInput [(ngModel)]="firstname" placeholder="Max">
+          <input matInput [(ngModel)]="firstname" (change)="checkMemberInput()" placeholder="Max">
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>Nachname</mat-label>
-          <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
+          <input matInput [(ngModel)]="lastname" (change)="checkMemberInput()"  placeholder="Mustermann">
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>E-Mail</mat-label>
-          <input matInput [(ngModel)]="email"  [formControl]="emailFormControl2" placeholder="max@mustermann.com">
+          <input matInput [(ngModel)]="email"  [formControl]="emailFormControl2"  (change)="checkMemberInput()"  placeholder="max@mustermann.com">
           <mat-error *ngIf="emailFormControl2.invalid">E-Mail Adress ist nicht gültig</mat-error>
         </mat-form-field>
         <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()" [disabled]="disableAdding">Hinzufügen</button>
