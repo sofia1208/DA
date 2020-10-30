@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy ,NgZone } from '@angular/core';
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -15,6 +15,7 @@ import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
 import { DialogDeleteMemberComponent } from '../dialog-delete-member/dialog-delete-member.component';
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -75,7 +76,11 @@ export class RegistrationComponent implements OnInit {
   disableAdding: boolean = false;
   openData: boolean = false;
   openStorno: boolean = false;
-  constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
+  searchForAddress: string;
+  private geoCoder;
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog, private ngZone: NgZone) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
@@ -92,8 +97,14 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
     console.log('on init registration');
     this.getEvent(this.detailId);
+    //this.autocomplete();
 
     
+  }
+ 
+
+  public handleAddressChange(address: any) {
+    this.searchForAddress = address.formatted_addred
   }
   editSchooling(id: number) {
     let member = this.dataSource.find(x => x.id == id);

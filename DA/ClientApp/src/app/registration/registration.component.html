@@ -53,7 +53,19 @@
         <mat-form-field class="example-full-width">
 
           <mat-label>Firmenname</mat-label>
-          <input matInput [(ngModel)]="company"  (change)="checkButton()">
+          <input matInput [(ngModel)]="company" (change)="checkButton()">
+        </mat-form-field>
+
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="1">
+        <h3 class="firma"> </h3>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4">
+        <mat-form-field class="example-full-width">
+
+          <mat-label>Adresse suchen</mat-label>
+          <input ngx-google-places-autocomplete  (onAddressChange)="handleAddressChange($event)" />
         </mat-form-field>
 
       </mat-grid-tile>
@@ -65,27 +77,27 @@
         <div style="display: flex; flex-direction: row; flex-flow: wrap;">
           <mat-form-field class="example-full-width">
             <mat-label>Straße</mat-label>
-            <input matInput [(ngModel)]="companyStreet"  (change)="checkButton()">
+            <input matInput [(ngModel)]="companyStreet" (change)="checkButton()">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Hausnummer</mat-label>
-            <input matInput [(ngModel)]="companyStreetNumber"  (change)="checkButton()">
+            <input matInput [(ngModel)]="companyStreetNumber" (change)="checkButton()">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Postleitzahl</mat-label>
-            <input matInput [(ngModel)]="companyZipCode"  (change)="checkButton()">
+            <input matInput [(ngModel)]="companyZipCode" (change)="checkButton()">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Stadt</mat-label>
-            <input matInput [(ngModel)]="companyCity"  (change)="checkButton()">
+            <input matInput [(ngModel)]="companyCity" (change)="checkButton()">
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>Land</mat-label>
-            <input matInput [(ngModel)]="companyCountry"  (change)="checkButton()">
+            <input matInput [(ngModel)]="companyCountry" (change)="checkButton()">
           </mat-form-field>
         </div>
 
