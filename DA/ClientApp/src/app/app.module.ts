@@ -43,6 +43,8 @@ import { DialogSavingComponent } from './dialog-saving/dialog-saving.component';
 import { DialogEditComponent } from './dialog-edit/dialog-edit.component';
 import { DialogDeleteMemberComponent } from './dialog-delete-member/dialog-delete-member.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AddressPipe } from './address.pipe';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -85,6 +87,7 @@ const routes: Routes = [
     DialogSavingComponent,
     DialogEditComponent,
     DialogDeleteMemberComponent,
+    AddressPipe,
   
   ],
   imports: [
@@ -110,6 +113,8 @@ const routes: Routes = [
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     BrowserAnimationsModule,
     MatGridListModule,
+    GooglePlaceModule
+    
  
     
    // MatDatepickerModule, MatInputModule, MatNativeDateModule

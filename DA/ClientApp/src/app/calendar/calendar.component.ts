@@ -330,6 +330,7 @@ export class CalendarComponent implements OnInit {
       }
     };
     this.router.navigate(["/registration"], navigationExtras);
+    window.open("https://www.google.com", "_blank");
   
   }
  
@@ -490,10 +491,11 @@ export class CalendarComponent implements OnInit {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
   setListView() {
-    this.view = CalendarView.Day;
+    this.view = null;
     this.listactive = "activeList";
     this.hidden = true;
     this.calendar = false;
+    console.log(this.view);
     
   }
   setView(view: CalendarView) {

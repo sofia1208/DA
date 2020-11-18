@@ -363,14 +363,17 @@
     background-color: #ededed; }
   .cal-week-view .cal-day-column {
     border-left-color: #e1e1e1; }
-  .cal-week-view .cal-event {
+  .cal-week-view .cal-event  {
     background-color: #8CEE88;
     border-color: #5ba658;
     color: #707070;
     font-size: 14px;
   }
-  .cal-week-view .cal-all-day-events {
-    border-color: #e1e1e1; }
+  
+
+.cal-week-view .cal-all-day-events {
+  border-color: #e1e1e1;
+}
   .cal-week-view .cal-header.cal-today {
     background-color: #e8fde7; }
   .cal-week-view .cal-header.cal-weekend span {
@@ -493,5 +496,10 @@
 .cal-month-view .cal-day-cell.cal-in-month.cal-has-events{
     display:flex;
 }
+.true {
+  background-color: red;
+}
+
+
 
 
