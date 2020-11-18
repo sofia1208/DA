@@ -364,6 +364,8 @@ export class RegistrationComponent implements OnInit {
     if (this.freePlaces == 0) {
       this.disableAdding = true;
     }
+    this.disableAdding = true;
+    this.emailFormControl2.set;
    
   }
   submit(): void {

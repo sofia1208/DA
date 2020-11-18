@@ -330,6 +330,7 @@ export class CalendarComponent implements OnInit {
       }
     };
     this.router.navigate(["/registration"], navigationExtras);
+    window.open("https://www.google.com", "_blank");
   
   }
  
