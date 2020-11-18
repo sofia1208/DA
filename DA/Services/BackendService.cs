@@ -163,6 +163,7 @@ namespace DA.Services {
                 });
                 db.GetPersons(ref persons);
 
+                Console.WriteLine(schooling.End);
                 wasSuccessful = db.UpdateSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
 
                 db.GetSchoolings(ref schoolings);
