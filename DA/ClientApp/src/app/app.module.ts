@@ -62,6 +62,8 @@ const routes: Routes = [
       { path: 'invoice', component: InvoiceComponent }
     ]
   },
+
+
   { path: '', redirectTo: '/calendar', pathMatch: 'full' }
 ];
 @NgModule({
