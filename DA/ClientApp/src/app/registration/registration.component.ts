@@ -365,7 +365,7 @@ export class RegistrationComponent implements OnInit {
       this.disableAdding = true;
     }
     this.disableAdding = true;
-    this.emailFormControl2.set;
+    //this.emailFormControl2.set;
    
   }
   submit(): void {
