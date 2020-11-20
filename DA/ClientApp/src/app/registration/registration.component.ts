@@ -78,6 +78,7 @@ export class RegistrationComponent implements OnInit {
   openStorno: boolean = false;
   searchForAddress: string;
   private geoCoder;
+ 
   @ViewChild('search')
   public searchElementRef: ElementRef;
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog, private ngZone: NgZone) {
@@ -231,7 +232,10 @@ export class RegistrationComponent implements OnInit {
   }
   planRoute() {
     var ad = this.adresse.split(",")[0];
-    document.location.href = `https://www.google.at/maps/dir//${ad}`;
+
+
+    window.open(`https://www.google.at/maps/dir//${ad}`, '_blank');
+  
   }
   openDialog(name: string): void {
     const dialogConfig = new MatDialogConfig();
@@ -294,6 +298,7 @@ export class RegistrationComponent implements OnInit {
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
     this.freePlaces = schooling.freePlaces;
+    
     
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
    

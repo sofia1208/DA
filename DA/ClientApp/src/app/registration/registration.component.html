@@ -21,6 +21,7 @@
         <div class="row innerRows">Kontaktperson</div>
         <div class="row innerRows">Telefon</div>
         <div class="row innerRows">Adresse</div>
+        <div class="row innerRows">Verfügbare Plätze</div>
       </div>
 
       <div class="column col2">
@@ -31,6 +32,7 @@
         <div class="row innerRows">{{kontaktperson}}</div>
         <div class="row innerRows">{{telefon}}</div>
         <div class="row innerRows">{{adresse}}</div>
+        <div class="row innerRows">{{freePlaces}}</div>
       </div>
 
 
@@ -58,17 +60,6 @@
 
       </mat-grid-tile>
 
-      <!--<mat-grid-tile colspan="1">
-        <h3 class="firma"> </h3>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="4">
-        <mat-form-field class="example-full-width">
-
-          <mat-label>Adresse suchen</mat-label>
-          <input matInput (onAddressChange)="handleAddressChange($event)" />
-        </mat-form-field>
-
-      </mat-grid-tile>-->
 
       <mat-grid-tile colspan="1">
 

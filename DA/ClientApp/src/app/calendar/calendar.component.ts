@@ -86,14 +86,14 @@ export class CalendarComponent implements OnInit {
   schoolingList: GetSummaryForPrint[] = [];
   calendar: boolean=true;
   detailId: Number;
-
+  canReg: boolean = false;
   activeWorkshop: boolean = false;
   activeAvailable: boolean = false;
   activeKombi: boolean = false;
   activeGrundlagen: boolean = false;
   activeAdmin: boolean = false;
   listactive: string="seas";
-
+  freePlaces : string;
 
   displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
     selectedId: Number;
@@ -329,8 +329,14 @@ export class CalendarComponent implements OnInit {
         "title": this.detailTitle
       }
     };
-    this.router.navigate(["/registration"], navigationExtras);
-    window.open("https://www.google.com", "_blank");
+   
+
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/registration'],navigationExtras)
+    );
+
+    window.open(url, '_blank');
+  
   
   }
  
@@ -354,7 +360,7 @@ export class CalendarComponent implements OnInit {
     this.detailId = Number(event.id);
 
 
-    if (event.isHoliday || !event.isFree) {
+    if (event.isHoliday ) {
       this.hidden = true;
     }
     else {
@@ -366,6 +372,13 @@ export class CalendarComponent implements OnInit {
           console.log(data);
 
           this.fillDetails(schooling);
+          if (!event.isFree) {
+            this.canReg = true;
+            this.detailTitle = this.detailTitle + "   (Diese Schulung ist belegt)";
+          }
+          else {
+            this.canReg = false;
+          }
 
         }
           , err => {
@@ -413,6 +426,7 @@ export class CalendarComponent implements OnInit {
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
+    this.freePlaces = "" +schooling.freePlaces;
     this.refresh.next();
   }
   convertToGermanTime(schooling: SchoolingDto) {

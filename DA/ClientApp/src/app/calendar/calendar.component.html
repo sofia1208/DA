@@ -327,6 +327,7 @@
             <div class="row innerRows">Kontaktperson</div>
             <div class="row innerRows">Telefon</div>
             <div class="row innerRows">Adresse</div>
+            <div class="row innerRows">Verfügbare Plätze</div>
           </div>
 
           <div class="column col2">
@@ -337,11 +338,12 @@
             <div class="row innerRows">{{kontaktperson}}</div>
             <div class="row innerRows">{{telefon}}</div>
             <div class="row innerRows">{{adresse}}</div>
+            <div class="row innerRows">{{freePlaces}}</div>
           </div>
 
 
         </div>
-        <button (click)="goToRegistration()" style="float: right; margin-bottom:30px; margin-right: 30px;" class="categoryBtn">Anmelden</button>
+        <button (click)="goToRegistration()" style="float: right; margin-bottom:30px; margin-right: 30px;" [hidden]="canReg" class="categoryBtn">Anmelden</button>
       </div>
 
     </div>
