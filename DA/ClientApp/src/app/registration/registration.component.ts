@@ -66,7 +66,7 @@ export class RegistrationComponent implements OnInit {
   buttonActive: boolean = false;
   available: number;
   schooling: SchoolingDto;
-
+  printReady: boolean = true;
   checkDatenschutz: boolean;
   checkStrono: boolean;
   onePart: boolean = true;
@@ -247,6 +247,7 @@ export class RegistrationComponent implements OnInit {
     this.dialog.open(DialogComponentComponent, dialogConfig);
   }
   printRegistration() {
+    this.printReady = false;
     window.print();
   }
   checkSize() {

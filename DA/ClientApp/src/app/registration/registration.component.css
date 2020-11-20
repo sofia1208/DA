@@ -334,25 +334,22 @@ input[type=checkbox]{
  
 }
 @media print {
+  .onlyShowPrint {
+    display: block !important;
+  }
   .printMe {
+    display: none !important;
+  }
+ 
+}
+
+@media not print{
+  .onlyShowPrint {
     display: none !important;
   }
 }
 
-app-print-layout {
-  display: none;
-}
 
-app-invoice {
-  display: none;
-}
-
-@media print {
-
-  app-invoice {
-    display: flex;
-  }
-}
 
 .btnPrint {
   margin-left: 50px;
@@ -383,4 +380,24 @@ table {
 }
 .table thead th{
     text-align: center;
+}
+td.mat-cell {
+  padding: 15px;
+  font-size: 15px;
+  vertical-align: middle;
+}
+ul {
+  list-style-type: none;
+}
+li{
+    margin-bottom: 20px;
+}
+@media print {
+  app-root > * {
+    display: none;
+  }
+
+  app-root app-print-layout {
+    display: block;
+  }
 }

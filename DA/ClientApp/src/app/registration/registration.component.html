@@ -5,7 +5,7 @@
       Anmeldung
     </h1>
   </div>
- 
+
   <h3 #detailView class="detailTitle">{{detailTitle}}</h3>
   <button class="btnSubmit printMe" (click)="printRegistration()">Schulung ausdrucken</button>
   <div class="detailview">
@@ -111,12 +111,12 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>Name</mat-label>
-          <input matInput [(ngModel)]="companyContactPersonLn"  (change)="checkButton()">
+          <input matInput [(ngModel)]="companyContactPersonLn" (change)="checkButton()">
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Telefonnummer</mat-label>
-          <input matInput [(ngModel)]="companyPhone"  (change)="checkButton()">
+          <input matInput [(ngModel)]="companyPhone" (change)="checkButton()">
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
@@ -137,9 +137,9 @@
         <div style="display:flex; flex-direction: column">
           <h3 class="firma">Teilnehmer</h3>
           <p style="color: #707070;" *ngIf="freePlaces >1">noch {{freePlaces}} freie Plätze</p>
-          <p  style="color: #707070;" *ngIf="freePlaces == 1">noch {{freePlaces}} freier Platz</p>
+          <p style="color: #707070;" *ngIf="freePlaces == 1">noch {{freePlaces}} freier Platz</p>
         </div>
-    
+
       </mat-grid-tile>
       <mat-grid-tile colspan="4">
 
@@ -149,11 +149,11 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>Nachname</mat-label>
-          <input matInput [(ngModel)]="lastname" (change)="checkMemberInput()"  placeholder="Mustermann">
+          <input matInput [(ngModel)]="lastname" (change)="checkMemberInput()" placeholder="Mustermann">
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>E-Mail</mat-label>
-          <input matInput [(ngModel)]="email"  [formControl]="emailFormControl2"  (change)="checkMemberInput()"  placeholder="max@mustermann.com">
+          <input matInput [(ngModel)]="email" [formControl]="emailFormControl2" (change)="checkMemberInput()" placeholder="max@mustermann.com">
           <mat-error *ngIf="emailFormControl2.invalid">E-Mail Adress ist nicht gültig</mat-error>
         </mat-form-field>
         <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()" [disabled]="disableAdding">Hinzufügen</button>
@@ -165,7 +165,7 @@
   </div>
 
 
-  <div class="printMe" style="margin-bottom: 50px" [hidden]="onePart">
+  <div class="printMe"  style="margin-bottom: 50px" [hidden]="onePart">
     <mat-grid-list cols="5" rowHeight="{{dynamicRow}}">
       <mat-grid-tile colspan="1">
         <h3 class="firma">Teilnehmerübersicht</h3>
@@ -193,7 +193,7 @@
 
 
 
-          <ng-container matColumnDef="edit">
+          <ng-container class="printMe" matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef>  </th>
             <td mat-cell *matCellDef="let member">
               <button style="background-color: white; border:none" data-toggle="tooltip" title="Editieren" (click)="editSchooling(member.id)">
@@ -203,7 +203,7 @@
           </ng-container>
 
 
-          <ng-container matColumnDef="delete">
+          <ng-container class="printMe" matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef>  </th>
             <td mat-cell *matCellDef="let member">
               <button style="background-color: white; border:none" data-toggle="tooltip" title="Teilnehmer löschen" (click)="deleteSchooling(member.id)">
@@ -223,8 +223,18 @@
 
     </mat-grid-list>
   </div>
+  <div class="onlyShowPrint" style="margin-bottom: 50px">
+   
+        <h3 class="firma">Teilnehmerübersicht ({{dataSource.length}} Teilnehmer)</h3>
+
+    
+         <ul>
+           <li *ngFor="let it of dataSource">{{it.firstname}} {{it.lastname}} - {{it.email}}</li>
+         </ul>
 
 
+   
+  </div>
 
   <!--<div class="printMe">-->
   <!--<h3 class="firma">Firma*</h3>
