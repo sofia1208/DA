@@ -91,7 +91,12 @@
 
           <mat-form-field class="example-full-width">
             <mat-label>Land</mat-label>
-            <input matInput [(ngModel)]="companyCountry" (change)="checkButton()">
+            <input matInput [(ngModel)]="companyCountry"  [formControl]="countryControl" (change)="checkButton()" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of countryOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
         </div>
 

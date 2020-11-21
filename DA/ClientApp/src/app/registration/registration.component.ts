@@ -15,6 +15,7 @@ import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
 import { DialogDeleteMemberComponent } from '../dialog-delete-member/dialog-delete-member.component';
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
@@ -93,16 +94,26 @@ export class RegistrationComponent implements OnInit {
   }
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   emailFormControl2 = new FormControl('', [Validators.required, Validators.email]);
-
+  countryControl = new FormControl();
+  options: string[] = ['Österreich', 'Deutschland', 'Schweiz'];
+  countryOptions: Observable<string[]>;
   displayedColumns: string[] = ['firstname', 'lastname', 'email', 'edit', 'delete'];
   ngOnInit(): void {
     console.log('on init registration');
     this.getEvent(this.detailId);
     //this.autocomplete();
-
+    this.countryOptions = this.countryControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
     
   }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
 
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
   checkMemberInput() {
     if (this.firstname != "" && this.lastname != "" && this.emailFormControl2.valid) this.disableAdding = false;
     else {
