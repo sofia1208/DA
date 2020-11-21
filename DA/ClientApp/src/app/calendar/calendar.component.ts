@@ -94,7 +94,8 @@ export class CalendarComponent implements OnInit {
   activeAdmin: boolean = false;
   listactive: string="seas";
   freePlaces : string;
-
+  kurzbeschreibung: string;
+  contentLink: string;
   displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
     selectedId: Number;
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog) { }
@@ -426,7 +427,9 @@ export class CalendarComponent implements OnInit {
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
-    this.freePlaces = "" +schooling.freePlaces;
+    this.freePlaces = "" + schooling.freePlaces;
+    this.kurzbeschreibung = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.At vero eos et ac";
+    this.contentLink = `https://www.google.at`;
     this.refresh.next();
   }
   convertToGermanTime(schooling: SchoolingDto) {
@@ -682,6 +685,10 @@ export class CalendarComponent implements OnInit {
 
     this.table.renderRows();
 
+  }
+  goToHyperLink() {
+  
+    window.open(this.contentLink , '_blank');
   }
 
 

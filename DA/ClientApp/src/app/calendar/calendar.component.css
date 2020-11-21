@@ -296,5 +296,8 @@ p {
 .true{
     background-color: red;
 }
+.hyp {
+  text-decoration: underline;
+}
 
 
