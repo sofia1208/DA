@@ -41,9 +41,9 @@ export class RegistrationComponent implements OnInit {
   lastname: string="";
   email: string="";
   freePlaces: number;
-
+  kurzbeschreibung: string;
   mobile: boolean = false;
-
+  contentLink: string;
   company: string= "";
   companyPhone: string = "";
   companyMail: string = "";
@@ -302,7 +302,8 @@ export class RegistrationComponent implements OnInit {
     
     
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
-   
+    this.kurzbeschreibung = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+    this.contentLink = `https://www.google.at`;
      this.getAddress();
   
   }
@@ -395,7 +396,10 @@ export class RegistrationComponent implements OnInit {
     return this.http.get<Location[]>(url);
 
   }
+  goToHyperLink() {
 
+    window.open(this.contentLink, '_blank');
+  }
   
 
 }

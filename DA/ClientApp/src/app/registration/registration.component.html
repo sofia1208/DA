@@ -22,6 +22,7 @@
         <div class="row innerRows">Telefon</div>
         <div class="row innerRows">Adresse</div>
         <div class="row innerRows">Verfügbare Plätze</div>
+        <div class="row innerRows">Kurzbeschreibung</div>
       </div>
 
       <div class="column col2">
@@ -33,6 +34,8 @@
         <div class="row innerRows">{{telefon}}</div>
         <div class="row innerRows">{{adresse}}</div>
         <div class="row innerRows">{{freePlaces}}</div>
+        <div class="row innerRows" style="display:contents">{{kurzbeschreibung}} (<p style="display:contents" class="hyp" (click)="goToHyperLink()" data-toggle="tooltip" title="Inhalt dieser Schulung ansehen">Schulungsinhalt anzeigen</p>)</div>
+        <div class="row innerRows"></div>
       </div>
 
 
@@ -374,7 +377,7 @@
       <h3 class="firma checks">Stornobedingungen</h3>
     </div>
     <input type="checkbox" (change)="changeStorno()" [(ngModel)]="checkStrono" />
-    <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen"> Stornobedingungen </a> von moveIT Software gelesen.</p>
+    <p class="pDown" >Ja, ich habe die <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen"> Stornobedingungen </a> von moveIT Software gelesen.</p>
   </div>
 
   <div class="row printMe">
@@ -382,7 +385,7 @@
       <h3 class="firma checks">Datenschutz</h3>
     </div>
     <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />
-    <p>Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutzbedinungen</a> von moveIT Software gelesen.</p>
+    <p class="pDown" >Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutzbedinungen</a> von moveIT Software gelesen.</p>
 
     <button class="btnSubmit btnDown" [disabled]="!buttonActive" (click)="submit()">Abschicken</button>
   </div>

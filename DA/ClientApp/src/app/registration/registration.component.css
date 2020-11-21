@@ -131,7 +131,7 @@ h1 {
 }
 
 .col2 {
-  width: 40%
+  width: 70%
 }
 
 .innerRows {
@@ -341,7 +341,7 @@ input[type=checkbox]{
     display: none !important;
   }
  
-}#-
+}
 
 @media not print{
   .onlyShowPrint {
@@ -400,4 +400,18 @@ li{
   app-root app-print-layout {
     display: block;
   }
+}
+.pDown{
+    margin: auto;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+.hyp:hover {
+  text-decoration: underline;
+}
+
+.hyp {
+  margin: 0px;
+  color: #FEAE5F;
+  display: inline;
 }

@@ -132,8 +132,8 @@ margin: auto
 .col1{
 width: 25%
 }
-.col2{
-    width: 50%
+.col2 {
+  width: 70%
 }
 
 .innerRows{
@@ -296,8 +296,13 @@ p {
 .true{
     background-color: red;
 }
-.hyp {
+.hyp:hover {
   text-decoration: underline;
+
+}
+.hyp {
+  margin: 0px;
+  color: #FEAE5F;
 }
 
 
