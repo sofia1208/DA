@@ -92,26 +92,32 @@ export class RegistrationComponent implements OnInit {
     console.log(this.mobile);
 
   }
+  
+  options: string[] = ['Österreich', 'Deutschland', 'Schweiz'];
+  filteredOptions: Observable<string[]>;
+
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   emailFormControl2 = new FormControl('', [Validators.required, Validators.email]);
-  countryControl = new FormControl();
-  options: string[] = ['Österreich', 'Deutschland', 'Schweiz'];
-  countryOptions: Observable<string[]>;
+  countryC = new FormControl();
+
+
   displayedColumns: string[] = ['firstname', 'lastname', 'email', 'edit', 'delete'];
   ngOnInit(): void {
     console.log('on init registration');
     this.getEvent(this.detailId);
-    //this.autocomplete();
-    this.countryOptions = this.countryControl.valueChanges
+
+     this.filteredOptions = this.countryC.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
-      );
+    );
+
+   
     
   }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
+    console.log(value);
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
   checkMemberInput() {

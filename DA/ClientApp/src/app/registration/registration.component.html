@@ -89,15 +89,29 @@
             <input matInput [(ngModel)]="companyCity" (change)="checkButton()">
           </mat-form-field>
 
-          <mat-form-field class="example-full-width">
+          <!--<mat-form-field class="example-full-width">
             <mat-label>Land</mat-label>
-            <input matInput [(ngModel)]="companyCountry"  [formControl]="countryControl" (change)="checkButton()" [matAutocomplete]="auto">
+            <input matInput [(ngModel)]="companyCountry" [formControl]="countryControl" (change)="checkButton()" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option *ngFor="let option of countryOptions | async" [value]="option">
                 {{option}}
               </mat-option>
             </mat-autocomplete>
-          </mat-form-field>
+          </mat-form-field>-->
+
+
+          <form>
+            <mat-form-field>
+              <mat-label>Land</mat-label>
+              <input type="text" [(ngModel)]="companyCountry" [formControl]="countryC" matInput [matAutocomplete]="y" />
+              <mat-autocomplete #y="matAutocomplete">
+                <mat-option *ngFor="let o of options " [value]="o">
+                  {{o}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+
         </div>
 
       </mat-grid-tile>
