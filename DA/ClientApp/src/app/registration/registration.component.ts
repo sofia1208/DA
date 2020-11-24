@@ -53,8 +53,8 @@ export class RegistrationComponent implements OnInit {
   companyZipCode: string="";
   companyCity: string = "";
   companyCountry: string = "";
-  companyContactPersonVn: string = "";
-  companyContactPersonLn: string = "";
+  companyContactPersonName: string = "";
+  companyContactPersonTitle: string = "";
   locations: Location[]= [];
   lat: Number = 48.1505921;
   lon: Number = 14.0069141;
@@ -96,28 +96,32 @@ export class RegistrationComponent implements OnInit {
   options: string[] = ['Österreich', 'Deutschland', 'Schweiz'];
   filteredOptions: Observable<string[]>;
 
+  countryC = new FormControl('');
+
+
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   emailFormControl2 = new FormControl('', [Validators.required, Validators.email]);
-  countryC = new FormControl();
-
+ 
+  titleOptions: string[] = ['Frau', 'Herr'];
 
   displayedColumns: string[] = ['firstname', 'lastname', 'email', 'edit', 'delete'];
   ngOnInit(): void {
-    console.log('on init registration');
-    this.getEvent(this.detailId);
-
-     this.filteredOptions = this.countryC.valueChanges
+    this.filteredOptions = this.countryC.valueChanges
       .pipe(
         startWith(''),
-        map(value => this._filter(value))
+        map(value => this.filter(value))
     );
 
+    console.log('on init registration');
+    this.getEvent(this.detailId);
+    
+   
    
     
   }
-  private _filter(value: string): string[] {
+  private filter(value: string): string[] {
+  
     const filterValue = value.toLowerCase();
-    console.log(value);
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
   checkMemberInput() {
@@ -127,9 +131,7 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  public handleAddressChange(address: any) {
-    this.searchForAddress = address.formatted_addred
-  }
+
   editSchooling(id: number) {
     let member = this.dataSource.find(x => x.id == id);
     const dialogRef = this.dialog.open(DialogEditComponent, {
@@ -220,6 +222,8 @@ export class RegistrationComponent implements OnInit {
     this.checkButton();
   }
   changeData() {
+ 
+
     if (!this.openData) {
       this.openDialog("Datenschutzbestimmungen");
       
@@ -230,8 +234,8 @@ export class RegistrationComponent implements OnInit {
   checkButton() {
     this.saved = false;
     if (this.checkDatenschutz && this.checkStrono && this.company!=="" && this.companyCity!=="" &&
-      this.companyContactPersonLn!=="" &&
-      this.companyContactPersonVn!=="" && 
+      this.companyContactPersonTitle!=="" &&
+      this.companyContactPersonName!=="" && 
       this.companyCountry!=="" && 
       this.companyMail!=="" && 
       this.companyPhone!=="" && 
@@ -368,6 +372,7 @@ export class RegistrationComponent implements OnInit {
         );
     });
     this.fillDetails(this.schooling);
+   
     return promise;
   
     
@@ -394,7 +399,7 @@ export class RegistrationComponent implements OnInit {
   }
   submit(): void {
     console.log("Submit registration");
-    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.dataSource, this.companyContactPersonVn + " " +this.companyContactPersonLn))
+    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.dataSource, this.companyContactPersonTitle,this.companyContactPersonName))
       .subscribe(x => console.log(x));
     this.router.navigate(["/checkout"]);
   }

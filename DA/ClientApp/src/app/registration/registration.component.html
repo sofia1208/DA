@@ -89,23 +89,15 @@
             <input matInput [(ngModel)]="companyCity" (change)="checkButton()">
           </mat-form-field>
 
-          <!--<mat-form-field class="example-full-width">
-            <mat-label>Land</mat-label>
-            <input matInput [(ngModel)]="companyCountry" [formControl]="countryControl" (change)="checkButton()" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let option of countryOptions | async" [value]="option">
-                {{option}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>-->
+  
 
 
-          <form>
+          <form >
             <mat-form-field>
               <mat-label>Land</mat-label>
               <input type="text" [(ngModel)]="companyCountry" [formControl]="countryC" matInput [matAutocomplete]="y" />
               <mat-autocomplete #y="matAutocomplete">
-                <mat-option *ngFor="let o of options " [value]="o">
+                <mat-option *ngFor="let o of filteredOptions |async " [value]="o">
                   {{o}}
                 </mat-option>
               </mat-autocomplete>
@@ -126,14 +118,27 @@
       </mat-grid-tile>
       <mat-grid-tile colspan="4">
 
-        <mat-form-field class="example-full-width">
+        <!--<mat-form-field class="example-full-width">
           <mat-label>Anrede</mat-label>
-          <input matInput [(ngModel)]="companyContactPersonVn" (change)="checkButton()">
-        </mat-form-field>
+          <input matInput [(ngModel)]="companyContactPersonTitle" (change)="checkButton()">
+        </mat-form-field>-->
+
+
+        <form>
+          <mat-form-field>
+            <mat-label>Anrede</mat-label>
+            <input type="text" [(ngModel)]="companyContactPersonTitle"  matInput [matAutocomplete]="personTitle" />
+            <mat-autocomplete #personTitle="matAutocomplete">
+              <mat-option *ngFor="let o of titleOptions " [value]="o">
+                {{o}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
 
         <mat-form-field class="example-full-width">
           <mat-label>Name</mat-label>
-          <input matInput [(ngModel)]="companyContactPersonLn" (change)="checkButton()">
+          <input matInput [(ngModel)]="companyContactPersonName" (change)="checkButton()">
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
