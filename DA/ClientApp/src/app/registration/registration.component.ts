@@ -16,6 +16,7 @@ import { DialogDeleteMemberComponent } from '../dialog-delete-member/dialog-dele
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
+import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
 
 @Component({
   selector: 'app-registration',
@@ -234,15 +235,22 @@ export class RegistrationComponent implements OnInit {
   checkButton() {
     this.saved = false;
     if (this.checkDatenschutz && this.checkStrono && this.company!=="" && this.companyCity!=="" &&
-      this.companyContactPersonTitle!=="" &&
+      
       this.companyContactPersonName!=="" && 
-      this.companyCountry!=="" && 
+   
       this.companyMail!=="" && 
       this.companyPhone!=="" && 
       this.companyStreet!=="" && 
       this.companyStreetNumber!="" &&
       this.companyZipCode !== ""
     ) {
+      if (this.dataSource.length == 0) {
+        const dialogConfig = new MatDialogConfig();
+       
+        dialogConfig.autoFocus = true;
+
+        this.dialog.open(DialogErrorComponent, dialogConfig);
+      }
 
       console.log("true");
       this.buttonActive = true;
