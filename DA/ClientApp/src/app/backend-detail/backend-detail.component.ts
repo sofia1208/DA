@@ -65,6 +65,7 @@ export class BackendDetailComponent implements OnInit {
   readyToPost: boolean = false;
   addOrEdit: string = "Schulung anlegen";
   newCategory: string;
+  kurzbeschreibungHtml: string;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
@@ -559,6 +560,7 @@ export class BackendDetailComponent implements OnInit {
 
           var index = this.organizer.indexOf(this.organizerName);
           this.organizerName.name = this.newOrganizer;
+          //PUT REQUEST?
           //console.log(this.category[index]);
 
         }
@@ -567,4 +569,5 @@ export class BackendDetailComponent implements OnInit {
 
     });
   }
+ 
 }
