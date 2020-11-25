@@ -15,6 +15,7 @@ import { DialogAddPartComponent } from '../dialog-add-part/dialog-add-part.compo
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
 import { DialogAddCategoryComponent } from '../dialog-add-category/dialog-add-category.component';
 import { DialogEditOrgCatComponent } from '../dialog-edit-org-cat/dialog-edit-org-cat.component';
+import { DialogSuccessfulAddedComponent } from '../dialog-successful-added/dialog-successful-added.component';
 @Component({
   selector: 'app-backend-detail',
   templateUrl: './backend-detail.component.html',
@@ -66,6 +67,7 @@ export class BackendDetailComponent implements OnInit {
   addOrEdit: string = "Schulung anlegen";
   newCategory: string;
   kurzbeschreibungHtml: string;
+  contentLink: string;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
@@ -141,6 +143,17 @@ export class BackendDetailComponent implements OnInit {
       console.log("Schulung anlegt");
       this.addSchooling(false);
     }
+
+    const dialogRef = this.dialog.open(DialogSuccessfulAddedComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    
+      });
+
+
     if (this.detailId > 0) {
       this.addOrEdit = "Schulung anlegen";
     }
@@ -415,7 +428,7 @@ export class BackendDetailComponent implements OnInit {
         this.startDate.setHours(this.startDate.getHours() + 1);
         this.endDate.setHours(this.endDate.getHours() + 1);
         this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
-          this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+          this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling, this.kurzbeschreibungHtml, this.contentLink))
           .subscribe(x => {
             console.log(x);
             if (goBack) {
@@ -439,7 +452,7 @@ export class BackendDetailComponent implements OnInit {
     this.endDate.setHours(this.endDate.getHours() + 1);
 
     this.putSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
-      this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+      this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling, this.kurzbeschreibungHtml, this.contentLink))
       .subscribe(x => {
         console.log(x);
         if (goBack) {
@@ -568,6 +581,10 @@ export class BackendDetailComponent implements OnInit {
 
 
     });
+  }
+  categoryChanged() {
+    this.checkInputs();
+
   }
  
 }

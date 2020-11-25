@@ -20,6 +20,8 @@ export class BackendDetailDto {
   isFree: boolean;
   participants: CompanyMember[];
   availablePlaces: Number;
+  kurzbeschreibung: string;
+  contentLink: string;
 
   constructor(id: Number,    name: string,    start: Date,    end: Date,    price: Number,    zipCode: Number,    city: string,    street: string,    streetNumber: Number,    country: string,    organizer: string,
     contactPerson: string,
@@ -28,7 +30,9 @@ export class BackendDetailDto {
     phone: string,
     isFree: boolean,
     participants: CompanyMember[],
-    availablePlaces: Number) {
+    availablePlaces: Number,
+    kurzbeschreibung: string,
+    contentLink: string) {
 
     this.id =id;
     this.name = name;
@@ -47,7 +51,9 @@ export class BackendDetailDto {
     this.phone =  phone;
     this.isFree = isFree;
     this.participants =  participants;
-    this.availablePlaces =  availablePlaces;
+    this.availablePlaces = availablePlaces;
+    this.kurzbeschreibung = kurzbeschreibung;
+    this.contentLink = contentLink;
 
   }
 }

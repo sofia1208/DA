@@ -47,7 +47,8 @@ import { AddressPipe } from './address.pipe';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { DialogErrorComponent } from './dialog-error/dialog-error.component';
 import { DialogAddCategoryComponent } from './dialog-add-category/dialog-add-category.component';
-import { DialogEditOrgCatComponent } from './dialog-edit-org-cat/dialog-edit-org-cat.component'
+import { DialogEditOrgCatComponent } from './dialog-edit-org-cat/dialog-edit-org-cat.component';
+import { DialogSuccessfulAddedComponent } from './dialog-successful-added/dialog-successful-added.component'
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -96,6 +97,7 @@ const routes: Routes = [
     DialogErrorComponent,
     DialogAddCategoryComponent,
     DialogEditOrgCatComponent,
+    DialogSuccessfulAddedComponent,
   
   ],
   imports: [
@@ -133,7 +135,7 @@ const routes: Routes = [
   bootstrap: [AppComponent],
   entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent,
     DialogMoreEventsComponent, DialogAddPartComponent, DialogSavingComponent, DialogEditComponent, DialogDeleteMemberComponent, DialogErrorComponent, DialogAddCategoryComponent,
-    DialogEditOrgCatComponent
+    DialogEditOrgCatComponent, DialogSuccessfulAddedComponent
   ] 
 })
 export class AppModule { }

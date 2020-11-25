@@ -9,6 +9,7 @@
     <div class="displayRow">
       <div class="column columDetails columnFields">
         <p class="pColumn">Name</p>
+        <p class="pColumn">Schulungsinhalt (Link)</p>
         <p class="pColumn">Adresse</p>
 
         <p class="pColumn">Beginn-Datum und Uhrzeit</p>
@@ -20,7 +21,7 @@
         <div>
           <mat-form-field class="fields" appearance="fill">
             <mat-label>Kategorie auswählen</mat-label>
-            <mat-select [(ngModel)]="catName" (selectionChange)="checkInputs()">
+            <mat-select [(ngModel)]="catName" (selectionChange)="categoryChanged()">
               <mat-option *ngFor="let s of category" [value]="s">
                 {{s}}
               </mat-option>
@@ -28,6 +29,13 @@
           </mat-form-field>
           <button class="btnMap" (click)="addCategory()">Kategorie hinzufügen</button>
           <button class="btnMap" (click)="editCategory()">Kategorie bearbeiten</button>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <mat-label>Link</mat-label>
+            <input matInput (change)="checkInputs()" [(ngModel)]="contentLink">
+          </mat-form-field>
         </div>
 
         <div class="displayRow fields">

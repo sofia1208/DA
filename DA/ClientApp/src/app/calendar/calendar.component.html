@@ -128,52 +128,7 @@
 
       </ng-template>
 
-      <ng-template #defaultTemplate
-                   let-weekEvent="weekEvent"
-                   let-tooltipPlacement="tooltipPlacement"
-                   let-eventClicked="eventClicked"
-                   let-tooltipTemplate="tooltipTemplate"
-                   let-tooltipAppendToBody="tooltipAppendToBody"
-                   let-tooltipDisabled="tooltipDisabled"
-                   let-tooltipDelay="tooltipDelay"
-                   let-column="column"
-                   let-daysInWeek="daysInWeek">
-        <div class="cal-event" 
-       
-        [mwlCalendarTooltip]="
-          !tooltipDisabled
-            ? (weekEvent.event.title
-              | calendarEventTitle
-                : (daysInWeek === 1 ? 'dayTooltip' : 'weekTooltip')
-                : weekEvent.tempEvent || weekEvent.event)
-            : ''
-        "
-             [tooltipPlacement]="tooltipPlacement"
-             [tooltipEvent]="weekEvent.tempEvent || weekEvent.event"
-             [tooltipTemplate]="tooltipTemplate"
-             [tooltipAppendToBody]="tooltipAppendToBody"
-             [tooltipDelay]="tooltipDelay"
-             (mwlClick)="eventClicked.emit({ sourceEvent: $event })"
-             (mwlKeydownEnter)="eventClicked.emit({ sourceEvent: $event })"
-             tabindex="0"
-             role="application"
-             [attr.aria-label]="
-          { event: weekEvent.tempEvent || weekEvent.event, locale: locale }
-            | calendarA11y: 'eventDescription'
-        ">
-          <div class="{{weekEvent.event.isFree}}">
-            <mwl-calendar-event-actions [event]="weekEvent.tempEvent || weekEvent.event"
-                                        [customTemplate]="eventActionsTemplate">
-            </mwl-calendar-event-actions>
-            &ngsp;
-            <mwl-calendar-event-title [event]="weekEvent.tempEvent || weekEvent.event"
-                                      [customTemplate]="eventTitleTemplate"
-                                      [view]="daysInWeek === 1 ? 'day' : 'week'">
-            </mwl-calendar-event-title>
-          </div>
-         
-        </div>
-      </ng-template>
+      
 
       <div>
         <div class="container">
@@ -298,8 +253,7 @@
                                 [dayStartHour]="7"
                                 [dayEndHour]="21"
                                 [weekendDays]="weekendDays"
-                                [weekStartsOn]="weekStartsOn"
-                                [eventTemplate]="defaultTemplate">
+                                [weekStartsOn]="weekStartsOn">
         </mwl-calendar-week-view>
         <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
                                [viewDate]="viewDate"
@@ -341,7 +295,7 @@
             <div class="row innerRows">{{adresse}}</div>
             <div class="row innerRows">{{freePlaces}}</div>
             <div class="row innerRows" style="display:contents">{{kurzbeschreibung}} (<p style="display:contents" class="hyp" (click)="goToHyperLink()" data-toggle="tooltip" title="Inhalt dieser Schulung ansehen">Schulungsinhalt anzeigen</p>)</div>
-            <div class="row innerRows"></div>
+          
            
           </div>
 

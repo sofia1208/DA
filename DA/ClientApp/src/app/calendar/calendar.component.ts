@@ -366,7 +366,7 @@ export class CalendarComponent implements OnInit {
     }
     else {
       this.hidden = false;
-      this.scrollToDetail();
+    
       this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
         .subscribe(data => {
           schooling = data;
@@ -431,6 +431,7 @@ export class CalendarComponent implements OnInit {
     this.kurzbeschreibung = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.At vero eos et ac";
     this.contentLink = `https://www.google.at`;
     this.refresh.next();
+    this.scrollToDetail();
   }
   convertToGermanTime(schooling: SchoolingDto) {
     let start = new Date(schooling.start);
@@ -459,7 +460,7 @@ export class CalendarComponent implements OnInit {
 
   }
   scrollToDetail() {
-    this.myScrollContainer.nativeElement.scrollIntoView();
+    this.myScrollContainer.nativeElement.scrollIntoView({ block: "end", behavior: "smooth" });
   }
   dayClicked({ date, events }: { date: Date; events: CustomEvent[] }): void {
     // TO-DO: Bei mehreren Events an einem Tag?
