@@ -6,6 +6,7 @@ export class CompanyMember {
   contactPerson: string;
   mail: string;
   id: Number;
+ 
   constructor(id: Number,firstname: string, lastname: string, email: string, companyName: string, 
     contactPerson: string,
     mail: string) {

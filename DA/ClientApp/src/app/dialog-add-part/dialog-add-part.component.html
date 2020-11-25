@@ -15,16 +15,11 @@
       <mat-label>Email</mat-label>
       <input matInput [(ngModel)]="data.mail" placeholder="max@mustmann.com">
     </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Firma auswählen</mat-label>
-      <mat-select [(ngModel)]="companyName">
-        <mat-option *ngFor="let s of data.companys" [value]="s">
-          {{s}}
-        </mat-option>
-      </mat-select>
-
+    <mat-form-field class="example-full-width">
+      <mat-label>Firma</mat-label>
+      <input matInput [(ngModel)]="companyName">
     </mat-form-field>
-    <button (click)="addCompany()">Firma hinzufügen</button>
+   
   </div>
 
 </div>

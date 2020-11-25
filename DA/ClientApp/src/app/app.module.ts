@@ -45,7 +45,9 @@ import { DialogDeleteMemberComponent } from './dialog-delete-member/dialog-delet
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AddressPipe } from './address.pipe';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { DialogErrorComponent } from './dialog-error/dialog-error.component'
+import { DialogErrorComponent } from './dialog-error/dialog-error.component';
+import { DialogAddCategoryComponent } from './dialog-add-category/dialog-add-category.component';
+import { DialogEditOrgCatComponent } from './dialog-edit-org-cat/dialog-edit-org-cat.component'
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -92,6 +94,8 @@ const routes: Routes = [
     DialogDeleteMemberComponent,
     AddressPipe,
     DialogErrorComponent,
+    DialogAddCategoryComponent,
+    DialogEditOrgCatComponent,
   
   ],
   imports: [
@@ -127,7 +131,9 @@ const routes: Routes = [
   exports: [RouterModule, FormsModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: "de" }, { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }, AuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent, DialogMoreEventsComponent, DialogAddPartComponent, DialogSavingComponent, DialogEditComponent, DialogDeleteMemberComponent, DialogErrorComponent
+  entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent,
+    DialogMoreEventsComponent, DialogAddPartComponent, DialogSavingComponent, DialogEditComponent, DialogDeleteMemberComponent, DialogErrorComponent, DialogAddCategoryComponent,
+    DialogEditOrgCatComponent
   ] 
 })
 export class AppModule { }

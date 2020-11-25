@@ -13,6 +13,8 @@ import { CompanyMember } from './CompanyMember';
 import { Organizer } from './Organizer';
 import { DialogAddPartComponent } from '../dialog-add-part/dialog-add-part.component';
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
+import { DialogAddCategoryComponent } from '../dialog-add-category/dialog-add-category.component';
+import { DialogEditOrgCatComponent } from '../dialog-edit-org-cat/dialog-edit-org-cat.component';
 @Component({
   selector: 'app-backend-detail',
   templateUrl: './backend-detail.component.html',
@@ -62,6 +64,7 @@ export class BackendDetailComponent implements OnInit {
   @ViewChild('btnSchooling3', { static: true }) private btnSchooling3: ElementRef;
   readyToPost: boolean = false;
   addOrEdit: string = "Schulung anlegen";
+  newCategory: string;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
@@ -78,7 +81,7 @@ export class BackendDetailComponent implements OnInit {
      
     })
   }
-  displayedColumns: string[] = ['firstname', 'lastname', 'email','delete'];
+  displayedColumns: string[] = ['firstname', 'lastname', 'email', 'company', 'delete'];
   category: string[] = [
     "moveIT@ISS + Grundlagen",
     "moveIT@ISS + Workshop",
@@ -499,5 +502,69 @@ export class BackendDetailComponent implements OnInit {
     console.log(this.dataSource.length);
     this.table.renderRows();
   }
+  addCategory() {
+    const dialogRef = this.dialog.open(DialogAddCategoryComponent, {
+      width: '600px',
+      data: { org: this.newCategory }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.newCategory = result;
+      if (result != null) {
+        if (this.newCategory != "") {
+          console.log(this.newCategory);
+          this.category.push(this.newCategory);
+          this.catName = this.newCategory;
+        }
+      }
+
+
+    });
+  }
+  editCategory() {
+    const dialogRef = this.dialog.open(DialogEditOrgCatComponent, {
+      width: '600px',
+      data: { org: this.catName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.newCategory = result;
+      if (result != null) {
+        if (this.newCategory != "") {
+          console.log(this.newCategory);
+          var index = this.category.indexOf(this.catName);
+          this.category[index] = this.newCategory;
+          console.log(this.category[index]);
+          
+        }
+      }
+
+
+    });
+  }
+  editOrganizer() {
+    const dialogRef = this.dialog.open(DialogEditOrgCatComponent, {
+      width: '600px',
+      data: { org: this.organizerName.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.newOrganizer = result;
+      if (result != null) {
+        if (this.newOrganizer != "") {
+          console.log(this.newOrganizer);
+
+          var index = this.organizer.indexOf(this.organizerName);
+          this.organizerName.name = this.newOrganizer;
+          //console.log(this.category[index]);
+
+        }
+      }
+
+
+    });
+  }
 }

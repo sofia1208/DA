@@ -17,14 +17,19 @@
         <p class="pColumn">Preis</p>
       </div>
       <div class="columnFields">
-        <mat-form-field class="fields" appearance="fill">
-          <mat-label>Kategorie auswählen</mat-label>
-          <mat-select [(ngModel)]="catName" (selectionChange)="checkInputs()">
-            <mat-option *ngFor="let s of category" [value]="s">
-              {{s}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div>
+          <mat-form-field class="fields" appearance="fill">
+            <mat-label>Kategorie auswählen</mat-label>
+            <mat-select [(ngModel)]="catName" (selectionChange)="checkInputs()">
+              <mat-option *ngFor="let s of category" [value]="s">
+                {{s}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button class="btnMap" (click)="addCategory()">Kategorie hinzufügen</button>
+          <button class="btnMap" (click)="editCategory()">Kategorie bearbeiten</button>
+        </div>
+        
         <div class="displayRow fields">
           <mat-form-field>
             <mat-label>Straße</mat-label>
@@ -135,7 +140,11 @@
       </div>
       <div class="column" style="margin: 10px">
         <button class="btnMap" data-toggle="tooltip" title="Organisator hinzufügen" (click)="addOrganizer()" mat-fab>
-         Organisator hinzufügen
+          Organisator hinzufügen
+        </button>
+
+        <button class="btnMap" data-toggle="tooltip" title="Organisator editieren" (click)="editOrganizer()" mat-fab>
+          Organisator editieren
         </button>
       </div>
     </div>
@@ -180,6 +189,11 @@
         <td mat-cell *matCellDef="let member"> {{member.email}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="company">
+        <th mat-header-cell *matHeaderCellDef> Firma </th>
+        <td mat-cell *matCellDef="let member"> {{member.companyName}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef> Löschen </th>
         <td mat-cell *matCellDef="let member">
@@ -187,7 +201,7 @@
             <mat-icon>delete</mat-icon>
           </button>
       </ng-container>
-      
+
 
 
 

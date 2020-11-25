@@ -81,3 +81,6 @@ agm-map {
 td.mat-cell{
     vertical-align:middle;
 }
+.table thead th{
+    width:190px;
+}
