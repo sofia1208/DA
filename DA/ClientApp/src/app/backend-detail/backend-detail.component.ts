@@ -68,6 +68,7 @@ export class BackendDetailComponent implements OnInit {
   newCategory: string;
   kurzbeschreibungHtml: string;
   contentLink: string;
+  dateString: string;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
@@ -321,6 +322,7 @@ export class BackendDetailComponent implements OnInit {
     this.endDate.setFullYear(+xxE[0], +xxE[1] - 1, +dayE[0]);
     this.endDate.setHours(+hoursE[0], +hoursE[1]);
 
+    this.dateString = this.startDate.toDateString() + " - " + this.endDate.toDateString();
     let sT = new Date(this.backendDto.start);
     let eT = new Date(this.backendDto.end);
     this.convertToGermanTime(sT, eT);
