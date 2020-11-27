@@ -48,7 +48,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { DialogErrorComponent } from './dialog-error/dialog-error.component';
 import { DialogAddCategoryComponent } from './dialog-add-category/dialog-add-category.component';
 import { DialogEditOrgCatComponent } from './dialog-edit-org-cat/dialog-edit-org-cat.component';
-import { DialogSuccessfulAddedComponent } from './dialog-successful-added/dialog-successful-added.component'
+import { DialogSuccessfulAddedComponent } from './dialog-successful-added/dialog-successful-added.component';
+import { PrintMemberComponent } from './print-member/print-member.component'
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -98,6 +99,7 @@ const routes: Routes = [
     DialogAddCategoryComponent,
     DialogEditOrgCatComponent,
     DialogSuccessfulAddedComponent,
+    PrintMemberComponent,
   
   ],
   imports: [

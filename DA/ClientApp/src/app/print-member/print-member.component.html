@@ -1,0 +1,33 @@
+<h2>Teilnehmerliste</h2>
+<h3>Seminar: {{category}} Termin: {{date}}</h3>
+
+<table mat-table #mytable [dataSource]="dataSource" class="table">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let member"> {{member.firstname}} {{member.lastname}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="company">
+  <th mat-header-cell *matHeaderCellDef> Firma </th>
+  <td mat-cell *matCellDef="let member"> {{member.companyName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Einverständnis & E-Mail </th>
+    <td mat-cell *matCellDef="let member"> </td>
+  </ng-container>
+
+  
+
+  <ng-container matColumnDef="signiture">
+    <th mat-header-cell *matHeaderCellDef> Unterschrift </th>
+    <td mat-cell *matCellDef="let member">
+      </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

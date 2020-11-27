@@ -204,7 +204,7 @@ export class CalendarComponent implements OnInit {
   getHolidays(): void {
   
     let now = new Date().getFullYear();
-   
+    
     this.getHolidaysHTTP(`https://getfestivo.com/v2/holidays?api_key=4995fde4f1b7998b6d7632886ede685a&country=AT&year=${now}&language=de`)
       .subscribe(data => {
 

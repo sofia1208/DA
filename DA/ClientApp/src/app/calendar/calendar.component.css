@@ -128,16 +128,25 @@ margin: auto
   font-size: 20px;
   color: #707070;
   margin-bottom: 0px;
+  display:flex;
+  flex-wrap:wrap;
+}
+.row{
+ margin-left: 0px;
 }
 .col1{
-width: 25%
+flex:1
 }
 .col2 {
-  width: 70%
+  flex:1
+}
+.col3{
+    flex:2
 }
 
-.innerRows{
-    height: 30px;
+.innerRows {
+  height: 30px;
+  margin-bottom: 5px;
 }
 .btnLogin {
   border-radius: 12px;

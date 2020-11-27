@@ -22,7 +22,7 @@
         <div class="row innerRows">Telefon</div>
         <div class="row innerRows">Adresse</div>
         <div class="row innerRows">Verfügbare Plätze</div>
-        <div class="row innerRows">Kurzbeschreibung</div>
+       
       </div>
 
       <div class="column col2">
@@ -34,11 +34,14 @@
         <div class="row innerRows">{{telefon}}</div>
         <div class="row innerRows">{{adresse}}</div>
         <div class="row innerRows">{{freePlaces}}</div>
+     
+      </div>
+
+      <div class="column col3">
+        <div class="row innerRows">Kurzbeschreibung</div>
         <div class="row innerRows" style="display:contents">{{kurzbeschreibung}} (<p style="display:contents" class="hyp" (click)="goToHyperLink()" data-toggle="tooltip" title="Inhalt dieser Schulung ansehen">Schulungsinhalt anzeigen</p>)</div>
         <div class="row innerRows"></div>
       </div>
-
-
 
     </div>
 
