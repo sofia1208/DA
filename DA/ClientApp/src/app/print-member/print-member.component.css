@@ -1,0 +1,43 @@
+
+table thead th {
+  width: 190px;
+  font-size: 17px;
+}
+table tr:first-child td {
+  border-top: 0;
+}
+table {
+  margin-left: 30px;
+  width: 95%;
+
+}
+
+.table th {
+  border-top: none;
+  width: 190px;
+  font-size: 17px;
+  color:black;
+}
+
+td.mat-cell {
+  font-size: 15px;
+  vertical-align: middle;
+  border-left: 1px rgba(0, 0, 0, 0.12) solid;
+  border-right: 1px rgba(0, 0, 0, 0.12) solid;
+  padding: 0 24px !important;
+  color: black;
+}
+th.mat-header-cell{
+    padding-left: 20px;
+}
+.headerIndex{
+    width: 10px !important;
+}
+.lineAbove {
+    display:flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 20px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}

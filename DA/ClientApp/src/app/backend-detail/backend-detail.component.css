@@ -16,7 +16,17 @@ margin-top: 20px;
     flex-direction: row;
 }
 @media print {
+  .onlyShowPrint {
+    display: block !important;
+  }
+
   .printMe {
+    display: none !important;
+  }
+}
+
+@media not print {
+  .onlyShowPrint {
     display: none !important;
   }
 }
@@ -78,9 +88,30 @@ agm-map {
   flex-direction: row;
   text-align: center;
 }
-td.mat-cell{
-    vertical-align:middle;
+table thead th {
+  width: 190px;
+  font-size: 17px;
 }
-.table thead th{
-    width:190px;
+
+table tr:first-child td {
+  border-top: 0;
 }
+
+
+.table th {
+  border-top: none;
+  width: 190px;
+  font-size: 17px;
+}
+
+td.mat-cell {
+  font-size: 15px;
+  vertical-align: middle;
+
+  padding: 0 24px !important;
+}
+
+th.mat-header-cell {
+  padding-left: 20px;
+}
+

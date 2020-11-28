@@ -8,9 +8,10 @@ import { Member } from '../registration/Member';
 })
 export class PrintMemberComponent implements OnInit {
   @Input() category: string;
-  @Input() date: string;
+  @Input() sDate: Date;
+  @Input() eDate: Date;
   @Input() dataSource: Member[] = [];
-  displayedColumns: string[] = ['name', 'company', 'email', 'signiture'];
+  displayedColumns: string[] = ['index','name', 'company', 'email', 'signiture'];
   constructor() { }
 
   ngOnInit(): void {

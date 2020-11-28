@@ -1,7 +1,15 @@
-<h2>Teilnehmerliste</h2>
-<h3>Seminar: {{category}} &emsp; Termin: {{date}}</h3>
+<h2 style="border-bottom: 1px #feae5f solid; ">Teilnehmerliste</h2>
+<div class="lineAbove">
+  <h3>Seminar: {{category}} &emsp; </h3>
+  <h3>Termin: {{sDate | date:'dd.MMM yyyy' :'de'}} - {{eDate | date: 'dd.MMM yyyy' :'de'}}</h3>
+</div>
 
 <table mat-table #mytable [dataSource]="dataSource" class="table">
+
+  <ng-container matColumnDef="index">
+    <th mat-header-cell *matHeaderCellDef class="headerIndex">  </th>
+    <td mat-cell class="headerIndex" *matCellDef="let member ; let i = index;">{{i+1}}  </td>
+  </ng-container>
 
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -10,24 +18,35 @@
 
 
   <ng-container matColumnDef="company">
-  <th mat-header-cell *matHeaderCellDef> Firma </th>
-  <td mat-cell *matCellDef="let member"> {{member.companyName}} </td>
+    <th mat-header-cell *matHeaderCellDef> Firma </th>
+    <td mat-cell *matCellDef="let member"> {{member.companyName}} </td>
   </ng-container>
 
   <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef>Einverständnis & E-Mail </th>
-    <td mat-cell *matCellDef="let member"> </td>
+    <th mat-header-cell *matHeaderCellDef>Einverständnis & E-Mail* </th>
+    <td mat-cell *matCellDef="let member">
+      <button style="background-color: white; border: none;" mat-fab color="#A0A0A0">
+        <mat-icon>crop_square</mat-icon>
+      </button>
+    </td>
   </ng-container>
 
-  
+
 
   <ng-container matColumnDef="signiture">
     <th mat-header-cell *matHeaderCellDef> Unterschrift </th>
     <td mat-cell *matCellDef="let member">
-      </td>
+    </td>
   </ng-container>
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<div>
+  *Der Teilnehmer erklärt sich durch seine Bestätigung damit einverstanden von moveIT per Mail an die moveIT vorliegende Mailadresse (persönliche Firmen-Mailadresse oder Mailadresse der Schulungsanmeldung) einen Feedbackbogen zur Beurteilung dieser Schulung zu erhalten. Auch mit Einverständniserklärung bleibt die tatsächliche Teilnahme freiwillig. Der Versand, die Befragung als auch die Auswertung erfolgen über die Umfrageplattform www.surveymonkey.com.
+</div>
+<div>
+  Die hier vorliegenden Daten werden zum Zwecke der Erfassung der Anwesenheit erhoben.
+</div>
+
