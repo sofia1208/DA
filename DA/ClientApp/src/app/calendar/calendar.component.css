@@ -147,6 +147,7 @@ flex:1
 .innerRows {
   height: 30px;
   margin-bottom: 5px;
+ 
 }
 .btnLogin {
   border-radius: 12px;
@@ -194,6 +195,9 @@ app-invoice{
     display: flex;
     flex-wrap: initial;
     margin: 4px;
+  }
+  .innerRows{
+      height: unset;
   }
   .rowData{
      flex-direction: column;
@@ -312,6 +316,10 @@ p {
 .hyp {
   margin: 0px;
   color: #FEAE5F;
+}
+.detailRes{
+    display:flex;
+    flex-wrap:wrap;
 }
 
 

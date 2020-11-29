@@ -244,13 +244,7 @@ export class RegistrationComponent implements OnInit {
       this.companyStreetNumber!="" &&
       this.companyZipCode !== ""
     ) {
-      if (this.dataSource.length == 0) {
-        const dialogConfig = new MatDialogConfig();
-       
-        dialogConfig.autoFocus = true;
-
-        this.dialog.open(DialogErrorComponent, dialogConfig);
-      }
+      
 
       console.log("true");
       this.buttonActive = true;
@@ -259,6 +253,15 @@ export class RegistrationComponent implements OnInit {
       this.buttonActive = false;
     }
   }
+  noMembersAdded() {
+
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.autoFocus = true;
+
+      this.dialog.open(DialogErrorComponent, dialogConfig);
+    
+  }
   planRoute() {
     var ad = this.adresse.split(",")[0];
 
@@ -266,6 +269,7 @@ export class RegistrationComponent implements OnInit {
     window.open(`https://www.google.at/maps/dir//${ad}`, '_blank');
   
   }
+
   openDialog(name: string): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -407,9 +411,15 @@ export class RegistrationComponent implements OnInit {
   }
   submit(): void {
     console.log("Submit registration");
-    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.dataSource, this.companyContactPersonTitle,this.companyContactPersonName))
-      .subscribe(x => console.log(x));
-    this.router.navigate(["/checkout"]);
+    if (this.dataSource.length == 0) {
+      this.noMembersAdded();
+    }
+    else {
+      this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.dataSource, this.companyContactPersonTitle, this.companyContactPersonName))
+        .subscribe(x => console.log(x));
+      this.router.navigate(["/checkout"]);
+    }
+   
   }
   addCompanyToSchooling(reg: Registration): Observable<Registration> {
     const httpOptions = {

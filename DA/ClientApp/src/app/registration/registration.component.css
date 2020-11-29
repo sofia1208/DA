@@ -269,27 +269,23 @@ input[type=checkbox]{
 .table tr:first-child td {
   border-top: 0;
 }
-
 @media (max-device-width: 768px) {
-   .filterBtn{
-       display: block;
-   }
   .outerRow {
     margin: 0;
   }
-  
+
   .outerDiv {
     margin: 0px;
   }
-  .mat-typography p {
-    margin: 0;
-    margin-left: 5px;
-    margin-top: 5px;
-  }
+
   .row {
     display: flex;
     flex-wrap: initial;
     margin: 4px;
+  }
+
+  .innerRows {
+    height: unset;
   }
 
   .rowData {
@@ -297,11 +293,19 @@ input[type=checkbox]{
   }
 
   .col1 {
-    width: 25%
+    width: 40%
   }
 
   .col2 {
-    width: 35%;
+    width: 60%;
+  }
+  .col3{
+      margin-top: 30px;
+      width: 100%;
+  }
+
+  .filterBtn {
+    display: flow-root;
   }
 
   .container {
@@ -325,16 +329,6 @@ input[type=checkbox]{
   .btnPrint {
     margin-left: 0px;
   }
-  .rowFields{
-      flex-direction: column;
-  }
-  .colEmpty{
-      display: none;
-  }
-  .checks{
-      display:none;
-  }
- 
 }
 @media print {
   .onlyShowPrint {
@@ -417,6 +411,10 @@ li{
   margin: 0px;
   color: #FEAE5F;
   display: inline;
+}
+.detailRes {
+display: flex;
+  flex-wrap: wrap;
 }
 
 
