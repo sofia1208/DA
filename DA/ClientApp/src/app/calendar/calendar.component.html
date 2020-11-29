@@ -278,7 +278,7 @@
 
         <h1 #detailView class="schulungh1">{{detailTitle}}</h1>
         <div class="row outerRow detailRes">
-          <div class="column col1">
+          <div>
             <div class="row innerRows">Termin</div>
             <div class="row innerRows">Uhrzeit</div>
             <div class="row innerRows">Preis</div>
@@ -290,7 +290,7 @@
 
           </div>
 
-          <div class="column col2">
+          <div>
             <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
             <div class="row innerRows">{{startTime}} - {{endTime}}</div>
             <div class="row innerRows">{{preis}}</div>
@@ -302,11 +302,11 @@
 
 
           </div>
-          <div class="column col3">
-            <div class="row innerRows">Kurzbeschreibung:</div>
-            <div class="row innerRows" [innerHTML]="kurzbeschreibung" style="display:contents"></div>
+          <div>
+            <div  class="row innerRows shortText">Kurzbeschreibung:</div>
+            <div  class="row innerRows shortText" [innerHTML]="kurzbeschreibung" style="display:inline-block"></div>
             <div>(<p style="display:contents" class="hyp" (click)="goToHyperLink()" data-toggle="tooltip" title="Inhalt dieser Schulung ansehen">Schulungsinhalt anzeigen</p>)</div>
-            <div class="row innerRows"></div>
+          
           </div>
 
 

@@ -147,6 +147,7 @@ flex:1
 .innerRows {
   height: 30px;
   margin-bottom: 5px;
+  width:400px;
  
 }
 .btnLogin {
@@ -320,6 +321,9 @@ p {
 .detailRes{
     display:flex;
     flex-wrap:wrap;
+}
+.shortText{
+    width: 600px;
 }
 
 
