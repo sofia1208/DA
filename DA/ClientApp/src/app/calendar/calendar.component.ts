@@ -96,7 +96,7 @@ export class CalendarComponent implements OnInit {
   freePlaces : string;
   kurzbeschreibung: string;
   contentLink: string;
-  displayedColumns: string[] = ['type', 'city', 'date', 'price', 'organisation'];
+  displayedColumns: string[] = ['typ', 'city', 'date', 'price', 'organisation'];
     selectedId: Number;
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog) { }
   ngAfterViewInit(): void {
@@ -371,15 +371,24 @@ export class CalendarComponent implements OnInit {
         .subscribe(data => {
           schooling = data;
           console.log(data);
-
-          this.fillDetails(schooling);
+          var today = new Date();
+          console.log(today);
+          console.log(event.start);
+          
+          
           if (!event.isFree) {
             this.canReg = true;
             this.detailTitle = this.detailTitle + "   (Diese Schulung ist belegt)";
           }
+          else if (event.start < today)
+          {
+            
+            this.canReg = true;
+          }
           else {
             this.canReg = false;
           }
+          this.fillDetails(schooling);
 
         }
           , err => {
@@ -566,10 +575,10 @@ export class CalendarComponent implements OnInit {
         outOfMonth: false
 
       };
-      var today = new Date();
-      if ((schooling.end > today)) {
+     
+    
         this.events.push(schooling);
-      }
+      
      
       this.refresh.next();
       
@@ -683,7 +692,7 @@ export class CalendarComponent implements OnInit {
       this.summaryList.push(this.schoolingList[i]);
      
     }
-
+    console.log(this.summaryList);
     this.table.renderRows();
 
   }
