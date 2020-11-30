@@ -24,6 +24,7 @@ namespace Schulungskalender.Services {
         private List<PersonRessource> persons;
         private List<RegistrationRessource> registrations;
         private List<SchoolingRessource> schoolings;
+        private List<CategoryRessource> categories;
 
 
         public SchoolingService() {
@@ -124,8 +125,9 @@ namespace Schulungskalender.Services {
             persons = new List<PersonRessource>();
             registrations = new List<RegistrationRessource>();
             schoolings = new List<SchoolingRessource>();
+            categories = new List<CategoryRessource>();
 
-            db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
+            db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons, ref categories);
         }
 
         private bool IsSchoolingFree(int id) {

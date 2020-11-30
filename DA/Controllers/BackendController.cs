@@ -62,5 +62,11 @@ namespace DA.Controllers {
             return backendService.GetCompanies();
         }
 
+        [HttpGet("Categories")]
+        public List<CategoryDto> Categories() {
+            return backendService.GetCategories();
+        }
+
+
     }
 }

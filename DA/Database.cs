@@ -25,13 +25,16 @@ namespace DA {
                ref List<SchoolingRessource> schoolings,
                 ref List<OrganizerRessource> organizers,
                 ref List<RegistrationRessource> registrations,
-                ref List<PersonRessource> persons) {
+                ref List<PersonRessource> persons,
+            ref List<CategoryRessource> categories) {
             GetAddresses(ref addresses);
             GetCompanies(ref companies);
             GetOrganizers(ref organizers);
             GetPersons(ref persons);
             GetSchoolings(ref schoolings);
+            GetSchoolings(ref schoolings);
             GetRegistrations(ref registrations);
+            GetCategories(ref categories);
         }
 
 
@@ -194,9 +197,25 @@ namespace DA {
             catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
+        }
 
+        public void GetCategories(ref List<CategoryRessource> categories) {
+            categories = new List<CategoryRessource>();
 
+            try {
+                var getCategoryCmd = new MySqlCommand("SELECT * FROM categories", connection);
 
+                CategoryRessource category;
+                using MySqlDataReader reader = getCategoryCmd.ExecuteReader();
+                while (reader.Read()) {
+                    category = new CategoryRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), ShortDescription = reader.GetString(2), ContentLink = reader.GetString(3) };
+                    Console.WriteLine(category.Name);
+                    categories.Add(category);
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public bool InsertAddress(RegistrationDTO registrationDTO) {
@@ -353,16 +372,16 @@ namespace DA {
                 string insertstatement = "";
                 if (addressId == 0) {
                     if (organizerId == 0) {
-                         insertstatement = $"INSERT INTO schoolings(name, start, end, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                        insertstatement = $"INSERT INTO schoolings(name, start, end, number_of_places, price)" +
+                                        $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
                     else {
-                         insertstatement = $"INSERT INTO schoolings(name, start, end, organizer_id, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                        insertstatement = $"INSERT INTO schoolings(name, start, end, organizer_id, number_of_places, price)" +
+                                        $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
                 }
                 else {
-                    if(organizerId == 0) {
+                    if (organizerId == 0) {
                         insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, number_of_places, price)" +
                                         $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
