@@ -163,6 +163,7 @@ namespace DA.Services {
                 });
                 db.GetPersons(ref persons);
 
+                Console.WriteLine(schooling.End);
                 wasSuccessful = db.UpdateSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
 
                 db.GetSchoolings(ref schoolings);
@@ -226,7 +227,13 @@ namespace DA.Services {
         }
 
         private SchoolingRessource FindSchooling(BackendDetailDTO backendDetail) {
-            return schoolings.Find(x => x.End == backendDetail.End && x.Name == backendDetail.Name && x.Start == backendDetail.Start && x.Price == backendDetail.Price);
+            return schoolings.Find(x =>
+              x.End.Day == backendDetail.End.Day &&
+            x.End.Month == backendDetail.End.Month &&
+            x.Name == backendDetail.Name && 
+            x.Start.Day == backendDetail.Start.Day && 
+            x.Start.Month == backendDetail.Start.Month && 
+            x.Price == backendDetail.Price);
         }
 
         private CompanyRessource FindCompany(ParticipantDTO participant) {

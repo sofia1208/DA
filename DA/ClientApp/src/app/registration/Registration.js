@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Registration = /** @class */ (function () {
-    function Registration(schoolingId, company, phone, companyEmail, street, streetNumber, zipCode, city, country, participants) {
+    function Registration(schoolingId, company, phone, companyEmail, street, streetNumber, zipCode, city, country, participants, contactPersonTitle, contactPersonName) {
         this.company = company;
         this.schoolingId = schoolingId;
         this.phone = phone;
@@ -12,6 +12,8 @@ var Registration = /** @class */ (function () {
         this.city = city;
         this.country = country;
         this.participants = participants;
+        this.contactPersonName = contactPersonName;
+        this.contactPersonTitle = contactPersonTitle;
     }
     return Registration;
 }());

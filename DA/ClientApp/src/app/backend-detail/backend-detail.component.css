@@ -78,3 +78,9 @@ agm-map {
   flex-direction: row;
   text-align: center;
 }
+td.mat-cell{
+    vertical-align:middle;
+}
+.table thead th{
+    width:190px;
+}

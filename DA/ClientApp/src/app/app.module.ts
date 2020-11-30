@@ -40,6 +40,15 @@ import { DialogMoreEventsComponent } from './dialog-more-events/dialog-more-even
 import { AuthGuard } from './login/AuthGuard';
 import { DialogAddPartComponent } from './dialog-add-part/dialog-add-part.component';
 import { DialogSavingComponent } from './dialog-saving/dialog-saving.component';
+import { DialogEditComponent } from './dialog-edit/dialog-edit.component';
+import { DialogDeleteMemberComponent } from './dialog-delete-member/dialog-delete-member.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AddressPipe } from './address.pipe';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { DialogErrorComponent } from './dialog-error/dialog-error.component';
+import { DialogAddCategoryComponent } from './dialog-add-category/dialog-add-category.component';
+import { DialogEditOrgCatComponent } from './dialog-edit-org-cat/dialog-edit-org-cat.component';
+import { DialogSuccessfulAddedComponent } from './dialog-successful-added/dialog-successful-added.component'
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -57,6 +66,8 @@ const routes: Routes = [
       { path: 'invoice', component: InvoiceComponent }
     ]
   },
+
+
   { path: '', redirectTo: '/calendar', pathMatch: 'full' }
 ];
 @NgModule({
@@ -80,6 +91,13 @@ const routes: Routes = [
     DialogMoreEventsComponent,
     DialogAddPartComponent,
     DialogSavingComponent,
+    DialogEditComponent,
+    DialogDeleteMemberComponent,
+    AddressPipe,
+    DialogErrorComponent,
+    DialogAddCategoryComponent,
+    DialogEditOrgCatComponent,
+    DialogSuccessfulAddedComponent,
   
   ],
   imports: [
@@ -104,12 +122,20 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     BrowserAnimationsModule,
+    MatGridListModule,
+    MatAutocompleteModule
+  
+    
+ 
+    
    // MatDatepickerModule, MatInputModule, MatNativeDateModule
   ],
   exports: [RouterModule, FormsModule, ReactiveFormsModule],
-  providers: [{ provide: LOCALE_ID, useValue: "de" }, AuthGuard],
+  providers: [{ provide: LOCALE_ID, useValue: "de" }, { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }, AuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent, DialogMoreEventsComponent, DialogAddPartComponent, DialogSavingComponent
+  entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent,
+    DialogMoreEventsComponent, DialogAddPartComponent, DialogSavingComponent, DialogEditComponent, DialogDeleteMemberComponent, DialogErrorComponent, DialogAddCategoryComponent,
+    DialogEditOrgCatComponent, DialogSuccessfulAddedComponent
   ] 
 })
 export class AppModule { }

@@ -13,6 +13,9 @@ import { CompanyMember } from './CompanyMember';
 import { Organizer } from './Organizer';
 import { DialogAddPartComponent } from '../dialog-add-part/dialog-add-part.component';
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
+import { DialogAddCategoryComponent } from '../dialog-add-category/dialog-add-category.component';
+import { DialogEditOrgCatComponent } from '../dialog-edit-org-cat/dialog-edit-org-cat.component';
+import { DialogSuccessfulAddedComponent } from '../dialog-successful-added/dialog-successful-added.component';
 @Component({
   selector: 'app-backend-detail',
   templateUrl: './backend-detail.component.html',
@@ -25,15 +28,15 @@ export class BackendDetailComponent implements OnInit {
   zipCode: string;
   city: string;
   country: string;
-  catName: string = "";
+  catName: string ;
   backendDto: BackendDetailDto;
   organizer: Organizer[] = [];
   contactPerson: string;
   email: string;
   website: string;
   phone: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date = new Date();
+  endDate: Date= new Date();
   startTime: string;
   endTime: string;
   sizeOfSchooling: Number;
@@ -46,7 +49,7 @@ export class BackendDetailComponent implements OnInit {
   mail: string = "";
   companyContactPerson: string = "";
   companyMail: string = "";
-
+  sDate: Date;
   organizerDto: Organizer
   newOrganizer: string = "";
   lat: Number = 48.1505921;
@@ -62,6 +65,9 @@ export class BackendDetailComponent implements OnInit {
   @ViewChild('btnSchooling3', { static: true }) private btnSchooling3: ElementRef;
   readyToPost: boolean = false;
   addOrEdit: string = "Schulung anlegen";
+  newCategory: string;
+  kurzbeschreibungHtml: string;
+  contentLink: string;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
     this.route.queryParams.subscribe(p => {
      
@@ -70,38 +76,36 @@ export class BackendDetailComponent implements OnInit {
       this.fillComboboxes();
       if (this.detailId > 0) {
         this.addOrEdit = "Schulung speichern";
-        this.getDetails();
-     
-        //this.btnSchooling1.nativeElement.innerHTML = "Schulung speichern";
-        //this.btnSchooling2.nativeElement.innerHTML = "Schulung speichern";
-        //this.btnSchooling3.nativeElement.innerHTML = "Schulung speichern";
-     
+        this.readyToPost = true;
       }
-
+      this.sDate = new Date();
   
 
      
     })
   }
-  displayedColumns: string[] = ['firstname', 'lastname', 'email','delete'];
+  displayedColumns: string[] = ['firstname', 'lastname', 'email', 'company', 'delete'];
   category: string[] = [
-    "moveIT@ISS+Grundlagen",
-    "moveIT@ISS+Workshop",
-    "moveIT@ISS+Administrator",
-    "moveIT@ISS+Kombimodell"
+    "moveIT@ISS + Grundlagen",
+    "moveIT@ISS + Workshop",
+    "moveIT@ISS + Administrator",
+    "moveIT@ISS + Kombimodell"
   ];
   members: CompanyMember[]=[];
   dataSource = this.members;
   emails: string[] = [];
   ngOnInit() {
   
-   
-   
+    if (this.detailId > 0) {
+      this.getDetails();
+    }
+    
   
   }
   goBack() {
-    //TO_DO get Info if anything changed
+  
     if (this.saved) {
+      console.log("everything saved");
       this.router.navigate(["/start"]);
     }
     else {
@@ -114,14 +118,19 @@ export class BackendDetailComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.saved = result.saved;
+        if (result != null) {
+          this.saved = result.saved;
+        }
+        
+       
         if (this.saved) {
           this.addSchooling(true);
-          
+
         }
         else {
           this.router.navigate(["/start"]);
         }
+       
       });
     }
   }
@@ -134,10 +143,19 @@ export class BackendDetailComponent implements OnInit {
       console.log("Schulung anlegt");
       this.addSchooling(false);
     }
+
+    const dialogRef = this.dialog.open(DialogSuccessfulAddedComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    
+      });
+
+
     if (this.detailId > 0) {
-      this.btnSchooling1.nativeElement.innerHTML = "Schulung anlegen";
-      this.btnSchooling2.nativeElement.innerHTML = "Schulung anlegen";
-      this.btnSchooling3.nativeElement.innerHTML = "Schulung anlegen";
+      this.addOrEdit = "Schulung anlegen";
     }
     this.dataSource = [];
     this.table.renderRows();
@@ -155,13 +173,14 @@ export class BackendDetailComponent implements OnInit {
       .subscribe(x => {
         console.log(x);
         this.organizer = x;
-         
-        //DISTINCT
+        const distinctArray = this.organizer.filter((n, i) => this.organizer.indexOf(n) === i);
+        console.log(distinctArray);
       })
     
   }
   changeOrganizer() {
     console.log("changing");
+    this.checkInputs();
     console.log(this.organizerName);
     let shownO = this.organizer.find(x => x.name === this.organizerName.name);
     this.contactPerson = shownO.contactPerson;
@@ -179,9 +198,15 @@ export class BackendDetailComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
         this.newOrganizer = result;
+        if (result != null) {
+          if (this.newOrganizer != "") {
+            console.log(this.newOrganizer);
+            this.organizer.push(new Organizer(this.organizer.length, this.newOrganizer, "", "", "", ""));
+            this.organizerName.name = this.newOrganizer;
+          }
+        }
+       
 
-        this.organizer.push(new Organizer(this.organizer.length,this.newOrganizer,"","","",""));
-        this.organizerName.name = this.newOrganizer;
       });
    
    
@@ -223,16 +248,19 @@ export class BackendDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.firstname = result.firstname;
-      this.lastname= result.lastname;
-      this.mail= result.mail;
-      this.companyName= result.companyName;
-      //this.companyName = result.name;
-      //this.companyContactPerson = result.contactperson;
-      //this.companyMail = result.mail;
+      if (result != null) {
+        this.firstname = result.firstname;
+        this.lastname = result.lastname;
+        this.mail = result.mail;
+        this.companyName = result.companyName;
+        //this.companyName = result.name;
+        //this.companyContactPerson = result.contactperson;
+        //this.companyMail = result.mail;
 
-      this.companys.push(this.companyName);
-      this.addMember();
+        this.companys.push(this.companyName);
+        this.addMember();
+      }
+    
 
     });
 
@@ -261,16 +289,38 @@ export class BackendDetailComponent implements OnInit {
 
   }
   fillDetails() {
-
+    console.log(this.backendDto);
     this.street= this.backendDto.street;
     this.streetNumber = this.backendDto.streetNumber.toString();
     this.zipCode = this.backendDto.zipCode.toString();
     this.city = this.backendDto.city;
     this.country = this.backendDto.country;
-    this.catName = this.backendDto.name;
-  
-    this.startDate = this.backendDto.start;
-    this.endDate = this.backendDto.end;
+    console.log(this.backendDto.name);
+
+    let arr = this.backendDto.name.split("+");
+    let cat = arr[1].replace(/\s/g, "");
+    //for (var i = 0; i < this.category.length; i++) {
+      
+    //}
+    this.catName = this.category.filter(x => x.includes(cat))[0];
+    console.log(this.catName);
+   
+    var xx = this.backendDto.start.toString().split("-");
+    var day = xx[2].split("T");
+    var hours = day[1].split(":");
+
+    var xxE = this.backendDto.end.toString().split("-");
+    var dayE = xxE[2].split("T");
+    var hoursE = dayE[1].split(":")
+
+    this.startDate = new Date();
+    this.startDate.setFullYear(+xx[0], +xx[1] - 1, +day[0]);
+    this.startDate.setHours(+hours[0], +hours[1]);
+
+    this.endDate = new Date();
+    this.endDate.setFullYear(+xxE[0], +xxE[1] - 1, +dayE[0]);
+    this.endDate.setHours(+hoursE[0], +hoursE[1]);
+
     let sT = new Date(this.backendDto.start);
     let eT = new Date(this.backendDto.end);
     this.convertToGermanTime(sT, eT);
@@ -278,8 +328,7 @@ export class BackendDetailComponent implements OnInit {
 
     this.organizerName = this.organizer.find(x => x.name === this.backendDto.organizer);
     console.log(this.organizerName);
-    
-    console.log(this.organizerName);
+
     this.email = this.backendDto.email;
     this.phone = this.backendDto.phone;
     this.website = this.backendDto.website;
@@ -362,8 +411,10 @@ export class BackendDetailComponent implements OnInit {
 
   }
   checkInputs() {
+    console.log("checks");
+    this.saved = false;
     if (this.catName != "" && this.startDate != null, this.endDate != null, this.price != null, Number(this.zipCode) != null, this.city != null, this.street != null, Number(this.streetNumber) != null,
-      this.country != null, this.organizerName.name != null, this.sizeOfSchooling != null) {
+      this.country != null,  this.sizeOfSchooling != null) {
       this.readyToPost = true;
     }
   }
@@ -374,8 +425,10 @@ export class BackendDetailComponent implements OnInit {
     else {
       this.checkInputs();
       if (this.readyToPost) {
+        this.startDate.setHours(this.startDate.getHours() + 1);
+        this.endDate.setHours(this.endDate.getHours() + 1);
         this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
-          this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+          this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling, this.kurzbeschreibungHtml, this.contentLink))
           .subscribe(x => {
             console.log(x);
             if (goBack) {
@@ -393,10 +446,13 @@ export class BackendDetailComponent implements OnInit {
 
    
   }
-  editSchooling(goBack:boolean) {
-   
+  editSchooling(goBack: boolean) {
+ 
+    this.startDate.setHours(this.startDate.getHours() + 1);
+    this.endDate.setHours(this.endDate.getHours() + 1);
+
     this.putSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
-      this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling))
+      this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling, this.kurzbeschreibungHtml, this.contentLink))
       .subscribe(x => {
         console.log(x);
         if (goBack) {
@@ -407,6 +463,16 @@ export class BackendDetailComponent implements OnInit {
       });
 
 
+  }
+  changeTime(typ: boolean) {
+    console.log(typ);
+    if (typ) {
+      this.startDate.setHours(+this.startTime.split(":")[0], +this.startTime.split(":")[1]);
+
+    }
+    else {
+      this.endDate.setHours(+this.endTime.split(":")[0], +this.endTime.split(":")[1]);
+    }
   }
   postSchooling(reg: BackendDetailDto): Observable<BackendDetailDto> {
     const httpOptions = {
@@ -450,5 +516,75 @@ export class BackendDetailComponent implements OnInit {
     console.log(this.dataSource.length);
     this.table.renderRows();
   }
+  addCategory() {
+    const dialogRef = this.dialog.open(DialogAddCategoryComponent, {
+      width: '600px',
+      data: { org: this.newCategory }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.newCategory = result;
+      if (result != null) {
+        if (this.newCategory != "") {
+          console.log(this.newCategory);
+          this.category.push(this.newCategory);
+          this.catName = this.newCategory;
+        }
+      }
+
+
+    });
+  }
+  editCategory() {
+    const dialogRef = this.dialog.open(DialogEditOrgCatComponent, {
+      width: '600px',
+      data: { org: this.catName }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.newCategory = result;
+      if (result != null) {
+        if (this.newCategory != "") {
+          console.log(this.newCategory);
+          var index = this.category.indexOf(this.catName);
+          this.category[index] = this.newCategory;
+          console.log(this.category[index]);
+          
+        }
+      }
+
+
+    });
+  }
+  editOrganizer() {
+    const dialogRef = this.dialog.open(DialogEditOrgCatComponent, {
+      width: '600px',
+      data: { org: this.organizerName.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.newOrganizer = result;
+      if (result != null) {
+        if (this.newOrganizer != "") {
+          console.log(this.newOrganizer);
+
+          var index = this.organizer.indexOf(this.organizerName);
+          this.organizerName.name = this.newOrganizer;
+          //PUT REQUEST?
+          //console.log(this.category[index]);
+
+        }
+      }
+
+
+    });
+  }
+  categoryChanged() {
+    this.checkInputs();
+
+  }
+ 
 }

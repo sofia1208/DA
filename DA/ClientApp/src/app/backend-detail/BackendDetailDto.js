@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var BackendDetailDto = /** @class */ (function () {
-    function BackendDetailDto(id, name, start, end, price, zipCode, city, street, streetNumber, country, organizer, contactPerson, email, website, phone, isFree, participants, availablePlaces) {
+    function BackendDetailDto(id, name, start, end, price, zipCode, city, street, streetNumber, country, organizer, contactPerson, email, website, phone, isFree, participants, availablePlaces, kurzbeschreibung, contentLink) {
         this.id = id;
         this.name = name;
         this.start = start;
@@ -20,6 +20,8 @@ var BackendDetailDto = /** @class */ (function () {
         this.isFree = isFree;
         this.participants = participants;
         this.availablePlaces = availablePlaces;
+        this.kurzbeschreibung = kurzbeschreibung;
+        this.contentLink = contentLink;
     }
     return BackendDetailDto;
 }());

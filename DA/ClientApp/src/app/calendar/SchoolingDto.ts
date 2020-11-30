@@ -14,6 +14,9 @@ export class SchoolingDto {
   phone: string;
   email: string;
   contactPerson: string;
+  freePlaces: number;
+  kurzbeschreibung: string;
+  contentLink: string;
   
 }
 

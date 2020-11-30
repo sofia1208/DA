@@ -1,12 +1,9 @@
 <h1 mat-dialog-title>
   Ungespeicherte Informationen
 </h1>
-<div mat-dialog-content>
-  <div>
-  
 
-</div>
+
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Nicht speichern</button>
+  <button mat-button (click)="onNoClick()" [mat-dialog-close]="data">Nicht speichern</button>
   <button mat-button [mat-dialog-close]="data" (click)="saved()" cdkFocusInitial>Speichern</button>
 </div>

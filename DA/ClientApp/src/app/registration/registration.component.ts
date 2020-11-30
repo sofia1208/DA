@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy ,NgZone } from '@angular/core';
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -6,11 +6,17 @@ import { CustomEvent } from '../calendar/CustomEvent';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from './Member';
-import { MatTable, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatTable, MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
 import { Registration } from './Registration';
 import { AgmMap, MouseEvent, MapsAPILoader } from '@agm/core';
 import { Location } from './Location';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
+import { DialogEditComponent } from '../dialog-edit/dialog-edit.component';
+import { DialogDeleteMemberComponent } from '../dialog-delete-member/dialog-delete-member.component';
+import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
+import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
 
 @Component({
   selector: 'app-registration',
@@ -36,10 +42,10 @@ export class RegistrationComponent implements OnInit {
   firstname: string = "";
   lastname: string="";
   email: string="";
-  members: Member[] = [];
-
+  freePlaces: number;
+  kurzbeschreibung: string;
   mobile: boolean = false;
-
+  contentLink: string;
   company: string= "";
   companyPhone: string = "";
   companyMail: string = "";
@@ -48,8 +54,8 @@ export class RegistrationComponent implements OnInit {
   companyZipCode: string="";
   companyCity: string = "";
   companyCountry: string = "";
-  companyContactPersonVn: string = "";
-  companyContactPersonLn: string = "";
+  companyContactPersonName: string = "";
+  companyContactPersonTitle: string = "";
   locations: Location[]= [];
   lat: Number = 48.1505921;
   lon: Number = 14.0069141;
@@ -58,14 +64,26 @@ export class RegistrationComponent implements OnInit {
   markerLng: Number;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
-  dataSource = this.members;
+  dataSource: Member[] = [];
   buttonActive: boolean = false;
-  
+  available: number;
   schooling: SchoolingDto;
-
+  printReady: boolean = true;
   checkDatenschutz: boolean;
   checkStrono: boolean;
-  constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog) {
+  onePart: boolean = true;
+  dynamicRow: string = "150px";
+  dynamicHeight: number = 150;
+  saved: boolean = true;
+  disableAdding: boolean = true;
+  openData: boolean = false;
+  openStorno: boolean = false;
+  searchForAddress: string;
+  private geoCoder;
+ 
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private apiloader: MapsAPILoader, public dialog: MatDialog, private ngZone: NgZone) {
     console.log("constructor");
     this.route.queryParams.subscribe(p => {
       this.detailId = p["id"];
@@ -75,34 +93,164 @@ export class RegistrationComponent implements OnInit {
     console.log(this.mobile);
 
   }
+  
+  options: string[] = ['Österreich', 'Deutschland', 'Schweiz'];
+  filteredOptions: Observable<string[]>;
 
-  displayedColumns: string[] = ['firstname', 'lastname', 'email'];
+  countryC = new FormControl('');
+
+
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  emailFormControl2 = new FormControl('', [Validators.required, Validators.email]);
+ 
+  titleOptions: string[] = ['Frau', 'Herr'];
+
+  displayedColumns: string[] = ['firstname', 'lastname', 'email', 'edit', 'delete'];
   ngOnInit(): void {
+    this.filteredOptions = this.countryC.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this.filter(value))
+    );
+
     console.log('on init registration');
     this.getEvent(this.detailId);
- 
+    
+   
+   
     
   }
+  private filter(value: string): string[] {
+  
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+  checkMemberInput() {
+    if (this.firstname != "" && this.lastname != "" && this.emailFormControl2.valid) this.disableAdding = false;
+    else {
+      this.disableAdding = true;
+    }
+  }
+
+
+  editSchooling(id: number) {
+    let member = this.dataSource.find(x => x.id == id);
+    const dialogRef = this.dialog.open(DialogEditComponent, {
+      width: '50%',
+      data: {
+        firstname: member.firstname,
+        lastname: member.lastname,
+        email: member.email
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result != null) {
+    
+        member.firstname = result.firstname;
+        member.lastname = result.lastname;
+        member.email = result.email;
+       
+      }
+      
+
+
+    });
+    
+
+  }
+  deleteSchooling(id: number) {
+    let member = this.dataSource.find(x => x.id == id);
+    const dialogRef = this.dialog.open(DialogDeleteMemberComponent, {
+      width: '40%',
+      data: {
+       name: member.firstname + " " + member.lastname
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result != null) {
+        this.dataSource = this.dataSource.filter(item => item.id != id);
+        this.freePlaces++;
+        if (this.freePlaces > 0) this.disableAdding = false;
+
+      }
+
+
+
+    });
+
+  }
+  goBack() {
+    if (this.saved) {
+      console.log("everything saved");
+      this.router.navigate(["/calendar"]);
+    }
+    else {
+     
+      const dialogRef = this.dialog.open(DialogSavingComponent, {
+        width: '400px',
+        data: {
+          saved: this.saved
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != null) {
+          this.saved = result.saved;
+        }
+
+
+        if (this.saved) {
+         // this.addSchooling(true);
+
+        }
+        else {
+          this.router.navigate(["/calendar"]);
+        }
+
+      });
+    }
+  }
   changeStorno() {
-    this.openDialog("Stornobedingungen");
+    console.log(this.openStorno);
+    if (!this.openStorno) {
+      this.openDialog("Stornobedingungen");
+    }
+    this.openStorno = !this.openStorno;
     this.checkButton();
   }
   changeData() {
-    this.openDialog("Datenschutzbestimmungen");
+ 
+
+    if (!this.openData) {
+      this.openDialog("Datenschutzbestimmungen");
+      
+    }
+    this.openData = !this.openData;
     this.checkButton();
   }
   checkButton() {
-    
+    this.saved = false;
     if (this.checkDatenschutz && this.checkStrono && this.company!=="" && this.companyCity!=="" &&
-      this.companyContactPersonLn!=="" &&
-      this.companyContactPersonVn!=="" && 
-      this.companyCountry!=="" && 
+      
+      this.companyContactPersonName!=="" && 
+   
       this.companyMail!=="" && 
       this.companyPhone!=="" && 
       this.companyStreet!=="" && 
       this.companyStreetNumber!="" &&
       this.companyZipCode !== ""
     ) {
+      if (this.dataSource.length == 0) {
+        const dialogConfig = new MatDialogConfig();
+       
+        dialogConfig.autoFocus = true;
+
+        this.dialog.open(DialogErrorComponent, dialogConfig);
+      }
 
       console.log("true");
       this.buttonActive = true;
@@ -113,7 +261,10 @@ export class RegistrationComponent implements OnInit {
   }
   planRoute() {
     var ad = this.adresse.split(",")[0];
-    document.location.href = `https://www.google.at/maps/dir//${ad}`;
+
+
+    window.open(`https://www.google.at/maps/dir//${ad}`, '_blank');
+  
   }
   openDialog(name: string): void {
     const dialogConfig = new MatDialogConfig();
@@ -125,6 +276,7 @@ export class RegistrationComponent implements OnInit {
     this.dialog.open(DialogComponentComponent, dialogConfig);
   }
   printRegistration() {
+    this.printReady = false;
     window.print();
   }
   checkSize() {
@@ -165,7 +317,7 @@ export class RegistrationComponent implements OnInit {
 
   fillDetails(schooling: SchoolingDto) {
    
-    console.log('fill details');
+    console.log(schooling);
  
     this.telefon = schooling.phone;
     this.convertToGermanTime(schooling);
@@ -175,9 +327,12 @@ export class RegistrationComponent implements OnInit {
 
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
-   
+    this.freePlaces = schooling.freePlaces;
+    
+    
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
-
+    this.kurzbeschreibung = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+    this.contentLink = `https://www.google.at`;
      this.getAddress();
   
   }
@@ -225,24 +380,34 @@ export class RegistrationComponent implements OnInit {
         );
     });
     this.fillDetails(this.schooling);
+   
     return promise;
   
     
   }
 
   addMember(): void {
-   
+       
   
     this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.email, this.company));
     this.table.renderRows();
     this.firstname = "";
     this.lastname = "";
     this.email = "";
+    this.onePart = false;
+    this.dynamicHeight = this.dynamicHeight + 50;
+    this.dynamicRow = this.dynamicHeight + "px";
+    this.freePlaces--;
+    if (this.freePlaces == 0) {
+      this.disableAdding = true;
+    }
+    this.disableAdding = true;
+    //this.emailFormControl2.set;
    
   }
   submit(): void {
     console.log("Submit registration");
-    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.members))
+    this.addCompanyToSchooling(new Registration(Number(this.detailId), this.company, this.companyPhone, this.companyMail, this.companyStreet, Number(this.companyStreetNumber), Number(this.companyZipCode), this.companyCity, this.companyCountry, this.dataSource, this.companyContactPersonTitle,this.companyContactPersonName))
       .subscribe(x => console.log(x));
     this.router.navigate(["/checkout"]);
   }
@@ -256,15 +421,15 @@ export class RegistrationComponent implements OnInit {
 
   
   
-  private getDetail(url: string): Observable<SchoolingDto> {
-    return this.http.get<SchoolingDto>(url);
 
-  }
   private getCoordinates(url: string): Observable<Location[]> {
     return this.http.get<Location[]>(url);
 
   }
+  goToHyperLink() {
 
+    window.open(this.contentLink, '_blank');
+  }
   
 
 }
