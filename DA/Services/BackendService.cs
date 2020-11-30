@@ -73,7 +73,9 @@ namespace DA.Services {
             return converter.getbackendDetaiDTO(schooling, address, organizer, participants, isFree);
         }
 
-
+        internal bool AddCategory(CategoryDto categoryDto) {
+            return db.InsertCategory(categoryDto);
+        }
 
         public bool InsertSchooling(BackendDetailDTO schooling) {
             var wasSuccessful = true;

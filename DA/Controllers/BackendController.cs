@@ -68,5 +68,12 @@ namespace DA.Controllers {
         }
 
 
+        [HttpPost("Categories")]
+        public bool AddCategories([FromBody] CategoryDto category) {
+            return backendService.AddCategory(category);
+        }
+
+        
+
     }
 }

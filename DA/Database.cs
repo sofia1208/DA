@@ -317,6 +317,22 @@ namespace DA {
             return true;
         }
 
+        public bool InsertCategory(CategoryDto categoryDto) {
+            try {
+                string insertstatement = $"INSERT INTO categories (name, short_description, content_link) " +
+                                         $"VALUES ('{categoryDto.Name}', '{categoryDto.ShortDescription}', '{categoryDto.ContentLink}')";
+
+                var insertCategoryCmd = new MySqlCommand(insertstatement, connection);
+                insertCategoryCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
         public bool deleteSchooling(int id) {
             try {
                 string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
