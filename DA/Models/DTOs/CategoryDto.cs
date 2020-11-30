@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 namespace DA.Models.DTOs {
     public class CategoryDto {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
         public string ShortDescription { get; set; }
-        public int ContentLink { get; set; }
+        public string ContentLink { get; set; }
     }
 }
