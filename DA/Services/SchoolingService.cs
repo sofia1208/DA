@@ -36,11 +36,6 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            schoolings.ForEach(x => {
-                if (x.Start < DateTime.Now) {
-                    UpdateDisplay(x.Id, false);
-                }
-            });
 
             if (type.ToLower().Equals("isfree")) {
                 return schoolings.Select(x => {
