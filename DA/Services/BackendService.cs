@@ -36,7 +36,10 @@ namespace DA.Services {
 
 
         public List<BackendSummaryDTO> GetSchoolings() {
-            return schoolings.Select(x => converter.getBackendSummaryDTO(x))
+            return schoolings.Select(x => {
+                var category = categories.Find(y => y.Id == x.CategoryId);
+                return converter.getBackendSummaryDTO(x, category);
+                })
                 .OrderBy(x => x.Start)
                 .ToList();
         }
@@ -66,11 +69,12 @@ namespace DA.Services {
 
         public BackendDetailDTO GetSchoolings(int id) {
             var schooling = schoolings.Find(x => x.Id == id);
+            var category = categories.Find(y => y.Id == schooling.CategoryId);
             var address = FindAddress(schooling);
             var organizer = FindOrganizer(schooling);
             var participants = GetParticipants(id);
             var isFree = IsSchoolingFree(id);
-            return converter.getbackendDetaiDTO(schooling, address, organizer, participants, isFree);
+            return converter.getbackendDetaiDTO(schooling, category, address, organizer, participants, isFree);
         }
 
         internal bool AddCategory(CategoryDto categoryDto) {
@@ -166,7 +170,6 @@ namespace DA.Services {
                 });
                 db.GetPersons(ref persons);
 
-                Console.WriteLine(schooling.End);
                 wasSuccessful = db.UpdateSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
 
                 db.GetSchoolings(ref schoolings);
@@ -234,7 +237,6 @@ namespace DA.Services {
             return schoolings.Find(x =>
               x.End.Day == backendDetail.End.Day &&
             x.End.Month == backendDetail.End.Month &&
-            x.Name == backendDetail.Name &&
             x.Start.Day == backendDetail.Start.Day &&
             x.Start.Month == backendDetail.Start.Month &&
             x.Price == backendDetail.Price);

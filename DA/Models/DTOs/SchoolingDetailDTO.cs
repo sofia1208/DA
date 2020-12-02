@@ -23,5 +23,9 @@ namespace Schulungskalender.Models {
         public int FreePlaces { get; set; }
         public string kurzbechreibung { get; set; }
         public string ContentLink { get; set; }
+
+        public override string ToString() {
+            return $"{Name} {Start} {End} {Street} {StreetNumber} {ZipCode} {City} {Country} {Phone} {Email} {ContactPerson} {ContentLink}";
+        }
     }
 }
