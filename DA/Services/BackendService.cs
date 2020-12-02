@@ -39,7 +39,7 @@ namespace DA.Services {
             return schoolings.Select(x => {
                 var category = categories.Find(y => y.Id == x.CategoryId);
                 return converter.getBackendSummaryDTO(x, category);
-                })
+            })
                 .OrderBy(x => x.Start)
                 .ToList();
         }
@@ -103,6 +103,8 @@ namespace DA.Services {
                 }
             }
 
+            var category = categories.Find(x => x.Name.Equals(schooling.Name));
+
 
             if (wasSuccessful) {
                 schooling.participants.ForEach(x => {
@@ -117,7 +119,7 @@ namespace DA.Services {
                 });
                 db.GetPersons(ref persons);
 
-                wasSuccessful = db.InsertSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
+                wasSuccessful = db.InsertSchooling(schooling, category.Id, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
 
                 db.GetSchoolings(ref schoolings);
 
@@ -157,6 +159,14 @@ namespace DA.Services {
                 }
             }
 
+            CategoryRessource category = null;
+            category = FindCategory(schooling);
+            if (category == null && wasSuccessful) {
+                wasSuccessful = db.InsertCategory(schooling);
+                db.GetCategories(ref categories);
+                category = FindCategory(schooling);
+            }
+
             if (wasSuccessful) {
                 schooling.participants.ForEach(x => {
                     if (FindCompany(x) == null) {
@@ -170,7 +180,7 @@ namespace DA.Services {
                 });
                 db.GetPersons(ref persons);
 
-                wasSuccessful = db.UpdateSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
+                wasSuccessful = db.UpdateSchooling(schooling, category.Id, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
 
                 db.GetSchoolings(ref schoolings);
 
@@ -227,6 +237,10 @@ namespace DA.Services {
 
         private OrganizerRessource FindOrganizer(BackendDetailDTO schooling) {
             return organizers.Find(x => x.Name == schooling.Organizer);
+        }
+
+        private CategoryRessource FindCategory(BackendDetailDTO schooling) {
+            return categories.Find(x => x.Name.Equals(schooling.Name) && x.ContentLink.Equals(schooling.ContentLink) && x.ShortDescription.Equals(schooling.Kurzbeschreibung));
         }
 
         private PersonRessource FindPerson(ParticipantDTO participant) {

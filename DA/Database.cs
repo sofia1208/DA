@@ -333,6 +333,22 @@ namespace DA {
             return true;
         }
 
+        public bool InsertCategory(BackendDetailDTO schoolingDto) {
+            try {
+                string insertstatement = $"INSERT INTO categories (name, short_description, content_link) " +
+                                         $"VALUES ('{schoolingDto.Name}', '{schoolingDto.Kurzbeschreibung}', '{schoolingDto.ContentLink}')";
+
+                var insertCategoryCmd = new MySqlCommand(insertstatement, connection);
+                insertCategoryCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
         public bool deleteSchooling(int id) {
             try {
                 string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
@@ -383,26 +399,26 @@ namespace DA {
         }
 
 
-        public bool InsertSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
+        public bool InsertSchooling(BackendDetailDTO backendDetail,int categoryId, int addressId, int organizerId) {
             try {
                 string insertstatement = "";
                 if (addressId == 0) {
                     if (organizerId == 0) {
-                        insertstatement = $"INSERT INTO schoolings(name, start, end, number_of_places, price)" +
-                                        $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                        insertstatement = $"INSERT INTO schoolings(category_id, start, end, number_of_places, price)" +
+                                        $" VALUES('{categoryId}','{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
                     else {
-                        insertstatement = $"INSERT INTO schoolings(name, start, end, organizer_id, number_of_places, price)" +
-                                        $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                        insertstatement = $"INSERT INTO schoolings(category_id, start, end, organizer_id, number_of_places, price)" +
+                                        $" VALUES('{categoryId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
                 }
                 else {
                     if (organizerId == 0) {
-                        insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, number_of_places, price)" +
-                                        $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                        insertstatement = $"INSERT INTO schoolings(category_id, address_id, start, end, number_of_places, price)" +
+                                        $" VALUES('{categoryId}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
-                    insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, organizer_id, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                    insertstatement = $"INSERT INTO schoolings(category_id, address_id, start, end, organizer_id, number_of_places, price)" +
+                                         $" VALUES('{categoryId}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                 }
 
 
@@ -418,10 +434,10 @@ namespace DA {
         }
 
 
-        public bool UpdateSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
+        public bool UpdateSchooling(BackendDetailDTO backendDetail,int categoryId, int addressId, int organizerId) {
             try {
                 string updateStatement = $"UPDATE schoolings " +
-                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', end='{backendDetail.End:yyyy-MM-dd HH:mm:ss}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'" +
+                                         $"SET category_id='{categoryId}', address_id='{addressId}', start='{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', end='{backendDetail.End:yyyy-MM-dd HH:mm:ss}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'" +
                                          $"WHERE schooling_id={backendDetail.Id};";
 
                 var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
