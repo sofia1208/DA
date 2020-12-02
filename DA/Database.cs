@@ -160,7 +160,7 @@ namespace DA {
                 while (reader.Read()) {
                     schooling = new SchoolingRessource() {
                         Id = reader.GetInt32(0),
-                        Name = reader.GetString(1) ?? "",
+                        CategoryId = reader.GetInt32(1),
                         AddressId = reader.GetInt32(2),
                         Start = reader.GetDateTime(3),
                         End = reader.GetDateTime(4),

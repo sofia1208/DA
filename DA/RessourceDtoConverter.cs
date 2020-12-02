@@ -11,7 +11,7 @@ namespace DA {
     public class RessourceDtoConverter {
 
 
-        public SchoolingSummaryDTO GetSchoolingSummaryDTO(SchoolingRessource schooling, AddressRessource address, OrganizerRessource organizer, bool isFree) {
+        public SchoolingSummaryDTO GetSchoolingSummaryDTO(SchoolingRessource schooling,CategoryRessource category, AddressRessource address, OrganizerRessource organizer, bool isFree) {
             if (address == null) {
                 if (organizer == null) {
                     return new SchoolingSummaryDTO() { Id = schooling.Id, Name = schooling.Name, IsFree = isFree, Start = schooling.Start.ToString("yyyy-MM-ddThh:mm:ss"), End = schooling.End.ToString("yyyy-MM-ddThh:mm:ss"), Price = schooling.Price };
@@ -33,7 +33,7 @@ namespace DA {
             }
         }
 
-        public SchoolingDetailDTO GetSchoolingDetailDTO(SchoolingRessource schooling, AddressRessource address, OrganizerRessource organizer, bool isFree, int freePlaces) {
+        public SchoolingDetailDTO GetSchoolingDetailDTO(SchoolingRessource schooling, CategoryRessource category, AddressRessource address, OrganizerRessource organizer, bool isFree, int freePlaces) {
             if (address == null) {
                 if (organizer == null) {
                     return new SchoolingDetailDTO() { Id = schooling.Id, End = schooling.End, Start = schooling.Start, Price = schooling.Price, IsFree = isFree, FreePlaces = freePlaces };
