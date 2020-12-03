@@ -237,8 +237,8 @@ namespace DA {
 
         public bool InsertCompany(RegistrationDTO registrationDTO, int address_id) {
             try {
-                string insertstatement = $"INSERT INTO companies(name, email, phone, address_id)" +
-                                         $" VALUES('{registrationDTO.Company}', '{registrationDTO.CompanyEmail}', '{registrationDTO.Phone}', '{address_id}');";
+                string insertstatement = $"INSERT INTO companies(name, contact_person_title, contact_person, email, phone, address_id)" +
+                                         $" VALUES('{registrationDTO.Company}', '{registrationDTO.ContactPersonTitle}', '{registrationDTO.ContactPerson}', '{registrationDTO.CompanyEmail}', '{registrationDTO.Phone}', '{address_id}');";
 
                 var insertCompanyCmd = new MySqlCommand(insertstatement, connection);
                 insertCompanyCmd.ExecuteNonQuery();

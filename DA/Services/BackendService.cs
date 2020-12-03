@@ -103,7 +103,14 @@ namespace DA.Services {
                 }
             }
 
-            var category = categories.Find(x => x.Name.Equals(schooling.Name));
+
+            CategoryRessource category = null;
+            category = FindCategory(schooling);
+            if (category == null && wasSuccessful) {
+                wasSuccessful = db.InsertCategory(schooling);
+                db.GetCategories(ref categories);
+                category = FindCategory(schooling);
+            }
 
 
             if (wasSuccessful) {
