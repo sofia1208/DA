@@ -209,7 +209,6 @@ namespace DA {
                 using MySqlDataReader reader = getCategoryCmd.ExecuteReader();
                 while (reader.Read()) {
                     category = new CategoryRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), ShortDescription = reader.GetString(2), ContentLink = reader.GetString(3) };
-                    Console.WriteLine(category.Name);
                     categories.Add(category);
                 }
             }

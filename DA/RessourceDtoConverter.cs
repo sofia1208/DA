@@ -57,7 +57,7 @@ namespace DA {
         }
 
         internal BackendDetailDTO getbackendDetaiDTO(SchoolingRessource schooling, CategoryRessource category, AddressRessource address, OrganizerRessource organizer, List<ParticipantDTO> participants, bool isFree) {
-            return new BackendDetailDTO() { Id = schooling.Id, Name = category.Name, website = organizer.Website, Start = schooling.Start, End = schooling.End, Price = schooling.Price, ZipCode = address.ZipCode, City = address.City, Street = address.Street, StreetNumber = address.StreetNumber, Country = address.Country, Organizer = organizer.Name, ContactPerson = organizer.ContactPerson, Email = organizer.Email, Phone = organizer.Phone, IsFree = isFree, participants = participants, availablePlaces = schooling.Places };
+            return new BackendDetailDTO() { Id = schooling.Id, Name = category.Name, website = organizer.Website, Start = schooling.Start, End = schooling.End, Price = schooling.Price, ZipCode = address.ZipCode, City = address.City, Street = address.Street, StreetNumber = address.StreetNumber, Country = address.Country, Organizer = organizer.Name, ContactPerson = organizer.ContactPerson, Email = organizer.Email, Phone = organizer.Phone, IsFree = isFree, participants = participants, availablePlaces = schooling.Places, ContentLink=category.ContentLink, Kurzbeschreibung=category.ShortDescription };
         }
 
         

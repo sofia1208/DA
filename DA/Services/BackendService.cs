@@ -68,12 +68,14 @@ namespace DA.Services {
 
 
         public BackendDetailDTO GetSchoolings(int id) {
+            
             var schooling = schoolings.Find(x => x.Id == id);
             var category = categories.Find(y => y.Id == schooling.CategoryId);
             var address = FindAddress(schooling);
             var organizer = FindOrganizer(schooling);
             var participants = GetParticipants(id);
             var isFree = IsSchoolingFree(id);
+            Console.WriteLine("***********************" + category.ShortDescription + " " + category.ContentLink);
             return converter.getbackendDetaiDTO(schooling, category, address, organizer, participants, isFree);
         }
 
@@ -82,6 +84,7 @@ namespace DA.Services {
         }
 
         public bool InsertSchooling(BackendDetailDTO schooling) {
+            schooling.ToString();
             var wasSuccessful = true;
             AddressRessource address = null;
             if (schooling.Street != null && schooling.City != null && schooling.Country != null) {
@@ -247,7 +250,24 @@ namespace DA.Services {
         }
 
         private CategoryRessource FindCategory(BackendDetailDTO schooling) {
-            return categories.Find(x => x.Name.Equals(schooling.Name) && x.ContentLink.Equals(schooling.ContentLink) && x.ShortDescription.Equals(schooling.Kurzbeschreibung));
+            if ("".Equals(schooling.ContentLink) || schooling.ContentLink == null) {
+                if ("".Equals(schooling.Kurzbeschreibung) || schooling.Kurzbeschreibung == null) {
+                    return categories.Find(x => x.Name.Equals(schooling.Name));
+                }
+                else {
+                    return categories.Find(x => x.Name.Equals(schooling.Name) && x.ShortDescription.Equals(schooling.Kurzbeschreibung));
+                }
+            }
+            else {
+                if ("".Equals(schooling.Kurzbeschreibung) || schooling.Kurzbeschreibung == null) {
+                    return categories.Find(x => x.Name.Equals(schooling.Name) && x.ContentLink.Equals(schooling.ContentLink));
+                }
+                else {
+                    return categories.Find(x => x.Name.Equals(schooling.Name) && x.ShortDescription.Equals(schooling.Kurzbeschreibung) && x.ContentLink.Equals(schooling.ContentLink));
+                }
+            }
+            
+            
         }
 
         private PersonRessource FindPerson(ParticipantDTO participant) {
