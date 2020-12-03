@@ -45,7 +45,7 @@ namespace DA.Services {
         }
 
         internal List<CategoryDto> GetCategories() {
-            return categories.Select(x => new CategoryDto() { Id = x.Id, Name = x.Name, ShortDescription = x.ShortDescription, ContentLink = x.ContentLink })
+            return categories.Select(x => new CategoryDto() { Id = x.Id, Name = x.Name, Kurzbeschreibung = x.ShortDescription, ContentLink = x.ContentLink })
                 .ToList();
         }
 
@@ -56,6 +56,8 @@ namespace DA.Services {
             db.GetRegistrations(ref registrations);
             return wasSuccessful;
         }
+
+        
 
         public bool UpdateDisplay(int id, bool isDisplayed) {
             var schooling = schoolings.Find(x => x.Id == id);
@@ -68,21 +70,36 @@ namespace DA.Services {
 
 
         public BackendDetailDTO GetSchoolings(int id) {
-            
+
             var schooling = schoolings.Find(x => x.Id == id);
             var category = categories.Find(y => y.Id == schooling.CategoryId);
             var address = FindAddress(schooling);
             var organizer = FindOrganizer(schooling);
             var participants = GetParticipants(id);
             var isFree = IsSchoolingFree(id);
-            Console.WriteLine("***********************" + category.ShortDescription + " " + category.ContentLink);
             return converter.getbackendDetaiDTO(schooling, category, address, organizer, participants, isFree);
         }
 
-        internal bool AddCategory(CategoryDto categoryDto) {
+        public bool AddCategory(CategoryDto categoryDto) {
             return db.InsertCategory(categoryDto);
         }
 
+        public bool UpdateCategory(CategoryDto category) {
+            return db.UpdateCategory(category);
+        }
+
+        internal bool AddOrganizer(OrganizerDTO organizer) {
+            if (organizers.Find(x => x.Name.Equals(organizer.Name) && x.Phone.Equals(organizer.Phone) && x.Email.Equals(organizer.Email) && x.ContactPerson.Equals(organizer.ContactPerson)) != null) {
+                return true;
+            }
+            else {
+                return db.InsertOrganizer(organizer);
+            }
+        }
+
+        internal bool UpdateOrganizer(OrganizerDTO organizer) {
+            return db.UpdateOrganizer(organizer);
+        }
         public bool InsertSchooling(BackendDetailDTO schooling) {
             schooling.ToString();
             var wasSuccessful = true;

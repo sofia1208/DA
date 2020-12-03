@@ -57,6 +57,17 @@ namespace DA.Controllers {
             return backendService.GetOrganizers();
         }
 
+        [HttpPost("Organizers")]
+        public bool AddCategories([FromBody] OrganizerDTO organizer) {
+            return backendService.AddOrganizer(organizer);
+        }
+
+        [HttpPut("Organizers/{id}")]
+        public bool UpdateCategory(int id, [FromBody] OrganizerDTO organizer) {
+            organizer.Id = id;
+            return backendService.UpdateOrganizer(organizer);
+        }
+
         [HttpGet("Companies")]
         public List<string> Companies() {
             return backendService.GetCompanies();
@@ -73,7 +84,11 @@ namespace DA.Controllers {
             return backendService.AddCategory(category);
         }
 
-        
+        [HttpPut("Categories/{id}")]
+        public bool UpdateCategory(int id, [FromBody] CategoryDto category) {
+            category.Id = id;
+            return backendService.UpdateCategory(category);
+        }
 
     }
 }

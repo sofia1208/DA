@@ -94,7 +94,7 @@ namespace DA {
 
         }
 
-
+        
 
         public void GetOrganizers(ref List<OrganizerRessource> organizers) {
             organizers = new List<OrganizerRessource>();
@@ -121,7 +121,7 @@ namespace DA {
             }
         }
 
-
+        
 
         public void GetPersons(ref List<PersonRessource> persons) {
             persons = new List<PersonRessource>();
@@ -319,7 +319,7 @@ namespace DA {
         public bool InsertCategory(CategoryDto categoryDto) {
             try {
                 string insertstatement = $"INSERT INTO categories (name, short_description, content_link) " +
-                                         $"VALUES ('{categoryDto.Name}', '{categoryDto.ShortDescription}', '{categoryDto.ContentLink}')";
+                                         $"VALUES ('{categoryDto.Name}', '{categoryDto.Kurzbeschreibung}', '{categoryDto.ContentLink}')";
 
                 var insertCategoryCmd = new MySqlCommand(insertstatement, connection);
                 insertCategoryCmd.ExecuteNonQuery();
@@ -348,19 +348,7 @@ namespace DA {
             return true;
         }
 
-        public bool deleteSchooling(int id) {
-            try {
-                string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
-                var deleteschoolingCmd = new MySqlCommand(deleteStatement, connection);
-                deleteschoolingCmd.ExecuteNonQuery();
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message);
-                return false;
-            }
-
-            return true;
-        }
+       
 
 
 
@@ -385,6 +373,22 @@ namespace DA {
             try {
                 string insertstatement = $"INSERT INTO organizers(name, contact_person, email, website, phone)" +
                                          $" VALUES('{backendDetail.Organizer}', '{backendDetail.ContactPerson}', '{backendDetail.Email}', '{backendDetail.website}', '{backendDetail.Phone}');";
+
+                var insertOrganizerCmd = new MySqlCommand(insertstatement, connection);
+                insertOrganizerCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        internal bool InsertOrganizer(OrganizerDTO organizer) {
+            try {
+                string insertstatement = $"INSERT INTO organizers(name, contact_person, email, website, phone)" +
+                                         $" VALUES('{organizer.Name}', '{organizer.ContactPerson}', '{organizer.Email}', '{organizer.Website}', '{organizer.Phone}');";
 
                 var insertOrganizerCmd = new MySqlCommand(insertstatement, connection);
                 insertOrganizerCmd.ExecuteNonQuery();
@@ -450,13 +454,14 @@ namespace DA {
             return true;
         }
 
-
-        public bool DeleteRegistration(int schoolingId, int participantId) {
+        public bool UpdateCategory(CategoryDto category) {
             try {
-                string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{schoolingId}' AND person_id = '{participantId}'";
+                string updateStatement = $"UPDATE categories " +
+                                         $"SET name='{category.Name}', content_link='{category.ContentLink}', short_description='{category.Kurzbeschreibung}'" +
+                                         $"WHERE category_id={category.Id};";
 
-                var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
-                deleteRegistrationCmd.ExecuteNonQuery();
+                var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
+                updateSchoolingCmd.ExecuteNonQuery();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -466,12 +471,14 @@ namespace DA {
             return true;
         }
 
-        public bool RemoveAllForId(int id) {
+        internal bool UpdateOrganizer(OrganizerDTO organizer) {
             try {
-                string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{id}'";
+                string updateStatement = $"UPDATE organizers " +
+                                         $"SET name='{organizer.Name}', email='{organizer.Email}', phone='{organizer.Phone}', website='{organizer.Website}', contact_person='{organizer.ContactPerson}'" +
+                                         $"WHERE category_id={organizer.Id};";
 
-                var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
-                deleteRegistrationCmd.ExecuteNonQuery();
+                var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
+                updateSchoolingCmd.ExecuteNonQuery();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -497,6 +504,53 @@ namespace DA {
 
             return true;
         }
+
+
+        public bool DeleteRegistration(int schoolingId, int participantId) {
+            try {
+                string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{schoolingId}' AND person_id = '{participantId}'";
+
+                var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
+                deleteRegistrationCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool deleteSchooling(int id) {
+            try {
+                string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
+                var deleteschoolingCmd = new MySqlCommand(deleteStatement, connection);
+                deleteschoolingCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool RemoveAllForId(int id) {
+            try {
+                string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{id}'";
+
+                var deleteRegistrationCmd = new MySqlCommand(deleteStatement, connection);
+                deleteRegistrationCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        
 
 
 
