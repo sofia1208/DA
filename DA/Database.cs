@@ -25,13 +25,16 @@ namespace DA {
                ref List<SchoolingRessource> schoolings,
                 ref List<OrganizerRessource> organizers,
                 ref List<RegistrationRessource> registrations,
-                ref List<PersonRessource> persons) {
+                ref List<PersonRessource> persons,
+            ref List<CategoryRessource> categories) {
             GetAddresses(ref addresses);
             GetCompanies(ref companies);
             GetOrganizers(ref organizers);
             GetPersons(ref persons);
             GetSchoolings(ref schoolings);
+            GetSchoolings(ref schoolings);
             GetRegistrations(ref registrations);
+            GetCategories(ref categories);
         }
 
 
@@ -91,7 +94,7 @@ namespace DA {
 
         }
 
-
+        
 
         public void GetOrganizers(ref List<OrganizerRessource> organizers) {
             organizers = new List<OrganizerRessource>();
@@ -118,7 +121,7 @@ namespace DA {
             }
         }
 
-
+        
 
         public void GetPersons(ref List<PersonRessource> persons) {
             persons = new List<PersonRessource>();
@@ -157,7 +160,7 @@ namespace DA {
                 while (reader.Read()) {
                     schooling = new SchoolingRessource() {
                         Id = reader.GetInt32(0),
-                        Name = reader.GetString(1) ?? "",
+                        CategoryId = reader.GetInt32(1),
                         AddressId = reader.GetInt32(2),
                         Start = reader.GetDateTime(3),
                         End = reader.GetDateTime(4),
@@ -194,9 +197,24 @@ namespace DA {
             catch (Exception e) {
                 Console.WriteLine(e.Message);
             }
+        }
 
+        public void GetCategories(ref List<CategoryRessource> categories) {
+            categories = new List<CategoryRessource>();
 
+            try {
+                var getCategoryCmd = new MySqlCommand("SELECT * FROM categories", connection);
 
+                CategoryRessource category;
+                using MySqlDataReader reader = getCategoryCmd.ExecuteReader();
+                while (reader.Read()) {
+                    category = new CategoryRessource() { Id = reader.GetInt32(0), Name = reader.GetString(1), ShortDescription = reader.GetString(2), ContentLink = reader.GetString(3) };
+                    categories.Add(category);
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public bool InsertAddress(RegistrationDTO registrationDTO) {
@@ -218,8 +236,8 @@ namespace DA {
 
         public bool InsertCompany(RegistrationDTO registrationDTO, int address_id) {
             try {
-                string insertstatement = $"INSERT INTO companies(name, email, phone, address_id)" +
-                                         $" VALUES('{registrationDTO.Company}', '{registrationDTO.CompanyEmail}', '{registrationDTO.Phone}', '{address_id}');";
+                string insertstatement = $"INSERT INTO companies(name, contact_person_title, contact_person, email, phone, address_id)" +
+                                         $" VALUES('{registrationDTO.Company}', '{registrationDTO.ContactPersonTitle}', '{registrationDTO.ContactPerson}', '{registrationDTO.CompanyEmail}', '{registrationDTO.Phone}', '{address_id}');";
 
                 var insertCompanyCmd = new MySqlCommand(insertstatement, connection);
                 insertCompanyCmd.ExecuteNonQuery();
@@ -298,11 +316,13 @@ namespace DA {
             return true;
         }
 
-        public bool deleteSchooling(int id) {
+        public bool InsertCategory(CategoryDto categoryDto) {
             try {
-                string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
-                var deleteschoolingCmd = new MySqlCommand(deleteStatement, connection);
-                deleteschoolingCmd.ExecuteNonQuery();
+                string insertstatement = $"INSERT INTO categories (name, short_description, content_link) " +
+                                         $"VALUES ('{categoryDto.Name}', '{categoryDto.Kurzbeschreibung}', '{categoryDto.ContentLink}')";
+
+                var insertCategoryCmd = new MySqlCommand(insertstatement, connection);
+                insertCategoryCmd.ExecuteNonQuery();
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
@@ -311,6 +331,24 @@ namespace DA {
 
             return true;
         }
+
+        public bool InsertCategory(BackendDetailDTO schoolingDto) {
+            try {
+                string insertstatement = $"INSERT INTO categories (name, short_description, content_link) " +
+                                         $"VALUES ('{schoolingDto.Name}', '{schoolingDto.Kurzbeschreibung}', '{schoolingDto.ContentLink}')";
+
+                var insertCategoryCmd = new MySqlCommand(insertstatement, connection);
+                insertCategoryCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+       
 
 
 
@@ -347,27 +385,43 @@ namespace DA {
             return true;
         }
 
+        internal bool InsertOrganizer(OrganizerDTO organizer) {
+            try {
+                string insertstatement = $"INSERT INTO organizers(name, contact_person, email, website, phone)" +
+                                         $" VALUES('{organizer.Name}', '{organizer.ContactPerson}', '{organizer.Email}', '{organizer.Website}', '{organizer.Phone}');";
 
-        public bool InsertSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
+                var insertOrganizerCmd = new MySqlCommand(insertstatement, connection);
+                insertOrganizerCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public bool InsertSchooling(BackendDetailDTO backendDetail,int categoryId, int addressId, int organizerId) {
             try {
                 string insertstatement = "";
                 if (addressId == 0) {
                     if (organizerId == 0) {
-                         insertstatement = $"INSERT INTO schoolings(name, start, end, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                        insertstatement = $"INSERT INTO schoolings(category_id, start, end, number_of_places, price)" +
+                                        $" VALUES('{categoryId}','{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
                     else {
-                         insertstatement = $"INSERT INTO schoolings(name, start, end, organizer_id, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Name}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                        insertstatement = $"INSERT INTO schoolings(category_id, start, end, organizer_id, number_of_places, price)" +
+                                        $" VALUES('{categoryId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
                 }
                 else {
-                    if(organizerId == 0) {
-                        insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, number_of_places, price)" +
-                                        $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                    if (organizerId == 0) {
+                        insertstatement = $"INSERT INTO schoolings(category_id, address_id, start, end, number_of_places, price)" +
+                                        $" VALUES('{categoryId}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                     }
-                    insertstatement = $"INSERT INTO schoolings(name, address_id, start, end, organizer_id, number_of_places, price)" +
-                                         $" VALUES('{backendDetail.Name}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
+                    insertstatement = $"INSERT INTO schoolings(category_id, address_id, start, end, organizer_id, number_of_places, price)" +
+                                         $" VALUES('{categoryId}', '{addressId}', '{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', '{backendDetail.End:yyyy-MM-dd HH:mm:ss}', '{organizerId}', '{backendDetail.availablePlaces}', '{backendDetail.Price}');";
                 }
 
 
@@ -383,11 +437,62 @@ namespace DA {
         }
 
 
-        public bool UpdateSchooling(BackendDetailDTO backendDetail, int addressId, int organizerId) {
+        public bool UpdateSchooling(BackendDetailDTO backendDetail,int categoryId, int addressId, int organizerId) {
             try {
                 string updateStatement = $"UPDATE schoolings " +
-                                         $"SET name='{backendDetail.Name}', address_id='{addressId}', start='{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', end='{backendDetail.End:yyyy-MM-dd HH:mm:ss}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'" +
+                                         $"SET category_id='{categoryId}', address_id='{addressId}', start='{backendDetail.Start:yyyy-MM-dd HH:mm:ss}', end='{backendDetail.End:yyyy-MM-dd HH:mm:ss}', organizer_id='{organizerId}', number_of_places= '{backendDetail.availablePlaces}', price='{backendDetail.Price}'" +
                                          $"WHERE schooling_id={backendDetail.Id};";
+
+                var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
+                updateSchoolingCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool UpdateCategory(CategoryDto category) {
+            try {
+                string updateStatement = $"UPDATE categories " +
+                                         $"SET name='{category.Name}', content_link='{category.ContentLink}', short_description='{category.Kurzbeschreibung}'" +
+                                         $"WHERE category_id={category.Id};";
+
+                var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
+                updateSchoolingCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        internal bool UpdateOrganizer(OrganizerDTO organizer) {
+            try {
+                string updateStatement = $"UPDATE organizers " +
+                                         $"SET name='{organizer.Name}', email='{organizer.Email}', phone='{organizer.Phone}', website='{organizer.Website}', contact_person='{organizer.ContactPerson}'" +
+                                         $"WHERE category_id={organizer.Id};";
+
+                var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
+                updateSchoolingCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool UpdateSchooling(int id, bool isDisplayed) {
+            try {
+                string updateStatement = $"UPDATE schoolings " +
+                                         $"SET display={isDisplayed} " +
+                                         $"WHERE schooling_id={id};";
 
                 var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
                 updateSchoolingCmd.ExecuteNonQuery();
@@ -416,6 +521,20 @@ namespace DA {
             return true;
         }
 
+        public bool deleteSchooling(int id) {
+            try {
+                string deleteStatement = $"DELETE FROM schoolings WHERE schooling_id = '{id}'";
+                var deleteschoolingCmd = new MySqlCommand(deleteStatement, connection);
+                deleteschoolingCmd.ExecuteNonQuery();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return true;
+        }
+
         public bool RemoveAllForId(int id) {
             try {
                 string deleteStatement = $"DELETE FROM registrations WHERE schooling_id = '{id}'";
@@ -431,22 +550,7 @@ namespace DA {
             return true;
         }
 
-        public bool UpdateSchooling(int id, bool isDisplayed) {
-            try {
-                string updateStatement = $"UPDATE schoolings " +
-                                         $"SET display={isDisplayed} " +
-                                         $"WHERE schooling_id={id};";
-
-                var updateSchoolingCmd = new MySqlCommand(updateStatement, connection);
-                updateSchoolingCmd.ExecuteNonQuery();
-            }
-            catch (Exception e) {
-                Console.WriteLine(e.Message);
-                return false;
-            }
-
-            return true;
-        }
+        
 
 
 

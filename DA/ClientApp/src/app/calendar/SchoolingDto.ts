@@ -1,6 +1,6 @@
 export class SchoolingDto {
   id: number;
-
+name: string;
   start: string;
   end: string;
   zipCode: number;
@@ -17,6 +17,5 @@ export class SchoolingDto {
   freePlaces: number;
   kurzbeschreibung: string;
   contentLink: string;
-  
 }
 

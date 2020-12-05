@@ -17,6 +17,7 @@ namespace DA.Services {
         private List<PersonRessource> persons;
         private List<RegistrationRessource> registrations;
         private List<SchoolingRessource> schoolings;
+        private List<CategoryRessource> categories;
 
         public BackendService() {
             db = new Database();
@@ -35,15 +36,18 @@ namespace DA.Services {
 
 
         public List<BackendSummaryDTO> GetSchoolings() {
-            schoolings.ForEach(x => {
-                if (x.Start < DateTime.Now) {
-                    UpdateDisplay(x.Id, false);
-                }
-            });
-            return schoolings.Select(x => converter.getBackendSummaryDTO(x)).OrderBy(x => x.Start).ToList();
+            return schoolings.Select(x => {
+                var category = categories.Find(y => y.Id == x.CategoryId);
+                return converter.getBackendSummaryDTO(x, category);
+            })
+                .OrderBy(x => x.Start)
+                .ToList();
         }
 
-
+        internal List<CategoryDto> GetCategories() {
+            return categories.Select(x => new CategoryDto() { Id = x.Id, Name = x.Name, Kurzbeschreibung = x.ShortDescription, ContentLink = x.ContentLink })
+                .ToList();
+        }
 
         public bool DeleteSchooling(int id) {
             var wasSuccessful = db.deleteSchooling(id);
@@ -52,6 +56,8 @@ namespace DA.Services {
             db.GetRegistrations(ref registrations);
             return wasSuccessful;
         }
+
+        
 
         public bool UpdateDisplay(int id, bool isDisplayed) {
             var schooling = schoolings.Find(x => x.Id == id);
@@ -64,17 +70,38 @@ namespace DA.Services {
 
 
         public BackendDetailDTO GetSchoolings(int id) {
+
             var schooling = schoolings.Find(x => x.Id == id);
+            var category = categories.Find(y => y.Id == schooling.CategoryId);
             var address = FindAddress(schooling);
             var organizer = FindOrganizer(schooling);
             var participants = GetParticipants(id);
             var isFree = IsSchoolingFree(id);
-            return converter.getbackendDetaiDTO(schooling, address, organizer, participants, isFree);
+            return converter.getbackendDetaiDTO(schooling, category, address, organizer, participants, isFree);
         }
 
+        public bool AddCategory(CategoryDto categoryDto) {
+            return db.InsertCategory(categoryDto);
+        }
 
+        public bool UpdateCategory(CategoryDto category) {
+            return db.UpdateCategory(category);
+        }
 
+        internal bool AddOrganizer(OrganizerDTO organizer) {
+            if (organizers.Find(x => x.Name.Equals(organizer.Name) && x.Phone.Equals(organizer.Phone) && x.Email.Equals(organizer.Email) && x.ContactPerson.Equals(organizer.ContactPerson)) != null) {
+                return true;
+            }
+            else {
+                return db.InsertOrganizer(organizer);
+            }
+        }
+
+        internal bool UpdateOrganizer(OrganizerDTO organizer) {
+            return db.UpdateOrganizer(organizer);
+        }
         public bool InsertSchooling(BackendDetailDTO schooling) {
+            schooling.ToString();
             var wasSuccessful = true;
             AddressRessource address = null;
             if (schooling.Street != null && schooling.City != null && schooling.Country != null) {
@@ -87,7 +114,7 @@ namespace DA.Services {
             }
 
             OrganizerRessource organizer = null;
-            if(schooling.Organizer != null) {
+            if (schooling.Organizer != null) {
                 organizer = FindOrganizer(schooling);
                 if (organizer == null && wasSuccessful) {
                     wasSuccessful = db.InsertOrganizer(schooling);
@@ -95,22 +122,31 @@ namespace DA.Services {
                     organizer = FindOrganizer(schooling);
                 }
             }
-            
+
+
+            CategoryRessource category = null;
+            category = FindCategory(schooling);
+            if (category == null && wasSuccessful) {
+                wasSuccessful = db.InsertCategory(schooling);
+                db.GetCategories(ref categories);
+                category = FindCategory(schooling);
+            }
+
 
             if (wasSuccessful) {
                 schooling.participants.ForEach(x => {
-                    if(FindCompany(x) == null) {
+                    if (FindCompany(x) == null) {
                         wasSuccessful = db.InsertCompany(x);
                     }
                     db.GetCompanies(ref companies);
                     var company = FindCompany(x);
                     if (wasSuccessful && FindPerson(x) == null) {
-                        wasSuccessful = db.InsertPerson(x, company) ;
+                        wasSuccessful = db.InsertPerson(x, company);
                     }
                 });
                 db.GetPersons(ref persons);
 
-                wasSuccessful = db.InsertSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null)? 0 : organizer.Id);
+                wasSuccessful = db.InsertSchooling(schooling, category.Id, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
 
                 db.GetSchoolings(ref schoolings);
 
@@ -150,6 +186,14 @@ namespace DA.Services {
                 }
             }
 
+            CategoryRessource category = null;
+            category = FindCategory(schooling);
+            if (category == null && wasSuccessful) {
+                wasSuccessful = db.InsertCategory(schooling);
+                db.GetCategories(ref categories);
+                category = FindCategory(schooling);
+            }
+
             if (wasSuccessful) {
                 schooling.participants.ForEach(x => {
                     if (FindCompany(x) == null) {
@@ -163,8 +207,7 @@ namespace DA.Services {
                 });
                 db.GetPersons(ref persons);
 
-                Console.WriteLine(schooling.End);
-                wasSuccessful = db.UpdateSchooling(schooling, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
+                wasSuccessful = db.UpdateSchooling(schooling, category.Id, (address == null) ? 0 : address.Id, (organizer == null) ? 0 : organizer.Id);
 
                 db.GetSchoolings(ref schoolings);
 
@@ -198,8 +241,9 @@ namespace DA.Services {
             persons = new List<PersonRessource>();
             registrations = new List<RegistrationRessource>();
             schoolings = new List<SchoolingRessource>();
+            categories = new List<CategoryRessource>();
 
-            db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
+            db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons, ref categories);
         }
 
         private bool IsSchoolingFree(int id) {
@@ -222,6 +266,27 @@ namespace DA.Services {
             return organizers.Find(x => x.Name == schooling.Organizer);
         }
 
+        private CategoryRessource FindCategory(BackendDetailDTO schooling) {
+            if ("".Equals(schooling.ContentLink) || schooling.ContentLink == null) {
+                if ("".Equals(schooling.Kurzbeschreibung) || schooling.Kurzbeschreibung == null) {
+                    return categories.Find(x => x.Name.Equals(schooling.Name));
+                }
+                else {
+                    return categories.Find(x => x.Name.Equals(schooling.Name) && x.ShortDescription.Equals(schooling.Kurzbeschreibung));
+                }
+            }
+            else {
+                if ("".Equals(schooling.Kurzbeschreibung) || schooling.Kurzbeschreibung == null) {
+                    return categories.Find(x => x.Name.Equals(schooling.Name) && x.ContentLink.Equals(schooling.ContentLink));
+                }
+                else {
+                    return categories.Find(x => x.Name.Equals(schooling.Name) && x.ShortDescription.Equals(schooling.Kurzbeschreibung) && x.ContentLink.Equals(schooling.ContentLink));
+                }
+            }
+            
+            
+        }
+
         private PersonRessource FindPerson(ParticipantDTO participant) {
             return persons.Find(x => x.Email == participant.Email && x.Firstname == participant.Firstname && x.Lastname == participant.Lastname);
         }
@@ -230,9 +295,8 @@ namespace DA.Services {
             return schoolings.Find(x =>
               x.End.Day == backendDetail.End.Day &&
             x.End.Month == backendDetail.End.Month &&
-            x.Name == backendDetail.Name && 
-            x.Start.Day == backendDetail.Start.Day && 
-            x.Start.Month == backendDetail.Start.Month && 
+            x.Start.Day == backendDetail.Start.Day &&
+            x.Start.Month == backendDetail.Start.Month &&
             x.Price == backendDetail.Price);
         }
 
