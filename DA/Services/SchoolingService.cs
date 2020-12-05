@@ -24,6 +24,7 @@ namespace Schulungskalender.Services {
         private List<PersonRessource> persons;
         private List<RegistrationRessource> registrations;
         private List<SchoolingRessource> schoolings;
+        private List<CategoryRessource> categories;
 
 
         public SchoolingService() {
@@ -36,18 +37,14 @@ namespace Schulungskalender.Services {
         }
 
         public List<SchoolingSummaryDTO> Summary(string type) {
-            schoolings.ForEach(x => {
-                if (x.Start < DateTime.Now) {
-                    UpdateDisplay(x.Id, false);
-                }
-            });
 
             if (type.ToLower().Equals("isfree")) {
                 return schoolings.Select(x => {
                     var address = addresses.Find(y => y.Id == x.AddressId);
                     var organizer = organizers.Find(y => y.Id == x.OrganizerId);
+                    var category = categories.Find(y => y.Id == x.CategoryId);
 
-                    return converter.GetSchoolingSummaryDTO(x, address, organizer, IsSchoolingFree(x.Id));
+                    return converter.GetSchoolingSummaryDTO(x, category, address, organizer, IsSchoolingFree(x.Id));
 
                 })
                 .Where(x => x.IsFree).ToList();
@@ -55,8 +52,9 @@ namespace Schulungskalender.Services {
             return schoolings.Select(x => {
                 var address = addresses.Find(y => y.Id == x.AddressId);
                 var organizer = organizers.Find(y => y.Id == x.OrganizerId);
+                var category = categories.Find(y => y.Id == x.CategoryId);
 
-                return converter.GetSchoolingSummaryDTO(x, address, organizer, IsSchoolingFree(x.Id));
+                return converter.GetSchoolingSummaryDTO(x, category, address, organizer, IsSchoolingFree(x.Id));
 
             })
                 .Where(x => x.Name.Split('+')[1].Trim().ToLower().Equals(type)).OrderBy(x => x.Start).ToList();
@@ -66,8 +64,9 @@ namespace Schulungskalender.Services {
             var scho = schoolings.Select(x => {
                 var address = addresses.Find(y => y.Id == x.AddressId);
                 var organizer = organizers.Find(y => y.Id == x.OrganizerId);
+                var category = categories.Find(y => y.Id == x.CategoryId);
 
-                return converter.GetSchoolingSummaryDTO(x, address, organizer, IsSchoolingFree(x.Id));
+                return converter.GetSchoolingSummaryDTO(x, category, address, organizer, IsSchoolingFree(x.Id));
 
             })
                 .ToList();
@@ -79,8 +78,9 @@ namespace Schulungskalender.Services {
             var schooling = schoolings.Find(x => x.Id == id);
             var address = addresses.Find(x => x.Id == schooling.AddressId);
             var organizer = organizers.Find(x => x.Id == schooling.OrganizerId);
+            var category = categories.Find(y => y.Id == schooling.CategoryId);
 
-            return converter.GetSchoolingDetailDTO(schooling, address, organizer, IsSchoolingFree(id), getFreePlaces(id));
+            return converter.GetSchoolingDetailDTO(schooling,category, address, organizer, IsSchoolingFree(id), getFreePlaces(id));
         }
 
 
@@ -116,7 +116,8 @@ namespace Schulungskalender.Services {
 
             if (isRegistrationSuccessful) {
                 var schooling = schoolings.Find(x => x.Id == registration.SchoolingId);
-                mailMaker.sendMail("isabelle.arthofer@gmail.com"/*company.Email*/, company.ContactPerson, schooling.Name, schooling.Start, registration.Participants);
+                var category = categories.Find(y => y.Id == schooling.CategoryId);
+                mailMaker.sendMail("isabelle.arthofer@gmail.com"/*company.Email*/, company.ContactPerson, category.Name, schooling.Start, registration.Participants);
             }
 
             return registration;
@@ -129,8 +130,9 @@ namespace Schulungskalender.Services {
             persons = new List<PersonRessource>();
             registrations = new List<RegistrationRessource>();
             schoolings = new List<SchoolingRessource>();
+            categories = new List<CategoryRessource>();
 
-            db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons);
+            db.GetAllTables(ref addresses, ref companies, ref schoolings, ref organizers, ref registrations, ref persons, ref categories);
         }
 
         private bool IsSchoolingFree(int id) {

@@ -23,5 +23,11 @@ namespace DA.Models.DTOs {
         public bool IsFree { get; set; }
         public List<ParticipantDTO> participants { get; set; }
         public int availablePlaces { get; set; }
+        public string Kurzbeschreibung { get; set; }
+        public string ContentLink { get; set; }
+
+        public override string ToString() {
+            return $" ************ Test {Name}{ContentLink} {Kurzbeschreibung}";
+        }
     }
 }
