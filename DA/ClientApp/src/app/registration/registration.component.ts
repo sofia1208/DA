@@ -68,6 +68,7 @@ export class RegistrationComponent implements OnInit {
   buttonActive: boolean = false;
   available: number;
   schooling: SchoolingDto;
+  schoolingI: SchoolingDto;
   printReady: boolean = true;
   checkDatenschutz: boolean;
   checkStrono: boolean;
@@ -320,23 +321,24 @@ export class RegistrationComponent implements OnInit {
  
 
   fillDetails(schooling: SchoolingDto) {
-   
     console.log(schooling);
+    this.schoolingI = schooling;
+    //console.log(schooling);
  
-    this.telefon = schooling.phone;
-    this.convertToGermanTime(schooling);
-    this.preis = schooling.price + " €";
-    this.organisator = schooling.organizer;
-    this.kontaktperson = schooling.contactPerson;
+    //this.telefon = schooling.phone;
+    //this.convertToGermanTime(schooling);
+    //this.preis = schooling.price + " €";
+    //this.organisator = schooling.organizer;
+    //this.kontaktperson = schooling.contactPerson;
 
-    this.startDate = new Date(schooling.start);
-    this.endDate = new Date(schooling.end);
-    this.freePlaces = schooling.freePlaces;
+    //this.startDate = new Date(schooling.start);
+    //this.endDate = new Date(schooling.end);
+    //this.freePlaces = schooling.freePlaces;
     
     
-    this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
-    this.kurzbeschreibung = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
-    this.contentLink = `https://www.google.at`;
+    //this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
+    //this.contentLink = schooling.contentLink;
+    //this.kurzbeschreibung = schooling.kurzbeschreibung;
      this.getAddress();
   
   }
@@ -383,6 +385,7 @@ export class RegistrationComponent implements OnInit {
           }
         );
     });
+   
     this.fillDetails(this.schooling);
    
     return promise;

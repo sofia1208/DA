@@ -1,0 +1,35 @@
+<h1 #detailView class="schulungh1">{{detailTitle}}</h1>
+<div class="row outerRow detailRes">
+  <div>
+    <div class="row innerRows">Termin</div>
+    <div class="row innerRows">Uhrzeit</div>
+    <div class="row innerRows">Preis</div>
+    <div class="row innerRows">Organisator</div>
+    <div class="row innerRows">Kontaktperson</div>
+    <div class="row innerRows">Telefon</div>
+    <div class="row innerRows">Adresse</div>
+    <div class="row innerRows">Verfügbare Plätze</div>
+
+  </div>
+
+  <div>
+    <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
+    <div class="row innerRows">{{startTime}} - {{endTime}}</div>
+    <div class="row innerRows">{{preis}}</div>
+    <div class="row innerRows">{{organisator}}</div>
+    <div class="row innerRows">{{kontaktperson}}</div>
+    <div class="row innerRows">{{telefon}}</div>
+    <div class="row innerRows">{{adresse}}</div>
+    <div class="row innerRows">{{freePlaces}}</div>
+
+
+  </div>
+  <div>
+    <div class="row innerRows shortText">Kurzbeschreibung:</div>
+    <div class="row innerRows shortText" [innerHTML]="kurzbeschreibung" style="display:inline-block"></div>
+    <div>(<p style="display:contents" class="hyp" (click)="goToHyperLink()" data-toggle="tooltip" title="Inhalt dieser Schulung ansehen">Schulungsinhalt anzeigen</p>)</div>
+
+  </div>
+
+
+</div>

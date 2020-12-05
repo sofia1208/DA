@@ -96,6 +96,7 @@ export class CalendarComponent implements OnInit {
   freePlaces : string;
   kurzbeschreibung: string;
   contentLink: string;
+  schoolingI: SchoolingDto;
   displayedColumns: string[] = ['typ', 'city', 'date', 'price', 'organisation'];
     selectedId: Number;
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog) { }
@@ -372,8 +373,7 @@ export class CalendarComponent implements OnInit {
           schooling = data;
           console.log(data);
           var today = new Date();
-          console.log(today);
-          console.log(event.start);
+          this.schoolingI = schooling;
           
           
           if (!event.isFree) {
@@ -388,6 +388,7 @@ export class CalendarComponent implements OnInit {
           else {
             this.canReg = false;
           }
+          this.schoolingI = schooling;
           this.fillDetails(schooling);
 
         }
@@ -427,18 +428,18 @@ export class CalendarComponent implements OnInit {
 
   fillDetails(schooling: SchoolingDto) {
     
-    this.telefon = schooling.phone;
-    this.convertToGermanTime(schooling);
-    this.preis = schooling.price.toString() + " €";
-    this.organisator = schooling.organizer;
-    this.kontaktperson = schooling.contactPerson;
+    //this.telefon = schooling.phone;
+    //this.convertToGermanTime(schooling);
+    //this.preis = schooling.price.toString() + " €";
+    //this.organisator = schooling.organizer;
+    //this.kontaktperson = schooling.contactPerson;
    
-    this.startDate = new Date(schooling.start);
-    this.endDate = new Date(schooling.end);
-    this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
-    this.freePlaces = "" + schooling.freePlaces;
-    this.kurzbeschreibung = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.At vero eos et ac";
-    this.contentLink = `https://www.google.at`;
+    //this.startDate = new Date(schooling.start);
+    //this.endDate = new Date(schooling.end);
+    //this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
+    //this.freePlaces = "" + schooling.freePlaces;
+    //this.contentLink = schooling.contentLink;
+    //this.kurzbeschreibung = schooling.kurzbeschreibung;
     this.refresh.next();
     this.scrollToDetail();
   }

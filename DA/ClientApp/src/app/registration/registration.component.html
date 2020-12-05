@@ -6,46 +6,16 @@
     </h1>
   </div>
 
-  <h3 #detailView class="detailTitle">{{detailTitle}}</h3>
-  <button class="btnSubmit printMe" (click)="printRegistration()">Schulung ausdrucken</button>
+  
+
   <div class="detailview">
 
+    <app-detail-view [detailTitle]="detailTitle" [schoolingDto]="schoolingI"></app-detail-view>
 
 
-    <div class="row outerRow detailRes">
-      <div class="column col1">
-        <div class="row innerRows">Termin</div>
-        <div class="row innerRows">Uhrzeit</div>
-        <div class="row innerRows">Preis</div>
-        <div class="row innerRows">Organisator</div>
-        <div class="row innerRows">Kontaktperson</div>
-        <div class="row innerRows">Telefon</div>
-        <div class="row innerRows">Adresse</div>
-        <div class="row innerRows">Verfügbare Plätze</div>
-       
-      </div>
-
-      <div class="column col2">
-        <div class="row innerRows">{{startDate  | date:'d.M.yy' }} - {{endDate  | date:'d.M.yy' }}</div>
-        <div class="row innerRows">{{startTime}} - {{endTime}}</div>
-        <div class="row innerRows">{{preis}}</div>
-        <div class="row innerRows">{{organisator}}</div>
-        <div class="row innerRows">{{kontaktperson}}</div>
-        <div class="row innerRows">{{telefon}}</div>
-        <div class="row innerRows">{{adresse}}</div>
-        <div class="row innerRows">{{freePlaces}}</div>
-     
-      </div>
-
-      <div class="column col3">
-        <div class="row innerRows">Kurzbeschreibung</div>
-        <div class="row innerRows" style="display:contents">{{kurzbeschreibung}} (<p style="display:contents" class="hyp" (click)="goToHyperLink()" data-toggle="tooltip" title="Inhalt dieser Schulung ansehen">Schulungsinhalt anzeigen</p>)</div>
-        <div class="row innerRows"></div>
-      </div>
-
-    </div>
 
     <div class="printMe">
+      <button class="btnSubmit printMe" (click)="printRegistration()">Schulung ausdrucken</button>
       <button class="btnSubmit" style="margin-bottom: 10px;" (click)="planRoute()">Route planen</button>
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
