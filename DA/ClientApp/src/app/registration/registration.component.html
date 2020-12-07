@@ -10,13 +10,16 @@
 
   <div class="detailview">
 
-    <app-detail-view [detailTitle]="detailTitle" [schoolingDto]="schoolingI"></app-detail-view>
+    <app-detail-view [detailTitle]="detailTitle" [schoolingDto]="schooling"></app-detail-view>
 
 
 
     <div class="printMe">
-      <button class="btnSubmit printMe" (click)="printRegistration()">Schulung ausdrucken</button>
-      <button class="btnSubmit" style="margin-bottom: 10px;" (click)="planRoute()">Route planen</button>
+      <div style="margin-top: 20px; margin-bottom: 20px;">
+        <button class="btnSubmit printMe" style="margin-right:20px;" (click)="printRegistration()">Schulung ausdrucken</button>
+        <button class="btnSubmit" style="margin-bottom: 10px;" (click)="planRoute()">Route planen</button>
+      </div>
+      
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
       </agm-map>
@@ -132,7 +135,7 @@
   </div>
 
   <div class="printMe" style="margin-bottom: 50px;">
-    <mat-grid-list cols="5" rowHeight="100px">
+    <mat-grid-list cols="5" rowHeight="100px" >
       <mat-grid-tile colspan="1">
         <div style="display:flex; flex-direction: column">
           <h3 class="firma">Teilnehmer</h3>

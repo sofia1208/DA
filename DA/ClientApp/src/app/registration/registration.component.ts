@@ -80,6 +80,7 @@ export class RegistrationComponent implements OnInit {
   openData: boolean = false;
   openStorno: boolean = false;
   searchForAddress: string;
+  breakpoint: Number = 5;
   private geoCoder;
  
   @ViewChild('search')
@@ -112,14 +113,21 @@ export class RegistrationComponent implements OnInit {
       .pipe(
         startWith(''),
         map(value => this.filter(value))
-    );
+      );
 
     console.log('on init registration');
     this.getEvent(this.detailId);
-    
-   
-   
-    
+
+
+
+
+
+    this.breakpoint = (window.innerWidth <= 600) ? 1 : 3;
+
+  }
+  onResize(event) {
+    console.log()
+    this.breakpoint = (event.target.innerWidth <= 600) ? 1 : 3;
   }
   private filter(value: string): string[] {
   
