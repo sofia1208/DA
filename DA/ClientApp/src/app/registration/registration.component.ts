@@ -80,7 +80,7 @@ export class RegistrationComponent implements OnInit {
   openData: boolean = false;
   openStorno: boolean = false;
   searchForAddress: string;
-  breakpoint: Number = 5;
+  breakpoint: number;
   private geoCoder;
  
   @ViewChild('search')
@@ -93,6 +93,7 @@ export class RegistrationComponent implements OnInit {
     })
     this.checkSize();
     console.log(this.mobile);
+    //this.getEvent(this.detailId);
 
   }
   
@@ -116,18 +117,19 @@ export class RegistrationComponent implements OnInit {
       );
 
     console.log('on init registration');
-    this.getEvent(this.detailId);
+ 
 
 
 
 
 
-    this.breakpoint = (window.innerWidth <= 600) ? 1 : 3;
+    this.breakpoint = (window.innerWidth <= 600) ? 1 : 5;
 
   }
+
   onResize(event) {
-    console.log()
-    this.breakpoint = (event.target.innerWidth <= 600) ? 1 : 3;
+    console.log("event");
+    this.breakpoint = (event.target.innerWidth <= 600) ? 1 : 5;
   }
   private filter(value: string): string[] {
   
@@ -387,13 +389,15 @@ export class RegistrationComponent implements OnInit {
         .then(
           res => {
             console.log(res);
-            this.schooling =JSON.parse( JSON.stringify(res));
+            this.schooling = JSON.parse(JSON.stringify(res));
+            
             this.fillDetails(this.schooling);
             resolve();
           }
         );
     });
-   
+
+
     this.fillDetails(this.schooling);
    
     return promise;

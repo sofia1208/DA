@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { SchoolingDto } from '../calendar/SchoolingDto';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-detail-view',
@@ -7,7 +9,7 @@ import { SchoolingDto } from '../calendar/SchoolingDto';
   styleUrls: ['./detail-view.component.css']
 })
 export class DetailViewComponent implements OnChanges {
-  @Input() schoolingDto: SchoolingDto;
+  @Input() id: Number;
   @Input() detailTitle: string;
   startDate: Date;
   endDate: Date;
@@ -32,12 +34,21 @@ export class DetailViewComponent implements OnChanges {
   freePlaces: string;
   kurzbeschreibung: string;
   contentLink: string;
-  constructor() { }
+  schooling: SchoolingDto;
+  constructor(private http: HttpClient) { }
 
   ngOnChanges(): void {
     console.log("detailView on changes");
-  
-    this.fillDetails(this.schoolingDto);
+    //console.log(this.schoolingDto);
+    //this.fillDetails(this.schoolingDto);
+    console.log(this.id);
+    this.getSchooling();
+  }
+  ngOnInit() {
+    //console.log(this.schoolingDto);
+    //this.fillDetails(this.schoolingDto);
+    console.log(this.id);
+    this.getSchooling();
   }
   fillDetails(schooling: SchoolingDto) {
   
@@ -87,6 +98,26 @@ export class DetailViewComponent implements OnChanges {
     window.open(this.contentLink, '_blank');
   }
   scrollToDetail() {
-    this.myScrollContainer.nativeElement.scrollIntoView({ block: "end", behavior: "smooth" });
+  //  this.myScrollContainer.nativeElement.scrollIntoView({ block: "end", behavior: "smooth" });
   }
+  getSchooling() {
+    this.getDetail(`https://localhost:5001/schoolings/details/${this.id}`)
+      .subscribe(data => {
+        var schooling = data;
+        console.log(data);
+        if (schooling.freePlaces == 0) {
+          this.detailTitle = this.detailTitle + "   (Diese Schulung ist belegt)";
+        }
+
+        this.fillDetails(schooling);
+
+      })
+    this.fillDetails(this.schooling);
+ 
+  }
+       private getDetail(url: string): Observable < SchoolingDto > {
+      return this.http.get<SchoolingDto>(url);
+
+    }
+
 }

@@ -10,7 +10,7 @@
 
   <div class="detailview">
 
-    <app-detail-view [detailTitle]="detailTitle" [schoolingDto]="schooling"></app-detail-view>
+    <app-detail-view [detailTitle]="detailTitle" [id]="detailId"></app-detail-view>
 
 
 
@@ -87,50 +87,53 @@
   </div>
 
 
-  <div class="printMe" style="margin-bottom: 50px; margin-top: 50px;">
-    <mat-grid-list cols="5" rowHeight="100px">
+  <div class="printMe" style="margin-bottom: 50px; margin-top: 70px;">
+    <mat-grid-list cols="5" rowHeight="100px" >
       <mat-grid-tile colspan="1">
         <h3 class="firma">Ansprechperson*</h3>
       </mat-grid-tile>
+
+
+      <!--<mat-form-field class="example-full-width">
+    <mat-label>Anrede</mat-label>
+    <input matInput [(ngModel)]="companyContactPersonTitle" (change)="checkButton()">
+  </mat-form-field>-->
       <mat-grid-tile colspan="4">
+        <div style="display: flex; flex-direction: row; flex-flow: wrap;">
 
-        <!--<mat-form-field class="example-full-width">
-          <mat-label>Anrede</mat-label>
-          <input matInput [(ngModel)]="companyContactPersonTitle" (change)="checkButton()">
-        </mat-form-field>-->
+          <form>
+            <mat-form-field>
+              <mat-label>Anrede</mat-label>
+              <input type="text" [(ngModel)]="companyContactPersonTitle" matInput [matAutocomplete]="personTitle" />
+              <mat-autocomplete #personTitle="matAutocomplete">
+                <mat-option *ngFor="let o of titleOptions " [value]="o">
+                  {{o}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
 
-
-        <form>
-          <mat-form-field>
-            <mat-label>Anrede</mat-label>
-            <input type="text" [(ngModel)]="companyContactPersonTitle"  matInput [matAutocomplete]="personTitle" />
-            <mat-autocomplete #personTitle="matAutocomplete">
-              <mat-option *ngFor="let o of titleOptions " [value]="o">
-                {{o}}
-              </mat-option>
-            </mat-autocomplete>
+          <mat-form-field class="example-full-width">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="companyContactPersonName" (change)="checkButton()">
           </mat-form-field>
-        </form>
 
-        <mat-form-field class="example-full-width">
-          <mat-label>Name</mat-label>
-          <input matInput [(ngModel)]="companyContactPersonName" (change)="checkButton()">
-        </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Telefonnummer</mat-label>
+            <input matInput [(ngModel)]="companyPhone" (change)="checkButton()">
+          </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <mat-label>Telefonnummer</mat-label>
-          <input matInput [(ngModel)]="companyPhone" (change)="checkButton()">
-        </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>E-Mail</mat-label>
+            <input matInput [(ngModel)]="companyMail" [formControl]="emailFormControl" (change)="checkButton()">
+            <mat-error *ngIf="emailFormControl.invalid">E-Mail Adress ist nicht gültig</mat-error>
+          </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <mat-label>E-Mail</mat-label>
-          <input matInput [(ngModel)]="companyMail" [formControl]="emailFormControl" (change)="checkButton()">
-          <mat-error *ngIf="emailFormControl.invalid">E-Mail Adress ist nicht gültig</mat-error>
-        </mat-form-field>
 
+
+        </div>
       </mat-grid-tile>
-
-
+     
     </mat-grid-list>
   </div>
 
