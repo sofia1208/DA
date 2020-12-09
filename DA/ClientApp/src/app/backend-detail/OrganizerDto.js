@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Organizer = /** @class */ (function () {
-    function Organizer(id, name, contactPerson, email, phone, website) {
+exports.OrganizerDto = void 0;
+var OrganizerDto = /** @class */ (function () {
+    function OrganizerDto(id, name, contactPerson, email, phone, website) {
         this.id = id;
         this.name = name;
         this.contactPerson = contactPerson;
@@ -9,7 +10,7 @@ var Organizer = /** @class */ (function () {
         this.phone = phone,
             this.website = website;
     }
-    return Organizer;
+    return OrganizerDto;
 }());
-exports.Organizer = Organizer;
-//# sourceMappingURL=Organizer.js.map
+exports.OrganizerDto = OrganizerDto;
+//# sourceMappingURL=OrganizerDto.js.map

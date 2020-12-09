@@ -51,6 +51,7 @@ import { DialogEditOrgCatComponent } from './dialog-edit-org-cat/dialog-edit-org
 import { DialogSuccessfulAddedComponent } from './dialog-successful-added/dialog-successful-added.component';
 import { PrintMemberComponent } from './print-member/print-member.component';
 import { DetailViewComponent } from './detail-view/detail-view.component'
+import { CoreModule } from './core/core.module';
 registerLocaleData(localDe, 'de');
 const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
@@ -127,7 +128,8 @@ const routes: Routes = [
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     BrowserAnimationsModule,
     MatGridListModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    CoreModule
   
     
  

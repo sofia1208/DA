@@ -23,7 +23,7 @@
             <mat-label>Kategorie auswählen</mat-label>
             <mat-select [(ngModel)]="catName" (selectionChange)="categoryChanged()">
               <mat-option *ngFor="let s of category" [value]="s">
-                {{s}}
+                {{s.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>

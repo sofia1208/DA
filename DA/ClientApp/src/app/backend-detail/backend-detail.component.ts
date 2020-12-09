@@ -10,12 +10,14 @@ import { Location } from '../registration/Location';
 import { DialogOrganizerComponent } from '../dialog-organizer/dialog-organizer.component';
 import { DialogCompanyComponent } from '../dialog-company/dialog-company.component';
 import { CompanyMember } from './CompanyMember';
-import { Organizer } from './Organizer';
+import { OrganizerDto } from './OrganizerDto';
 import { DialogAddPartComponent } from '../dialog-add-part/dialog-add-part.component';
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
 import { DialogAddCategoryComponent } from '../dialog-add-category/dialog-add-category.component';
 import { DialogEditOrgCatComponent } from '../dialog-edit-org-cat/dialog-edit-org-cat.component';
 import { DialogSuccessfulAddedComponent } from '../dialog-successful-added/dialog-successful-added.component';
+import { BackendDetailService } from '../core/backend-detail.service';
+import { CategoryDto } from './CategoryDto';
 @Component({
   selector: 'app-backend-detail',
   templateUrl: './backend-detail.component.html',
@@ -28,9 +30,9 @@ export class BackendDetailComponent implements OnInit {
   zipCode: string;
   city: string;
   country: string;
-  catName: string ;
+  catName: CategoryDto ;
   backendDto: BackendDetailDto;
-  organizer: Organizer[] = [];
+  organizer: OrganizerDto[] = [];
   contactPerson: string;
   email: string;
   website: string;
@@ -40,7 +42,7 @@ export class BackendDetailComponent implements OnInit {
   startTime: string;
   endTime: string;
   sizeOfSchooling: Number;
-  organizerName: Organizer;
+  organizerName: OrganizerDto;
   price: Number;
   companyName: string;
   companys: string[] = [];
@@ -50,7 +52,7 @@ export class BackendDetailComponent implements OnInit {
   companyContactPerson: string = "";
   companyMail: string = "";
   sDate: Date;
-  organizerDto: Organizer
+  organizerDto: OrganizerDto
   newOrganizer: string = "";
   lat: Number = 48.1505921;
   lon: Number = 14.0069141;
@@ -69,7 +71,8 @@ export class BackendDetailComponent implements OnInit {
   kurzbeschreibungHtml: string;
   contentLink: string;
   dateString: string;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog) {
+    newContentLink: any;
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, public dialog: MatDialog, private backendService: BackendDetailService) {
     this.route.queryParams.subscribe(p => {
      
       this.detailId = p["id"];
@@ -86,12 +89,7 @@ export class BackendDetailComponent implements OnInit {
     })
   }
   displayedColumns: string[] = ['firstname', 'lastname', 'email', 'company', 'delete'];
-  category: string[] = [
-    "moveIT@ISS + Grundlagen",
-    "moveIT@ISS + Workshop",
-    "moveIT@ISS + Administrator",
-    "moveIT@ISS + Kombimodell"
-  ];
+  category: CategoryDto[] = [];
   members: CompanyMember[]=[];
   dataSource = this.members;
   emails: string[] = [];
@@ -165,18 +163,14 @@ export class BackendDetailComponent implements OnInit {
 
   }
   fillComboboxes() {
-    this.getCompanys(`https://localhost:5001/backend/companies`)
-      .subscribe(x => {
-        console.log(x);
-        this.companys = x;
-      })
-    this.getOrganizer(`https://localhost:5001/backend/organizers`)
+    this.backendService.getOrganizer()
       .subscribe(x => {
         console.log(x);
         this.organizer = x;
         const distinctArray = this.organizer.filter((n, i) => this.organizer.indexOf(n) === i);
         console.log(distinctArray);
       })
+    this.backendService.getCategories().subscribe(x => this.category = x);
     
   }
   changeOrganizer() {
@@ -202,7 +196,7 @@ export class BackendDetailComponent implements OnInit {
         if (result != null) {
           if (this.newOrganizer != "") {
             console.log(this.newOrganizer);
-            this.organizer.push(new Organizer(this.organizer.length, this.newOrganizer, "", "", "", ""));
+            this.organizer.push(new OrganizerDto(this.organizer.length, this.newOrganizer, "", "", "", ""));
             this.organizerName.name = this.newOrganizer;
           }
         }
@@ -303,7 +297,7 @@ export class BackendDetailComponent implements OnInit {
     //for (var i = 0; i < this.category.length; i++) {
       
     //}
-    this.catName = this.category.filter(x => x.includes(cat))[0];
+    this.catName = this.category.filter(x => x.name.includes(cat))[0];
     console.log(this.catName);
    
     var xx = this.backendDto.start.toString().split("-");
@@ -415,7 +409,7 @@ export class BackendDetailComponent implements OnInit {
   checkInputs() {
     console.log("checks");
     this.saved = false;
-    if (this.catName != "" && this.startDate != null, this.endDate != null, this.price != null, Number(this.zipCode) != null, this.city != null, this.street != null, Number(this.streetNumber) != null,
+    if (this.catName.name != "" && this.startDate != null, this.endDate != null, this.price != null, Number(this.zipCode) != null, this.city != null, this.street != null, Number(this.streetNumber) != null,
       this.country != null,  this.sizeOfSchooling != null) {
       this.readyToPost = true;
     }
@@ -429,7 +423,7 @@ export class BackendDetailComponent implements OnInit {
       if (this.readyToPost) {
         this.startDate.setHours(this.startDate.getHours() + 1);
         this.endDate.setHours(this.endDate.getHours() + 1);
-        this.postSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
+        this.postSchooling(new BackendDetailDto(10, this.catName.name, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
           this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling, this.kurzbeschreibungHtml, this.contentLink))
           .subscribe(x => {
             console.log(x);
@@ -453,7 +447,7 @@ export class BackendDetailComponent implements OnInit {
     this.startDate.setHours(this.startDate.getHours() + 1);
     this.endDate.setHours(this.endDate.getHours() + 1);
 
-    this.putSchooling(new BackendDetailDto(10, this.catName, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
+    this.putSchooling(new BackendDetailDto(10, this.catName.name, this.startDate, this.endDate, this.price, Number(this.zipCode), this.city, this.street, Number(this.streetNumber),
       this.country, this.organizerName.name, this.contactPerson, this.email, this.website, this.phone, true, this.dataSource, this.sizeOfSchooling, this.kurzbeschreibungHtml, this.contentLink))
       .subscribe(x => {
         console.log(x);
@@ -496,9 +490,7 @@ export class BackendDetailComponent implements OnInit {
      return this.http.get<string[]>(url);
 
   }
-  getOrganizer(url:string): Observable<Organizer[]> {
-    return this.http.get<Organizer[]>(url);
-  }
+
 
   addMember() {
     console.log(this.firstname);
@@ -521,17 +513,19 @@ export class BackendDetailComponent implements OnInit {
   addCategory() {
     const dialogRef = this.dialog.open(DialogAddCategoryComponent, {
       width: '600px',
-      data: { org: this.newCategory }
+      data: { org: this.newCategory, newContentLink: this.newContentLink }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.newCategory = result;
+
       if (result != null) {
         if (this.newCategory != "") {
-          console.log(this.newCategory);
-          this.category.push(this.newCategory);
-          this.catName = this.newCategory;
+          const categ = new CategoryDto(result.org, result.newContentLink);
+     
+          this.category.push(categ);
+          this.backendService.postCategory(categ).subscribe(x=> console.log("post category"));
+          //this.catName = this.newCategory;
         }
       }
 
@@ -541,20 +535,25 @@ export class BackendDetailComponent implements OnInit {
   editCategory() {
     const dialogRef = this.dialog.open(DialogEditOrgCatComponent, {
       width: '600px',
-      data: { org: this.catName }
+      data: { org: this.catName.name, isCategory: true, editLink: this.contentLink }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.newCategory = result;
+      
       if (result != null) {
-        if (this.newCategory != "") {
+        
           console.log(this.newCategory);
-          var index = this.category.indexOf(this.catName);
-          this.category[index] = this.newCategory;
-          console.log(this.category[index]);
+        var index = this.category.indexOf(this.catName);
+        console.log(index);
+        this.catName.contentLink = result.editLink;
+        this.catName.name = result.org;
+        this.category[index] = this.catName;
+        this.backendService.putCategory(this.catName).subscribe(x => console.log("put category"));
+        this.contentLink = this.catName.contentLink;
+        
           
-        }
+        
       }
 
 
@@ -586,6 +585,7 @@ export class BackendDetailComponent implements OnInit {
   }
   categoryChanged() {
     this.checkInputs();
+    this.contentLink = this.catName.contentLink;
 
   }
  

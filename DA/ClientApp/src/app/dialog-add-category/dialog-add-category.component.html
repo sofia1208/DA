@@ -5,8 +5,12 @@
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="data.org">
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Link zum Schulungsinhalt</mat-label>
+    <input matInput [(ngModel)]="data.newContentLink">
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Abbrechen</button>
-  <button mat-button [mat-dialog-close]="data.org" cdkFocusInitial>Ok</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>

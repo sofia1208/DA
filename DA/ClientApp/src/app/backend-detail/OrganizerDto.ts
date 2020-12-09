@@ -1,4 +1,4 @@
-export class Organizer {
+export class OrganizerDto {
   id: Number;
   name: string;
   contactPerson: string;
