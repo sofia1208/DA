@@ -77,7 +77,7 @@ export class BackendDetailComponent implements OnInit {
      
       this.detailId = p["id"];
       console.log(this.detailId);
-      this.fillComboboxes();
+     
       if (this.detailId > 0) {
         this.addOrEdit = "Schulung speichern";
         this.readyToPost = true;
@@ -96,7 +96,9 @@ export class BackendDetailComponent implements OnInit {
   ngOnInit() {
   
     if (this.detailId > 0) {
+      this.fillComboboxes();
       this.getDetails();
+     
     }
     
   
@@ -196,8 +198,10 @@ export class BackendDetailComponent implements OnInit {
         if (result != null) {
           if (this.newOrganizer != "") {
             console.log(this.newOrganizer);
-            this.organizer.push(new OrganizerDto(this.organizer.length, this.newOrganizer, "", "", "", ""));
+            var org = new OrganizerDto(this.organizer.length, this.newOrganizer, "", "", "", "")
+            this.organizer.push(org);
             this.organizerName.name = this.newOrganizer;
+            this.backendService.postOrganizer(org).subscribe(x => console.log("org added"));
           }
         }
        
@@ -567,14 +571,14 @@ export class BackendDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.newOrganizer = result;
+      this.newOrganizer = result.org;
       if (result != null) {
         if (this.newOrganizer != "") {
           console.log(this.newOrganizer);
 
           var index = this.organizer.indexOf(this.organizerName);
           this.organizerName.name = this.newOrganizer;
-          //PUT REQUEST?
+          this.backendService.putOrganizer(this.organizerName);
           //console.log(this.category[index]);
 
         }

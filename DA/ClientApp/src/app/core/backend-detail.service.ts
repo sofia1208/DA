@@ -33,4 +33,18 @@ export class BackendDetailService {
   getOrganizer(): Observable<OrganizerDto[]> {
     return this.http.get<OrganizerDto[]>(`https://localhost:5001/backend/organizers`);
   }
+  postOrganizer(org: OrganizerDto): Observable<OrganizerDto> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    console.log("post");
+    return this.http.post<OrganizerDto>(`https://localhost:5001/backend/organizer`, org, httpOptions);
+  }
+  putOrganizer(org: OrganizerDto): Observable<OrganizerDto> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    console.log("put");
+    return this.http.put<OrganizerDto>(`https://localhost:5001/backend/organizer/${org.id}`, org, httpOptions);
+  }
 }
