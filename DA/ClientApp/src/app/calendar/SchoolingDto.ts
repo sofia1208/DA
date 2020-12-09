@@ -15,7 +15,7 @@ name: string;
   email: string;
   contactPerson: string;
   freePlaces: number;
-  kurzbeschreibung: string;
+  kurzbechreibung: string;
   contentLink: string;
 }
 

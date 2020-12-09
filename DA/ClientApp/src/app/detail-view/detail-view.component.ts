@@ -51,7 +51,7 @@ export class DetailViewComponent implements OnChanges {
     this.getSchooling();
   }
   fillDetails(schooling: SchoolingDto) {
-  
+    console.log(schooling);
     this.telefon = schooling.phone;
     this.convertToGermanTime(schooling);
     this.preis = schooling.price.toString() + " €";
@@ -63,7 +63,8 @@ export class DetailViewComponent implements OnChanges {
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
     this.freePlaces = "" + schooling.freePlaces;
     this.contentLink = schooling.contentLink;
-    this.kurzbeschreibung = schooling.kurzbeschreibung;
+    this.kurzbeschreibung = schooling.kurzbechreibung;
+    console.log(this.kurzbeschreibung);
     //this.refresh.next();
     this.scrollToDetail();
   }
