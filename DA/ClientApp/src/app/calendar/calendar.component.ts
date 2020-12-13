@@ -378,7 +378,7 @@ export class CalendarComponent implements OnInit {
           
           if (!event.isFree) {
             this.canReg = true;
-            this.detailTitle = this.detailTitle + "   (Diese Schulung ist belegt)";
+            this.detailTitle = this.detailTitle;
           }
           else if (event.start < today)
           {
@@ -563,22 +563,50 @@ export class CalendarComponent implements OnInit {
       let moreDays = false;
  
       console.log(this.schoolings)
-      const schooling: CustomEvent = {
-        isFree: this.schoolings[i].isFree,
-        start: start,
-        end: end,
-        title: this.schoolings[i].name,
-        id: this.schoolings[i].id,
-        allDay: false,
-        isHoliday: false,
-        hasMoreDays: moreDays,
+      if (this.schoolings[i].isFree) {
+        const schooling: CustomEvent = {
+          isFree: this.schoolings[i].isFree,
+          start: start,
+          end: end,
+          title: this.schoolings[i].name,
+          id: this.schoolings[i].id,
+          allDay: false,
+          isHoliday: false,
+          hasMoreDays: moreDays,
 
-        outOfMonth: false
+          outOfMonth: false,
+          color: {
+            primary: "#8CEE88",
+            secondary: "#5ba658"
+          },
+        
+        };
+        this.events.push(schooling);
+      }
+      else {
+        const schooling: CustomEvent = {
+          isFree: this.schoolings[i].isFree,
+          start: start,
+          end: end,
+          title: this.schoolings[i].name,
+          id: this.schoolings[i].id,
+          allDay: false,
+          isHoliday: false,
+          hasMoreDays: moreDays,
 
-      };
+          outOfMonth: false,
+          color: {
+            primary: "#ad2121",
+            secondary: "#FAE3E3"
+          },
+
+        };
+        this.events.push(schooling);
+      }
+     
      
     
-        this.events.push(schooling);
+        
       
      
       this.refresh.next();
