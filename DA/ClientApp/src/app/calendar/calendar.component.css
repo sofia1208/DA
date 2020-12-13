@@ -162,11 +162,21 @@ flex:1
 .mat-typography {
   font-family: 'Open Sans', sans-serif;
 }
+
 @media print {
+  .onlyShowPrint {
+    display: block !important;
+  }
+
   .printMe {
     display: none !important;
   }
 }
+/*@media not print {
+  .onlyShowPrint {
+    display: none !important;
+  }
+}*/
 
 app-print-layout{
   display:none;

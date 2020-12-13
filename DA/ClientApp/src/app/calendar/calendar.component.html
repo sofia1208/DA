@@ -2,14 +2,14 @@
 <html lang="de">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <body>
-  <div class="printMe">
+  <div >
 
 
     <div class="outerDiv">
       <h1 class="schulungh1">
         Schulungen und Workshops
       </h1>
-      <div class="row">
+      <div class="row printMe">
         <div class=" ctnTop">
           <div class="row rowData">
             <div class="col rowPostition">
@@ -128,7 +128,7 @@
 
 
 
-      <div >
+      <div class="printMe">
         <div class="container">
           <div class="btn-group filterBtn">
             <!--<p class="filterBtn filterText">Filter nach:</p>-->
@@ -147,7 +147,7 @@
       </div>
 
 
-      <div *ngIf="!calendar">
+      <div class="onlyShowPrint" [hidden]="calendar">
         <table mat-table #mytable [dataSource]="summaryList" class="table">
 
           <ng-container matColumnDef="typ">
@@ -158,7 +158,7 @@
 
           <ng-container matColumnDef="city">
             <th mat-header-cell *matHeaderCellDef> Ort </th>
-            <td mat-cell *matCellDef="let schooling"> {{schooling.city}} </td>
+            <td mat-cell *matCellDef="let schooling"> {{schooling.address}} </td>
           </ng-container>
 
 
@@ -189,7 +189,7 @@
 
       </div>
 
-      <div *ngIf="calendar" [ngSwitch]="view">
+      <div *ngIf="calendar" class="printMe" [ngSwitch]="view">
 
         <div class="legend">
 
