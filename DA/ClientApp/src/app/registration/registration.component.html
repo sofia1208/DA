@@ -6,7 +6,7 @@
     </h1>
   </div>
 
-  
+
 
   <div class="detailview">
 
@@ -19,12 +19,15 @@
         <button class="btnSubmit printMe" style="margin-right:20px;" (click)="printRegistration()">Schulung ausdrucken</button>
         <button class="btnSubmit" style="margin-bottom: 10px;" (click)="planRoute()">Route planen</button>
       </div>
-      
+
       <agm-map [latitude]="lat" [longitude]="lon" [zoom]="16">
         <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
       </agm-map>
     </div>
   </div>
+  <div *ngIf="!mobile">
+
+  
   <div class="printMe">
     <mat-grid-list cols="5" rowHeight="100px">
       <mat-grid-tile colspan="1">
@@ -65,10 +68,10 @@
             <input matInput [(ngModel)]="companyCity" (change)="checkButton()">
           </mat-form-field>
 
-  
 
 
-          <form >
+
+          <form>
             <mat-form-field>
               <mat-label>Land</mat-label>
               <input type="text" [(ngModel)]="companyCountry" [formControl]="countryC" matInput [matAutocomplete]="y" />
@@ -88,16 +91,16 @@
 
 
   <div class="printMe" style="margin-bottom: 50px; margin-top: 70px;">
-    <mat-grid-list cols="5" rowHeight="100px" >
+    <mat-grid-list cols="5" rowHeight="100px">
       <mat-grid-tile colspan="1">
         <h3 class="firma">Ansprechperson*</h3>
       </mat-grid-tile>
 
 
       <!--<mat-form-field class="example-full-width">
-    <mat-label>Anrede</mat-label>
-    <input matInput [(ngModel)]="companyContactPersonTitle" (change)="checkButton()">
-  </mat-form-field>-->
+        <mat-label>Anrede</mat-label>
+        <input matInput [(ngModel)]="companyContactPersonTitle" (change)="checkButton()">
+      </mat-form-field>-->
       <mat-grid-tile colspan="4">
         <div style="display: flex; flex-direction: row; flex-flow: wrap;">
 
@@ -133,12 +136,12 @@
 
         </div>
       </mat-grid-tile>
-     
+
     </mat-grid-list>
   </div>
 
   <div class="printMe" style="margin-bottom: 50px;">
-    <mat-grid-list cols="5" rowHeight="100px" >
+    <mat-grid-list [cols]="breakpoint" rowHeight="100px">
       <mat-grid-tile colspan="1">
         <div style="display:flex; flex-direction: column">
           <h3 class="firma">Teilnehmer</h3>
@@ -147,17 +150,17 @@
         </div>
 
       </mat-grid-tile>
-      <mat-grid-tile colspan="4">
+      <mat-grid-tile [colspan]="col4">
 
-        <mat-form-field class="example-full-width">
+        <mat-form-field colspan="1" class="example-full-width">
           <mat-label>Vorname</mat-label>
           <input matInput [(ngModel)]="firstname" (change)="checkMemberInput()" placeholder="Max">
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field colspan="1" class="example-full-width">
           <mat-label>Nachname</mat-label>
           <input matInput [(ngModel)]="lastname" (change)="checkMemberInput()" placeholder="Mustermann">
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field colspan="1" class="example-full-width">
           <mat-label>E-Mail</mat-label>
           <input matInput [(ngModel)]="email" [formControl]="emailFormControl2" (change)="checkMemberInput()" placeholder="max@mustermann.com">
           <mat-error *ngIf="emailFormControl2.invalid">E-Mail Adress ist nicht gültig</mat-error>
@@ -171,7 +174,7 @@
   </div>
 
 
-  <div class="printMe"  style="margin-bottom: 50px" [hidden]="onePart">
+  <div class="printMe" style="margin-bottom: 50px" [hidden]="onePart">
     <mat-grid-list cols="5" rowHeight="{{dynamicRow}}">
       <mat-grid-tile colspan="1">
         <h3 class="firma">Teilnehmerübersicht</h3>
@@ -229,121 +232,101 @@
 
     </mat-grid-list>
   </div>
-  <div class="onlyShowPrint" style="margin-bottom: 50px">
-   
-        <h3 class="firma">Teilnehmerübersicht ({{dataSource.length}} Teilnehmer)</h3>
-
-    
-         <ul>
-           <li *ngFor="let it of dataSource">{{it.firstname}} {{it.lastname}} - {{it.email}}</li>
-         </ul>
-
-
-   
-  </div>
-
-  <!--<div class="printMe">-->
-  <!--<h3 class="firma">Firma*</h3>
-  <div class="containerInput">-->
-  <!--<div class="row rowFields">
-    <div class="column col1">
-      <div class="row innerRows firma"></div>
     </div>
+  <div *ngIf="mobile">
+    <h3 class="firma">Firma</h3>
     <mat-form-field class="example-full-width">
 
       <mat-label>Firmenname</mat-label>
-      <input matInput [(ngModel)]="company">
+      <input matInput [(ngModel)]="company" (change)="checkButton()">
     </mat-form-field>
-
-
-  </div>-->
-  <!--<div class="row rowFields">
-    <div class="column col1">
-      <div class="row innerRows firma"></div>
-    </div>
     <mat-form-field class="example-full-width">
       <mat-label>Straße</mat-label>
-      <input matInput [(ngModel)]="companyStreet">
+      <input matInput [(ngModel)]="companyStreet" (change)="checkButton()">
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Hausnummer</mat-label>
-      <input matInput [(ngModel)]="companyStreetNumber">
+      <input matInput [(ngModel)]="companyStreetNumber" (change)="checkButton()">
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Postleitzahl</mat-label>
-      <input matInput [(ngModel)]="companyZipCode">
+      <input matInput [(ngModel)]="companyZipCode" (change)="checkButton()">
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Stadt</mat-label>
-      <input matInput [(ngModel)]="companyCity">
+      <input matInput [(ngModel)]="companyCity" (change)="checkButton()">
     </mat-form-field>
+    <form>
+      <mat-form-field>
+        <mat-label>Land</mat-label>
+        <input type="text" [(ngModel)]="companyCountry" [formControl]="countryC" matInput [matAutocomplete]="y" />
+        <mat-autocomplete #y="matAutocomplete">
+          <mat-option *ngFor="let o of filteredOptions |async " [value]="o">
+            {{o}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Land</mat-label>
-      <input matInput [(ngModel)]="companyCountry">
-    </mat-form-field>
-  </div>-->
-  <!--<h3 class="firma">Ansprechperson*</h3>-->
-  <!--<div class="row rowFields">
-  <div class="column col1">
-    <div class="row innerRows firma"></div>
-  </div>-->
-  <!--<mat-form-field class="example-full-width">
-      <mat-label>Anrede</mat-label>
-      <input matInput [(ngModel)]="companyContactPersonVn">
-    </mat-form-field>
+    <h3 class="firma">Ansprechperson*</h3>
+
+
+
+    <form>
+      <mat-form-field>
+        <mat-label>Anrede</mat-label>
+        <input type="text" [(ngModel)]="companyContactPersonTitle" matInput [matAutocomplete]="personTitle" />
+        <mat-autocomplete #personTitle="matAutocomplete">
+          <mat-option *ngFor="let o of titleOptions " [value]="o">
+            {{o}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
 
     <mat-form-field class="example-full-width">
       <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="companyContactPersonLn">
+      <input matInput [(ngModel)]="companyContactPersonName" (change)="checkButton()">
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Telefonnummer</mat-label>
-      <input matInput [(ngModel)]="companyPhone">
+      <input matInput [(ngModel)]="companyPhone" (change)="checkButton()">
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>E-Mail</mat-label>
-      <input matInput [(ngModel)]="companyMail">
+      <input matInput [(ngModel)]="companyMail" [formControl]="emailFormControl" (change)="checkButton()">
+      <mat-error *ngIf="emailFormControl.invalid">E-Mail Adress ist nicht gültig</mat-error>
     </mat-form-field>
-  </div>-->
-  <!--</div>-->
-  <!--<h3 class="firma">Teilnehmer</h3>
-  <div>-->
-  <!--<div class="containerInput">
-    <div class="row rowFields">
-      <div class="column col1">
-        <div class="row innerRows firma"></div>
-      </div>
-      <mat-form-field class="example-full-width">
-        <mat-label>Vorname</mat-label>
-        <input matInput [(ngModel)]="firstname" placeholder="Max">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Nachname</mat-label>
-        <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="email" placeholder="mm">
-      </mat-form-field>
-      <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()">Hinzufügen</button>
-    </div>
-  </div>-->
-  <!--<br />
 
-  <h3 class="firma">Teilnehmerübersicht</h3>
-  <div class="row">
-    <div class="column col1 colEmpty">
-      <div class="row innerRows firma"></div>
-    </div>
+    <h3 class="firma">Teilnehmer</h3>
+    <p style="color: #707070;" *ngIf="freePlaces >1">noch {{freePlaces}} freie Plätze</p>
+    <p style="color: #707070;" *ngIf="freePlaces == 1">noch {{freePlaces}} freier Platz</p>
 
-    <div class="column col2">
-      <table mat-table #mytable [dataSource]="dataSource" class="table">
+
+
+    <mat-form-field colspan="1" class="example-full-width">
+      <mat-label>Vorname</mat-label>
+      <input matInput [(ngModel)]="firstname" (change)="checkMemberInput()" placeholder="Max">
+    </mat-form-field>
+    <mat-form-field colspan="1" class="example-full-width">
+      <mat-label>Nachname</mat-label>
+      <input matInput [(ngModel)]="lastname" (change)="checkMemberInput()" placeholder="Mustermann">
+    </mat-form-field>
+    <mat-form-field colspan="1" class="example-full-width">
+      <mat-label>E-Mail</mat-label>
+      <input matInput [(ngModel)]="email" [formControl]="emailFormControl2" (change)="checkMemberInput()" placeholder="max@mustermann.com">
+      <mat-error *ngIf="emailFormControl2.invalid">E-Mail Adress ist nicht gültig</mat-error>
+    </mat-form-field>
+    <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()" [disabled]="disableAdding">Hinzufügen</button>
+
+    <h3 class="firma">Teilnehmerübersicht</h3>
+
+      <table mat-table #mytable [dataSource]="dataSource" class="table" [hidden]="onePart">
 
         <ng-container matColumnDef="firstname">
           <th mat-header-cell *matHeaderCellDef> Vorname </th>
@@ -364,35 +347,204 @@
 
 
 
+        <ng-container class="printMe" matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef>  </th>
+          <td mat-cell *matCellDef="let member">
+            <button style="background-color: white; border:none" data-toggle="tooltip" title="Editieren" (click)="editSchooling(member.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <ng-container class="printMe" matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef>  </th>
+          <td mat-cell *matCellDef="let member">
+            <button style="background-color: white; border:none" data-toggle="tooltip" title="Teilnehmer löschen" (click)="deleteSchooling(member.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
 
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-    </div>
-  </div>-->
 
 
 
-  <div class="row printMe">
-    <div class="column col1 checks">
-      <h3 class="firma checks">Stornobedingungen</h3>
-    </div>
-    <input type="checkbox" (change)="changeStorno()" [(ngModel)]="checkStrono" />
-    <p class="pDown" >Ja, ich habe die <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen"> Stornobedingungen </a> von moveIT Software gelesen.</p>
   </div>
+      <div class="onlyShowPrint" style="margin-bottom: 50px">
 
-  <div class="row printMe">
-    <div class="column col1 checks">
-      <h3 class="firma checks">Datenschutz</h3>
-    </div>
-    <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />
-    <p class="pDown" >Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutzbedinungen</a> von moveIT Software gelesen.</p>
+        <h3 class="firma">Teilnehmerübersicht ({{dataSource.length}} Teilnehmer)</h3>
 
-    <button class="btnSubmit btnDown" [disabled]="!buttonActive" (click)="submit()">Abschicken</button>
+
+        <ul>
+          <li *ngFor="let it of dataSource">{{it.firstname}} {{it.lastname}} - {{it.email}}</li>
+        </ul>
+
+
+
+      </div>
+
+      <!--<div class="printMe">-->
+      <!--<h3 class="firma">Firma*</h3>
+    <div class="containerInput">-->
+      <!--<div class="row rowFields">
+      <div class="column col1">
+        <div class="row innerRows firma"></div>
+      </div>
+      <mat-form-field class="example-full-width">
+
+        <mat-label>Firmenname</mat-label>
+        <input matInput [(ngModel)]="company">
+      </mat-form-field>
+
+
+    </div>-->
+      <!--<div class="row rowFields">
+      <div class="column col1">
+        <div class="row innerRows firma"></div>
+      </div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Straße</mat-label>
+        <input matInput [(ngModel)]="companyStreet">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Hausnummer</mat-label>
+        <input matInput [(ngModel)]="companyStreetNumber">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Postleitzahl</mat-label>
+        <input matInput [(ngModel)]="companyZipCode">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Stadt</mat-label>
+        <input matInput [(ngModel)]="companyCity">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Land</mat-label>
+        <input matInput [(ngModel)]="companyCountry">
+      </mat-form-field>
+    </div>-->
+      <!--<h3 class="firma">Ansprechperson*</h3>-->
+      <!--<div class="row rowFields">
+    <div class="column col1">
+      <div class="row innerRows firma"></div>
+    </div>-->
+      <!--<mat-form-field class="example-full-width">
+        <mat-label>Anrede</mat-label>
+        <input matInput [(ngModel)]="companyContactPersonVn">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="companyContactPersonLn">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Telefonnummer</mat-label>
+        <input matInput [(ngModel)]="companyPhone">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>E-Mail</mat-label>
+        <input matInput [(ngModel)]="companyMail">
+      </mat-form-field>
+    </div>-->
+      <!--</div>-->
+      <!--<h3 class="firma">Teilnehmer</h3>
+    <div>-->
+      <!--<div class="containerInput">
+      <div class="row rowFields">
+        <div class="column col1">
+          <div class="row innerRows firma"></div>
+        </div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Vorname</mat-label>
+          <input matInput [(ngModel)]="firstname" placeholder="Max">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Nachname</mat-label>
+          <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email" placeholder="mm">
+        </mat-form-field>
+        <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()">Hinzufügen</button>
+      </div>
+    </div>-->
+      <!--<br />
+
+    <h3 class="firma">Teilnehmerübersicht</h3>
+    <div class="row">
+      <div class="column col1 colEmpty">
+        <div class="row innerRows firma"></div>
+      </div>
+
+      <div class="column col2">
+        <table mat-table #mytable [dataSource]="dataSource" class="table">
+
+          <ng-container matColumnDef="firstname">
+            <th mat-header-cell *matHeaderCellDef> Vorname </th>
+            <td mat-cell *matCellDef="let member"> {{member.firstname}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="lastname">
+            <th mat-header-cell *matHeaderCellDef> Nachname </th>
+            <td mat-cell *matCellDef="let member"> {{member.lastname}}  </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> E-Mail </th>
+            <td mat-cell *matCellDef="let member"> {{member.email}} </td>
+          </ng-container>
+
+
+
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      </div>
+    </div>-->
+
+
+
+      <div class="row printMe checksDown">
+        <div class="column col1 checks">
+          <h3 class="firma checks">Stornobedingungen</h3>
+        </div>
+        <div class="row">
+          <input type="checkbox" (change)="changeStorno()" [(ngModel)]="checkStrono" />
+          <p class="pDown">Ja, ich habe die <a href="http://www.moveit.at/index.php/schulung1/stornobedingungen"> Stornobedingungen </a> von moveIT Software gelesen.</p>
+        </div>
+
+      </div>
+
+      <div class="row printMe checksDown">
+        <div class="column col1 checks">
+          <h3 class="firma checks">Datenschutz</h3>
+        </div>
+        <div class="row">
+          <input type="checkbox" (change)="changeData()" [(ngModel)]="checkDatenschutz" />
+          <p class="pDown">Ja, ich habe die <a href="http://www.moveit.at/index.php/datenschutz">Datenschutzbedinungen</a> von moveIT Software gelesen.</p>
+        </div>
+
+
+        <button class="btnSubmit btnDown" [disabled]="!buttonActive" (click)="submit()">Abschicken</button>
+      </div>
+
+
   </div>
-
-
-</div>
 

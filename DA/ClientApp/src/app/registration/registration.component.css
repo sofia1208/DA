@@ -303,6 +303,10 @@ input[type=checkbox]{
       margin-top: 30px;
       width: 100%;
   }
+  .checksDown {
+    display: flex;
+    flex-direction:column;
+  }
 
   .filterBtn {
     display: flow-root;
@@ -328,6 +332,12 @@ input[type=checkbox]{
 
   .btnPrint {
     margin-left: 0px;
+  }
+  input{
+      width: 200px;
+  }
+  .firma{
+      margin-left: 10px;
   }
 }
 @media print {

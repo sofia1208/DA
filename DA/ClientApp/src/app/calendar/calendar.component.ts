@@ -683,7 +683,11 @@ export class CalendarComponent implements OnInit {
         allDay: true,
         isHoliday: true,
         hasMoreDays: false,
-        outOfMonth: outofMonth
+        outOfMonth: outofMonth,
+        color: {
+          primary: "#5c95db",
+          secondary: "#d9e8fa"
+        },
 
       };
       this.events.push(holiday);

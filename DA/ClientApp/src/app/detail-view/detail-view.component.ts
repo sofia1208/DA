@@ -106,7 +106,7 @@ export class DetailViewComponent implements OnChanges {
       .subscribe(data => {
         var schooling = data;
         console.log(data);
-        if (schooling.freePlaces == 0) {
+        if (schooling.freePlaces == 0 &&! this.detailTitle.includes("(Diese Schulung ist belegt)")) {
           this.detailTitle = this.detailTitle + "   (Diese Schulung ist belegt)";
         }
 

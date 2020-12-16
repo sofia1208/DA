@@ -336,6 +336,8 @@ export class BackendDetailComponent implements OnInit {
 
     this.dataSource = this.backendDto.participants;
     this.sizeOfSchooling = this.backendDto.availablePlaces;
+    this.contentLink = this.backendDto.contentLink;
+    this.kurzbeschreibungHtml = this.backendDto.kurzbeschreibung;
     
   }
   getDetails() {

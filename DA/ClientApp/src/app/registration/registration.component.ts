@@ -81,6 +81,7 @@ export class RegistrationComponent implements OnInit {
   openStorno: boolean = false;
   searchForAddress: string;
   breakpoint: number;
+  col4: number;
   private geoCoder;
  
   @ViewChild('search')
@@ -124,6 +125,7 @@ export class RegistrationComponent implements OnInit {
 
 
     this.breakpoint = (window.innerWidth <= 600) ? 1 : 5;
+    this.col4 = (window.innerWidth <= 600) ? 1 : 4;
 
   }
 
