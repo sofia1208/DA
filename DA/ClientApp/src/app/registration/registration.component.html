@@ -327,7 +327,7 @@
 
     <h3 class="firma">Teilnehmerübersicht</h3>
 
-      <table mat-table #mytableMobile [dataSource]="dataSource" class="table" [hidden]="onePart">
+      <table mat-table #mytable [dataSource]="dataSource" class="table" [hidden]="onePart">
 
         <ng-container matColumnDef="firstname">
           <th mat-header-cell *matHeaderCellDef> Vorname </th>
@@ -389,136 +389,7 @@
 
       </div>
 
-      <!--<div class="printMe">-->
-      <!--<h3 class="firma">Firma*</h3>
-    <div class="containerInput">-->
-      <!--<div class="row rowFields">
-      <div class="column col1">
-        <div class="row innerRows firma"></div>
-      </div>
-      <mat-form-field class="example-full-width">
-
-        <mat-label>Firmenname</mat-label>
-        <input matInput [(ngModel)]="company">
-      </mat-form-field>
-
-
-    </div>-->
-      <!--<div class="row rowFields">
-      <div class="column col1">
-        <div class="row innerRows firma"></div>
-      </div>
-      <mat-form-field class="example-full-width">
-        <mat-label>Straße</mat-label>
-        <input matInput [(ngModel)]="companyStreet">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Hausnummer</mat-label>
-        <input matInput [(ngModel)]="companyStreetNumber">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Postleitzahl</mat-label>
-        <input matInput [(ngModel)]="companyZipCode">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Stadt</mat-label>
-        <input matInput [(ngModel)]="companyCity">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Land</mat-label>
-        <input matInput [(ngModel)]="companyCountry">
-      </mat-form-field>
-    </div>-->
-      <!--<h3 class="firma">Ansprechperson*</h3>-->
-      <!--<div class="row rowFields">
-    <div class="column col1">
-      <div class="row innerRows firma"></div>
-    </div>-->
-      <!--<mat-form-field class="example-full-width">
-        <mat-label>Anrede</mat-label>
-        <input matInput [(ngModel)]="companyContactPersonVn">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Name</mat-label>
-        <input matInput [(ngModel)]="companyContactPersonLn">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>Telefonnummer</mat-label>
-        <input matInput [(ngModel)]="companyPhone">
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <mat-label>E-Mail</mat-label>
-        <input matInput [(ngModel)]="companyMail">
-      </mat-form-field>
-    </div>-->
-      <!--</div>-->
-      <!--<h3 class="firma">Teilnehmer</h3>
-    <div>-->
-      <!--<div class="containerInput">
-      <div class="row rowFields">
-        <div class="column col1">
-          <div class="row innerRows firma"></div>
-        </div>
-        <mat-form-field class="example-full-width">
-          <mat-label>Vorname</mat-label>
-          <input matInput [(ngModel)]="firstname" placeholder="Max">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <mat-label>Nachname</mat-label>
-          <input matInput [(ngModel)]="lastname" placeholder="Mustermann">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <mat-label>Email</mat-label>
-          <input matInput [(ngModel)]="email" placeholder="mm">
-        </mat-form-field>
-        <button class="btnSubmit" data-toggle="tooltip" title="Teilnehmer hinzufügen" (click)="addMember()">Hinzufügen</button>
-      </div>
-    </div>-->
-      <!--<br />
-
-    <h3 class="firma">Teilnehmerübersicht</h3>
-    <div class="row">
-      <div class="column col1 colEmpty">
-        <div class="row innerRows firma"></div>
-      </div>
-
-      <div class="column col2">
-        <table mat-table #mytable [dataSource]="dataSource" class="table">
-
-          <ng-container matColumnDef="firstname">
-            <th mat-header-cell *matHeaderCellDef> Vorname </th>
-            <td mat-cell *matCellDef="let member"> {{member.firstname}} </td>
-          </ng-container>
-
-
-          <ng-container matColumnDef="lastname">
-            <th mat-header-cell *matHeaderCellDef> Nachname </th>
-            <td mat-cell *matCellDef="let member"> {{member.lastname}}  </td>
-          </ng-container>
-
-
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> E-Mail </th>
-            <td mat-cell *matCellDef="let member"> {{member.email}} </td>
-          </ng-container>
-
-
-
-
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-
-      </div>
-    </div>-->
+ 
 
 
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CategoryDto } from '../backend-detail/CategoryDto';
 import { Member } from '../registration/Member';
 
 @Component({

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy ,NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy ,NgZone, AfterViewInit } from '@angular/core';
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -62,8 +62,8 @@ export class RegistrationComponent implements OnInit {
 
   markerLat: Number ;
   markerLng: Number;
-  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
-  
+  //@ViewChild(MatTable, { static: true }) table: MatTable<any>;
+  @ViewChild('mytable') table: MatTable<Element>;
   dataSource: Member[] = [];
   buttonActive: boolean = false;
   available: number;
@@ -97,6 +97,7 @@ export class RegistrationComponent implements OnInit {
     //this.getEvent(this.detailId);
 
   }
+
   
   options: string[] = ['Österreich', 'Deutschland', 'Schweiz'];
   filteredOptions: Observable<string[]>;
@@ -126,6 +127,10 @@ export class RegistrationComponent implements OnInit {
 
     this.breakpoint = (window.innerWidth <= 600) ? 1 : 5;
     this.col4 = (window.innerWidth <= 600) ? 1 : 4;
+ 
+
+  }
+  ngAfterViewÍnit() :void {
 
   }
 

@@ -94,10 +94,11 @@ export class BackendDetailComponent implements OnInit {
   dataSource = this.members;
   emails: string[] = [];
   ngOnInit() {
-  
+    this.fillComboboxes();
     if (this.detailId > 0) {
-      this.fillComboboxes();
+    
       this.getDetails();
+      this.fillDetails();
      
     }
     
@@ -296,12 +297,13 @@ export class BackendDetailComponent implements OnInit {
     this.country = this.backendDto.country;
     console.log(this.backendDto.name);
 
-    let arr = this.backendDto.name.split("+");
-    let cat = arr[1].replace(/\s/g, "");
-    //for (var i = 0; i < this.category.length; i++) {
+    //let arr = this.backendDto.name.split("+");
+    //let cat = arr[1].replace(/\s/g, "");
+    ////for (var i = 0; i < this.category.length; i++) {
       
-    //}
-    this.catName = this.category.filter(x => x.name.includes(cat))[0];
+    ////}
+    
+    this.catName = this.category.filter(x =>  x.name.startsWith(this.backendDto.name) )[0];
     console.log(this.catName);
    
     var xx = this.backendDto.start.toString().split("-");
@@ -348,8 +350,9 @@ export class BackendDetailComponent implements OnInit {
 
         this.fillDetails();
 
-      })
+      });
     this.fillDetails();
+   
   }
   private getDetail(url: string): Observable<BackendDetailDto> {
     return this.http.get<BackendDetailDto>(url);
