@@ -1,6 +1,6 @@
 <div class="outerDiv">
   <div style="display: flex; flex-direction: row">
-    <button mat-raised-button style="background-color: white; border: none; margin-bottom: 10px;" (click)="goBack()" data-toggle="tooltip" title="Zurück zur Übersicht"><mat-icon>chevron_left</mat-icon></button>
+  
     <h1 class="schulungh1 printMe">
       Anmeldung
     </h1>
@@ -311,6 +311,7 @@
 
     <mat-form-field colspan="1" class="example-full-width">
       <mat-label>Vorname</mat-label>
+
       <input matInput [(ngModel)]="firstname" (change)="checkMemberInput()" placeholder="Max">
     </mat-form-field>
     <mat-form-field colspan="1" class="example-full-width">
@@ -326,7 +327,7 @@
 
     <h3 class="firma">Teilnehmerübersicht</h3>
 
-      <table mat-table #mytable [dataSource]="dataSource" class="table" [hidden]="onePart">
+      <table mat-table #mytableMobile [dataSource]="dataSource" class="table" [hidden]="onePart">
 
         <ng-container matColumnDef="firstname">
           <th mat-header-cell *matHeaderCellDef> Vorname </th>

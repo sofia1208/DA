@@ -400,10 +400,10 @@ export class CalendarComponent implements OnInit {
  
   }
 
-  clickOnList(id: Number, name:string): void {
+  clickOnList(row): void {
     
-    this.detailId = id;
-    this.detailTitle = name;
+    this.detailId = row.id;
+    this.detailTitle = row.name;
     let schooling = new SchoolingDto;
   
       this.hidden = false;
@@ -519,10 +519,15 @@ export class CalendarComponent implements OnInit {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
   setListView() {
-    this.view = null;
+ 
+    this.calendar = false;
+   
     this.listactive = "activeList";
     this.hidden = true;
-    this.calendar = false;
+ 
+    
+    
+    //console.log(this.calendar);
     console.log(this.view);
     
   }
@@ -531,6 +536,7 @@ export class CalendarComponent implements OnInit {
     this.hidden = true;
     this.calendar = true;
     this.view = view;
+    console.log("VIEw" + this.calendar);
   }
 
   closeOpenMonthViewDay() {

@@ -63,7 +63,7 @@ export class RegistrationComponent implements OnInit {
   markerLat: Number ;
   markerLng: Number;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
-
+  
   dataSource: Member[] = [];
   buttonActive: boolean = false;
   available: number;
@@ -411,7 +411,7 @@ export class RegistrationComponent implements OnInit {
        
   
     this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.email, this.company));
-    this.table.renderRows();
+  
     this.firstname = "";
     this.lastname = "";
     this.email = "";
@@ -423,8 +423,9 @@ export class RegistrationComponent implements OnInit {
       this.disableAdding = true;
     }
     this.disableAdding = true;
-    //this.emailFormControl2.set;
-   
+    console.log("TABLE" + this.dataSource.length);
+    console.log("TABLE" + this.table);
+    this.table.renderRows();
   }
   submit(): void {
     console.log("Submit registration");
