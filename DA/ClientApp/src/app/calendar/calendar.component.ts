@@ -408,7 +408,7 @@ export class CalendarComponent implements OnInit {
   
       this.hidden = false;
       this.scrollToDetail();
-      this.getDetail(`https://localhost:5001/schoolings/details/${id}`)
+      this.getDetail(`https://localhost:5001/schoolings/details/${row.id}`)
         .subscribe(data => {
           schooling = data;
           console.log(data);
