@@ -32,8 +32,7 @@ import { Holiday } from './Holiday';
 import { HolidayAPI } from './HolidayAPI';
 
 import { SchoolingDto } from './SchoolingDto';
-import { registerLocaleData } from '@angular/common';
-import localeDe from '@angular/common/locales/de';
+
 import { Router, NavigationExtras } from '@angular/router';
 import { Printing } from './Printing';
 import { GetSummaryForPrint } from '../invoice/GetSummaryForPrint';
@@ -41,7 +40,8 @@ import { GetSummaryForPrint } from '../invoice/GetSummaryForPrint';
 import { MatTable, MatDialogConfig, MatDialog } from '@angular/material';
 import { DialogMoreEventsComponent } from '../dialog-more-events/dialog-more-events.component';
 
- 
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 registerLocaleData(localeDe, 'de');
 enum MyCalendarView {List, Month, Week, Day}
 @Component({
@@ -158,6 +158,12 @@ export class CalendarComponent implements OnInit {
     this.getSummary();
   }
   getSummary(): void {
+    this.activeAdmin = false;
+    this.activeAvailable = false;
+    this.activeGrundlagen = false;
+    this.activeKombi = false;
+    this.activeWorkshop = false;
+
     this.deleteOldSchoolings();
     this.getSchoolings('https://localhost:5001/schoolings/summary')
       .subscribe(data => {
@@ -176,22 +182,12 @@ export class CalendarComponent implements OnInit {
 
   getAvailable(): void {
     if (!this.activeAvailable) {
+     
+ 
+
+
+      this.filter("isfree");
       this.activeAvailable = true;
-      this.deleteOldSchoolings();
-    
-      this.getSchoolings('https://localhost:5001/schoolings/summary/isfree')
-        .subscribe(data => {
-          this.schoolings = data;
-          this.schoolingsToEvents();
-
-        }
-          , err => {
-            console.log(`${err.message}`)
-          })
-        ;
-      this.schoolingsToEvents();
-
-
 
       console.log(this.schoolings.length);
     }
@@ -218,20 +214,10 @@ export class CalendarComponent implements OnInit {
 
   getGrundlagen(): void {
     if (!this.activeGrundlagen) {
+      
+
+      this.filter("grundlagen");
       this.activeGrundlagen = true;
-      this.deleteOldSchoolings();
-      this.getSchoolings('https://localhost:5001/schoolings/summary/grundlagen')
-        .subscribe(data => {
-          this.schoolings = data;
-          this.schoolingsToEvents();
-
-        }
-          , err => {
-            console.log(`${err.message}`)
-          })
-        ;
-      this.schoolingsToEvents();
-
 
     }
     else {
@@ -243,21 +229,12 @@ export class CalendarComponent implements OnInit {
   }
   getWorkshop(): void {
     if (!this.activeWorkshop) {
+     
+      
+
+ 
+      this.filter("workshop");
       this.activeWorkshop = true;
-      this.deleteOldSchoolings();
-      this.getSchoolings('https://localhost:5001/schoolings/summary/workshop')
-        .subscribe(data => {
-          this.schoolings = data;
-          this.schoolingsToEvents();
-
-        }
-          , err => {
-            console.log(`${err.message}`)
-          })
-        ;
-      this.schoolingsToEvents();
-
-
     }
     else {
       this.getSummary();
@@ -267,21 +244,11 @@ export class CalendarComponent implements OnInit {
   }
   getAdmin(): void {
     if (!this.activeAdmin) {
+    
+     
+
+      this.filter("administrator");
       this.activeAdmin = true;
-      this.deleteOldSchoolings();
-      this.getSchoolings('https://localhost:5001/schoolings/summary/administrator')
-        .subscribe(data => {
-          this.schoolings = data;
-          this.schoolingsToEvents();
-
-        }
-          , err => {
-            console.log(`${err.message}`)
-          })
-        ;
-      this.schoolingsToEvents();
-
-
     }
     else {
       this.getSummary();
@@ -292,20 +259,10 @@ export class CalendarComponent implements OnInit {
   }
   getKombimodell(): void {
     if (!this.activeKombi) {
+      this.filter("kombimodell");
       this.activeKombi = true;
-      this.deleteOldSchoolings();
-      this.getSchoolings('https://localhost:5001/schoolings/summary/kombimodell')
-        .subscribe(data => {
-          this.schoolings = data;
-          this.schoolingsToEvents();
-
-        }
-          , err => {
-            console.log(`${err.message}`)
-          })
-        ;
-      this.schoolingsToEvents();
-
+    
+     
 
     }
     else {
@@ -315,6 +272,25 @@ export class CalendarComponent implements OnInit {
 
 
 
+  }
+  filter(type: string) {
+    this.activeAdmin = false;
+    this.activeAvailable = false;
+    this.activeGrundlagen = false;
+    this.activeKombi = false;
+    this.activeWorkshop = false;
+    this.deleteOldSchoolings();
+    this.getSchoolings(`https://localhost:5001/schoolings/summary/${type}`)
+      .subscribe(data => {
+        this.schoolings = data;
+        this.schoolingsToEvents();
+
+      }
+        , err => {
+          console.log(`${err.message}`)
+        })
+      ;
+    this.schoolingsToEvents();
   }
   deleteOldSchoolings() {
     this.schoolings = [];
@@ -519,17 +495,10 @@ export class CalendarComponent implements OnInit {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
   setListView() {
- 
     this.calendar = false;
-   
     this.listactive = "activeList";
     this.hidden = true;
- 
-    
-    
-    //console.log(this.calendar);
-    console.log(this.view);
-    
+
   }
   setView(view: CalendarView) {
     this.listactive = "";

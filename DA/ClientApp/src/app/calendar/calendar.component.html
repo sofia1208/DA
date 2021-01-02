@@ -131,13 +131,13 @@
       <div class="printMe">
         <div class="container">
           <div class="btn-group filterBtn">
-            <!--<p class="filterBtn filterText">Filter nach:</p>-->
-            <button class="categoryBtn" (click)="getSummary()">Alle anzeigen</button>
-            <button class="categoryBtn" (click)="getGrundlagen()">Grundlagen</button>
-            <button class="categoryBtn" (click)="getWorkshop()">Workshop</button>
-            <button class="categoryBtn" (click)="getAdmin()">Administrator</button>
-            <button class="categoryBtn" (click)="getKombimodell()">Kombimodell</button>
-            <button class="categoryBtn" (click)="getAvailable()">Verfügbarkeit</button>
+           
+            <button class="categoryBtn"  (click)="getSummary()">Alle anzeigen</button>
+            <button class="categoryBtn" [class.categoryBtnChoosen]="activeGrundlagen"  (click)="getGrundlagen()">Grundlagen</button>
+            <button class="categoryBtn"  [class.categoryBtnChoosen]="activeWorkshop" (click)="getWorkshop()">Workshop</button>
+            <button class="categoryBtn"  [class.categoryBtnChoosen]="activeAdmin" (click)="getAdmin()">Administrator</button>
+            <button class="categoryBtn" [class.categoryBtnChoosen]="activeKombi"  (click)="getKombimodell()">Kombimodell</button>
+            <button class="categoryBtn"  [class.categoryBtnChoosen]="activeAvailable" (click)="getAvailable()">Verfügbarkeit</button>
           </div>
           <button class="btn buttonGray btnPrint" (click)="printPage()">
             <mat-icon>print</mat-icon>

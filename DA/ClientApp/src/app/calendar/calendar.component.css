@@ -320,5 +320,8 @@ p {
 .true{
     background-color: red;
 }
+.categoryBtnChoosen {
+  background-color: #e29850;
+}
 
 
