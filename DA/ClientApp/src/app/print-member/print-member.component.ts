@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { CategoryDto } from '../backend-detail/CategoryDto';
+import { CompanyMember } from '../backend-detail/CompanyMember';
 import { Member } from '../registration/Member';
 
 @Component({
@@ -8,16 +9,18 @@ import { Member } from '../registration/Member';
   templateUrl: './print-member.component.html',
   styleUrls: ['./print-member.component.css']
 })
-export class PrintMemberComponent implements OnInit {
+export class PrintMemberComponent implements OnInit, OnChanges {
   @Input() category: string;
   @Input() sDate: Date;
   @Input() eDate: Date;
-  @Input() dataSource: Member[] = [];
-  myDataSource: Member[] = [];
+  @Input() dataSource: CompanyMember[] = [];
+  myDataSource: CompanyMember[] = [];
   displayedColumns: string[] = ['index','name', 'company', 'email', 'signiture'];
   constructor() { }
-
-  ngOnInit(): void {
+   
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes.dataSource.currentValue);
+    console.log("PM: " + this.dataSource);
     this.myDataSource = this.dataSource;
     console.log(this.myDataSource);
     const length = 10 - this.dataSource.length;
@@ -25,6 +28,10 @@ export class PrintMemberComponent implements OnInit {
   //    this.myDataSource.push(Object.create(null));
   //}
 
-}
+  }
+  ngOnInit() {
+    console.log("PM: " + this.dataSource);
+    this.myDataSource = this.dataSource;
+  }
 
 }

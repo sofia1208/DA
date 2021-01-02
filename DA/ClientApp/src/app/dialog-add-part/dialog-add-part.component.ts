@@ -34,6 +34,7 @@ export class DialogAddPartComponent implements OnInit {
        name: this.companyName,
        contactperson: this.companyContactPerson,
         mail: this.companyMail
+
       }
     });
 

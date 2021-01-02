@@ -504,6 +504,7 @@ export class BackendDetailComponent implements OnInit {
   addMember() {
     console.log(this.firstname);
     this.dataSource.push(new CompanyMember(this.dataSource.length + 1, this.firstname, this.lastname, this.mail, this.companyName, this.companyContactPerson, this.companyMail));
+    this.dataSource = this.dataSource.map(x => Object.assign({}, x));
     this.table.renderRows();
     this.firstname = "";
     this.lastname = "";
