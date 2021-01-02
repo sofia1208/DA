@@ -17,5 +17,6 @@ name: string;
   freePlaces: number;
   kurzbechreibung: string;
   contentLink: string;
+  maxPlaces: string;
 }
 

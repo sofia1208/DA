@@ -35,6 +35,7 @@ export class DetailViewComponent implements OnChanges {
   kurzbeschreibung: string;
   contentLink: string;
   schooling: SchoolingDto;
+  maxPlaces: string;
   constructor(private http: HttpClient) { }
 
   ngOnChanges(): void {
@@ -65,6 +66,7 @@ export class DetailViewComponent implements OnChanges {
     this.contentLink = schooling.contentLink;
     this.kurzbeschreibung = schooling.kurzbechreibung;
     console.log(this.kurzbeschreibung);
+    this.maxPlaces = schooling.maxPlaces;
     //this.refresh.next();
     this.scrollToDetail();
   }

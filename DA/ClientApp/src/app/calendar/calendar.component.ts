@@ -603,7 +603,7 @@ export class CalendarComponent implements OnInit {
           outOfMonth: false,
           color: {
             primary: "#ad2121",
-            secondary: "#FAE3E3"
+            secondary: "#e36464"
           },
 
         };
