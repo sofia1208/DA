@@ -19,19 +19,21 @@ export class PrintMemberComponent implements OnInit, OnChanges {
   constructor() { }
    
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes.dataSource.currentValue);
-    console.log("PM: " + this.dataSource);
-    this.myDataSource = this.dataSource;
+   
+    this.myDataSource = this.dataSource.map(x => Object.assign({}, x));
     console.log(this.myDataSource);
-    const length = 10 - this.dataSource.length;
-  //  for (let i = 0; i < length; i++) {
-  //    this.myDataSource.push(Object.create(null));
-  //}
+    const length = 10 - this.myDataSource.length;
+    for (let i = 0; i < length; i++) {
+      this.myDataSource.push(Object.create(null));
+  }
 
   }
   ngOnInit() {
-    console.log("PM: " + this.dataSource);
-    this.myDataSource = this.dataSource;
+    this.myDataSource = this.dataSource.map(x => Object.assign({}, x));
+    const length = 10 - this.myDataSource.length;
+    for (let i = 0; i < length; i++) {
+      this.myDataSource.push(Object.create(null));
+    }
   }
 
 }
