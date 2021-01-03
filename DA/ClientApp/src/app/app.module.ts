@@ -140,8 +140,8 @@ const routes: Routes = [
   providers: [{ provide: LOCALE_ID, useValue: "de" }, { provide: MAT_DATE_LOCALE, useValue: 'de-DE' }, AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponentComponent, DialogOrganizerComponent, DialogCompanyComponent,
-    DialogMoreEventsComponent, DialogAddPartComponent, DialogSavingComponent, DialogEditComponent, DialogDeleteMemberComponent, DialogErrorComponent, DialogAddCategoryComponent,
-    DialogEditOrgCatComponent, DialogSuccessfulAddedComponent
+    DialogMoreEventsComponent, DialogAddPartComponent, DialogSavingComponent, DialogEditComponent, DialogErrorComponent, DialogAddCategoryComponent,
+    DialogEditOrgCatComponent, DialogSuccessfulAddedComponent, DialogDeleteMemberComponent
   ] 
 })
 export class AppModule { }

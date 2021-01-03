@@ -2,7 +2,7 @@ import { CalendarDateFormatter, DateFormatterParams, getWeekViewPeriod } from 'a
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+
 export class CustomDateFormatter extends CalendarDateFormatter {
  
 

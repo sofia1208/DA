@@ -4,7 +4,7 @@
   <h3>Termin: {{sDate | date:'dd.MMM yyyy' :'de'}} - {{eDate | date: 'dd.MMM yyyy' :'de'}}</h3>
 </div>
 
-<table mat-table #mytable [dataSource]="dataSource" class="table">
+<table style="width: 100%" mat-table #mytable [dataSource]="myDataSource" class="table">
 
   <ng-container matColumnDef="index">
     <th mat-header-cell *matHeaderCellDef class="headerIndex">  </th>
