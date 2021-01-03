@@ -306,14 +306,11 @@ export class CalendarComponent implements OnInit {
         "title": this.detailTitle
       }
     };
-
-
     const url = this.router.serializeUrl(
       this.router.createUrlTree(['/registration'], navigationExtras)
     );
 
     window.open(url, '_blank');
-
 
   }
 
@@ -330,12 +327,9 @@ export class CalendarComponent implements OnInit {
 
 
   clickOnEvent(event: CustomEvent): void {
-
-
     let schooling = new SchoolingDto;
     let id = event.id;
     this.detailId = Number(event.id);
-
 
     if (event.isHoliday) {
       this.hidden = true;
@@ -401,21 +395,8 @@ export class CalendarComponent implements OnInit {
   activeDayIsOpen: boolean = false;
 
   fillDetails(schooling: SchoolingDto) {
-
-    //this.telefon = schooling.phone;
-    //this.convertToGermanTime(schooling);
-    //this.preis = schooling.price.toString() + " €";
-    //this.organisator = schooling.organizer;
-    //this.kontaktperson = schooling.contactPerson;
-
-    //this.startDate = new Date(schooling.start);
-    //this.endDate = new Date(schooling.end);
-    //this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
-    //this.freePlaces = "" + schooling.freePlaces;
-    //this.contentLink = schooling.contentLink;
-    //this.kurzbeschreibung = schooling.kurzbeschreibung;
     this.refresh.next();
-    this.scrollToDetail();
+    this.myScrollContainer.nativeElement.scrollIntoView({ block: "end", behavior: "smooth" });
   }
   convertToGermanTime(schooling: SchoolingDto) {
     let start = new Date(schooling.start);
@@ -537,7 +518,7 @@ export class CalendarComponent implements OnInit {
       let colors;
       this.schoolings[i].isFree ? colors = { primary: "#8CEE88", secondary: "#5ba658" } : colors = { primary: "#ad2121", secondary: "#e36464" };
       console.log(colors)
-      if (this.schoolings[i].isFree) {
+     
         const schooling: CustomEvent = {
           isFree: this.schoolings[i].isFree,
           start: start,
@@ -550,47 +531,19 @@ export class CalendarComponent implements OnInit {
 
           outOfMonth: false,
          
-          color: {
-            primary: "#8CEE88",
-            secondary: "#5ba658"
-          },
+          color : colors
 
         };
         this.events.push(schooling);
+     
       }
-      else {
-        const schooling: CustomEvent = {
-          isFree: this.schoolings[i].isFree,
-          start: start,
-          end: end,
-          title: this.schoolings[i].name,
-          id: this.schoolings[i].id,
-          allDay: false,
-          isHoliday: false,
-          hasMoreDays: moreDays,
-
-          outOfMonth: false,
-          color: {
-            primary: "#ad2121",
-            secondary: "#e36464"
-          },
-
-        };
-        this.events.push(schooling);
-      }
-
-
-
-
-
 
       this.refresh.next();
-
 
     }
 
 
-  }
+  
   checkIfItsOutOfMonth(event) {
     console.log(event);
     return true;
@@ -623,10 +576,6 @@ export class CalendarComponent implements OnInit {
                 this.holidays.push(new Holiday(row[1], new Date(jsonObject.date)));
               }
             }
-
-
-
-
           }
           this.createHolidayEvents();
         },
@@ -634,8 +583,6 @@ export class CalendarComponent implements OnInit {
           console.log(error);
         }
       );
-
-
   }
 
 
@@ -676,12 +623,8 @@ export class CalendarComponent implements OnInit {
 
     this.getSchool('https://localhost:5001/schoolings/summary')
       .subscribe(data => {
-
-
         this.schoolingList = data;
-
         this.addSchoolingToList();
-
       }
         , err => {
           console.log(`${err.message}`)
@@ -715,18 +658,7 @@ export class CalendarComponent implements OnInit {
 
 
 
-const colors: any = {
-  red: {
-    primary: '#F28C8C',
-    secondary: '#FAE3E3',
-  },
-  green: {
-    primary: '#8CEE88',
-    secondary: '#90ee90',
-  },
 
-
-};
 
 
 

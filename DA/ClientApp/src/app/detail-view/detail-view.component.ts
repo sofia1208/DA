@@ -58,7 +58,6 @@ export class DetailViewComponent implements OnChanges {
     this.preis = schooling.price.toString() + " €";
     this.organisator = schooling.organizer;
     this.kontaktperson = schooling.contactPerson;
-
     this.startDate = new Date(schooling.start);
     this.endDate = new Date(schooling.end);
     this.adresse = schooling.street + " " + schooling.streetNumber + " " + schooling.zipCode + " " + schooling.city + ", " + schooling.country;
@@ -67,8 +66,7 @@ export class DetailViewComponent implements OnChanges {
     this.kurzbeschreibung = schooling.kurzbechreibung;
     console.log(this.kurzbeschreibung);
     this.maxPlaces = schooling.maxPlaces;
-    //this.refresh.next();
-    this.scrollToDetail();
+
   }
   convertToGermanTime(schooling: SchoolingDto) {
     let start = new Date(schooling.start);
