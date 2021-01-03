@@ -133,10 +133,10 @@
           <div class="btn-group filterBtn">
            
             <button class="categoryBtn"  (click)="getSummary()">Alle anzeigen</button>
-            <button class="categoryBtn" [class.categoryBtnChoosen]="activeGrundlagen"  (click)="getGrundlagen()">Grundlagen</button>
+            <button class="categoryBtn"  [class.categoryBtnChoosen]="activeGrundlagen"  (click)="getGrundlagen()">Grundlagen</button>
             <button class="categoryBtn"  [class.categoryBtnChoosen]="activeWorkshop" (click)="getWorkshop()">Workshop</button>
             <button class="categoryBtn"  [class.categoryBtnChoosen]="activeAdmin" (click)="getAdmin()">Administrator</button>
-            <button class="categoryBtn" [class.categoryBtnChoosen]="activeKombi"  (click)="getKombimodell()">Kombimodell</button>
+            <button class="categoryBtn"  [class.categoryBtnChoosen]="activeKombi"  (click)="getKombimodell()">Kombimodell</button>
             <button class="categoryBtn"  [class.categoryBtnChoosen]="activeAvailable" (click)="getAvailable()">Verfügbarkeit</button>
           </div>
           <button class="btn buttonGray btnPrint" (click)="printPage()">
