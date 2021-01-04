@@ -36,18 +36,18 @@ namespace DA {
         public SchoolingDetailDTO GetSchoolingDetailDTO(SchoolingRessource schooling, CategoryRessource category, AddressRessource address, OrganizerRessource organizer, bool isFree, int freePlaces) {
             if (address == null) {
                 if (organizer == null) {
-                    return new SchoolingDetailDTO() { Id = schooling.Id, End = schooling.End, Start = schooling.Start, Price = schooling.Price, IsFree = isFree, FreePlaces = freePlaces, ContentLink = category.ContentLink, kurzbechreibung = category.ShortDescription };
+                    return new SchoolingDetailDTO() { Id = schooling.Id, End = schooling.End, Start = schooling.Start, Price = schooling.Price, IsFree = isFree, FreePlaces = freePlaces, ContentLink = category.ContentLink, kurzbechreibung = category.ShortDescription, maxPlaces = schooling.Places.ToString() };
                 }
                 else {
-                    return new SchoolingDetailDTO() { Id = schooling.Id, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, ContactPerson = organizer.ContactPerson, IsFree = isFree, FreePlaces = freePlaces, ContentLink = category.ContentLink, kurzbechreibung = category.ShortDescription };
+                    return new SchoolingDetailDTO() { Id = schooling.Id, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, ContactPerson = organizer.ContactPerson, IsFree = isFree, FreePlaces = freePlaces, ContentLink = category.ContentLink, kurzbechreibung = category.ShortDescription, maxPlaces = schooling.Places.ToString() };
                 }
             }
             else {
                 if (organizer == null) {
-                    return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, IsFree = isFree, FreePlaces = freePlaces, ContentLink = category.ContentLink, kurzbechreibung = category.ShortDescription };
+                    return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, IsFree = isFree, FreePlaces = freePlaces, ContentLink = category.ContentLink, kurzbechreibung = category.ShortDescription, maxPlaces = schooling.Places.ToString() };
                 }
                 else {
-                    return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, ContactPerson = organizer.ContactPerson, IsFree = isFree, FreePlaces = freePlaces, ContentLink = category.ContentLink, kurzbechreibung = category.ShortDescription };
+                    return new SchoolingDetailDTO() { Id = schooling.Id, City = address.City, Email = organizer.Email, Organizer = organizer.Name, Phone = organizer.Phone, End = schooling.End, Start = schooling.Start, Price = schooling.Price, Street = address.Street, StreetNumber = address.StreetNumber, ZipCode = address.ZipCode, Country = address.Country, ContactPerson = organizer.ContactPerson, IsFree = isFree, FreePlaces = freePlaces, ContentLink = category.ContentLink, kurzbechreibung = category.ShortDescription, maxPlaces = schooling.Places.ToString() };
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace DA {
         }
 
         internal BackendDetailDTO getbackendDetaiDTO(SchoolingRessource schooling, CategoryRessource category, AddressRessource address, OrganizerRessource organizer, List<ParticipantDTO> participants, bool isFree) {
-            return new BackendDetailDTO() { Id = schooling.Id, Name = category.Name, website = organizer.Website, Start = schooling.Start, End = schooling.End, Price = schooling.Price, ZipCode = address.ZipCode, City = address.City, Street = address.Street, StreetNumber = address.StreetNumber, Country = address.Country, Organizer = organizer.Name, ContactPerson = organizer.ContactPerson, Email = organizer.Email, Phone = organizer.Phone, IsFree = isFree, participants = participants, availablePlaces = schooling.Places, ContentLink=category.ContentLink, Kurzbeschreibung=category.ShortDescription };
+            return new BackendDetailDTO() { Id = schooling.Id, Name = category.Name, website = organizer.Website, Start = schooling.Start, End = schooling.End, Price = schooling.Price, ZipCode = address.ZipCode, City = address.City, Street = address.Street, StreetNumber = address.StreetNumber, Country = address.Country, Organizer = organizer.Name, ContactPerson = organizer.ContactPerson, Email = organizer.Email, Phone = organizer.Phone, IsFree = isFree, participants = participants, availablePlaces = schooling.Places, ContentLink=category.ContentLink, Kurzbeschreibung=category.ShortDescription, maxPlaces = schooling.Places.ToString() };
         }
 
         

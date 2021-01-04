@@ -25,6 +25,7 @@ namespace DA.Models.DTOs {
         public int availablePlaces { get; set; }
         public string Kurzbeschreibung { get; set; }
         public string ContentLink { get; set; }
+        public string maxPlaces { get; set; }
 
         public override string ToString() {
             return $" ************ Test {Name}{ContentLink} {Kurzbeschreibung}";

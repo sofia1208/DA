@@ -167,7 +167,7 @@ namespace DA {
                         Price = reader[5] as int? ?? 0,
                         OrganizerId = reader[6] as int? ?? 0,
                         Places = reader[7] as int? ?? 0,
-                        Display = reader.GetBoolean(8)
+                        Display = reader.GetBoolean(8),
                     };
                     schoolings.Add(schooling);
                 }
@@ -549,11 +549,5 @@ namespace DA {
 
             return true;
         }
-
-        
-
-
-
-
     }
 }
