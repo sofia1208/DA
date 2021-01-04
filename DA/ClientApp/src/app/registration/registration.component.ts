@@ -282,8 +282,6 @@ export class RegistrationComponent implements OnInit {
   }
   planRoute() {
     var ad = this.adresse.split(",")[0];
-
-
     window.open(`https://www.google.at/maps/dir//${ad}`, '_blank');
   
   }
