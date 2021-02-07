@@ -16,17 +16,17 @@ namespace DA {
 
         public void sendMail(string Email, string ContactPerson, string NameOfSchooling, DateTime start, List<ParticipantDTO> participants) {
             try {
-                var smtpClient = new SmtpClient("smtp.gmail.com") {
-                    Port = 587,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("isabelle.arthofer@gmail.com", "3dfj#8JkIA"),
-                    EnableSsl = true,
-                };
-                //SmtpClient smtpClient = new SmtpClient("moveit-at.mail.protection.outlook.com");
+                //var smtpClient = new SmtpClient("smtp.gmail.com") {
+                //    Port = 587,
+                //    UseDefaultCredentials = false,
+                //    Credentials = new NetworkCredential("isabelle.arthofer@gmail.com", "3dfj#8JkIA"),
+                //    EnableSsl = true,
+                //};
+                SmtpClient smtpClient = new SmtpClient("moveit-at.mail.protection.outlook.com");
 
                 var mailMessage = new MailMessage {
-                    //From = new MailAddress("trainings@moveit.at"),
-                    From = new MailAddress("isabelle.arthofer@gmail.com"),
+                    //From = new MailAddress("isabelle.arthofer@gmail.com"),
+                    From = new MailAddress("trainings@moveit.at"),
                     Subject = "Test",
                     Body = GetEmailString(ContactPerson, NameOfSchooling, start, participants),
                     IsBodyHtml = true,
@@ -47,7 +47,7 @@ namespace DA {
             text = text.Replace("StartDateAndEndDate", start.ToString("yyyy-MM-dd"));
             string participantsText = "";
             participants.ForEach(x => participantsText += x.Firstname + " " + x.Lastname + ", ");
-            text = text.Replace("ParticipantNames", participantsText.Substring(0, text.Length-1));
+            text = text.Replace("ParticipantNames", participantsText.Substring(0, participantsText.Length-2));
             Console.WriteLine(text);
             return text;
         }
