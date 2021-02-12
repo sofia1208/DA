@@ -145,7 +145,6 @@ export class BackendDetailComponent implements OnInit {
       console.log("Schulung anlegt");
       this.addSchooling(false);
     }
-
     const dialogRef = this.dialog.open(DialogSuccessfulAddedComponent, {
       width: '400px'
     });
@@ -155,16 +154,14 @@ export class BackendDetailComponent implements OnInit {
     
       });
 
-
     if (this.detailId > 0) {
       this.addOrEdit = "Schulung anlegen";
     }
     this.dataSource = [];
     this.table.renderRows();
     this.detailId = 0;
-   
-
   }
+
   fillComboboxes() {
     this.backendService.getOrganizer()
       .subscribe(x => {
@@ -346,13 +343,9 @@ export class BackendDetailComponent implements OnInit {
     this.getDetail(`https://localhost:5001/backend/schoolings/${this.detailId}`)
       .subscribe(data => {
         this.backendDto = data;
-        console.log(data);
-
         this.fillDetails();
-
       });
     this.fillDetails();
-   
   }
   private getDetail(url: string): Observable<BackendDetailDto> {
     return this.http.get<BackendDetailDto>(url);

@@ -48,9 +48,6 @@ export class BackendStartComponent implements OnInit {
         this.fillTable();
       });
 
-
-
-
   }
   deleteSch() {
     for (var i = Math.min(this.startIndex, this.endIndex); i <= Math.max(this.startIndex, this.endIndex); i++) {

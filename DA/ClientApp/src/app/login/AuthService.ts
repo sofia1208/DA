@@ -26,13 +26,11 @@ export class AuthenticationService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
-
-
     return this.http.post<any>(`https://localhost:5001/backend/login`, { username, password }, httpOptions)
       .pipe(
         tap(
           data => {
-            console.log("AuthService" + data);
+        
             this.loggedIn = data;
             return data;
           }

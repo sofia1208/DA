@@ -143,8 +143,14 @@ export class RegistrationComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
+  onFreePlaces($event) {
+    //var x = event.target.response.split("freePlaces")[1][2];
+   // this.freePlaces = Number(x);
+  }
   checkMemberInput() {
-    if (this.firstname != "" && this.lastname != "" && this.emailFormControl2.valid) this.disableAdding = false;
+    console.log(this.dataSource.length);
+    console.log(this.freePlaces);
+    if (this.firstname != "" && this.lastname != "" && this.emailFormControl2.valid &&this.dataSource.length < this.freePlaces) this.disableAdding = false;
     else {
       this.disableAdding = true;
     }
@@ -171,9 +177,6 @@ export class RegistrationComponent implements OnInit {
         member.email = result.email;
        
       }
-      
-
-
     });
     
 
@@ -195,9 +198,6 @@ export class RegistrationComponent implements OnInit {
         if (this.freePlaces > 0) this.disableAdding = false;
 
       }
-
-
-
     });
 
   }
@@ -241,7 +241,6 @@ export class RegistrationComponent implements OnInit {
     this.checkButton();
   }
   changeData() {
- 
 
     if (!this.openData) {
       this.openDialog("Datenschutzbestimmungen");
@@ -250,6 +249,7 @@ export class RegistrationComponent implements OnInit {
     this.openData = !this.openData;
     this.checkButton();
   }
+
   checkButton() {
     this.saved = false;
     if (this.checkDatenschutz && this.checkStrono && this.company!=="" && this.companyCity!=="" &&
@@ -411,8 +411,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   addMember(): void {
-       
-  
     this.dataSource.push(new Member(this.dataSource.length+1 ,this.firstname, this.lastname, this.email, this.company));
   
     this.firstname = "";
@@ -426,8 +424,6 @@ export class RegistrationComponent implements OnInit {
       this.disableAdding = true;
     }
     this.disableAdding = true;
-    console.log("TABLE" + this.dataSource.length);
-    console.log("TABLE" + this.table);
     this.table.renderRows();
   }
   submit(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class DetailViewComponent implements OnChanges {
   @Input() id: Number;
   @Input() detailTitle: string;
+  @Output() fPlaces = new EventEmitter<string>();
   startDate: Date;
   endDate: Date;
   startTime: string;
@@ -36,6 +37,7 @@ export class DetailViewComponent implements OnChanges {
   contentLink: string;
   schooling: SchoolingDto;
   maxPlaces: string;
+ 
   constructor(private http: HttpClient) { }
 
   ngOnChanges(): void {
@@ -64,9 +66,14 @@ export class DetailViewComponent implements OnChanges {
     this.freePlaces = "" + schooling.freePlaces;
     this.contentLink = schooling.contentLink;
     this.kurzbeschreibung = schooling.kurzbechreibung;
-    console.log(this.kurzbeschreibung);
+    console.log(this.freePlaces);
     this.maxPlaces = schooling.maxPlaces;
+    this.getPlaces();
+  
 
+  }
+  getPlaces() {
+    this.fPlaces.emit(this.freePlaces);
   }
   convertToGermanTime(schooling: SchoolingDto) {
     let start = new Date(schooling.start);
