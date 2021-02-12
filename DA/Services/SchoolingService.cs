@@ -117,7 +117,7 @@ namespace Schulungskalender.Services {
             if (isRegistrationSuccessful) {
                 var schooling = schoolings.Find(x => x.Id == registration.SchoolingId);
                 var category = categories.Find(y => y.Id == schooling.CategoryId);
-                mailMaker.sendMail("isabelle.arthofer@gmail.com"/*company.Email*/, company.ContactPerson, category.Name, schooling.Start, registration.Participants);
+                mailMaker.sendMail("isabelle.arthofer@gmail.com" /*company.Email*/ ,company.ContactPerson, category.Name, schooling.Start, registration.Participants);
             }
 
             return registration;
@@ -155,25 +155,25 @@ namespace Schulungskalender.Services {
             return persons.Find(x => x.Firstname == firstname && x.Lastname == lastname && x.Email == email && x.CompanyId == company_id);
         }
 
-        public bool UpdateDisplay(int id, bool isDisplayed) {
-            var schooling = schoolings.Find(x => x.Id == id);
-            db.UpdateSchooling(id, isDisplayed);
-            db.GetSchoolings(ref schoolings);
+        //public bool UpdateDisplay(int id, bool isDisplayed) {
+        //    var schooling = schoolings.Find(x => x.Id == id);
+        //    db.UpdateSchooling(id, isDisplayed);
+        //    db.GetSchoolings(ref schoolings);
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        private List<ParticipantDTO> GetParticipants(int id) {
-            return registrations.Where(x => x.SchoolingId == id)
-                .Select(x => x.PersonId)
-                .Distinct()
-                .Select(x => {
-                    var personRessource = persons.Find(y => y.Id == x);
-                    var company = companies.Find(y => y.Id == personRessource.CompanyId);
-                    return new ParticipantDTO() { Id = personRessource.Id, Firstname = personRessource.Firstname, Lastname = personRessource.Lastname, Email = personRessource.Email, CompanyName = company.Name, CompanyEmail = company.Email, ContactPerson = company.ContactPerson };
-                })
-                .ToList();
-        }
+        //private List<ParticipantDTO> GetParticipants(int id) {
+        //    return registrations.Where(x => x.SchoolingId == id)
+        //        .Select(x => x.PersonId)
+        //        .Distinct()
+        //        .Select(x => {
+        //            var personRessource = persons.Find(y => y.Id == x);
+        //            var company = companies.Find(y => y.Id == personRessource.CompanyId);
+        //            return new ParticipantDTO() { Id = personRessource.Id, Firstname = personRessource.Firstname, Lastname = personRessource.Lastname, Email = personRessource.Email, CompanyName = company.Name, CompanyEmail = company.Email, ContactPerson = company.ContactPerson };
+        //        })
+        //        .ToList();
+        //}
     }
 }
 

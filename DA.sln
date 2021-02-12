@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DA", "DA\DA.csproj", "{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarTests", "CalendarTests\CalendarTests.csproj", "{FA70A1CE-7E87-41A5-933E-E66DEE7F216D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D880441E-6D18-4D8B-AE18-EFBAD540ACCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA70A1CE-7E87-41A5-933E-E66DEE7F216D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA70A1CE-7E87-41A5-933E-E66DEE7F216D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA70A1CE-7E87-41A5-933E-E66DEE7F216D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA70A1CE-7E87-41A5-933E-E66DEE7F216D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
