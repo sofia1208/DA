@@ -13,7 +13,7 @@ import { CompanyMember } from './CompanyMember';
 import { OrganizerDto } from './OrganizerDto';
 import { DialogAddPartComponent } from '../dialog-add-part/dialog-add-part.component';
 import { DialogSavingComponent } from '../dialog-saving/dialog-saving.component';
-import { DialogAddCategoryComponent } from '../dialog-add-category/dialog-add-category.component';
+import { DialogAddCategoryComponent } from '../dialog-add-category/dialog-add-category.component'; 
 import { DialogEditOrgCatComponent } from '../dialog-edit-org-cat/dialog-edit-org-cat.component';
 import { DialogSuccessfulAddedComponent } from '../dialog-successful-added/dialog-successful-added.component';
 import { BackendDetailService } from '../core/backend-detail.service';

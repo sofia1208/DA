@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angu
 import { SchoolingDto } from '../calendar/SchoolingDto';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-view',
@@ -37,8 +38,9 @@ export class DetailViewComponent implements OnChanges {
   contentLink: string;
   schooling: SchoolingDto;
   maxPlaces: string;
+  canLogin: boolean = true;
  
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnChanges(): void {
     console.log("detailView on changes");
@@ -51,6 +53,9 @@ export class DetailViewComponent implements OnChanges {
     //console.log(this.schoolingDto);
     //this.fillDetails(this.schoolingDto);
     console.log(this.id);
+    if (this.router.url.includes('/registration')) {
+      this.canLogin = false;
+    }
     this.getSchooling();
   }
   fillDetails(schooling: SchoolingDto) {
@@ -115,6 +120,7 @@ export class DetailViewComponent implements OnChanges {
         console.log(data);
         if (schooling.freePlaces == 0 &&! this.detailTitle.includes("(Diese Schulung ist belegt)")) {
           this.detailTitle = this.detailTitle + "   (Diese Schulung ist belegt)";
+          this.canLogin = false;
         }
 
         this.fillDetails(schooling);
@@ -122,6 +128,20 @@ export class DetailViewComponent implements OnChanges {
       })
     this.fillDetails(this.schooling);
  
+  }
+  goToRegistration(): void {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "id": this.id,
+        "title": this.detailTitle
+      }
+    };
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/registration'], navigationExtras)
+    );
+
+    window.open(url, '_blank');
+
   }
        private getDetail(url: string): Observable < SchoolingDto > {
       return this.http.get<SchoolingDto>(url);

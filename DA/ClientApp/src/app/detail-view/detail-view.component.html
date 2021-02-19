@@ -30,6 +30,8 @@
     <div>(<p style="display:contents" class="hyp" (click)="goToHyperLink()" data-toggle="tooltip" title="Inhalt dieser Schulung ansehen">Schulungsinhalt anzeigen</p>)</div>
 
   </div>
-
+  <div>
+    <button (click)="goToRegistration()" style="float: right; height: 50px" *ngIf="canLogin" class="categoryBtn">Anmelden</button>
+  </div>
 
 </div>

@@ -99,6 +99,7 @@ export class CalendarComponent implements OnInit {
   schoolingI: SchoolingDto;
   displayedColumns: string[] = ['typ', 'city', 'date', 'price', 'organisation'];
   selectedId: Number;
+  canLogin: boolean
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog) { }
   ngAfterViewInit(): void {
 
@@ -299,31 +300,18 @@ export class CalendarComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
 
-  goToRegistration(): void {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "id": this.detailId,
-        "title": this.detailTitle
-      }
-    };
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree(['/registration'], navigationExtras)
-    );
+ 
 
-    window.open(url, '_blank');
+  //goToRegistrationList(id: Number, title: string): void {
+  //  let navigationExtras: NavigationExtras = {
+  //    queryParams: {
+  //      "id": id,
+  //      "title": title
+  //    }
+  //  };
+  //  this.router.navigate(["/registration"], navigationExtras);
 
-  }
-
-  goToRegistrationList(id: Number, title: string): void {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "id": id,
-        "title": title
-      }
-    };
-    this.router.navigate(["/registration"], navigationExtras);
-
-  }
+  //}
 
 
   clickOnEvent(event: CustomEvent): void {

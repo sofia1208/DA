@@ -9713,20 +9713,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\isabe\\.nuget\\packages\\": {}
+    "C:\\Users\\sofia\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\isabe\\Documents\\Schule\\Diplomarbeit\\Schulungskalender\\CalendarTests\\CalendarTests.csproj",
+      "projectUniqueName": "C:\\Users\\sofia\\source\\repos\\Schulungskalender\\CalendarTests\\CalendarTests.csproj",
       "projectName": "CalendarTests",
-      "projectPath": "C:\\Users\\isabe\\Documents\\Schule\\Diplomarbeit\\Schulungskalender\\CalendarTests\\CalendarTests.csproj",
-      "packagesPath": "C:\\Users\\isabe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\isabe\\Documents\\Schule\\Diplomarbeit\\Schulungskalender\\CalendarTests\\obj\\",
+      "projectPath": "C:\\Users\\sofia\\source\\repos\\Schulungskalender\\CalendarTests\\CalendarTests.csproj",
+      "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sofia\\source\\repos\\Schulungskalender\\CalendarTests\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\isabe\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -9739,8 +9746,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\isabe\\Documents\\Schule\\Diplomarbeit\\Schulungskalender\\DA\\DA.csproj": {
-              "projectPath": "C:\\Users\\isabe\\Documents\\Schule\\Diplomarbeit\\Schulungskalender\\DA\\DA.csproj"
+            "C:\\Users\\sofia\\source\\repos\\Schulungskalender\\DA\\DA.csproj": {
+              "projectPath": "C:\\Users\\sofia\\source\\repos\\Schulungskalender\\DA\\DA.csproj"
             }
           }
         }

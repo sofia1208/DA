@@ -57,8 +57,8 @@ const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
-  //{ path: 'start', component: BackendStartComponent, canActivate: [AuthGuard] },
-  { path: 'start', component: BackendStartComponent },
+  { path: 'start', component: BackendStartComponent, canActivate: [AuthGuard] },
+  
   { path: 'detail', component: BackendDetailComponent },
   { path: 'checkout', component: RegistrationSuccessComponent },
   {
